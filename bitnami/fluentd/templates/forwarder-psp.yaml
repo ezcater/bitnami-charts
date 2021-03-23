@@ -11,9 +11,7 @@ spec:
   requiredDropCapabilities:
     - ALL
   allowedHostPaths:
-    - pathPrefix: '/var/lib/docker/containers'
-      readOnly: true
-    - pathPrefix: '/var/log'
+    {{- toYaml .Values.forwarder.podSecurityPolicy.allowedHostPaths | nindent 4 }}
   volumes:
     - 'configMap'
     - 'emptyDir'
