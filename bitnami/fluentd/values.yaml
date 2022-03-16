@@ -462,6 +462,21 @@ forwarder:
   rbac:
     create: true
     pspEnabled: false
+
+  podSecurityPolicy:
+    allowedHostPaths:
+      - pathPrefix: '/var/lib/docker/containers'
+        readOnly: true
+      - pathPrefix: '/var/log'
+
+  ## Add init containers to forwarder pods
+  ## For example:
+  ## initContainers:
+  ##   - name: your-image-name
+  ##     image: your-image
+  ##     imagePullPolicy: Always
+  ##
+
   ## Persist data to a persistent volume
   ##
   persistence:
