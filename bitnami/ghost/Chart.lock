@@ -1,9 +1,9 @@
 dependencies:
 - name: common
   repository: https://charts.bitnami.com/bitnami
-  version: 1.4.1
+  version: 1.8.0
 - name: mariadb
   repository: https://charts.bitnami.com/bitnami
-  version: 9.3.5
-digest: sha256:a0844157142ecc15e87d92e903aba3be431b94583dc52886d18a5c67f551218b
-generated: "2021-03-12T17:36:25.698370541Z"
+  version: 9.4.3
+digest: sha256:77ca7d350285320b0cd2fe7219ffd2f4e0f56397e1c92d05f374e1359fbdd6c7
+generated: "2021-08-25T04:47:23.629320099Z"
