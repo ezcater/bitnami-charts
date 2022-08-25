@@ -1,15 +1,6 @@
 {{/* vim: set filetype=mustache: */}}
 
 {{/*
-Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-If release name contains chart name it will be used as a full name.
-*/}}
-{{- define "memcached.fullname" -}}
-{{- include "common.names.fullname" . -}}
-{{- end -}}
-
-{{/*
 Return the proper Memcached image name
 */}}
 {{- define "memcached.image" -}}
@@ -36,6 +27,20 @@ Return the proper Docker Image Registry Secret Names
 */}}
 {{- define "memcached.imagePullSecrets" -}}
 {{- include "common.images.pullSecrets" (dict "images" (list .Values.image .Values.metrics.image .Values.volumePermissions.image) "global" .Values.global) -}}
+<<<<<<< HEAD
+=======
+{{- end -}}
+
+{{/*
+ Create the name of the service account to use
+ */}}
+{{- define "memcached.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create -}}
+    {{ default (include "common.names.fullname" .) .Values.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.serviceAccount.name }}
+{{- end -}}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- end -}}
 
 {{/*
@@ -44,6 +49,7 @@ Check if there are rolling tags in the images
 {{- define "memcached.checkRollingTags" -}}
 {{- include "common.warnings.rollingTag" .Values.image }}
 {{- include "common.warnings.rollingTag" .Values.metrics.image }}
+{{- include "common.warnings.rollingTag" .Values.volumePermissions.image }}
 {{- end -}}
 
 {{/*
@@ -53,6 +59,7 @@ Compile all warnings into a single message, and call fail.
 {{- $messages := list -}}
 {{- $messages := append $messages (include "memcached.validateValues.architecture" .) -}}
 {{- $messages := append $messages (include "memcached.validateValues.replicaCount" .) -}}
+{{- $messages := append $messages (include "memcached.validateValues.auth" .) -}}
 {{- $messages := append $messages (include "memcached.validateValues.readOnlyRootFilesystem" .) -}}
 {{- $messages := without $messages "" -}}
 {{- $message := join "\n" $messages -}}
@@ -82,22 +89,20 @@ memcached: replicaCount
 {{- end -}}
 {{- end -}}
 
-{{/* Validate values of Memcached - securityContext.readOnlyRootFilesystem */}}
-{{- define "memcached.validateValues.readOnlyRootFilesystem" -}}
-{{- if and .Values.securityContext.enabled .Values.securityContext.readOnlyRootFilesystem (not (empty .Values.memcachedPassword)) -}}
-memcached: securityContext.readOnlyRootFilesystem
-    Enabling authentication is not compatible with using a read-only filesystem.
-    Please disable it (--set securityContext.readOnlyRootFilesystem=false)
+{{/* Validate values of Memcached - authentication */}}
+{{- define "memcached.validateValues.auth" -}}
+{{- if and .Values.auth.enabled (empty .Values.auth.username) -}}
+memcached: auth.username
+    Enabling authentication requires setting a valid admin username.
+    Please set a valid username (--set auth.username="xxxx")
 {{- end -}}
 {{- end -}}
 
-{{/*
- Create the name of the service account to use
- */}}
-{{- define "memcached.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create -}}
-    {{ default (include "memcached.fullname" .) .Values.serviceAccount.name }}
-{{- else -}}
-    {{ default "default" .Values.serviceAccount.name }}
+{{/* Validate values of Memcached - containerSecurityContext.readOnlyRootFilesystem */}}
+{{- define "memcached.validateValues.readOnlyRootFilesystem" -}}
+{{- if and .Values.containerSecurityContext.enabled .Values.containerSecurityContext.readOnlyRootFilesystem .Values.auth.enabled -}}
+memcached: containerSecurityContext.readOnlyRootFilesystem
+    Enabling authentication is not compatible with using a read-only filesystem.
+    Please disable it (--set containerSecurityContext.readOnlyRootFilesystem=false)
 {{- end -}}
 {{- end -}}

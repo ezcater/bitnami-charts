@@ -9,6 +9,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
   {{- end }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
+<<<<<<< HEAD
       app.kubernetes.io/component: querier
     {{- if .Values.metrics.serviceMonitor.selector }}
     {{- include "common.tplvalues.render" (dict "value" .Values.metrics.serviceMonitor.selector "context" $) | nindent 4 }}
@@ -16,13 +17,34 @@ metadata:
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
+=======
+    app.kubernetes.io/component: querier
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.metrics.serviceMonitor.labels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.metrics.serviceMonitor.labels "context" $ ) | nindent 4 }}
+    {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   {{- if .Values.commonAnnotations }}
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
+<<<<<<< HEAD
   selector:
     matchLabels: {{ include "common.labels.matchLabels" . | nindent 6 }}
         app.kubernetes.io/component: querier
+=======
+  {{- if .Values.metrics.serviceMonitor.jobLabel }}
+  jobLabel: {{ .Values.metrics.serviceMonitor.jobLabel }}
+  {{- end }}
+  selector:
+    matchLabels: {{ include "common.labels.matchLabels" . | nindent 6 }}
+      {{- if .Values.metrics.serviceMonitor.selector }}
+      {{- include "common.tplvalues.render" (dict "value" .Values.metrics.serviceMonitor.selector "context" $) | nindent 6 }}
+      {{- end }}
+      app.kubernetes.io/component: querier
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   endpoints:
     - port: http
       {{- if .Values.metrics.serviceMonitor.interval }}
@@ -31,6 +53,18 @@ spec:
       {{- if .Values.metrics.serviceMonitor.scrapeTimeout }}
       scrapeTimeout: {{ .Values.metrics.serviceMonitor.scrapeTimeout }}
       {{- end }}
+<<<<<<< HEAD
+=======
+      {{- if .Values.metrics.serviceMonitor.honorLabels }}
+      honorLabels: {{ .Values.metrics.serviceMonitor.honorLabels }}
+      {{- end }}
+      {{- if .Values.metrics.serviceMonitor.metricRelabelings }}
+      metricRelabelings: {{- toYaml .Values.metrics.serviceMonitor.metricRelabelings | nindent 6 }}
+      {{- end }}
+      {{- if .Values.metrics.serviceMonitor.relabelings }}
+      relabelings: {{- toYaml .Values.metrics.serviceMonitor.relabelings | nindent 6 }}
+      {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   namespaceSelector:
     matchNames:
       - {{ .Release.Namespace }}

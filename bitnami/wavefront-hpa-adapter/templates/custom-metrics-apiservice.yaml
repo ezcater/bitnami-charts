@@ -1,5 +1,9 @@
 {{- if .Values.apiService.create }}
+<<<<<<< HEAD
 apiVersion: apiregistration.k8s.io/v1beta1
+=======
+apiVersion: {{ include "common.capabilities.apiService.apiVersion" . }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 kind: APIService
 metadata:
   name: v1beta1.custom.metrics.k8s.io

@@ -62,7 +62,7 @@ Return the proper etcdctl authentication options
 {{- $certsOption := " --cert $ETCD_CERT_FILE --key $ETCD_KEY_FILE" -}}
 {{- $autoCertsOption := " --cert /bitnami/etcd/data/fixtures/client/cert.pem --key /bitnami/etcd/data/fixtures/client/key.pem" -}}
 {{- $caOption := " --cacert $ETCD_TRUSTED_CA_FILE" -}}
-{{- if .Values.auth.rbac.enabled -}}
+{{- if or .Values.auth.rbac.create .Values.auth.rbac.enabled -}}
     {{- printf "%s" $rbacOption -}}
 {{- end -}}
 {{- if and .Values.auth.client.secureTransport .Values.auth.client.useAutoTLS -}}
@@ -118,6 +118,29 @@ Get the secret password key to be retrieved from etcd secret.
 {{- end -}}
 
 {{/*
+<<<<<<< HEAD
+=======
+Return true if a secret object should be created for the etcd token private key
+*/}}
+{{- define "etcd.token.createSecret" -}}
+{{- if and (eq .Values.auth.token.type "jwt") (empty .Values.auth.token.privateKey.existingSecret) }}
+    {{- true -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return the secret with etcd token private key
+*/}}
+{{- define "etcd.token.secretName" -}}
+    {{- if .Values.auth.token.privateKey.existingSecret -}}
+        {{- printf "%s" .Values.auth.token.privateKey.existingSecret -}}
+    {{- else -}}
+        {{- printf "%s-jwt-token" (include "common.names.fullname" .) -}}
+    {{- end -}}
+{{- end -}}
+
+{{/*
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 Return the proper Disaster Recovery PVC name
 */}}
 {{- define "etcd.disasterRecovery.pvc.name" -}}
@@ -127,6 +150,17 @@ Return the proper Disaster Recovery PVC name
     {{- printf "%s" (tpl .Values.startFromSnapshot.existingClaim $) -}}
 {{- else -}}
     {{- printf "%s-snapshotter" (include "common.names.fullname" .) }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+ Create the name of the service account to use
+ */}}
+{{- define "etcd.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create -}}
+{{ default (include "common.names.fullname" .) .Values.serviceAccount.name }}
+{{- else -}}
+{{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
 

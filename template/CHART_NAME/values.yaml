@@ -21,12 +21,22 @@ global:
 ## @param kubeVersion Override Kubernetes version
 ##
 kubeVersion: ""
+<<<<<<< HEAD
 ## @param nameOverride String to partially override common.names.fullname
+=======
+## @param nameOverride String to partially override common.names.name
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 nameOverride: ""
 ## @param fullnameOverride String to fully override common.names.fullname
 ##
 fullnameOverride: ""
+<<<<<<< HEAD
+=======
+## @param namespaceOverride String to fully override common.names.namespace
+##
+namespaceOverride: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param commonLabels Labels to add to all deployed objects
 ##
 commonLabels: {}
@@ -60,8 +70,13 @@ diagnosticMode:
 ## %%MAIN_CONTAINER/POD_DESCRIPTION%%
 ##
 %%MAIN_OBJECT_BLOCK%%:
+<<<<<<< HEAD
   ## Bitnami %%MAIN_CONTAINER image
   ## ref: https://hub.docker.com/r/bitnami/redis/tags/
+=======
+  ## Bitnami %%MAIN_CONTAINER%% image
+  ## ref: https://hub.docker.com/r/bitnami/%%IMAGE_NAME%%/tags/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param %%MAIN_OBJECT_BLOCK%%.image.registry %%MAIN_CONTAINER%% image registry
   ## @param %%MAIN_OBJECT_BLOCK%%.image.repository %%MAIN_CONTAINER%% image repository
   ## @param %%MAIN_OBJECT_BLOCK%%.image.tag %%MAIN_CONTAINER%% image tag (immutable tags are recommended)
@@ -92,9 +107,21 @@ diagnosticMode:
   ## @param %%MAIN_OBJECT_BLOCK%%.replicaCount Number of %%MAIN_CONTAINER_NAME%% replicas to deploy
   ##
   replicaCount: 1
+<<<<<<< HEAD
   ## Configure extra options for %%MAIN_CONTAINER_NAME%% containers' liveness and readiness probes
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
   ## @param %%MAIN_OBJECT_BLOCK%%.livenessProbe.enabled Enable livenessProbe on %%MAIN_CONTAINER_NAME%% nodes
+=======
+  ## @param %%MAIN_OBJECT_BLOCK%%.containerPorts.http %%MAIN_CONTAINER_NAME%% HTTP container port
+  ## @param %%MAIN_OBJECT_BLOCK%%.containerPorts.https %%MAIN_CONTAINER_NAME%% HTTPS container port
+  ##
+  containerPorts:
+    http: 80
+    https: 443
+  ## Configure extra options for %%MAIN_CONTAINER_NAME%% containers' liveness and readiness probes
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  ## @param %%MAIN_OBJECT_BLOCK%%.livenessProbe.enabled Enable livenessProbe on %%MAIN_CONTAINER_NAME%% containers
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param %%MAIN_OBJECT_BLOCK%%.livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
   ## @param %%MAIN_OBJECT_BLOCK%%.livenessProbe.periodSeconds Period seconds for livenessProbe
   ## @param %%MAIN_OBJECT_BLOCK%%.livenessProbe.timeoutSeconds Timeout seconds for livenessProbe
@@ -103,13 +130,16 @@ diagnosticMode:
   ##
   livenessProbe:
     enabled: true
-    %%httpGet || command || etc%%
     initialDelaySeconds: foo
     periodSeconds: bar
     timeoutSeconds: foo
     failureThreshold: bar
     successThreshold: foo
+<<<<<<< HEAD
   ## @param %%MAIN_OBJECT_BLOCK%%.readinessProbe.enabled Enable readinessProbe on %%MAIN_CONTAINER_NAME%% nodes
+=======
+  ## @param %%MAIN_OBJECT_BLOCK%%.readinessProbe.enabled Enable readinessProbe on %%MAIN_CONTAINER_NAME%% containers
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param %%MAIN_OBJECT_BLOCK%%.readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
   ## @param %%MAIN_OBJECT_BLOCK%%.readinessProbe.periodSeconds Period seconds for readinessProbe
   ## @param %%MAIN_OBJECT_BLOCK%%.readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
@@ -118,7 +148,28 @@ diagnosticMode:
   ##
   readinessProbe:
     enabled: true
-    %%httpGet || command || etc%%
+    initialDelaySeconds: foo
+    periodSeconds: bar
+    timeoutSeconds: foo
+    failureThreshold: bar
+    successThreshold: foo
+<<<<<<< HEAD
+  ## @param %%MAIN_OBJECT_BLOCK%%.customLivenessProbe Custom livenessProbe that overrides the default one
+  ##
+  customLivenessProbe: {}
+  ## @param %%MAIN_OBJECT_BLOCK%%.customReadinessProbe Custom readinessProbe that overrides the default one
+  ##
+  customReadinessProbe: {}
+=======
+  ## @param %%MAIN_OBJECT_BLOCK%%.startupProbe.enabled Enable startupProbe on %%MAIN_CONTAINER_NAME%% containers
+  ## @param %%MAIN_OBJECT_BLOCK%%.startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+  ## @param %%MAIN_OBJECT_BLOCK%%.startupProbe.periodSeconds Period seconds for startupProbe
+  ## @param %%MAIN_OBJECT_BLOCK%%.startupProbe.timeoutSeconds Timeout seconds for startupProbe
+  ## @param %%MAIN_OBJECT_BLOCK%%.startupProbe.failureThreshold Failure threshold for startupProbe
+  ## @param %%MAIN_OBJECT_BLOCK%%.startupProbe.successThreshold Success threshold for startupProbe
+  ##
+  startupProbe:
+    enabled: false
     initialDelaySeconds: foo
     periodSeconds: bar
     timeoutSeconds: foo
@@ -130,6 +181,10 @@ diagnosticMode:
   ## @param %%MAIN_OBJECT_BLOCK%%.customReadinessProbe Custom readinessProbe that overrides the default one
   ##
   customReadinessProbe: {}
+  ## @param %%MAIN_OBJECT_BLOCK%%.customStartupProbe Custom startupProbe that overrides the default one
+  ##
+  customStartupProbe: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## %%MAIN_CONTAINER_NAME%% resource requests and limits
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
   ## @param %%MAIN_OBJECT_BLOCK%%.resources.limits The resources limits for the %%MAIN_CONTAINER_NAME%% containers
@@ -147,16 +202,32 @@ diagnosticMode:
     enabled: true
     fsGroup: 1001
   ## Configure Container Security Context
+<<<<<<< HEAD
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   ## @param %%MAIN_OBJECT_BLOCK%%.containerSecurityContext.enabled Enabled %%MAIN_CONTAINER_NAME%% containers' Security Context
   ## @param %%MAIN_OBJECT_BLOCK%%.containerSecurityContext.runAsUser Set %%MAIN_CONTAINER_NAME%% containers' Security Context runAsUser
+=======
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  ## @param %%MAIN_OBJECT_BLOCK%%.containerSecurityContext.enabled Enabled %%MAIN_CONTAINER_NAME%% containers' Security Context
+  ## @param %%MAIN_OBJECT_BLOCK%%.containerSecurityContext.runAsUser Set %%MAIN_CONTAINER_NAME%% containers' Security Context runAsUser
+  ## @param %%MAIN_OBJECT_BLOCK%%.containerSecurityContext.runAsNonRoot Set %%MAIN_CONTAINER_NAME%% containers' Security Context runAsNonRoot
+  ## @param %%MAIN_OBJECT_BLOCK%%.containerSecurityContext.readOnlyRootFilesystem Set %%MAIN_CONTAINER_NAME%% containers' Security Context runAsNonRoot
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   containerSecurityContext:
     enabled: true
     runAsUser: 1001
+<<<<<<< HEAD
 
   %%OTHER_PARAMETERS_RELATED_TO_THIS_CONTAINER/POD%%
 
+=======
+    runAsNonRoot: true
+    readOnlyRootFilesystem: false
+
+  %%OTHER_PARAMETERS_RELATED_TO_THIS_CONTAINER/POD%%
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param %%MAIN_OBJECT_BLOCK%%.existingConfigmap The name of an existing ConfigMap with your custom configuration for %%MAIN_CONTAINER_NAME%%
   ##
   existingConfigmap:
@@ -186,6 +257,33 @@ diagnosticMode:
   ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
   ##
   podAntiAffinityPreset: soft
+<<<<<<< HEAD
+=======
+  ## Pod Disruption Budget configuration
+  ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb
+  ## @param %%MAIN_OBJECT_BLOCK%%.pdb.create Enable/disable a Pod Disruption Budget creation
+  ## @param %%MAIN_OBJECT_BLOCK%%.pdb.minAvailable Minimum number/percentage of pods that should remain scheduled
+  ## @param %%MAIN_OBJECT_BLOCK%%.pdb.maxUnavailable Maximum number/percentage of pods that may be made unavailable
+  ##
+  pdb:
+    create: false
+    minAvailable: 1
+    maxUnavailable: ""
+  ## Autoscaling configuration
+  ## ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+  ## @param %%MAIN_OBJECT_BLOCK%%.autoscaling.enabled Enable autoscaling for %%MAIN_OBJECT_BLOCK%%
+  ## @param %%MAIN_OBJECT_BLOCK%%.autoscaling.minReplicas Minimum number of %%MAIN_OBJECT_BLOCK%% replicas
+  ## @param %%MAIN_OBJECT_BLOCK%%.autoscaling.maxReplicas Maximum number of %%MAIN_OBJECT_BLOCK%% replicas
+  ## @param %%MAIN_OBJECT_BLOCK%%.autoscaling.targetCPU Target CPU utilization percentage
+  ## @param %%MAIN_OBJECT_BLOCK%%.autoscaling.targetMemory Target Memory utilization percentage
+  ##
+  autoscaling:
+    enabled: false
+    minReplicas: ""
+    maxReplicas: ""
+    targetCPU: ""
+    targetMemory: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Node %%MAIN_OBJECT_BLOCK%%.affinity preset
   ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#node-affinity
   ##
@@ -224,11 +322,38 @@ diagnosticMode:
     ## Can be set to RollingUpdate or OnDelete
     ##
     type: RollingUpdate
+<<<<<<< HEAD
   ## @param %%MAIN_OBJECT_BLOCK%%.priorityClassName %%MAIN_CONTAINER_NAME%% pods' priorityClassName
   ##
   priorityClassName: ""
   ## @param %%MAIN_OBJECT_BLOCK%%.lifecycleHooks for the %%MAIN_CONTAINER_NAME%% container(s) to automate configuration before or after startup
   ##
+=======
+
+  ## ONLY FOR STATEFULSETS
+  ## @param %%MAIN_OBJECT_BLOCK%%.podManagementPolicy Statefulset Pod management policy, it needs to be Parallel to be able to complete the cluster join
+  ## Ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
+  ##
+  podManagementPolicy: OrderedReady
+
+  ## @param %%MAIN_OBJECT_BLOCK%%.priorityClassName %%MAIN_CONTAINER_NAME%% pods' priorityClassName
+  ##
+  priorityClassName: ""
+  ## @param %%MAIN_OBJECT_BLOCK%%.topologySpreadConstraints Topology Spread Constraints for pod assignment spread across your cluster among failure-domains. Evaluated as a template
+  ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/#spread-constraints-for-pods
+  ##
+  topologySpreadConstraints: []
+  ## @param %%MAIN_OBJECT_BLOCK%%.schedulerName Name of the k8s scheduler (other than default) for %%MAIN_CONTAINER_NAME%% pods
+  ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+  ##
+  schedulerName: ""
+  ## @param %%MAIN_OBJECT_BLOCK%%.terminationGracePeriodSeconds Seconds Redmine pod needs to terminate gracefully
+  ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
+  ##
+  terminationGracePeriodSeconds: ""
+  ## @param %%MAIN_OBJECT_BLOCK%%.lifecycleHooks for the %%MAIN_CONTAINER_NAME%% container(s) to automate configuration before or after startup
+  ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   lifecycleHooks: {}
   ## @param %%MAIN_OBJECT_BLOCK%%.extraEnvVars Array with extra environment variables to add to %%MAIN_CONTAINER_NAME%% nodes
   ## e.g:
@@ -239,10 +364,17 @@ diagnosticMode:
   extraEnvVars: []
   ## @param %%MAIN_OBJECT_BLOCK%%.extraEnvVarsCM Name of existing ConfigMap containing extra env vars for %%MAIN_CONTAINER_NAME%% nodes
   ##
+<<<<<<< HEAD
   extraEnvVarsCM:
   ## @param %%MAIN_OBJECT_BLOCK%%.extraEnvVarsSecret Name of existing Secret containing extra env vars for %%MAIN_CONTAINER_NAME%% nodes
   ##
   extraEnvVarsSecret:
+=======
+  extraEnvVarsCM: ""
+  ## @param %%MAIN_OBJECT_BLOCK%%.extraEnvVarsSecret Name of existing Secret containing extra env vars for %%MAIN_CONTAINER_NAME%% nodes
+  ##
+  extraEnvVarsSecret: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param %%MAIN_OBJECT_BLOCK%%.extraVolumes Optionally specify extra list of additional volumes for the %%MAIN_CONTAINER_NAME%% pod(s)
   ##
   extraVolumes: []
@@ -259,7 +391,11 @@ diagnosticMode:
   ##       - name: portname
   ##         containerPort: 1234
   ##
+<<<<<<< HEAD
   sidecars: {}
+=======
+  sidecars: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param %%MAIN_OBJECT_BLOCK%%.initContainers Add additional init containers to the %%MAIN_CONTAINER_NAME%% pod(s)
   ## ref: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
   ## e.g:
@@ -269,7 +405,11 @@ diagnosticMode:
   ##    imagePullPolicy: Always
   ##    command: ['sh', '-c', 'echo "hello world"']
   ##
+<<<<<<< HEAD
   initContainers: {}
+=======
+  initContainers: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## %%SECONDARY_CONTAINER/POD_DESCRIPTION%%
 ##
@@ -289,29 +429,51 @@ service:
   ## @param service.type %%MAIN_CONTAINER_NAME%% service type
   ##
   type: LoadBalancer
+<<<<<<< HEAD
   ## @param service.port %%MAIN_CONTAINER_NAME%% service HTTP port
   ##
   port: 80
   ## @param service.httpsPort %%MAIN_CONTAINER_NAME%% service HTTPS port
   ##
   httpsPort: 443
+=======
+  ## @param service.ports.http %%MAIN_CONTAINER_NAME%% service HTTP port
+  ## @param service.ports.https %%MAIN_CONTAINER_NAME%% service HTTPS port
+  ##
+  ports:
+    http: 80
+    https: 443
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Node ports to expose
   ## @param service.nodePorts.http Node port for HTTP
   ## @param service.nodePorts.https Node port for HTTPS
   ## NOTE: choose port between <30000-32767>
   ##
   nodePorts:
+<<<<<<< HEAD
     http:
     https:
+=======
+    http: ""
+    https: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param service.clusterIP %%MAIN_CONTAINER_NAME%% service Cluster IP
   ## e.g.:
   ## clusterIP: None
   ##
+<<<<<<< HEAD
   clusterIP:
   ## @param service.loadBalancerIP %%MAIN_CONTAINER_NAME%% service Load Balancer IP
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer
   ##
   loadBalancerIP:
+=======
+  clusterIP: ""
+  ## @param service.loadBalancerIP %%MAIN_CONTAINER_NAME%% service Load Balancer IP
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer
+  ##
+  loadBalancerIP: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param service.loadBalancerSourceRanges %%MAIN_CONTAINER_NAME%% service Load Balancer sources
   ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
   ## e.g:
@@ -326,6 +488,23 @@ service:
   ## @param service.annotations Additional custom annotations for %%MAIN_CONTAINER_NAME%% service
   ##
   annotations: {}
+<<<<<<< HEAD
+=======
+  ## @param service.extraPorts Extra ports to expose in %%MAIN_CONTAINER_NAME%% service (normally used with the `sidecars` value)
+  ##
+  extraPorts: []
+  ## @param service.sessionAffinity Control where client requests go, to the same pod or round-robin
+  ## Values: ClientIP or None
+  ## ref: https://kubernetes.io/docs/user-guide/services/
+  ##
+  sessionAffinity: None
+  ## @param service.sessionAffinityConfig Additional settings for the sessionAffinity
+  ## sessionAffinityConfig:
+  ##   clientIP:
+  ##     timeoutSeconds: 300
+  ##
+  sessionAffinityConfig: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## %%MAIN_CONTAINER_NAME%% ingress parameters
 ## ref: http://kubernetes.io/docs/user-guide/ingress/
 ##
@@ -338,22 +517,45 @@ ingress:
   pathType: ImplementationSpecific
   ## @param ingress.apiVersion Force Ingress API version (automatically detected if not set)
   ##
+<<<<<<< HEAD
   apiVersion:
   ## @param ingress.hostname Default host for the ingress record
   ##
   hostname: %%COMPONENT_NAME%%.local
+=======
+  apiVersion: ""
+  ## @param ingress.hostname Default host for the ingress record
+  ##
+  hostname: %%COMPONENT_NAME%%.local
+  ## @param ingress.ingressClassName IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+)
+  ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
+  ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
+  ##
+  ingressClassName: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param ingress.path Default path for the ingress record
   ## NOTE: You may need to set this to '/*' in order to use this with ALB ingress controllers
   ##
   path: /
+<<<<<<< HEAD
   ## @param ingress.annotations Additional custom annotations for the ingress record
   ## NOTE: If `ingress.certManager=true`, annotation `kubernetes.io/tls-acme: "true"` will automatically be added
+=======
+  ## @param ingress.annotations Additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations.
+  ## Use this parameter to set the required annotations for cert-manager, see
+  ## ref: https://cert-manager.io/docs/usage/ingress/#supported-annotations
+  ## e.g:
+  ## annotations:
+  ##   kubernetes.io/ingress.class: nginx
+  ##   cert-manager.io/cluster-issuer: cluster-issuer-name
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   annotations: {}
   ## @param ingress.tls Enable TLS configuration for the host defined at `ingress.hostname` parameter
   ## TLS certificates will be retrieved from a TLS secret with name: `{{- printf "%s-tls" .Values.ingress.hostname }}`
   ## You can:
   ##   - Use the `ingress.secrets` parameter to create this TLS secret
+<<<<<<< HEAD
   ##   - Relay on cert-manager to create it by setting `ingress.certManager=true`
   ##   - Relay on Helm to create self-signed certificates by setting `ingress.selfSigned=true`
   ##
@@ -361,6 +563,12 @@ ingress:
   ## @param ingress.certManager Add the corresponding annotations for cert-manager integration
   ##
   certManager: false
+=======
+  ##   - Rely on cert-manager to create it by setting the corresponding annotations
+  ##   - Rely on Helm to create self-signed certificates by setting `ingress.selfSigned=true`
+  ##
+  tls: false
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param ingress.selfSigned Create a TLS secret for this ingress record using self-signed certificates generated by Helm
   ##
   selfSigned: false
@@ -409,7 +617,72 @@ ingress:
   ##       -----END CERTIFICATE-----
   ##
   secrets: []
+<<<<<<< HEAD
 
+=======
+  ## @param ingress.extraRules Additional rules to be covered with this ingress record
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-rules
+  ## e.g:
+  ## extraRules:
+  ## - host: example.local
+  ##     http:
+  ##       path: /
+  ##       backend: 
+  ##         service:
+  ##           name: example-svc
+  ##           port:
+  ##             name: http
+  ##
+  extraRules: []
+
+## @section Persistence Parameters
+
+## Enable persistence using Persistent Volume Claims
+## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
+##
+persistence:
+  ## @param persistence.enabled Enable persistence using Persistent Volume Claims
+  ##
+  enabled: true
+  ## @param persistence.mountPath Path to mount the volume at.
+  ##
+  mountPath: /bitnami/%%MAIN_OBJECT_BLOCK%%/data
+  ## @param persistence.subPath The subdirectory of the volume to mount to, useful in dev environments and one PV for multiple services
+  ##
+  subPath: ""
+  ## @param persistence.storageClass Storage class of backing PVC
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
+  storageClass: ""
+  ## @param persistence.annotations Persistent Volume Claim annotations
+  ##
+  annotations: {}
+  ## @param persistence.accessModes Persistent Volume Access Modes
+  ##
+  accessModes:
+    - ReadWriteOnce
+  ## @param persistence.size Size of data volume
+  ##
+  size: 8Gi
+  ## @param persistence.existingClaim The name of an existing PVC to use for persistence
+  ##
+  existingClaim: ""
+  ## @param persistence.selector Selector to match an existing Persistent Volume for WordPress data PVC
+  ## If set, the PVC can't have a PV dynamically provisioned for it
+  ## E.g.
+  ## selector:
+  ##   matchLabels:
+  ##     app: my-app
+  ##
+  selector: {}
+  ## @param persistence.dataSource Custom PVC data source
+  ##
+  dataSource: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @section Init Container Parameters
 
 ## 'volumePermissions' init container parameters
@@ -431,8 +704,8 @@ volumePermissions:
   image:
     registry: docker.io
     repository: bitnami/bitnami-shell
-    tag: "10"
-    pullPolicy: Always
+    tag: 11-debian-11-r%%IMAGE_REVISION%%
+    pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -458,15 +731,36 @@ volumePermissions:
   ##
   containerSecurityContext:
     runAsUser: 0
+<<<<<<< HEAD
 
 ## @section Other Parameters
 
+=======
+
+## @section Other Parameters
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## RBAC configuration
 ##
 rbac:
   ## @param rbac.create Specifies whether RBAC resources should be created
   ##
   create: false
+<<<<<<< HEAD
+=======
+  ## @param rbac.rules Custom RBAC rules to set
+  ## e.g:
+  ## rules:
+  ##   - apiGroups:
+  ##       - ""
+  ##     resources:
+  ##       - pods
+  ##     verbs:
+  ##       - get
+  ##       - list
+  ##
+  rules: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## ServiceAccount configuration
 ##
@@ -476,9 +770,71 @@ serviceAccount:
   create: true
   ## @param serviceAccount.name The name of the ServiceAccount to use.
   ## If not set and create is true, a name is generated using the common.names.fullname template
+<<<<<<< HEAD
   ##
   name: ""
+=======
+  ##
+  name: ""
+  ## @param serviceAccount.annotations Additional Service Account annotations (evaluated as a template)
+  ##
+  annotations: {}
+  ## @param serviceAccount.automountServiceAccountToken Automount service account token for the server service account
+  ##
+  automountServiceAccountToken: true
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
+## Prometheus metrics
+##
+metrics:
+  ## @param metrics.enabled Enable the export of Prometheus metrics
+  ##
+  enabled: false
+  ## Prometheus Operator ServiceMonitor configuration
+  ##
+  serviceMonitor:
+    ## @param metrics.serviceMonitor.enabled if `true`, creates a Prometheus Operator ServiceMonitor (also requires `metrics.enabled` to be `true`)
+    ##
+    enabled: false
+    ## @param metrics.serviceMonitor.namespace Namespace in which Prometheus is running
+    ##
+    namespace: ""
+    ## @param metrics.serviceMonitor.annotations Additional custom annotations for the ServiceMonitor
+    ##
+    annotations: {}
+    ## @param metrics.serviceMonitor.labels Extra labels for the ServiceMonitor
+    ##
+    labels: {}
+    ## @param metrics.serviceMonitor.jobLabel The name of the label on the target service to use as the job name in Prometheus
+    ##
+    jobLabel: ""
+    ## @param metrics.serviceMonitor.honorLabels honorLabels chooses the metric's labels on collisions with target labels
+    ##
+    honorLabels: false
+    ## @param metrics.serviceMonitor.interval Interval at which metrics should be scraped.
+    ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
+    ## e.g:
+    ## interval: 10s
+    ##
+    interval: ""
+    ## @param metrics.serviceMonitor.scrapeTimeout Timeout after which the scrape is ended
+    ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
+    ## e.g:
+    ## scrapeTimeout: 10s
+    ##
+    scrapeTimeout: ""
+    ## @param metrics.serviceMonitor.metricRelabelings Specify additional relabeling of metrics
+    ##
+    metricRelabelings: []
+    ## @param metrics.serviceMonitor.relabelings Specify general relabeling
+    ##
+    relabelings: []
+    ## @param metrics.serviceMonitor.selector Prometheus instance selector labels
+    ## ref: https://github.com/bitnami/charts/tree/master/bitnami/prometheus-operator#prometheus-configuration
+    ## selector:
+    ##   prometheus: my-prometheus
+    ##
+    selector: {}
 ## %%SUBCHART_CONTAINER/POD_DESCRIPTION%%
 ##
 %%SUBCHART_NAME%%:

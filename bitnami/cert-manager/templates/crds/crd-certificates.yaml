@@ -1,11 +1,20 @@
+<<<<<<< HEAD
+=======
+# Source: https://github.com/cert-manager/cert-manager/tree/master/deploy/crds
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- if .Values.installCRDs }}
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   name: certificates.cert-manager.io
+<<<<<<< HEAD
   annotations:
     cert-manager.io/inject-ca-from-secret: '{{ template "certmanager.webhook.caRef" . }}'
   labels: {{- include "common.labels.standard" . | nindent 4 }}
+=======
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app: {{ template "common.names.name" . }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 spec:
   group: cert-manager.io
   names:
@@ -19,6 +28,7 @@ spec:
     categories:
       - cert-manager
   scope: Namespaced
+<<<<<<< HEAD
   conversion:
     # a Webhook strategy instruct API server to call an external webhook for any conversion between custom resources.
     strategy: Webhook
@@ -942,6 +952,9 @@ spec:
                   type: integer
       served: true
       storage: false
+=======
+  versions:
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     - name: v1
       subresources:
         status: {}
@@ -986,6 +999,24 @@ spec:
                 - issuerRef
                 - secretName
               properties:
+<<<<<<< HEAD
+=======
+                additionalOutputFormats:
+                  description: AdditionalOutputFormats defines extra output formats of the private key and signed certificate chain to be written to this Certificate's target Secret. This is an Alpha Feature and is only enabled with the `--feature-gates=AdditionalCertificateOutputFormats=true` option on both the controller and webhook components.
+                  type: array
+                  items:
+                    description: CertificateAdditionalOutputFormat defines an additional output format of a Certificate resource. These contain supplementary data formats of the signed certificate chain and paired private key.
+                    type: object
+                    required:
+                      - type
+                    properties:
+                      type:
+                        description: Type is the name of the format type that should be written to the Certificate's target Secret.
+                        type: string
+                        enum:
+                          - DER
+                          - CombinedPEM
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
                 commonName:
                   description: 'CommonName is a common name to be used on the Certificate. The CommonName should have a length of 64 characters or fewer to avoid generating invalid CSRs. This value is ignored by TLS clients when any subject alt name is set. This is x509 behaviour: https://tools.ietf.org/html/rfc6125#section-6.4.4'
                   type: string
@@ -995,7 +1026,11 @@ spec:
                   items:
                     type: string
                 duration:
+<<<<<<< HEAD
                   description: The requested 'duration' (i.e. lifetime) of the Certificate. This option may be ignored/overridden by some issuer types. If unset this defaults to 90 days. If overridden and `renewBefore` is greater than the actual certificate duration, the certificate will be automatically renewed 2/3rds of the way through the certificate's duration.
+=======
+                  description: The requested 'duration' (i.e. lifetime) of the Certificate. This option may be ignored/overridden by some issuer types. If unset this defaults to 90 days. Certificate will be renewed either 2/3 through its duration or `renewBefore` period before its expiry, whichever is later. Minimum accepted duration is 1 hour. Value must be in units accepted by Go time.ParseDuration https://golang.org/pkg/time/#ParseDuration
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
                   type: string
                 emailAddresses:
                   description: EmailAddresses is a list of email subjectAltNames to be set on the Certificate.
@@ -1081,11 +1116,19 @@ spec:
                   type: object
                   properties:
                     algorithm:
+<<<<<<< HEAD
                       description: Algorithm is the private key algorithm of the corresponding private key for this certificate. If provided, allowed values are either `RSA` or `ECDSA` If `algorithm` is specified and `size` is not provided, key size of 256 will be used for `ECDSA` key algorithm and key size of 2048 will be used for `RSA` key algorithm.
+=======
+                      description: Algorithm is the private key algorithm of the corresponding private key for this certificate. If provided, allowed values are either `RSA`,`Ed25519` or `ECDSA` If `algorithm` is specified and `size` is not provided, key size of 256 will be used for `ECDSA` key algorithm and key size of 2048 will be used for `RSA` key algorithm. key size is ignored when using the `Ed25519` key algorithm.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
                       type: string
                       enum:
                         - RSA
                         - ECDSA
+<<<<<<< HEAD
+=======
+                        - Ed25519
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
                     encoding:
                       description: The private key cryptography standards (PKCS) encoding for this certificate's private key to be encoded in. If provided, allowed values are `PKCS1` and `PKCS8` standing for PKCS#1 and PKCS#8, respectively. Defaults to `PKCS1` if not specified.
                       type: string
@@ -1095,11 +1138,22 @@ spec:
                     rotationPolicy:
                       description: RotationPolicy controls how private keys should be regenerated when a re-issuance is being processed. If set to Never, a private key will only be generated if one does not already exist in the target `spec.secretName`. If one does exists but it does not have the correct algorithm or size, a warning will be raised to await user intervention. If set to Always, a private key matching the specified requirements will be generated whenever a re-issuance occurs. Default is 'Never' for backward compatibility.
                       type: string
+<<<<<<< HEAD
                     size:
                       description: Size is the key bit size of the corresponding private key for this certificate. If `algorithm` is set to `RSA`, valid values are `2048`, `4096` or `8192`, and will default to `2048` if not specified. If `algorithm` is set to `ECDSA`, valid values are `256`, `384` or `521`, and will default to `256` if not specified. No other values are allowed.
                       type: integer
                 renewBefore:
                   description: The amount of time before the currently issued certificate's `notAfter` time that cert-manager will begin to attempt to renew the certificate. If unset this defaults to 30 days. If this value is greater than the total duration of the certificate (i.e. notAfter - notBefore), it will be automatically renewed 2/3rds of the way through the certificate's duration.
+=======
+                      enum:
+                        - Never
+                        - Always
+                    size:
+                      description: Size is the key bit size of the corresponding private key for this certificate. If `algorithm` is set to `RSA`, valid values are `2048`, `4096` or `8192`, and will default to `2048` if not specified. If `algorithm` is set to `ECDSA`, valid values are `256`, `384` or `521`, and will default to `256` if not specified. If `algorithm` is set to `Ed25519`, Size is ignored. No other values are allowed.
+                      type: integer
+                renewBefore:
+                  description: How long before the currently issued certificate's expiry cert-manager should renew the certificate. The default is 2/3 of the issued certificate's duration. Minimum accepted value is 5 minutes. Value must be in units accepted by Go time.ParseDuration https://golang.org/pkg/time/#ParseDuration
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
                   type: string
                 revisionHistoryLimit:
                   description: revisionHistoryLimit is the maximum number of CertificateRequest revisions that are maintained in the Certificate's history. Each revision represents a single `CertificateRequest` created by this Certificate, either when it was created, renewed, or Spec was changed. Revisions will be removed by oldest first if the number of revisions exceeds this number. If set, revisionHistoryLimit must be a value of `1` or greater. If unset (`nil`), revisions will not be garbage collected. Default value is `nil`.
@@ -1108,6 +1162,23 @@ spec:
                 secretName:
                   description: SecretName is the name of the secret resource that will be automatically created and managed by this Certificate resource. It will be populated with a private key and certificate, signed by the denoted issuer.
                   type: string
+<<<<<<< HEAD
+=======
+                secretTemplate:
+                  description: SecretTemplate defines annotations and labels to be copied to the Certificate's Secret. Labels and annotations on the Secret will be changed as they appear on the SecretTemplate when added or removed. SecretTemplate annotations are added in conjunction with, and cannot overwrite, the base set of annotations cert-manager sets on the Certificate's Secret.
+                  type: object
+                  properties:
+                    annotations:
+                      description: Annotations is a key value map to be copied to the target Kubernetes Secret.
+                      type: object
+                      additionalProperties:
+                        type: string
+                    labels:
+                      description: Labels is a key value map to be copied to the target Kubernetes Secret.
+                      type: object
+                      additionalProperties:
+                        type: string
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
                 subject:
                   description: Full X509 name specification (https://golang.org/pkg/crypto/x509/pkix/#Name).
                   type: object
@@ -1223,6 +1294,15 @@ spec:
                       type:
                         description: Type of the condition, known values are (`Ready`, `Issuing`).
                         type: string
+<<<<<<< HEAD
+=======
+                  x-kubernetes-list-map-keys:
+                    - type
+                  x-kubernetes-list-type: map
+                failedIssuanceAttempts:
+                  description: The number of continuous failed issuance attempts up till now. This field gets removed (if set) on a successful issuance and gets set to 1 if unset and an issuance has failed. If an issuance has failed, the delay till the next issuance will be calculated using formula time.Hour * 2 ^ (failedIssuanceAttempts - 1).
+                  type: integer
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
                 lastFailureTime:
                   description: LastFailureTime is the time as recorded by the Certificate controller of the most recent failure to complete a CertificateRequest for this Certificate resource. If set, cert-manager will not re-request another Certificate until 1 hour has elapsed from this time.
                   type: string
@@ -1247,10 +1327,13 @@ spec:
                   type: integer
       served: true
       storage: true
+<<<<<<< HEAD
 status:
   acceptedNames:
     kind: ""
     plural: ""
   conditions: []
   storedVersions: []
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- end -}}

@@ -1,3 +1,7 @@
+CHART NAME: {{ .Chart.Name }}
+CHART VERSION: {{ .Chart.Version }}
+APP VERSION: {{ .Chart.AppVersion }}
+
 ** Please be patient while the chart is being deployed **
 
 The nginx-ingress controller has been installed.
@@ -45,18 +49,21 @@ An example Ingress that makes use of the controller:
   apiVersion: networking.k8s.io/v1
   kind: Ingress
   metadata:
-    annotations:
-      kubernetes.io/ingress.class: {{ .Values.ingressClass }}
     name: example
-    namespace: foo
+    namespace: {{ .Release.Namespace }}
   spec:
+    ingressClassName: {{ .Values.ingressClassResource.name }}
     rules:
       - host: www.example.com
         http:
           paths:
             - backend:
                 service:
+<<<<<<< HEAD
                   name: exampleService
+=======
+                  name: example-service
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
                   port:
                     number: 80
               path: /
@@ -73,7 +80,7 @@ If TLS is enabled for the Ingress, a Secret containing the certificate and key m
   kind: Secret
   metadata:
     name: example-tls
-    namespace: foo
+    namespace: {{ .Release.Namespace }}
   data:
     tls.crt: <base64 encoded cert>
     tls.key: <base64 encoded key>

@@ -13,28 +13,36 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
-  serviceName: {{ template "common.names.fullname" . }}-headless
   replicas: {{ .Values.replicaCount }}
   podManagementPolicy: {{ .Values.podManagementPolicy }}
-  updateStrategy:
-    type: {{ .Values.updateStrategy }}
-    {{- if (eq "Recreate" .Values.updateStrategy) }}
-    rollingUpdate: null
-    {{- else if .Values.rollingUpdatePartition }}
-    rollingUpdate:
-      partition: {{ .Values.rollingUpdatePartition }}
-    {{- end }}
   selector:
     matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
       app.kubernetes.io/component: zookeeper
+  serviceName: {{ printf "%s-headless" (include "common.names.fullname" .) | trunc 63 | trimSuffix "-" }}
+  {{- if .Values.updateStrategy }}
+  updateStrategy: {{- toYaml .Values.updateStrategy | nindent 4 }}
+  {{- end }}
   template:
     metadata:
-      name: {{ template "common.names.fullname" . }}
+      annotations:
+        {{- if .Values.podAnnotations }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.podAnnotations "context" $) | nindent 8 }}
+        {{- end }}
+        {{- if (include "zookeeper.createConfigmap" .) }}
+        checksum/configuration: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- end }}
+        {{- if or (include "zookeeper.quorum.createSecret" .) (include "zookeeper.client.createSecret" .) (include "zookeeper.client.createTlsPasswordsSecret" .) (include "zookeeper.quorum.createTlsPasswordsSecret" .) }}
+        checksum/secrets: {{ include (print $.Template.BasePath "/secrets.yaml") . | sha256sum }}
+        {{- end }}
+        {{- if or (include "zookeeper.client.createTlsSecret" .) (include "zookeeper.quorum.createTlsSecret" .) }}
+        checksum/tls-secrets: {{ include (print $.Template.BasePath "/tls-secrets.yaml") . | sha256sum }}
+        {{- end }}
       labels: {{- include "common.labels.standard" . | nindent 8 }}
         app.kubernetes.io/component: zookeeper
         {{- if .Values.podLabels }}
         {{- include "common.tplvalues.render" (dict "value" .Values.podLabels "context" $) | nindent 8 }}
         {{- end }}
+<<<<<<< HEAD
       {{- if or .Values.podAnnotations (include "zookeeper.client.createTlsSecret" .) (include "zookeeper.quorum.createTlsSecret" .) }}
       annotations:
         {{- if (include "zookeeper.client.createTlsSecret" .) }}
@@ -47,16 +55,11 @@ spec:
         {{- include "common.tplvalues.render" (dict "value" .Values.podAnnotations "context" $) | nindent 8 }}
         {{- end }}
       {{- end }}
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     spec:
-      {{- if .Values.schedulerName }}
-      schedulerName: {{ .Values.schedulerName }}
-      {{- end }}
-      {{- include "zookeeper.imagePullSecrets" . | nindent 6 }}
       serviceAccountName: {{ template "zookeeper.serviceAccountName" . }}
-      {{- if .Values.securityContext.enabled }}
-      securityContext:
-        fsGroup: {{ .Values.securityContext.fsGroup }}
-      {{- end }}
+      {{- include "zookeeper.imagePullSecrets" . | nindent 6 }}
       {{- if .Values.hostAliases }}
       hostAliases: {{- include "common.tplvalues.render" (dict "value" .Values.hostAliases "context" $) | nindent 8 }}
       {{- end }}
@@ -80,26 +83,37 @@ spec:
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName }}
       {{- end }}
+<<<<<<< HEAD
       {{- if or .Values.initContainers (and .Values.volumePermissions.enabled .Values.persistence.enabled) (or .Values.tls.client.enabled .Values.tls.quorum.enabled) }}
+=======
+      {{- if .Values.schedulerName }}
+      schedulerName: {{ .Values.schedulerName }}
+      {{- end }}
+      {{- if .Values.podSecurityContext.enabled }}
+      securityContext: {{- omit .Values.podSecurityContext "enabled" | toYaml | nindent 8 }}
+      {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       initContainers:
-        {{- if .Values.initContainers }}
-        {{ include "common.tplvalues.render" (dict "value" .Values.initContainers "context" $) | trim | nindent 8 }}
-        {{- end }}
         {{- if and .Values.volumePermissions.enabled .Values.persistence.enabled }}
         - name: volume-permissions
           image: {{ template "zookeeper.volumePermissions.image" . }}
           imagePullPolicy: {{ default "" .Values.volumePermissions.image.pullPolicy | quote }}
           command:
-            - chown
+            - /bin/bash
           args:
-            - -R
-            - {{ .Values.securityContext.runAsUser }}:{{ .Values.securityContext.fsGroup }}
-            - /bitnami/zookeeper
-            {{- if .Values.dataLogDir }}
-            - {{ .Values.dataLogDir }}
-            {{- end }}
-          securityContext:
-            runAsUser: 0
+            - -ec
+            - |
+              mkdir -p /bitnami/zookeeper
+              chown -R {{ .Values.containerSecurityContext.runAsUser }}:{{ .Values.podSecurityContext.fsGroup }} /bitnami/zookeeper
+              find /bitnami/zookeeper -mindepth 1 -maxdepth 1 -not -name ".snapshot" -not -name "lost+found" | xargs -r chown -R {{ .Values.containerSecurityContext.runAsUser }}:{{ .Values.podSecurityContext.fsGroup }}
+              {{- if .Values.dataLogDir }}
+              mkdir -p {{ .Values.dataLogDir }}
+              chown -R {{ .Values.containerSecurityContext.runAsUser }}:{{ .Values.podSecurityContext.fsGroup }} {{ .Values.dataLogDir }}
+              find {{ .Values.dataLogDir }} -mindepth 1 -maxdepth 1 -not -name ".snapshot" -not -name "lost+found" | xargs -r chown -R {{ .Values.containerSecurityContext.runAsUser }}:{{ .Values.podSecurityContext.fsGroup }}
+              {{- end }}
+          {{- if .Values.volumePermissions.containerSecurityContext.enabled }}
+          securityContext: {{- omit .Values.volumePermissions.containerSecurityContext "enabled" | toYaml | nindent 12 }}
+          {{- end }}
           {{- if .Values.volumePermissions.resources }}
           resources: {{- toYaml .Values.volumePermissions.resources | nindent 12 }}
           {{- end }}
@@ -115,6 +129,7 @@ spec:
         - name: init-certs
           image: {{ include "zookeeper.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
+<<<<<<< HEAD
           {{- if .Values.securityContext.enabled }}
           securityContext:
             runAsUser: {{ .Values.securityContext.runAsUser }}
@@ -185,44 +200,74 @@ spec:
             fi
             {{- end }}
             {{- end }}
+=======
+          {{- if .Values.containerSecurityContext.enabled }}
+          securityContext: {{- omit .Values.containerSecurityContext "enabled" | toYaml | nindent 12 }}
+          {{- end }}
+          command:
+            - /scripts/init-certs.sh
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           env:
             - name: MY_POD_NAME
               valueFrom:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: metadata.name
+<<<<<<< HEAD
             {{- if or .Values.tls.client.keystorePassword .Values.tls.client.passwordsSecretName .Values.tls.client.autoGenerated }}
+=======
+            {{- if or .Values.tls.client.passwordsSecretName (include "zookeeper.client.createTlsPasswordsSecret" .) }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             - name: ZOO_TLS_CLIENT_KEYSTORE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ include "zookeeper.client.tlsPasswordsSecret" . }}
+<<<<<<< HEAD
                   key: "keystore-password"
             {{- end }}
             {{- if or .Values.tls.client.truststorePassword .Values.tls.client.passwordsSecretName .Values.tls.client.autoGenerated }}
+=======
+                  key: {{ include "zookeeper.client.tlsPasswordKeystoreKey" . }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             - name: ZOO_TLS_CLIENT_TRUSTSTORE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ include "zookeeper.client.tlsPasswordsSecret" . }}
+<<<<<<< HEAD
                   key: "truststore-password"
             {{- end }}
             {{- if or .Values.tls.quorum.keystorePassword .Values.tls.quorum.passwordsSecretName .Values.tls.quorum.autoGenerated }}
+=======
+                  key: {{ include "zookeeper.client.tlsPasswordTruststoreKey" . }}
+            {{- end }}
+            {{- if or .Values.tls.quorum.passwordsSecretName (include "zookeeper.quorum.createTlsPasswordsSecret" .) }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             - name: ZOO_TLS_QUORUM_KEYSTORE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ include "zookeeper.quorum.tlsPasswordsSecret" . }}
+<<<<<<< HEAD
                   key: "keystore-password"
             {{- end }}
             {{- if or .Values.tls.quorum.truststorePassword .Values.tls.quorum.passwordsSecretName .Values.tls.quorum.autoGenerated }}
+=======
+                  key: {{ include "zookeeper.quorum.tlsPasswordKeystoreKey" . }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             - name: ZOO_TLS_QUORUM_TRUSTSTORE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ include "zookeeper.quorum.tlsPasswordsSecret" . }}
+<<<<<<< HEAD
                   key: "truststore-password"
+=======
+                  key: {{ include "zookeeper.quorum.tlsPasswordTruststoreKey" . }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             {{- end }}
           {{- if .Values.tls.resources }}
           resources: {{- toYaml .Values.tls.resources | nindent 12 }}
           {{- end }}
           volumeMounts:
+<<<<<<< HEAD
           {{- if or .Values.tls.client.enabled }}
           - name: client-certificates
             mountPath: /certs/client
@@ -237,14 +282,45 @@ spec:
           {{- end }}
         {{- end }}
       {{- end }}
+=======
+            - name: scripts
+              mountPath: /scripts/init-certs.sh
+              subPath: init-certs.sh
+            {{- if or .Values.tls.client.enabled }}
+            - name: client-certificates
+              mountPath: /certs/client
+            - name: client-shared-certs
+              mountPath: /opt/bitnami/zookeeper/config/certs/client
+            {{- end }}
+            {{- if or .Values.tls.quorum.enabled }}
+            - name: quorum-certificates
+              mountPath: /certs/quorum
+            - name: quorum-shared-certs
+              mountPath: /opt/bitnami/zookeeper/config/certs/quorum
+            {{- end }}
+        {{- end }}
+        {{- if .Values.initContainers }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.initContainers "context" $) | trim | nindent 8 }}
+        {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       containers:
         - name: zookeeper
           image: {{ template "zookeeper.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy | quote }}
-          {{- if .Values.securityContext.enabled }}
-          securityContext:
-            runAsUser: {{ .Values.securityContext.runAsUser }}
+          {{- if .Values.containerSecurityContext.enabled }}
+          securityContext: {{- omit .Values.containerSecurityContext "enabled" | toYaml | nindent 12 }}
           {{- end }}
+          {{- if .Values.diagnosticMode.enabled }}
+          command: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.command "context" $) | nindent 12 }}
+          {{- else if .Values.command }}
+          command: {{- include "common.tplvalues.render" (dict "value" .Values.command "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.diagnosticMode.enabled }}
+          args: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.args "context" $) | nindent 12 }}
+          {{- else if .Values.args }}
+          args: {{- include "common.tplvalues.render" (dict "value" .Values.args "context" $) | nindent 12 }}
+          {{- end }}
+<<<<<<< HEAD
           {{- if .Values.diagnosticMode.enabled }}
           command: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.command "context" $) | nindent 12 }}
           args: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.args "context" $) | nindent 12 }}
@@ -270,6 +346,8 @@ spec:
                 fi
                 exec /entrypoint.sh /run.sh
           {{- end }}
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           {{- if .Values.resources }}
           resources: {{- toYaml .Values.resources | nindent 12 }}
           {{- end }}
@@ -279,7 +357,11 @@ spec:
             - name: ZOO_DATA_LOG_DIR
               value: {{ .Values.dataLogDir | quote }}
             - name: ZOO_PORT_NUMBER
+<<<<<<< HEAD
               value: {{ .Values.containerPort | quote }}
+=======
+              value: {{ .Values.containerPorts.client | quote }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             - name: ZOO_TICK_TIME
               value: {{ .Values.tickTime | quote }}
             - name: ZOO_INIT_LIMIT
@@ -305,37 +387,60 @@ spec:
             - name: ZOO_SERVERS
               {{- $replicaCount := int .Values.replicaCount }}
               {{- $minServerId := int .Values.minServerId }}
+<<<<<<< HEAD
               {{- $followerPort := int .Values.followerContainerPort }}
               {{- $electionPort := int .Values.electionContainerPort }}
+=======
+              {{- $followerPort := int .Values.containerPorts.follower }}
+              {{- $electionPort := int .Values.containerPorts.election }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
               {{- $releaseNamespace := include "zookeeper.namespace" . }}
               {{- $zookeeperFullname := include "common.names.fullname" . }}
               {{- $zookeeperHeadlessServiceName := printf "%s-%s" $zookeeperFullname "headless" | trunc 63  }}
               {{- $clusterDomain := .Values.clusterDomain }}
               value: {{ range $i, $e := until $replicaCount }}{{ $zookeeperFullname }}-{{ $e }}.{{ $zookeeperHeadlessServiceName }}.{{ $releaseNamespace }}.svc.{{ $clusterDomain }}:{{ $followerPort }}:{{ $electionPort }}::{{ add $e $minServerId }} {{ end }}
             - name: ZOO_ENABLE_AUTH
-              value: {{ ternary "yes" "no" .Values.auth.enabled | quote }}
-            {{- if .Values.auth.enabled }}
+              value: {{ ternary "yes" "no" .Values.auth.client.enabled | quote }}
+            {{- if .Values.auth.client.enabled }}
             - name: ZOO_CLIENT_USER
-              value: {{ .Values.auth.clientUser | quote }}
+              value: {{ .Values.auth.client.clientUser | quote }}
             - name: ZOO_CLIENT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ if .Values.auth.existingSecret }}{{ .Values.auth.existingSecret }}{{ else }}{{ template "common.names.fullname" . }}{{ end }}
+                  name: {{ include "zookeeper.client.secretName" . }}
                   key: client-password
             - name: ZOO_SERVER_USERS
-              value: {{ .Values.auth.serverUsers | quote }}
+              value: {{ .Values.auth.client.serverUsers | quote }}
             - name: ZOO_SERVER_PASSWORDS
               valueFrom:
                 secretKeyRef:
-                  name: {{ if .Values.auth.existingSecret }}{{ .Values.auth.existingSecret }}{{ else }}{{ template "common.names.fullname" . }}{{ end }}
+                  name: {{ include "zookeeper.client.secretName" . }}
                   key: server-password
+            {{- end }}
+            - name: ZOO_ENABLE_QUORUM_AUTH
+              value: {{ ternary "yes" "no" .Values.auth.quorum.enabled | quote }}
+            {{- if .Values.auth.quorum.enabled }}
+            - name: ZOO_QUORUM_LEARNER_USER
+              value: {{ .Values.auth.quorum.learnerUser | quote }}
+            - name: ZOO_QUORUM_LEARNER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "zookeeper.quorum.secretName" . }}
+                  key: quorum-learner-password
+            - name: ZOO_QUORUM_SERVER_USERS
+              value: {{ .Values.auth.quorum.serverUsers | quote }}
+            - name: ZOO_QUORUM_SERVER_PASSWORDS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "zookeeper.quorum.secretName" . }}
+                  key: quorum-server-password
             {{- end }}
             - name: ZOO_HEAP_SIZE
               value: {{ .Values.heapSize | quote }}
             - name: ZOO_LOG_LEVEL
               value: {{ .Values.logLevel | quote }}
             - name: ALLOW_ANONYMOUS_LOGIN
-              value: {{ ternary "yes" "no" .Values.allowAnonymousLogin | quote }}
+              value: {{ ternary "no" "yes" .Values.auth.client.enabled | quote }}
             {{- if .Values.jvmFlags }}
             - name: JVMFLAGS
               value: {{ .Values.jvmFlags | quote }}
@@ -347,8 +452,17 @@ spec:
               value: {{ .Values.metrics.containerPort | quote }}
             {{- end }}
             {{- if .Values.tls.client.enabled }}
+<<<<<<< HEAD
             - name: ZOO_TLS_CLIENT_ENABLE
               value: {{ .Values.tls.client.enabled | quote }}
+=======
+            - name: ZOO_TLS_PORT_NUMBER
+              value: {{ .Values.containerPorts.tls | quote }}
+            - name: ZOO_TLS_CLIENT_ENABLE
+              value: {{ .Values.tls.client.enabled | quote }}
+            - name: ZOO_TLS_CLIENT_AUTH
+              value: {{ .Values.tls.client.auth | quote }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             - name: ZOO_TLS_CLIENT_KEYSTORE_FILE
               value: {{ .Values.tls.client.keystorePath | quote }}
             - name: ZOO_TLS_CLIENT_TRUSTSTORE_FILE
@@ -358,19 +472,32 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ include "zookeeper.client.tlsPasswordsSecret" . }}
+<<<<<<< HEAD
                   key: "keystore-password"
+=======
+                  key: {{ include "zookeeper.client.tlsPasswordKeystoreKey" . }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             {{- end }}
             {{- if or .Values.tls.client.truststorePassword .Values.tls.client.passwordsSecretName .Values.tls.client.autoGenerated }}
             - name: ZOO_TLS_CLIENT_TRUSTSTORE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ include "zookeeper.client.tlsPasswordsSecret" . }}
+<<<<<<< HEAD
                   key: "truststore-password"
+=======
+                  key: {{ include "zookeeper.client.tlsPasswordTruststoreKey" . }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             {{- end }}
             {{- end }}
             {{- if .Values.tls.quorum.enabled }}
             - name: ZOO_TLS_QUORUM_ENABLE
               value: {{ .Values.tls.quorum.enabled | quote }}
+<<<<<<< HEAD
+=======
+            - name: ZOO_TLS_QUORUM_CLIENT_AUTH
+              value: {{ .Values.tls.quorum.auth | quote }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             - name: ZOO_TLS_QUORUM_KEYSTORE_FILE
               value: {{ .Values.tls.quorum.keystorePath | quote }}
             - name: ZOO_TLS_QUORUM_TRUSTSTORE_FILE
@@ -380,14 +507,22 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ include "zookeeper.quorum.tlsPasswordsSecret" . }}
+<<<<<<< HEAD
                   key: "keystore-password"
+=======
+                  key: {{ include "zookeeper.quorum.tlsPasswordKeystoreKey" . }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             {{- end }}
             {{- if or .Values.tls.quorum.truststorePassword .Values.tls.quorum.passwordsSecretName .Values.tls.quorum.autoGenerated }}
             - name: ZOO_TLS_QUORUM_TRUSTSTORE_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ include "zookeeper.quorum.tlsPasswordsSecret" . }}
+<<<<<<< HEAD
                   key: "truststore-password"
+=======
+                  key: {{ include "zookeeper.quorum.tlsPasswordTruststoreKey" . }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             {{- end }}
             {{- end }}
             - name: POD_NAME
@@ -396,11 +531,23 @@ spec:
                   apiVersion: v1
                   fieldPath: metadata.name
             {{- if .Values.extraEnvVars }}
-            {{- toYaml .Values.extraEnvVars | nindent 12 }}
+            {{- include "common.tplvalues.render" (dict "value" .Values.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
+          {{- if or .Values.extraEnvVarsCM .Values.extraEnvVarsSecret }}
+          envFrom:
+            {{- if .Values.extraEnvVarsCM }}
+            - configMapRef:
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.extraEnvVarsCM "context" $) }}
+            {{- end }}
+            {{- if .Values.extraEnvVarsSecret }}
+            - secretRef:
+                name: {{ include "common.tplvalues.render" (dict "value" .Values.extraEnvVarsSecret "context" $) }}
+            {{- end }}
+          {{- end }}
           ports:
             {{- if not .Values.service.disableBaseClientPort }}
             - name: client
+<<<<<<< HEAD
               containerPort: {{ .Values.containerPort }}
             {{- end }}
             {{- if .Values.tls.client.enabled }}
@@ -411,15 +558,28 @@ spec:
               containerPort: {{ .Values.followerContainerPort }}
             - name: election
               containerPort: {{ .Values.electionContainerPort }}
+=======
+              containerPort: {{ .Values.containerPorts.client }}
+            {{- end }}
+            {{- if .Values.tls.client.enabled }}
+            - name: client-tls
+              containerPort: {{ .Values.containerPorts.tls }}
+            {{- end }}
+            - name: follower
+              containerPort: {{ .Values.containerPorts.follower }}
+            - name: election
+              containerPort: {{ .Values.containerPorts.election }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             {{- if .Values.metrics.enabled }}
             - name: metrics
               containerPort: {{ .Values.metrics.containerPort }}
             {{- end }}
           {{- if not .Values.diagnosticMode.enabled }}
           {{- if .Values.livenessProbe.enabled }}
-          livenessProbe:
+          livenessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.livenessProbe "enabled" "probeCommandTimeout") "context" $) | nindent 12 }}
             exec:
               {{- if not .Values.service.disableBaseClientPort }}
+<<<<<<< HEAD
               command: ['/bin/bash', '-c', 'echo "ruok" | timeout {{ .Values.livenessProbe.probeCommandTimeout }} nc -w {{ .Values.livenessProbe.probeCommandTimeout }} localhost {{ .Values.containerPort }} | grep imok']
               {{- else }}
               {{- if not .Values.tls.client.enabled }}
@@ -433,13 +593,22 @@ spec:
             timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
             successThreshold: {{ .Values.livenessProbe.successThreshold }}
             failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+=======
+              command: ['/bin/bash', '-c', 'echo "ruok" | timeout {{ .Values.livenessProbe.probeCommandTimeout }} nc -w {{ .Values.livenessProbe.probeCommandTimeout }} localhost {{ .Values.containerPorts.client }} | grep imok']
+              {{- else if not .Values.tls.client.enabled }}
+              command: ['/bin/bash', '-c', 'echo "ruok" | timeout {{ .Values.livenessProbe.probeCommandTimeout }} openssl s_client -quiet -crlf -connect localhost:{{ .Values.containerPorts.tls }} | grep imok']
+              {{- else }}
+              command: ['/bin/bash', '-c', 'echo "ruok" | timeout {{ .Values.livenessProbe.probeCommandTimeout }} openssl s_client -quiet -crlf -connect localhost:{{ .Values.containerPorts.tls }} -cert {{ .Values.service.tls.client_cert_pem_path }} -key {{ .Values.service.tls.client_key_pem_path }} | grep imok']
+              {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           {{- else if .Values.customLivenessProbe }}
           livenessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.customLivenessProbe "context" $) | nindent 12 }}
           {{- end }}
           {{- if .Values.readinessProbe.enabled }}
-          readinessProbe:
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.readinessProbe "enabled" "probeCommandTimeout") "context" $) | nindent 12 }}
             exec:
               {{- if not .Values.service.disableBaseClientPort }}
+<<<<<<< HEAD
               command: ['/bin/bash', '-c', 'echo "ruok" | timeout {{ .Values.readinessProbe.probeCommandTimeout }} nc -w {{ .Values.readinessProbe.probeCommandTimeout }} localhost {{ .Values.containerPort }} | grep imok']
               {{- else }}
               {{- if not .Values.tls.client.enabled }}
@@ -456,15 +625,43 @@ spec:
           {{- else if .Values.customReadinessProbe }}
           readinessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.customReadinessProbe "context" $) | nindent 12 }}
           {{- end }}
+=======
+              command: ['/bin/bash', '-c', 'echo "ruok" | timeout {{ .Values.readinessProbe.probeCommandTimeout }} nc -w {{ .Values.readinessProbe.probeCommandTimeout }} localhost {{ .Values.containerPorts.client }} | grep imok']
+              {{- else if not .Values.tls.client.enabled }}
+              command: ['/bin/bash', '-c', 'echo "ruok" | timeout {{ .Values.readinessProbe.probeCommandTimeout }} openssl s_client -quiet -crlf -connect localhost:{{ .Values.containerPorts.tls }} | grep imok']
+              {{- else }}
+              command: ['/bin/bash', '-c', 'echo "ruok" | timeout {{ .Values.readinessProbe.probeCommandTimeout }} openssl s_client -quiet -crlf -connect localhost:{{ .Values.containerPorts.tls }} -cert {{ .Values.service.tls.client_cert_pem_path }} -key {{ .Values.service.tls.client_key_pem_path }} | grep imok']
+              {{- end }}
+          {{- else if .Values.customReadinessProbe }}
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.customReadinessProbe "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.startupProbe.enabled }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.startupProbe "enabled") "context" $) | nindent 12 }}
+            tcpSocket:
+              {{- if not .Values.service.disableBaseClientPort }}
+              port: client
+              {{- else }}
+              port: follower
+              {{- end }}
+          {{- else if .Values.customStartupProbe }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" .Values.customStartupProbe "context" $) | nindent 12 }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.lifecycleHooks }}
+          lifecycle: {{- include "common.tplvalues.render" (dict "value" .Values.lifecycleHooks "context" $) | nindent 12 }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           {{- end }}
           volumeMounts:
+            - name: scripts
+              mountPath: /scripts/setup.sh
+              subPath: setup.sh
             - name: data
               mountPath: /bitnami/zookeeper
             {{- if .Values.dataLogDir }}
             - name: data-log
               mountPath: {{ .Values.dataLogDir }}
             {{- end }}
-            {{- if .Values.config }}
+            {{- if or .Values.configuration .Values.existingConfigmap }}
             - name: config
               mountPath: /opt/bitnami/zookeeper/conf/zoo.cfg
               subPath: zoo.cfg
@@ -480,13 +677,20 @@ spec:
               readOnly: true
             {{- end }}
             {{- if .Values.extraVolumeMounts }}
-            {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
+            {{- include "common.tplvalues.render" ( dict "value" .Values.extraVolumeMounts "context" $ ) | nindent 12 }}
             {{- end }}
+        {{- if .Values.sidecars }}
+        {{- include "common.tplvalues.render" ( dict "value" .Values.sidecars "context" $ ) | nindent 8 }}
+        {{- end }}
       volumes:
-        {{- if .Values.config }}
+        - name: scripts
+          configMap:
+            name: {{ printf "%s-scripts" (include "common.names.fullname" .) }}
+            defaultMode: 0755
+        {{- if or .Values.configuration .Values.existingConfigmap }}
         - name: config
           configMap:
-            name: {{ template "common.names.fullname" . }}
+            name: {{ include "zookeeper.configmapName" . }}
         {{- end }}
         {{- if and .Values.persistence.enabled .Values.persistence.existingClaim }}
         - name: data
@@ -521,9 +725,9 @@ spec:
           emptyDir: {}
         {{- end }}
         {{- if .Values.extraVolumes }}
-        {{- toYaml .Values.extraVolumes | nindent 8 }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.extraVolumes "context" $) | nindent 8 }}
         {{- end }}
-  {{- if and .Values.persistence.enabled (not (and .Values.persistence.existingClaim .Values.persistence.dataLogDir.existingClaim) )}}
+  {{- if and .Values.persistence.enabled (not (and .Values.persistence.existingClaim .Values.persistence.dataLogDir.existingClaim) ) }}
   volumeClaimTemplates:
     {{- if not .Values.persistence.existingClaim }}
     - metadata:

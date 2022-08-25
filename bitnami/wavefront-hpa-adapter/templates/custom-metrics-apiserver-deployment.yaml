@@ -34,6 +34,15 @@ spec:
       {{- if .Values.hostAliases }}
       hostAliases: {{- include "common.tplvalues.render" (dict "value" .Values.hostAliases "context" $) | nindent 8 }}
       {{- end }}
+<<<<<<< HEAD
+=======
+      {{- if .Values.schedulerName }}
+      schedulerName: {{ .Values.schedulerName | quote }}
+      {{- end }}
+      {{- if .Values.topologySpreadConstraints }}
+      topologySpreadConstraints: {{- include "common.tplvalues.render" (dict "value" .Values.topologySpreadConstraints "context" $) | nindent 8 }}
+      {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       {{- if .Values.affinity }}
       affinity: {{- include "common.tplvalues.render" ( dict "value" .Values.affinity "context" $) | nindent 8 }}
       {{- else }}
@@ -83,7 +92,11 @@ spec:
             - --wavefront-metric-prefix={{ .Values.adapterMetricPrefix }}
             - --metrics-relist-interval={{ .Values.adapterMetricRelistInterval }}
             - --cert-dir={{ .Values.adapterSSLCertDir }}
+<<<<<<< HEAD
             - --secure-port={{ .Values.containerPort }}
+=======
+            - --secure-port={{ .Values.containerPorts.https }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             - --api-client-timeout={{ .Values.adapterAPIClientTimeout }}
             {{- if .Values.adapterRules }}
             - --external-metrics-config=/bitnami/wavefront-hpa-adapter/conf/config.yaml
@@ -108,7 +121,11 @@ spec:
           resources: {{- toYaml .Values.resources | nindent 12 }}
           {{- end }}
           ports:
+<<<<<<< HEAD
             - containerPort: {{ .Values.containerPort }}
+=======
+            - containerPort: {{ .Values.containerPorts.https }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
               name: https
           {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
@@ -134,6 +151,21 @@ spec:
           {{- else if .Values.customReadinessProbe }}
           readinessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.customReadinessProbe "context" $) | nindent 12 }}
           {{- end }}
+<<<<<<< HEAD
+=======
+          {{- if .Values.startupProbe.enabled }}
+          startupProbe:
+            tcpSocket:
+              port: https
+            initialDelaySeconds: {{ .Values.startupProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.startupProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.startupProbe.timeoutSeconds }}
+            successThreshold: {{ .Values.startupProbe.successThreshold }}
+            failureThreshold: {{ .Values.startupProbe.failureThreshold }}
+          {{- else if .Values.customStartupProbe }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" .Values.customStartupProbe "context" $) | nindent 12 }}
+          {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           volumeMounts:
             - mountPath: /tmp
               name: temp-vol
@@ -142,10 +174,15 @@ spec:
               name: config
               readOnly: true
           {{- end }}
+<<<<<<< HEAD
           {{- if .Values.adapterSSLCertsSecret }}
             - name: ssl-cert-dirs
               mountPath: {{ .Values.adapterSSLCertDir }}
           {{- end }}
+=======
+            - name: ssl-cert-dirs
+              mountPath: {{ .Values.adapterSSLCertDir }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           {{- if .Values.extraVolumeMounts }}
           {{- include "common.tplvalues.render" (dict "value" .Values.extraVolumeMounts "context" $) | nindent 12 }}
           {{- end }}
@@ -153,10 +190,19 @@ spec:
         {{- include "common.tplvalues.render" ( dict "value" .Values.sidecars "context" $) | nindent 8 }}
         {{- end }}
       volumes:
+<<<<<<< HEAD
       {{- if .Values.adapterSSLCertsSecret }}
         - name: ssl-cert-dirs
           secret:
             secretName: {{ .Values.adapterSSLCertsSecret }}
+=======
+        - name: ssl-cert-dirs
+      {{- if .Values.adapterSSLCertsSecret }}
+          secret:
+            secretName: {{ .Values.adapterSSLCertsSecret }}
+      {{- else }}
+          emptyDir: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       {{- end }}
         - name: temp-vol
           emptyDir: {}

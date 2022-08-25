@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 *************************************************************************
 *** PLEASE BE PATIENT: JupyterHub may take a few minutes to install   ***
 *************************************************************************
+=======
+CHART NAME: {{ .Chart.Name }}
+CHART VERSION: {{ .Chart.Version }}
+APP VERSION: {{ .Chart.AppVersion }}
+
+** Please be patient while the chart is being deployed **
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 {{- if .Values.proxy.ingress.enabled }}
 
@@ -15,6 +23,10 @@
 
 1. Get the JupyterHub URL by running:
 
+<<<<<<< HEAD
+=======
+{{- $port := coalesce .Values.proxy.service.public.ports.http .Values.proxy.service.public.port | toString }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- if eq .Values.proxy.service.public.type "NodePort" }}
 
   export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ template "common.names.fullname" . }}-proxy-public)
@@ -26,6 +38,7 @@
 ** Please ensure an external IP is associated to the {{ template "common.names.fullname" . }}-proxy-public service before proceeding **
 ** Watch the status using: kubectl get svc --namespace {{ .Release.Namespace }} -w {{ template "common.names.fullname" . }}-proxy-public **
 
+<<<<<<< HEAD
   export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "common.names.fullname" . }}-proxy-public --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
 
 {{- $port:=.Values.proxy.service.public.port | toString }}
@@ -34,6 +47,15 @@
 
   echo "JupyterHub URL: http://127.0.0.1:8080/"
   kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ template "common.names.fullname" . }}-proxy-public 8080:{{ .Values.proxy.service.public.port }}
+=======
+  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "common.names.fullname" . }}-proxy-public --template "{{ "{{ range (index .status.loadBalancer.ingress 0) }}{{ . }}{{ end }}" }}")
+  echo "JupyterHub URL: http://$SERVICE_IP{{- if ne $port "80" }}:{{ $port }}{{ end }}/"
+
+{{- else if eq .Values.proxy.service.public.type "ClusterIP" }}
+
+  echo "JupyterHub URL: http://127.0.0.1:8080/"
+  kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ template "common.names.fullname" . }}-proxy-public 8080:{{ $port }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 {{- end }}
 {{- end }}
@@ -41,11 +63,19 @@
 2. Login with the following admin user below to create a Notebook:
 
   echo Admin user: {{ .Values.hub.adminUser }}
+<<<<<<< HEAD
   echo Password: $(kubectl get secret --namespace {{ .Release.Namespace }} {{ template "common.names.fullname" . }}-hub -o jsonpath="{.data['values\.yaml']}" | base64 --decode | awk -F: '/password/ {gsub(/[ \t]+/, "", $2);print $2}')
+=======
+  echo Password: $(kubectl get secret --namespace {{ .Release.Namespace }} {{ template "common.names.fullname" . }}-hub -o jsonpath="{.data['values\.yaml']}" | base64 -d | awk -F: '/password/ {gsub(/[ \t]+/, "", $2);print $2}')
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 {{- include "common.warnings.rollingTag" .Values.hub.image }}
 {{- include "common.warnings.rollingTag" .Values.proxy.image }}
 {{- include "common.warnings.rollingTag" .Values.singleuser.image }}
+<<<<<<< HEAD
+=======
+{{- include "common.warnings.rollingTag" .Values.auxiliaryImage }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 {{- $passwordValidationErrors := list -}}
 
@@ -56,9 +86,12 @@
     {{- $passwordValidationErrors = append $passwordValidationErrors $requiredHubPasswordError -}}
 {{- end }}
 
+<<<<<<< HEAD
 {{- $postgresqlSecretName := include "jupyterhub.databaseSecretName" . -}}
 {{- $postgresqlPasswordValidationErrors := include "common.validations.values.postgresql.passwords" (dict "secret" $postgresqlSecretName "subchart" true "context" $) -}}
 {{- $passwordValidationErrors = append $passwordValidationErrors $postgresqlPasswordValidationErrors -}}
 
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- include "common.errors.upgrade.passwords.empty" (dict "validationErrors" $passwordValidationErrors "context" $) -}}
 {{- include "jupyterhub.validateValues" . }}

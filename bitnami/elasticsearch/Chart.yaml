@@ -1,28 +1,45 @@
 annotations:
   category: Analytics
 apiVersion: v2
+<<<<<<< HEAD
 appVersion: 7.14.1
+=======
+appVersion: 8.3.3
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 dependencies:
+  - condition: global.kibanaEnabled
+    name: kibana
+    repository: https://charts.bitnami.com/bitnami
+    version: 10.x.x
   - name: common
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
+<<<<<<< HEAD
     version: 1.x.x
   - condition: global.kibanaEnabled
     name: kibana
     repository: https://charts.bitnami.com/bitnami
     version: 9.x.x
 description: A highly scalable open-source full-text search and analytics engine
+=======
+    version: 2.x.x
+description: Elasticsearch is a distributed search and analytics engine. It is used for web search, log monitoring, and real-time analytics. Ideal for Big Data applications.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 engine: gotpl
 home: https://github.com/bitnami/charts/tree/master/bitnami/elasticsearch
 icon: https://bitnami.com/assets/stacks/elasticsearch/img/elasticsearch-stack-220x234.png
 keywords:
   - elasticsearch
 maintainers:
-  - email: containers@bitnami.com
-    name: Bitnami
+  - name: Bitnami
+    url: https://github.com/bitnami/charts
 name: elasticsearch
 sources:
-  - https://github.com/bitnami/bitnami-docker-elasticsearch
+  - https://github.com/bitnami/containers/tree/main/bitnami/elasticsearch
   - https://www.elastic.co/products/elasticsearch
+<<<<<<< HEAD
 version: 17.0.0
+=======
+version: 19.2.0
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+CHART NAME: {{ .Chart.Name }}
+CHART VERSION: {{ .Chart.Version }}
+APP VERSION: {{ .Chart.AppVersion }}
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ** Please be patient while the chart is being deployed **
 
 {{- if .Values.diagnosticMode.enabled }}
@@ -41,6 +48,7 @@ Installed components:
      NOTE: It may take a few minutes for the LoadBalancer IP to be available.
            You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ template "common.names.fullname" . }}
     export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ template "common.names.fullname" . }} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+<<<<<<< HEAD
     echo http://$SERVICE_IP:{{ .Values.queryFrontend.service.port }}
 {{- else if contains "ClusterIP" .Values.queryFrontend.service.type }}
     echo "The Query Frontend is available at http://127.0.0.1:{{ .Values.queryFrontend.service.port }}"
@@ -51,4 +59,14 @@ Installed components:
 {{- include "common.warnings.rollingTag" .Values.tempo.image }}
 {{- include "common.warnings.rollingTag" .Values.queryFrontend.query.image }}
 {{- include "common.warnings.rollingTag" .Values.vulture.image }}
+=======
+    echo http://$SERVICE_IP:{{ .Values.queryFrontend.service.ports.http }}
+{{- else if contains "ClusterIP" .Values.queryFrontend.service.type }}
+    echo "The Query Frontend is available at http://127.0.0.1:{{ .Values.queryFrontend.service.ports.http }}"
+    kubectl port-forward svc/{{ template "grafana-tempo.query-frontend.fullname" . }} {{ .Values.queryFrontend.service.ports.http }}:{{ .Values.queryFrontend.service.ports.http }} &
+{{- end }}
+{{- end }}
+
+{{- include "grafana-tempo.checkRollingTags" . }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- include "grafana-tempo.validateValues" . }}

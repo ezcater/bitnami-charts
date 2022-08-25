@@ -4,14 +4,25 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "common.names.fullname" . }}-query
+  namespace: {{ .Release.Namespace | quote }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: query
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
+<<<<<<< HEAD
   {{- if $query.service.annotations }}
   annotations: {{- include "common.tplvalues.render" (dict "value" $query.service.annotations "context" $) | nindent 4 }}
   {{- end }}
+=======
+  annotations:
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if $query.service.annotations }}
+    {{- include "common.tplvalues.render" (dict "value" $query.service.annotations "context" $) | nindent 4 }}
+    {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 spec:
   type: {{ $query.service.type }}
   {{- if and $query.service.clusterIP (eq $query.service.type "ClusterIP") }}
@@ -27,15 +38,21 @@ spec:
   loadBalancerSourceRanges: {{- toYaml $query.service.loadBalancerSourceRanges | nindent 4 }}
   {{- end }}
   ports:
+<<<<<<< HEAD
     - port: {{ $query.service.http.port }}
       targetPort: {{ $query.service.targetPort | default "http" }}
+=======
+    - port: {{ $query.service.ports.http }}
+      targetPort: http
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       protocol: TCP
       name: http
-      {{- if (and (or (eq $query.service.type "NodePort") (eq $query.service.type "LoadBalancer")) $query.service.http.nodePort) }}
-      nodePort: {{ $query.service.http.nodePort }}
+      {{- if and (or (eq $query.service.type "NodePort") (eq $query.service.type "LoadBalancer")) $query.service.nodePorts.http }}
+      nodePort: {{ $query.service.nodePorts.http }}
       {{- else if eq $query.service.type "ClusterIP" }}
       nodePort: null
       {{- end }}
+<<<<<<< HEAD
     - port: {{ $query.service.grpc.port }}
       targetPort: grpc
       protocol: TCP
@@ -45,6 +62,11 @@ spec:
       {{- else if eq $query.service.type "ClusterIP" }}
       nodePort: null
       {{- end }}
+=======
+    {{- if $query.service.extraPorts }}
+    {{- include "common.tplvalues.render" (dict "value" $query.service.extraPorts "context" $) | nindent 4 }}
+    {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   selector:
     {{- if $query.service.labelSelectorsOverride }}
     {{- include "common.tplvalues.render" (dict "value" $query.service.labelSelectorsOverride "context" $) | nindent 4 }}

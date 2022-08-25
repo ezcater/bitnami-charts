@@ -1,5 +1,9 @@
 {{- if .Values.autoscaling.enabled }}
+<<<<<<< HEAD
 apiVersion: autoscaling/v2beta1
+=======
+apiVersion: {{ include "common.capabilities.hpa.apiVersion" ( dict "context" $ ) }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ template "common.names.fullname" . }}
@@ -23,12 +27,32 @@ spec:
     - type: Resource
       resource:
         name: cpu
+<<<<<<< HEAD
         targetAverageUtilization: {{ .Values.autoscaling.targetCPU }}
+=======
+        {{- if semverCompare "<1.23-0" (include "common.capabilities.kubeVersion" .) }}
+        targetAverageUtilization: {{ .Values.autoscaling.targetCPU }}
+        {{- else }}
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.autoscaling.targetCPU }}
+        {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     {{- end }}
     {{- if .Values.autoscaling.targetMemory }}
     - type: Resource
       resource:
         name: memory
+<<<<<<< HEAD
         targetAverageUtilization: {{ .Values.autoscaling.targetMemory  }}
+=======
+        {{- if semverCompare "<1.23-0" (include "common.capabilities.kubeVersion" .) }}
+        targetAverageUtilization: {{ .Values.autoscaling.targetMemory }}
+        {{- else }}
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.autoscaling.targetMemory }}
+        {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     {{- end }}
 {{- end }}

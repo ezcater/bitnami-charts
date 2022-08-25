@@ -20,9 +20,18 @@ metadata:
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
     {{- end }}
 spec:
+<<<<<<< HEAD
   rules:
     {{- if .Values.ingress.hostname }}
     - host: {{ .Values.ingress.hostname }}
+=======
+  {{- if and .Values.ingress.ingressClassName (eq "true" (include "common.ingress.supportsIngressClassname" .)) }}
+  ingressClassName: {{ .Values.ingress.ingressClassName | quote }}
+  {{- end }}
+  rules:
+    {{- if .Values.ingress.hostname }}
+    - host: {{ .Values.ingress.hostname | quote }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       http:
         paths:
           {{- if .Values.ingress.extraPaths }}
@@ -44,11 +53,22 @@ spec:
             {{- end }}
             backend: {{- include "common.ingress.backend" (dict "serviceName" (include "common.names.fullname" $) "servicePort" "http" "context" $) | nindent 14 }}
     {{- end }}
+<<<<<<< HEAD
   {{- if or .Values.ingress.tls .Values.ingress.extraTls }}
   tls:
     {{- if .Values.ingress.tls }}
     - hosts:
         - {{ .Values.ingress.hostname }}
+=======
+    {{- if .Values.ingress.extraRules }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.ingress.extraRules "context" $) | nindent 4 }}
+    {{- end }}
+  {{- if or (and .Values.ingress.tls (or .Values.ingress.certManager .Values.ingress.selfSigned)) .Values.ingress.extraTls }}
+  tls:
+    {{- if and .Values.ingress.tls (or .Values.ingress.certManager .Values.ingress.selfSigned) }}
+    - hosts:
+        - {{ .Values.ingress.hostname | quote }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       secretName: {{ printf "%s-tls" .Values.ingress.hostname }}
     {{- end }}
     {{- if .Values.ingress.extraTls }}

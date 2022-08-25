@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {{- if and .Values.podDisruptionBudget.create (eq .Values.architecture "high-availability") }}
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
@@ -10,6 +11,21 @@ spec:
   {{- end }}
   {{- if .Values.podDisruptionBudget.maxUnavailable }}
   maxUnavailable: {{ .Values.podDisruptionBudget.maxUnavailable }}
+=======
+{{- if and .Values.pdb.create (eq .Values.architecture "high-availability") }}
+apiVersion: {{ include "common.capabilities.policy.apiVersion" . }}
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "common.names.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+spec:
+  {{- if .Values.pdb.minAvailable }}
+  minAvailable: {{ .Values.pdb.minAvailable }}
+  {{- end }}
+  {{- if .Values.pdb.maxUnavailable }}
+  maxUnavailable: {{ .Values.pdb.maxUnavailable }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   {{- end }}
   selector:
     matchLabels: {{ include "common.labels.matchLabels" . | nindent 6 }}

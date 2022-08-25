@@ -1,14 +1,18 @@
 annotations:
   category: Infrastructure
 apiVersion: v2
+<<<<<<< HEAD
 appVersion: 2.4.0
+=======
+appVersion: 2.8.4
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
-    version: 1.x.x
-description: An open-source, cloud-native messaging system
+    version: 2.x.x
+description: NATS is an open source, lightweight and high-performance messaging system. It is ideal for distributed systems and supports modern cloud architectures and pub-sub, request-reply and queuing models.
 engine: gotpl
 home: https://github.com/bitnami/charts/tree/master/bitnami/nats
 icon: https://bitnami.com/assets/stacks/nats/img/nats-stack-220x234.png
@@ -18,10 +22,14 @@ keywords:
   - addressing
   - discovery
 maintainers:
-  - email: containers@bitnami.com
-    name: Bitnami
+  - name: Bitnami
+    url: https://github.com/bitnami/charts
 name: nats
 sources:
-  - https://github.com/bitnami/bitnami-docker-nats
+  - https://github.com/bitnami/containers/tree/main/bitnami/nats
   - https://nats.io/
+<<<<<<< HEAD
 version: 6.4.5
+=======
+version: 7.4.0
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

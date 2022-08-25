@@ -1,14 +1,18 @@
 annotations:
   category: ApplicationServer
 apiVersion: v2
+<<<<<<< HEAD
 appVersion: 10.0.10
+=======
+appVersion: 10.0.23
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
-    version: 1.x.x
-description: Chart for Apache Tomcat
+    version: 2.x.x
+description: Apache Tomcat is an open-source web server designed to host and run Java-based web applications. It is a lightweight server with a good performance for applications running in production environments.
 engine: gotpl
 home: https://github.com/bitnami/charts/tree/master/bitnami/tomcat
 icon: https://bitnami.com/assets/stacks/tomcat/img/tomcat-stack-220x234.png
@@ -20,10 +24,14 @@ keywords:
   - application server
   - jsp
 maintainers:
-  - email: containers@bitnami.com
-    name: Bitnami
+  - name: Bitnami
+    url: https://github.com/bitnami/charts
 name: tomcat
 sources:
-  - https://github.com/bitnami/bitnami-docker-tomcat
+  - https://github.com/bitnami/containers/tree/main/bitnami/tomcat
   - http://tomcat.apache.org
+<<<<<<< HEAD
 version: 9.2.25
+=======
+version: 10.4.0
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 ** Please be patient while the chart is being deployed **
 
+=======
+CHART NAME: {{ .Chart.Name }}
+CHART VERSION: {{ .Chart.Version }}
+APP VERSION: {{ .Chart.AppVersion }}
+
+** Please be patient while the chart is being deployed **
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- if .Values.diagnosticMode.enabled }}
 The chart has been deployed in diagnostic mode. All probes have been disabled and the command has been overwritten with:
 
@@ -26,15 +35,15 @@ Tip:
 
 Services:
 
-  echo Primary: {{ include "mariadb.primary.fullname" . }}.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain }}:{{ .Values.primary.service.port }}
+  echo Primary: {{ include "mariadb.primary.fullname" . }}.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain }}:{{ coalesce .Values.primary.service.ports.mysql .Values.primary.service.port }}
 {{- if eq .Values.architecture "replication" }}
-  echo Secondary: {{ include "mariadb.secondary.fullname" . }}.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain }}:{{ .Values.secondary.service.port }}
+  echo Secondary: {{ include "mariadb.secondary.fullname" . }}.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain }}:{{ coalesce .Values.secondary.service.ports.mysql .Values.secondary.service.port }}
 {{- end }}
 
 Administrator credentials:
 
   Username: root
-  Password : $(kubectl get secret --namespace {{ .Release.Namespace }} {{ template "mariadb.secretName" . }} -o jsonpath="{.data.mariadb-root-password}" | base64 --decode)
+  Password : $(kubectl get secret --namespace {{ .Release.Namespace }} {{ template "mariadb.secretName" . }} -o jsonpath="{.data.mariadb-root-password}" | base64 -d)
 
 To connect to your database:
 
@@ -57,11 +66,16 @@ To upgrade this helm chart:
 
   1. Obtain the password as described on the 'Administrator credentials' section and set the 'auth.rootPassword' parameter as shown below:
 
+<<<<<<< HEAD
       ROOT_PASSWORD=$(kubectl get secret --namespace {{ .Release.Namespace }} {{ template "mariadb.secretName" . }} -o jsonpath="{.data.mariadb-root-password}" | base64 --decode)
+=======
+      ROOT_PASSWORD=$(kubectl get secret --namespace {{ .Release.Namespace }} {{ template "mariadb.secretName" . }} -o jsonpath="{.data.mariadb-root-password}" | base64 -d)
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       helm upgrade --namespace {{ .Release.Namespace }} {{ .Release.Name }} bitnami/mariadb --set auth.rootPassword=$ROOT_PASSWORD
 
 {{- include "common.warnings.rollingTag" .Values.image }}
 {{- include "common.warnings.rollingTag" .Values.metrics.image }}
+{{- include "common.warnings.rollingTag" .Values.volumePermissions.image }}
 {{- include "mariadb.validateValues" . }}
 {{- if not .Values.auth.customPasswordFiles -}}
   {{- $passwordValidationErrors := include "common.validations.values.mariadb.passwords" (dict "secret" (include "common.names.fullname" .) "context" $) -}}

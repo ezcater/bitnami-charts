@@ -3,9 +3,23 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "common.names.fullname" . }}-headless
+<<<<<<< HEAD
+=======
+  namespace: {{ .Release.Namespace | quote }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: aggregator
     app: aggregator
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- if or .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.aggregator.service.annotationsHeadless }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.aggregator.service.annotationsHeadless "context" $) | nindent 4 }}
+    {{- end }}
 spec:
   type: ClusterIP
   clusterIP: None

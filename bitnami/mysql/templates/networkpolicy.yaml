@@ -1,5 +1,6 @@
 {{- if .Values.networkPolicy.enabled }}
 kind: NetworkPolicy
+<<<<<<< HEAD
 apiVersion: {{ template "mysql.networkPolicy.apiVersion" . }}
 metadata:
   name: {{ template "common.names.fullname" . }}
@@ -9,6 +10,19 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
   namespace: {{ .Release.Namespace }}
+=======
+apiVersion: {{ template "common.capabilities.networkPolicy.apiVersion" . }}
+metadata:
+  name: {{ template "common.names.fullname" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 spec:
   podSelector:
     matchLabels:
@@ -16,7 +30,11 @@ spec:
   ingress:
     # Allow inbound connections
     - ports:
+<<<<<<< HEAD
         - port: {{ .Values.primary.service.port }}
+=======
+        - port: {{ .Values.primary.service.ports.mysql }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       {{- if not .Values.networkPolicy.allowExternal }}
       from:
         - podSelector:

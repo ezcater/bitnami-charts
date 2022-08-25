@@ -16,7 +16,11 @@ Return the target Kubernetes version
 {{- end -}}
 
 {{/*
+<<<<<<< HEAD
 Return the appropriate apiVersion for policy.
+=======
+Return the appropriate apiVersion for poddisruptionbudget.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 */}}
 {{- define "common.capabilities.policy.apiVersion" -}}
 {{- if semverCompare "<1.21-0" (include "common.capabilities.kubeVersion" .) -}}
@@ -27,6 +31,20 @@ Return the appropriate apiVersion for policy.
 {{- end -}}
 
 {{/*
+<<<<<<< HEAD
+=======
+Return the appropriate apiVersion for networkpolicy.
+*/}}
+{{- define "common.capabilities.networkPolicy.apiVersion" -}}
+{{- if semverCompare "<1.7-0" (include "common.capabilities.kubeVersion" .) -}}
+{{- print "extensions/v1beta1" -}}
+{{- else -}}
+{{- print "networking.k8s.io/v1" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 Return the appropriate apiVersion for cronjob.
 */}}
 {{- define "common.capabilities.cronjob.apiVersion" -}}
@@ -101,6 +119,32 @@ Return the appropriate apiVersion for CRDs.
 {{- print "apiextensions.k8s.io/v1beta1" -}}
 {{- else -}}
 {{- print "apiextensions.k8s.io/v1" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return the appropriate apiVersion for APIService.
+*/}}
+{{- define "common.capabilities.apiService.apiVersion" -}}
+{{- if semverCompare "<1.10-0" (include "common.capabilities.kubeVersion" .) -}}
+{{- print "apiregistration.k8s.io/v1beta1" -}}
+{{- else -}}
+{{- print "apiregistration.k8s.io/v1" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return the appropriate apiVersion for Horizontal Pod Autoscaler.
+*/}}
+{{- define "common.capabilities.hpa.apiVersion" -}}
+{{- if semverCompare "<1.23-0" (include "common.capabilities.kubeVersion" .context) -}}
+{{- if .beta2 -}}
+{{- print "autoscaling/v2beta2" -}}
+{{- else -}}
+{{- print "autoscaling/v2beta1" -}}
+{{- end -}}
+{{- else -}}
+{{- print "autoscaling/v2" -}}
 {{- end -}}
 {{- end -}}
 

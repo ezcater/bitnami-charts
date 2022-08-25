@@ -1,5 +1,8 @@
 {{- if .Values.rbac.create }}
+<<<<<<< HEAD
 ---
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: Role
 metadata:
@@ -73,7 +76,11 @@ rules:
     verbs: ["get", "list", "watch"]
   - apiGroups: [""]
     resources: ["secrets"]
+<<<<<<< HEAD
     verbs: ["get", "list", "watch", "create", "update", "delete"]
+=======
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   - apiGroups: [""]
     resources: ["events"]
     verbs: ["create", "patch"]
@@ -99,7 +106,11 @@ rules:
     verbs: ["get", "list", "watch"]
   - apiGroups: [""]
     resources: ["secrets"]
+<<<<<<< HEAD
     verbs: ["get", "list", "watch", "create", "update", "delete"]
+=======
+    verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   - apiGroups: [""]
     resources: ["events"]
     verbs: ["create", "patch"]

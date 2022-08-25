@@ -3,7 +3,7 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: {{ printf "%s-snapshotter" (include "common.names.fullname" .) }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ .Release.Namespace | quote }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
@@ -25,10 +25,38 @@ spec:
           annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.disasterRecovery.cronjob.podAnnotations "context" $) | nindent 12 }}
           {{- end }}
         spec:
+<<<<<<< HEAD
+=======
+          {{- if .Values.disasterRecovery.cronjob.nodeSelector }}
+          nodeSelector: {{-  toYaml .Values.disasterRecovery.cronjob.nodeSelector | nindent 12  }}
+          {{- end }}
+          {{- if .Values.disasterRecovery.cronjob.tolerations }}
+          tolerations: {{- toYaml .Values.disasterRecovery.cronjob.tolerations | nindent 12 }}
+          {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           {{- include "etcd.imagePullSecrets" . | nindent 10 }}
           restartPolicy: OnFailure
           {{- if .Values.podSecurityContext.enabled }}
           securityContext: {{- omit .Values.podSecurityContext "enabled" | toYaml | nindent 12 }}
+          {{- end }}
+          {{- if and .Values.volumePermissions.enabled (or .Values.podSecurityContext.enabled .Values.containerSecurityContext.enabled) }}
+          initContainers:
+            - name: volume-permissions
+              image: {{ include "etcd.volumePermissions.image" . }}
+              imagePullPolicy: {{ .Values.volumePermissions.image.pullPolicy | quote }}
+              command:
+                - /bin/bash
+                - -ec
+                - |
+                  chown -R {{ .Values.containerSecurityContext.runAsUser }}:{{ .Values.podSecurityContext.fsGroup }} /snapshots
+              securityContext:
+                runAsUser: 0
+              {{- if .Values.volumePermissions.resources }}
+              resources: {{- include "common.tplvalues.render" (dict "value" .Values.volumePermissions.resources "context" $) | nindent 16 }}
+              {{- end }}
+              volumeMounts:
+                - name: snapshot-volume
+                  mountPath: /snapshots
           {{- end }}
           containers:
             - name: etcd-snapshotter
@@ -38,8 +66,13 @@ spec:
               securityContext: {{- omit .Values.containerSecurityContext "enabled" | toYaml | nindent 16 }}
               {{- end }}
               {{- if .Values.diagnosticMode.enabled }}
+<<<<<<< HEAD
               command: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.command "context" $) | nindent 12 }}
               args: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.args "context" $) | nindent 12 }}
+=======
+              command: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.command "context" $) | nindent 16 }}
+              args: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.args "context" $) | nindent 16 }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
               {{- else }}
               command:
                 - /opt/bitnami/scripts/etcd/snapshot.sh
@@ -51,6 +84,11 @@ spec:
                   value: "3"
                 - name: ETCD_ON_K8S
                   value: "yes"
+<<<<<<< HEAD
+=======
+                - name: MY_STS_NAME
+                  value: {{ include "common.names.fullname" . | quote }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
                 {{- $releaseNamespace := .Release.Namespace }}
                 {{- $etcdFullname := include "common.names.fullname" . }}
                 {{- $etcdHeadlessServiceName := printf "%s-%s" $etcdFullname "headless" }}
@@ -68,6 +106,7 @@ spec:
                 - name: ETCD_CLIENT_CERT_AUTH
                   value: "true"
                 - name: ETCD_TRUSTED_CA_FILE
+<<<<<<< HEAD
                   value: "/opt/bitnami/etcd/certs/client/{{ .Values.auth.client.caFilename | default "ca.crt"}}"
                 {{- else if .Values.auth.client.caFilename }}
                 - name: ETCD_TRUSTED_CA_FILE
@@ -75,11 +114,24 @@ spec:
                 {{- end }}
                 {{- end }}
                 {{- if .Values.auth.rbac.enabled }}
+=======
+                  value: "/opt/bitnami/etcd/certs/client/{{ .Values.auth.client.caFilename | default "ca.crt" }}"
+                {{- else if .Values.auth.client.caFilename }}
+                - name: ETCD_TRUSTED_CA_FILE
+                  value: "/opt/bitnami/etcd/certs/client/{{ .Values.auth.client.caFilename | default "ca.crt" }}"
+                {{- end }}
+                {{- end }}
+                {{- if or .Values.auth.rbac.create .Values.auth.rbac.enabled }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
                 - name: ETCD_ROOT_PASSWORD
                   valueFrom:
                     secretKeyRef:
                       name: {{ include "etcd.secretName" . }}
+<<<<<<< HEAD
                       key: etcd-root-password
+=======
+                      key: {{ include "etcd.secretPasswordKey" . }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
                 {{- end }}
               {{- if .Values.disasterRecovery.cronjob.resources }}
               resources: {{- toYaml .Values.disasterRecovery.cronjob.resources | nindent 16 }}

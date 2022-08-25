@@ -5,6 +5,7 @@
 
 ## @param global.imageRegistry Global Docker image registry
 ## @param global.imagePullSecrets Global Docker registry secret names as an array
+<<<<<<< HEAD
 ##
 global:
   imageRegistry: ""
@@ -24,10 +25,42 @@ kubeVersion: ""
 nameOverride: ""
 ## @param fullnameOverride String to fully override logstash.fullname template
 ##
+=======
+## @param global.storageClass Global StorageClass for Persistent Volume(s)
+##
+global:
+  imageRegistry: ""
+  ## E.g.
+  ## imagePullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
+  imagePullSecrets: []
+  storageClass: ""
+
+## @section Common parameters
+
+## @param kubeVersion Force target Kubernetes version (using Helm capabilities if not set)
+##
+kubeVersion: ""
+## @param nameOverride String to partially override logstash.fullname template (will maintain the release name)
+##
+nameOverride: ""
+## @param fullnameOverride String to fully override logstash.fullname template
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 fullnameOverride: ""
 ## @param clusterDomain Default Kubernetes cluster domain
 ##
 clusterDomain: cluster.local
+<<<<<<< HEAD
+=======
+## @param commonAnnotations Annotations to add to all deployed objects
+##
+commonAnnotations: {}
+## @param commonLabels Labels to add to all deployed objects
+##
+commonLabels: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param extraDeploy Array of extra objects to deploy with the release (evaluated as a template).
 ##
 extraDeploy: []
@@ -54,6 +87,10 @@ diagnosticMode:
 ## @param image.registry Logstash image registry
 ## @param image.repository Logstash image repository
 ## @param image.tag Logstash image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+## @param image.digest Logstash image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param image.pullPolicy Logstash image pull policy
 ## @param image.pullSecrets Specify docker-registry secret names as an array
 ## @param image.debug Specify if debug logs should be enabled
@@ -61,9 +98,14 @@ diagnosticMode:
 image:
   registry: docker.io
   repository: bitnami/logstash
+<<<<<<< HEAD
   tag: 7.14.1-debian-10-r0
+=======
+  tag: 8.3.3-debian-11-r5
+  digest: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Specify a imagePullPolicy. Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
   ##
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets (secrets must be manually created in the namespace)
@@ -162,6 +204,7 @@ extraVolumes: []
 ##     readOnly: true
 ##
 extraVolumeMounts: []
+<<<<<<< HEAD
 ## @param containerPorts [array] Array containing the ports to open in the Logstash container
 ##
 containerPorts:
@@ -172,12 +215,38 @@ containerPorts:
   ##   containerPort: 1514
   ##   protocol: TCP
   ##
+=======
+
+ ## ServiceAccount for Logstash
+ ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+ ##
+serviceAccount:
+  ## @param serviceAccount.create Enable creation of ServiceAccount for Logstash pods
+  ##
+  create: true
+  ## @param serviceAccount.name The name of the service account to use. If not set and `create` is `true`, a name is generated
+  ## If not set and create is true, a name is generated using the logstash.serviceAccountName template
+  ##
+  name: ""
+  ## @param serviceAccount.automountServiceAccountToken Allows automount of ServiceAccountToken on the serviceAccount created
+  ## Can be set to false if pods using this serviceAccount do not need to use K8s API
+  ##
+  automountServiceAccountToken: true
+  ## @param serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  ##
+  annotations: {}
+
+## @param containerPorts [array] Array containing the ports to open in the Logstash container (evaluated as a template)
+##
+containerPorts:
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   - name: http
     containerPort: 8080
     protocol: TCP
   - name: monitoring
     containerPort: 9600
     protocol: TCP
+<<<<<<< HEAD
 ## @param replicaCount Number of Logstash replicas to deploy
 ##
 replicaCount: 1
@@ -185,6 +254,44 @@ replicaCount: 1
 ## ref: https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/#updating-statefulsets
 ##
 updateStrategy: RollingUpdate
+=======
+  ## - name: syslog-udp
+  ##   containerPort: 1514
+  ##   protocol: UDP
+  ## - name: syslog-tcp
+  ##   containerPort: 1514
+  ##   protocol: TCP
+  ##
+## @param initContainers Add additional init containers to the Logstash pod(s)
+## ref: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+## e.g:
+## initContainers:
+##  - name: your-image-name
+##    image: your-image
+##    imagePullPolicy: Always
+##    command: ['sh', '-c', 'echo "hello world"']
+##
+initContainers: []
+## @param sidecars Add additional sidecar containers to the Logstash pod(s)
+## e.g:
+## sidecars:
+##   - name: your-image-name
+##     image: your-image
+##     imagePullPolicy: Always
+##     ports:
+##       - name: portname
+##         containerPort: 1234
+##
+sidecars: []
+## @param replicaCount Number of Logstash replicas to deploy
+##
+replicaCount: 1
+## @param updateStrategy.type Update strategy type (`RollingUpdate`, or `OnDelete`)
+## ref: https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/#updating-statefulsets
+##
+updateStrategy:
+  type: RollingUpdate
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param podManagementPolicy Pod management policy
 ## https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#pod-management-policies
 ##
@@ -193,6 +300,13 @@ podManagementPolicy: OrderedReady
 ## Ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
 ##
 podAnnotations: {}
+<<<<<<< HEAD
+=======
+## @param podLabels Extra labels for Logstash pods
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+##
+podLabels: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param podAffinityPreset Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`
 ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
 ##
@@ -237,18 +351,63 @@ tolerations: []
 ## ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
 ##
 priorityClassName: ""
+<<<<<<< HEAD
 ## K8s Security Context for Logstash pods
 ## https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 ## @param securityContext.enabled Enable security context for Logstash
 ## @param securityContext.fsGroup Group ID for the Logstash filesystem
 ## @param securityContext.runAsUser User ID for the Logstash container
+=======
+## @param schedulerName Name of the k8s scheduler (other than default)
+## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
 ##
-securityContext:
+schedulerName: ""
+## @param terminationGracePeriodSeconds In seconds, time the given to the Logstash pod needs to terminate gracefully
+## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
+##
+terminationGracePeriodSeconds: ""
+## @param topologySpreadConstraints Topology Spread Constraints for pod assignment
+## https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+## The value is evaluated as a template
+##
+topologySpreadConstraints: []
+
+## K8s Security Context for Logstash pods
+## Configure Pods Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+## @param podSecurityContext.enabled Enabled Logstash pods' Security Context
+## @param podSecurityContext.fsGroup Set Logstash pod's Security Context fsGroup
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
+##
+podSecurityContext:
   enabled: true
   fsGroup: 1001
+## Configure Container Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+## @param containerSecurityContext.enabled Enabled Logstash containers' Security Context
+## @param containerSecurityContext.runAsUser Set Logstash containers' Security Context runAsUser
+## @param containerSecurityContext.runAsNonRoot Set Logstash container's Security Context runAsNonRoot
+##
+containerSecurityContext:
+  enabled: true
   runAsUser: 1001
+<<<<<<< HEAD
 ## Logstash containers' resource requests and limits
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  runAsNonRoot: true
+## @param command Override default container command (useful when using custom images)
+##
+command: []
+## @param args Override default container args (useful when using custom images)
+##
+args: []
+## @param lifecycleHooks for the Logstash container(s) to automate configuration before or after startup
+##
+lifecycleHooks: {}
+## Logstash containers' resource requests and limits
+## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## We usually recommend not to specify default resources and to leave this as a conscious
 ## choice for the user. This also increases chances charts run on environments with little
 ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -267,10 +426,30 @@ resources:
   ##    cpu: 100m
   ##    memory: 128Mi
   requests: {}
+<<<<<<< HEAD
 ## Logstash pods' liveness probe
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 ## @param livenessProbe.httpGet.path Request path for livenessProbe
 ## @param livenessProbe.httpGet.port Port for livenessProbe
+=======
+## Configure extra options for Logstash containers' liveness, readiness and startup probes
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+## @param startupProbe.enabled Enable startupProbe
+## @param startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+## @param startupProbe.periodSeconds Period seconds for startupProbe
+## @param startupProbe.timeoutSeconds Timeout seconds for startupProbe
+## @param startupProbe.failureThreshold Failure threshold for startupProbe
+## @param startupProbe.successThreshold Success threshold for startupProbe
+##
+startupProbe:
+  enabled: false
+  initialDelaySeconds: 60
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 6
+## @param livenessProbe.enabled Enable livenessProbe
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
 ## @param livenessProbe.periodSeconds Period seconds for livenessProbe
 ## @param livenessProbe.timeoutSeconds Timeout seconds for livenessProbe
@@ -278,18 +457,20 @@ resources:
 ## @param livenessProbe.successThreshold Success threshold for livenessProbe
 ##
 livenessProbe:
-  httpGet:
-    path: /
-    port: monitoring
+  enabled: true
   initialDelaySeconds: 60
   periodSeconds: 10
   timeoutSeconds: 5
   successThreshold: 1
   failureThreshold: 6
+<<<<<<< HEAD
 ## Logstash pods' readiness probe
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 ## @param readinessProbe.httpGet.path Request path for readinessProbe
 ## @param readinessProbe.httpGet.port Port for readinessProbe
+=======
+## @param readinessProbe.enabled Enable readinessProbe
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
 ## @param readinessProbe.periodSeconds Period seconds for readinessProbe
 ## @param readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
@@ -297,14 +478,13 @@ livenessProbe:
 ## @param readinessProbe.successThreshold Success threshold for readinessProbe
 ##
 readinessProbe:
-  httpGet:
-    path: /
-    port: monitoring
+  enabled: true
   initialDelaySeconds: 60
   periodSeconds: 10
   timeoutSeconds: 5
   successThreshold: 1
   failureThreshold: 6
+<<<<<<< HEAD
 ## @param lifecycle Logstash pods' lifecycle hooks
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/attach-handler-lifecycle-event/
 ## e.g:
@@ -316,12 +496,24 @@ readinessProbe:
 ##     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
 ##
 lifecycle: {}
+=======
+## @param customStartupProbe Custom startup probe for the Web component
+##
+customStartupProbe: {}
+## @param customLivenessProbe Custom liveness probe for the Web component
+##
+customLivenessProbe: {}
+## @param customReadinessProbe Custom readiness probe for the Web component
+##
+customReadinessProbe: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Service parameters
 ##
 service:
   ## @param service.type Kubernetes service type (`ClusterIP`, `NodePort`, or `LoadBalancer`)
   ##
   type: ClusterIP
+<<<<<<< HEAD
   ## @param service.ports.http [object] Logstash svc ports
   ##
   ports:
@@ -338,6 +530,24 @@ service:
       port: 8080
       targetPort: http
       protocol: TCP
+=======
+  ## @param service.ports [array] Logstash service ports (evaluated as a template)
+  ##
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+      protocol: TCP
+    ## - name: syslog-udp
+    ##   port: 1514
+    ##   targetPort: syslog-udp
+    ##   protocol: UDP
+    ## - name: syslog-tcp
+    ##   port: 1514
+    ##   targetPort: syslog-tcp
+    ##   protocol: TCP
+    ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param service.loadBalancerIP loadBalancerIP if service type is `LoadBalancer`
   ##
   loadBalancerIP: ""
@@ -349,7 +559,11 @@ service:
   ##
   loadBalancerSourceRanges: []
   ## @param service.externalTrafficPolicy External traffic policy, configure to Local to preserve client source IP when using an external loadBalancer
+<<<<<<< HEAD
   ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+=======
+  ## ref https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   externalTrafficPolicy: ""
   ## @param service.clusterIP Static clusterIP or None for headless services
@@ -361,6 +575,20 @@ service:
   ## @param service.annotations Annotations for Logstash service
   ##
   annotations: {}
+<<<<<<< HEAD
+=======
+  ## @param service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+  ## If "ClientIP", consecutive client requests will be directed to the same Pod
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+  ##
+  sessionAffinity: None
+  ## @param service.sessionAffinityConfig Additional settings for the sessionAffinity
+  ## sessionAffinityConfig:
+  ##   clientIP:
+  ##     timeoutSeconds: 300
+  ##
+  sessionAffinityConfig: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Persistence parameters
 ##
 persistence:
@@ -392,6 +620,17 @@ persistence:
   ## @param persistence.mountPath Mount path of the Logstash data volume
   ##
   mountPath: /bitnami/logstash/data
+<<<<<<< HEAD
+=======
+  ## @param persistence.selector Selector to match an existing Persistent Volume for WordPress data PVC
+  ## If set, the PVC can't have a PV dynamically provisioned for it
+  ## E.g.
+  ## selector:
+  ##   matchLabels:
+  ##     app: my-app
+  ##
+  selector: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Init Container parameters
 ## Change the owner and group of the persistent volume(s) mountpoint(s) to 'runAsUser:fsGroup' on each component
 ## values from the securityContext section of the component
@@ -408,18 +647,32 @@ volumePermissions:
   ## @param volumePermissions.image.registry Init container volume-permissions image registry
   ## @param volumePermissions.image.repository Init container volume-permissions image repository
   ## @param volumePermissions.image.tag Init container volume-permissions image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+  ## @param volumePermissions.image.digest Init container volume-permissions image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param volumePermissions.image.pullPolicy Init container volume-permissions image pull policy
   ## @param volumePermissions.image.pullSecrets Specify docker-registry secret names as an array
   ##
   image:
     registry: docker.io
     repository: bitnami/bitnami-shell
+<<<<<<< HEAD
     tag: 10-debian-10-r179
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
     pullPolicy: Always
+=======
+    tag: 11-debian-11-r23
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ##
+    pullPolicy: IfNotPresent
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## Optionally specify an array of imagePullSecrets (secrets must be manually created in the namespace)
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
     ## Example:
@@ -428,7 +681,11 @@ volumePermissions:
     ##
     pullSecrets: []
   ## Init Container resource requests and limits
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## We usually recommend not to specify default resources and to leave this as a conscious
   ## choice for the user. This also increases chances charts run on environments with little
   ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -449,15 +706,21 @@ volumePermissions:
     requests: {}
 ## Configure the ingress resource that allows you to access the
 ## Logstash installation. Set up the URL
-## ref: http://kubernetes.io/docs/user-guide/ingress/
+## ref: https://kubernetes.io/docs/user-guide/ingress/
 ##
 ingress:
   ## @param ingress.enabled Enable ingress controller resource
   ##
   enabled: false
+<<<<<<< HEAD
   ## @param ingress.certManager Set this to true in order to add the corresponding annotations for cert-manager
   ##
   certManager: false
+=======
+  ## @param ingress.selfSigned Create a TLS secret for this ingress record using self-signed certificates generated by Helm
+  ##
+  selfSigned: false
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param ingress.pathType Ingress Path type
   ##
   pathType: ImplementationSpecific
@@ -470,11 +733,20 @@ ingress:
   ## @param ingress.path The Path to Logstash. You may need to set this to '/*' in order to use this with ALB ingress controllers.
   ##
   path: /
+<<<<<<< HEAD
   ## @param ingress.annotations Ingress annotations
+=======
+  ## @param ingress.annotations Additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## For a full list of possible ingress annotations, please see
   ## ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md
+  ## Use this parameter to set the required annotations for cert-manager, see
+  ## ref: https://cert-manager.io/docs/usage/ingress/#supported-annotations
   ##
-  ## If certManager is set to true, annotation kubernetes.io/tls-acme: "true" will automatically be set
+  ## e.g:
+  ## annotations:
+  ##   kubernetes.io/ingress.class: nginx
+  ##   cert-manager.io/cluster-issuer: cluster-issuer-name
   ##
   annotations: {}
   ## @param ingress.tls Enable TLS configuration for the hostname defined at ingress.hostname parameter
@@ -498,6 +770,13 @@ ingress:
   ##     servicePort: use-annotation
   ##
   extraPaths: []
+<<<<<<< HEAD
+=======
+  ## @param ingress.extraRules The list of additional rules to be added to this ingress record. Evaluated as a template
+  ## Useful when looking for additional customization, such as using different backend
+  ##
+  extraRules: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param ingress.extraTls The tls configuration for additional hostnames to be covered with this ingress record.
   ## see: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
   ## extraTls:
@@ -516,11 +795,12 @@ ingress:
   ## It is also possible to create and manage the certificates outside of this helm chart
   ## Please see README.md for more information
   ##
-  secrets: []
-  ## - name: logstash.local-tls
-  ##   key:
-  ##   certificate:
+  ## secrets:
+  ##   - name: logstash.local-tls
+  ##     key:
+  ##     certificate:
   ##
+<<<<<<< HEAD
 ## Prometheus metrics
 ##
 metrics:
@@ -685,3 +965,22 @@ podDisruptionBudget:
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
 ##
 initContainers: []
+=======
+  secrets: []
+  ## @param ingress.ingressClassName IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+)
+  ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
+  ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
+  ##
+  ingressClassName: ""
+
+## Pod disruption budget configuration
+## ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
+## @param pdb.create If true, create a pod disruption budget for pods.
+## @param pdb.minAvailable Minimum number / percentage of pods that should remain scheduled
+## @param pdb.maxUnavailable Maximum number / percentage of pods that may be made unavailable
+##
+pdb:
+  create: false
+  minAvailable: 1
+  maxUnavailable: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

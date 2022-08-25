@@ -22,9 +22,17 @@ spec:
       app.kubernetes.io/component: compactor
   template:
     metadata:
+<<<<<<< HEAD
       {{- if .Values.compactor.podAnnotations }}
       annotations: {{- include "common.tplvalues.render" (dict "value" .Values.compactor.podAnnotations "context" $) | nindent 8 }}
       {{- end }}
+=======
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/tempo-configmap.yaml") . | sha256sum }}
+        {{- if .Values.compactor.podAnnotations }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.compactor.podAnnotations "context" $) | nindent 8 }}
+        {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       labels: {{- include "common.labels.standard" . | nindent 8 }}
         app.kubernetes.io/component: compactor
         tempo-gossip-member: "true"
@@ -51,9 +59,21 @@ spec:
       {{- if .Values.compactor.tolerations }}
       tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.compactor.tolerations "context" .) | nindent 8 }}
       {{- end }}
+<<<<<<< HEAD
       {{- if .Values.compactor.priorityClassName }}
       priorityClassName: {{ .Values.compactor.priorityClassName | quote }}
       {{- end }}
+=======
+      {{- if .Values.compactor.topologySpreadConstraints }}
+      topologySpreadConstraints: {{- include "common.tplvalues.render" (dict "value" .Values.compactor.topologySpreadConstraints "context" .) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.compactor.priorityClassName }}
+      priorityClassName: {{ .Values.compactor.priorityClassName | quote }}
+      {{- end }}
+      {{- if .Values.compactor.schedulerName }}
+      schedulerName: {{ .Values.compactor.schedulerName }}
+      {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       {{- if .Values.compactor.podSecurityContext.enabled }}
       securityContext: {{- omit .Values.compactor.podSecurityContext "enabled" | toYaml | nindent 8 }}
       {{- end }}
@@ -96,15 +116,22 @@ spec:
                 name: {{ include "common.tplvalues.render" (dict "value" .Values.compactor.extraEnvVarsSecret "context" $) }}
             {{- end }}
           ports:
+<<<<<<< HEAD
             - containerPort: {{ .Values.tempo.containerPort }}
               name: http
             - containerPort: {{ .Values.tempo.gossipRing.containerPort }}
+=======
+            - containerPort: {{ .Values.tempo.containerPorts.web }}
+              name: http
+            - containerPort: {{ .Values.tempo.containerPorts.gossipRing }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
               name: http-memberlist
           {{- if .Values.compactor.resources }}
           resources: {{- toYaml .Values.compactor.resources | nindent 12 }}
           {{- end }}
           {{- if not .Values.diagnosticMode.enabled }}
           {{- if .Values.compactor.livenessProbe.enabled }}
+<<<<<<< HEAD
           livenessProbe:
             httpGet:
               path: /ready
@@ -114,10 +141,17 @@ spec:
             timeoutSeconds: {{ .Values.compactor.livenessProbe.timeoutSeconds }}
             successThreshold: {{ .Values.compactor.livenessProbe.successThreshold }}
             failureThreshold: {{ .Values.compactor.livenessProbe.failureThreshold }}
+=======
+          livenessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.compactor.livenessProbe "enabled") "context" $) | nindent 12 }}
+            httpGet:
+              path: /ready
+              port: {{ .Values.tempo.containerPorts.web }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           {{- else if .Values.compactor.customLivenessProbe }}
           livenessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.compactor.customLivenessProbe "context" $) | nindent 12 }}
           {{- end }}
           {{- if .Values.compactor.readinessProbe.enabled }}
+<<<<<<< HEAD
           readinessProbe:
             httpGet:
               path: /ready
@@ -134,6 +168,26 @@ spec:
           lifecycle: {{- include "common.tplvalues.render" (dict "value" .Values.compactor.lifecycleHooks "context" $) | nindent 12 }}
           {{- end }}
           {{- end }}
+=======
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.compactor.readinessProbe "enabled") "context" $) | nindent 12 }}
+            httpGet:
+              path: /ready
+              port: {{ .Values.tempo.containerPorts.web }}
+          {{- else if .Values.compactor.customReadinessProbe }}
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.compactor.customReadinessProbe "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.compactor.startupProbe.enabled }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.compactor.startupProbe "enabled") "context" $) | nindent 12 }}
+            tcpSocket:
+              port: http
+          {{- else if .Values.compactor.customStartupProbe }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" .Values.compactor.customStartupProbe "context" $) | nindent 12 }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.compactor.lifecycleHooks }}
+          lifecycle: {{- include "common.tplvalues.render" (dict "value" .Values.compactor.lifecycleHooks "context" $) | nindent 12 }}
+          {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           volumeMounts:
             - name: tempo-config
               mountPath: /bitnami/grafana-tempo/conf/tempo.yaml

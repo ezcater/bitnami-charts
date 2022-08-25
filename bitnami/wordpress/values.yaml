@@ -2,6 +2,7 @@
 ## Global Docker image parameters
 ## Please, note that this will override the image parameters, including dependencies, configured to use the global value
 ## Current available global Docker image parameters: imageRegistry, imagePullSecrets and storageClass
+<<<<<<< HEAD
 
 ## @param global.imageRegistry Global Docker image registry
 ## @param global.imagePullSecrets Global Docker registry secret names as an array
@@ -57,22 +58,94 @@ diagnosticMode:
 
 ## @section WordPress Image parameters
 
+=======
+##
+
+## @param global.imageRegistry Global Docker image registry
+## @param global.imagePullSecrets Global Docker registry secret names as an array
+## @param global.storageClass Global StorageClass for Persistent Volume(s)
+##
+global:
+  imageRegistry: ""
+  ## E.g.
+  ## imagePullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
+  imagePullSecrets: []
+  storageClass: ""
+
+## @section Common parameters
+##
+
+## @param kubeVersion Override Kubernetes version
+##
+kubeVersion: ""
+## @param nameOverride String to partially override common.names.fullname template (will maintain the release name)
+##
+nameOverride: ""
+## @param fullnameOverride String to fully override common.names.fullname template
+##
+fullnameOverride: ""
+## @param commonLabels Labels to add to all deployed resources
+##
+commonLabels: {}
+## @param commonAnnotations Annotations to add to all deployed resources
+##
+commonAnnotations: {}
+## @param clusterDomain Kubernetes Cluster Domain
+##
+clusterDomain: cluster.local
+## @param extraDeploy Array of extra objects to deploy with the release
+##
+extraDeploy: []
+
+## Enable diagnostic mode in the deployment
+##
+diagnosticMode:
+  ## @param diagnosticMode.enabled Enable diagnostic mode (all probes will be disabled and the command will be overridden)
+  ##
+  enabled: false
+  ## @param diagnosticMode.command Command to override all containers in the deployment
+  ##
+  command:
+    - sleep
+  ## @param diagnosticMode.args Args to override all containers in the deployment
+  ##
+  args:
+    - infinity
+
+## @section WordPress Image parameters
+##
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Bitnami WordPress image
 ## ref: https://hub.docker.com/r/bitnami/wordpress/tags/
 ## @param image.registry WordPress image registry
 ## @param image.repository WordPress image repository
 ## @param image.tag WordPress image tag (immutable tags are recommended)
+<<<<<<< HEAD
 ## @param image.pullPolicy WordPress image pull policy
 ## @param image.pullSecrets WordPress image pull secrets
 ## @param image.debug Enable image debug mode
+=======
+## @param image.digest WordPress image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+## @param image.pullPolicy WordPress image pull policy
+## @param image.pullSecrets WordPress image pull secrets
+## @param image.debug Specify if debug values should be set
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 image:
   registry: docker.io
   repository: bitnami/wordpress
+<<<<<<< HEAD
   tag: 5.8.0-debian-10-r28
+=======
+  tag: 6.0.1-debian-11-r17
+  digest: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
   ##
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
@@ -89,7 +162,12 @@ image:
 
 ## @section WordPress Configuration parameters
 ## WordPress settings based on environment variables
+<<<<<<< HEAD
 ## ref: https://github.com/bitnami/bitnami-docker-wordpress#environment-variables
+=======
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/wordpress#environment-variables
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## @param wordpressUsername WordPress username
 ##
@@ -123,7 +201,11 @@ wordpressTablePrefix: wp_
 wordpressScheme: http
 ## @param wordpressSkipInstall Skip wizard installation
 ## NOTE: useful if you use an external database that already contains WordPress data
+<<<<<<< HEAD
 ## ref: https://github.com/bitnami/bitnami-docker-wordpress#connect-wordpress-docker-container-to-an-existing-database
+=======
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/wordpress#connect-wordpress-docker-container-to-an-existing-database
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 wordpressSkipInstall: false
 ## @param wordpressExtraConfigContent Add extra content to the default wp-config.php file
@@ -146,9 +228,12 @@ existingWordPressConfigurationSecret: ""
 ## NOTE: useful if you deploy Memcached for caching database queries or you use an external cache server
 ##
 wordpressConfigureCache: false
+<<<<<<< HEAD
 ## @param wordpressAutoUpdateLevel Level of auto-updates to allow. Allowed values: `major`, `minor` or `none`.
 ##
 wordpressAutoUpdateLevel: none
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param wordpressPlugins Array of plugins to install and activate. Can be specified as `all` or `none`.
 ## NOTE: If set to all, only plugins that are already installed will be activated, and if set to none, no plugins will be activated
 ##
@@ -161,7 +246,11 @@ apacheConfiguration: ""
 ##
 existingApacheConfigurationConfigMap: ""
 ## @param customPostInitScripts Custom post-init.d user scripts
+<<<<<<< HEAD
 ## ref: https://github.com/bitnami/bitnami-docker-wordpress/tree/master/5/debian-10/rootfs/post-init.d
+=======
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/wordpress
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## NOTE: supported formats are `.sh`, `.sql` or `.php`
 ## NOTE: scripts are exclusively executed during the 1st boot of the container
 ## e.g:
@@ -179,7 +268,11 @@ existingApacheConfigurationConfigMap: ""
 ##
 customPostInitScripts: {}
 ## SMTP mail delivery configuration
+<<<<<<< HEAD
 ## ref: https://github.com/bitnami/bitnami-docker-wordpress/#smtp-configuration
+=======
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/wordpress/#smtp-configuration
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param smtpHost SMTP server host
 ## @param smtpPort SMTP server port
 ## @param smtpUser SMTP username
@@ -202,6 +295,12 @@ allowEmptyPassword: true
 ## @param allowOverrideNone Configure Apache to prohibit overriding directives with htaccess files
 ##
 allowOverrideNone: false
+<<<<<<< HEAD
+=======
+## @param overrideDatabaseSettings Allow overriding the database settings persisted in wp-config.php
+##
+overrideDatabaseSettings: false
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param htaccessPersistenceEnabled Persist custom changes on htaccess files
 ## If `allowOverrideNone` is `false`, it will persist `/opt/bitnami/wordpress/wordpress-htaccess.conf`
 ## If `allowOverrideNone` is `true`, it will persist `/opt/bitnami/wordpress/.htaccess`
@@ -229,12 +328,22 @@ extraEnvVars: []
 ##
 extraEnvVarsCM: ""
 ## @param extraEnvVarsSecret Name of existing Secret containing extra env vars
+<<<<<<< HEAD
 ##
 extraEnvVarsSecret: ""
 
 ## @section WordPress Multisite Configuration parameters
 ## ref: https://github.com/bitnami/bitnami-docker-wordpress#multisite-configuration
 
+=======
+##
+extraEnvVarsSecret: ""
+
+## @section WordPress Multisite Configuration parameters
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/wordpress#multisite-configuration
+##
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param multisite.enable Whether to enable WordPress Multisite configuration.
 ## @param multisite.host WordPress Multisite hostname/address. This value is mandatory when enabling Multisite mode.
 ## @param multisite.networkType WordPress Multisite network type to enable. Allowed values: `subfolder`, `subdirectory` or `subdomain`.
@@ -245,12 +354,22 @@ multisite:
   host: ""
   networkType: subdomain
   enableNipIoRedirect: false
+<<<<<<< HEAD
 
 ## @section WordPress deployment parameters
 
 ## @param replicaCount Number of WordPress replicas to deploy
 ## NOTE: ReadWriteMany PVC(s) are required if replicaCount > 1
 ##
+=======
+
+## @section WordPress deployment parameters
+##
+
+## @param replicaCount Number of WordPress replicas to deploy
+## NOTE: ReadWriteMany PVC(s) are required if replicaCount > 1
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 replicaCount: 1
 ## @param updateStrategy.type WordPress deployment strategy type
 ## @param updateStrategy.rollingUpdate WordPress deployment rolling update configuration parameters
@@ -270,14 +389,26 @@ updateStrategy:
 ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
 ##
 schedulerName: ""
+<<<<<<< HEAD
 ## @param serviceAccountName ServiceAccount name
 ##
 serviceAccountName: default
+=======
+## @param topologySpreadConstraints Topology Spread Constraints for pod assignment spread across your cluster among failure-domains. Evaluated as a template
+## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/#spread-constraints-for-pods
+##
+topologySpreadConstraints: []
+## @param priorityClassName Name of the existing priority class to be used by WordPress pods, priority class needs to be created beforehand
+## Ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
+##
+priorityClassName: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param hostAliases [array] WordPress pod host aliases
 ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 ##
 hostAliases:
-  ## Required for apache-exporter to work
+  ## Required for Apache exporter to work
+  ##
   - ip: "127.0.0.1"
     hostnames:
       - "status.localhost"
@@ -287,6 +418,7 @@ extraVolumes: []
 ## @param extraVolumeMounts Optionally specify extra list of additional volumeMounts for WordPress container(s)
 ##
 extraVolumeMounts: []
+<<<<<<< HEAD
 ## @param extraContainerPorts Optionally specify extra list of additional ports for WordPress container(s)
 ## e.g:
 ## extraContainerPorts:
@@ -294,6 +426,8 @@ extraVolumeMounts: []
 ##     containerPort: 9090
 ##
 extraContainerPorts: []
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param sidecars Add additional sidecar containers to the WordPress pod
 ## e.g:
 ## sidecars:
@@ -350,7 +484,11 @@ nodeAffinityPreset:
   values: []
 ## @param affinity Affinity for pod assignment
 ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+<<<<<<< HEAD
 ## NOTE: podAffinityPreset, podAntiAffinityPreset, and  nodeAffinityPreset will be ignored when it's set
+=======
+## NOTE: podAffinityPreset, podAntiAffinityPreset, and nodeAffinityPreset will be ignored when it's set
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 affinity: {}
 ## @param nodeSelector Node labels for pod assignment
@@ -362,9 +500,16 @@ nodeSelector: {}
 ##
 tolerations: []
 ## WordPress containers' resource requests and limits
+<<<<<<< HEAD
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
 ## @param resources.limits The resources limits for the WordPress container
 ## @param resources.requests [object] The requested resources for the WordPress container
+=======
+## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+## @param resources.limits The resources limits for the WordPress containers
+## @param resources.requests.memory The requested memory for the WordPress containers
+## @param resources.requests.cpu The requested cpu for the WordPress containers
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 resources:
   limits: {}
@@ -378,6 +523,16 @@ resources:
 containerPorts:
   http: 8080
   https: 8443
+<<<<<<< HEAD
+=======
+## @param extraContainerPorts Optionally specify extra list of additional ports for WordPress container(s)
+## e.g:
+## extraContainerPorts:
+##   - name: myservice
+##     containerPort: 9090
+##
+extraContainerPorts: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Configure Pods Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 ## @param podSecurityContext.enabled Enabled WordPress pods' Security Context
@@ -396,9 +551,15 @@ containerSecurityContext:
   enabled: true
   runAsUser: 1001
   runAsNonRoot: true
+<<<<<<< HEAD
 ## Configure extra options for WordPress containers' liveness and readiness probes
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 ## @param livenessProbe.enabled Enable livenessProbe
+=======
+## Configure extra options for WordPress containers' liveness, readiness and startup probes
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
+## @param livenessProbe.enabled Enable livenessProbe on WordPress containers
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @skip livenessProbe.httpGet
 ## @param livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
 ## @param livenessProbe.periodSeconds Period seconds for livenessProbe
@@ -410,8 +571,8 @@ livenessProbe:
   enabled: true
   httpGet:
     path: /wp-admin/install.php
-    port: http
-    scheme: HTTP
+    port: '{{ .Values.wordpressScheme }}'
+    scheme: '{{ .Values.wordpressScheme | upper }}'
     ## If using an HTTPS-terminating load-balancer, the probes may need to behave
     ## like the balancer to prevent HTTP 302 responses. According to the Kubernetes
     ## docs, 302 should be considered "successful", but this issue on GitHub
@@ -427,7 +588,11 @@ livenessProbe:
   timeoutSeconds: 5
   failureThreshold: 6
   successThreshold: 1
+<<<<<<< HEAD
 ## @param readinessProbe.enabled Enable readinessProbe
+=======
+## @param readinessProbe.enabled Enable readinessProbe on WordPress containers
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @skip readinessProbe.httpGet
 ## @param readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
 ## @param readinessProbe.periodSeconds Period seconds for readinessProbe
@@ -439,13 +604,45 @@ readinessProbe:
   enabled: true
   httpGet:
     path: /wp-login.php
-    port: http
-    scheme: HTTP
+    port: '{{ .Values.wordpressScheme }}'
+    scheme: '{{ .Values.wordpressScheme | upper }}'
     ## If using an HTTPS-terminating load-balancer, the probes may need to behave
     ## like the balancer to prevent HTTP 302 responses. According to the Kubernetes
     ## docs, 302 should be considered "successful", but this issue on GitHub
     ## (https://github.com/kubernetes/kubernetes/issues/47893) shows that it isn't.
     ## E.g.
+<<<<<<< HEAD
+=======
+    ## httpHeaders:
+    ## - name: X-Forwarded-Proto
+    ##   value: https
+    ##
+    httpHeaders: []
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+## @param startupProbe.enabled Enable startupProbe on WordPress containers
+## @skip startupProbe.httpGet
+## @param startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+## @param startupProbe.periodSeconds Period seconds for startupProbe
+## @param startupProbe.timeoutSeconds Timeout seconds for startupProbe
+## @param startupProbe.failureThreshold Failure threshold for startupProbe
+## @param startupProbe.successThreshold Success threshold for startupProbe
+##
+startupProbe:
+  enabled: false
+  httpGet:
+    path: /wp-login.php
+    port: '{{ .Values.wordpressScheme }}'
+    scheme: '{{ .Values.wordpressScheme | upper }}'
+    ## If using an HTTPS-terminating load-balancer, the probes may need to behave
+    ## like the balancer to prevent HTTP 302 responses. According to the Kubernetes
+    ## docs, 302 should be considered "successful", but this issue on GitHub
+    ## (https://github.com/kubernetes/kubernetes/issues/47893) shows that it isn't.
+    ## E.g.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## httpHeaders:
     ## - name: X-Forwarded-Proto
     ##   value: https
@@ -462,8 +659,18 @@ customLivenessProbe: {}
 ## @param customReadinessProbe Custom readinessProbe that overrides the default one
 ##
 customReadinessProbe: {}
+## @param customStartupProbe Custom startupProbe that overrides the default one
+##
+customStartupProbe: {}
+## @param lifecycleHooks for the WordPress container(s) to automate configuration before or after startup
+##
+lifecycleHooks: {}
 
 ## @section Traffic Exposure Parameters
+<<<<<<< HEAD
+=======
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## WordPress service parameters
 ##
@@ -471,12 +678,21 @@ service:
   ## @param service.type WordPress service type
   ##
   type: LoadBalancer
+<<<<<<< HEAD
   ## @param service.port WordPress service HTTP port
   ##
   port: 80
   ## @param service.httpsPort WordPress service HTTPS port
   ##
   httpsPort: 443
+=======
+  ## @param service.ports.http WordPress service HTTP port
+  ## @param service.ports.https WordPress service HTTPS port
+  ##
+  ports:
+    http: 80
+    https: 443
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param service.httpsTargetPort Target port for HTTPS
   ##
   httpsTargetPort: https
@@ -488,6 +704,7 @@ service:
   nodePorts:
     http: ""
     https: ""
+<<<<<<< HEAD
   ## @param service.clusterIP WordPress service Cluster IP
   ## e.g.:
   ## clusterIP: None
@@ -496,6 +713,27 @@ service:
   ## @param service.loadBalancerIP WordPress service Load Balancer IP
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer
   ##
+=======
+  ## @param service.sessionAffinity Control where client requests go, to the same pod or round-robin
+  ## Values: ClientIP or None
+  ## ref: https://kubernetes.io/docs/user-guide/services/
+  ##
+  sessionAffinity: None
+  ## @param service.sessionAffinityConfig Additional settings for the sessionAffinity
+  ## sessionAffinityConfig:
+  ##   clientIP:
+  ##     timeoutSeconds: 300
+  ##
+  sessionAffinityConfig: {}
+  ## @param service.clusterIP WordPress service Cluster IP
+  ## e.g.:
+  ## clusterIP: None
+  ##
+  clusterIP: ""
+  ## @param service.loadBalancerIP WordPress service Load Balancer IP
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer
+  ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   loadBalancerIP: ""
   ## @param service.loadBalancerSourceRanges WordPress service Load Balancer sources
   ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
@@ -505,7 +743,11 @@ service:
   ##
   loadBalancerSourceRanges: []
   ## @param service.externalTrafficPolicy WordPress service external traffic policy
+<<<<<<< HEAD
   ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+=======
+  ## ref https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   externalTrafficPolicy: Cluster
   ## @param service.annotations Additional custom annotations for WordPress service
@@ -521,9 +763,12 @@ ingress:
   ## @param ingress.enabled Enable ingress record generation for WordPress
   ##
   enabled: false
+<<<<<<< HEAD
   ## @param ingress.certManager Add the corresponding annotations for cert-manager integration
   ##
   certManager: false
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param ingress.pathType Ingress path type
   ##
   pathType: ImplementationSpecific
@@ -542,18 +787,41 @@ ingress:
   ## NOTE: You may need to set this to '/*' in order to use this with ALB ingress controllers
   ##
   path: /
+<<<<<<< HEAD
   ## @param ingress.annotations Additional custom annotations for the ingress record
   ## NOTE: If `ingress.certManager=true`, annotation `kubernetes.io/tls-acme: "true"` will automatically be added
+=======
+  ## @param ingress.annotations Additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations.
+  ## For a full list of possible ingress annotations, please see
+  ## ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md
+  ## Use this parameter to set the required annotations for cert-manager, see
+  ## ref: https://cert-manager.io/docs/usage/ingress/#supported-annotations
+  ##
+  ## e.g:
+  ## annotations:
+  ##   kubernetes.io/ingress.class: nginx
+  ##   cert-manager.io/cluster-issuer: cluster-issuer-name
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   annotations: {}
   ## @param ingress.tls Enable TLS configuration for the host defined at `ingress.hostname` parameter
   ## TLS certificates will be retrieved from a TLS secret with name: `{{- printf "%s-tls" .Values.ingress.hostname }}`
   ## You can:
   ##   - Use the `ingress.secrets` parameter to create this TLS secret
+<<<<<<< HEAD
   ##   - Relay on cert-manager to create it by setting `ingress.certManager=true`
   ##   - Relay on Helm to create self-signed certificates by setting `ingress.tls=true` and `ingress.certManager=false`
   ##
   tls: false
+=======
+  ##   - Rely on cert-manager to create it by setting the corresponding annotations
+  ##   - Rely on Helm to create self-signed certificates by setting `ingress.selfSigned=true`
+  ##
+  tls: false
+  ## @param ingress.selfSigned Create a TLS secret for this ingress record using self-signed certificates generated by Helm
+  ##
+  selfSigned: false
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param ingress.extraHosts An array with additional hostname(s) to be covered with the ingress record
   ## e.g:
   ## extraHosts:
@@ -599,11 +867,33 @@ ingress:
   ##       -----END CERTIFICATE-----
   ##
   secrets: []
+  ## @param ingress.extraRules Additional rules to be covered with this ingress record
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-rules
+  ## e.g:
+  ## extraRules:
+  ## - host: wordpress.local
+  ##     http:
+  ##       path: /
+  ##       backend:
+  ##         service:
+  ##           name: wordpress-svc
+  ##           port:
+  ##             name: http
+  ##
+  extraRules: []
 
+## @section Persistence Parameters
+##
+
+<<<<<<< HEAD
 ## @section Persistence Parameters
 
 ## Persistence Parameters
 ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+=======
+## Persistence Parameters
+## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 persistence:
   ## @param persistence.enabled Enable persistence using Persistent Volume Claims
@@ -629,11 +919,30 @@ persistence:
   ##
   dataSource: {}
   ## @param persistence.existingClaim The name of an existing PVC to use for persistence
+<<<<<<< HEAD
   ##
   existingClaim: ""
 ## 'volumePermissions' init container parameters
 ## Changes the owner and group of the persistent volume mount point to runAsUser:fsGroup values
 ##   based on the podSecurityContext/containerSecurityContext parameters
+=======
+  ##
+  existingClaim: ""
+  ## @param persistence.selector Selector to match an existing Persistent Volume for WordPress data PVC
+  ## If set, the PVC can't have a PV dynamically provisioned for it
+  ## E.g.
+  ## selector:
+  ##   matchLabels:
+  ##     app: my-app
+  ##
+  selector: {}
+  ## @param persistence.annotations Persistent Volume Claim annotations
+  ##
+  annotations: {}
+
+## Init containers parameters:
+## volumePermissions: Change the owner and group of the persistent volume(s) mountpoint(s) to 'runAsUser:fsGroup' on each node
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 volumePermissions:
   ## @param volumePermissions.enabled Enable init container that changes the owner/group of the PV mount point to `runAsUser:fsGroup`
@@ -644,14 +953,24 @@ volumePermissions:
   ## @param volumePermissions.image.registry Bitnami Shell image registry
   ## @param volumePermissions.image.repository Bitnami Shell image repository
   ## @param volumePermissions.image.tag Bitnami Shell image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+  ## @param volumePermissions.image.digest Bitnami Shell image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param volumePermissions.image.pullPolicy Bitnami Shell image pull policy
   ## @param volumePermissions.image.pullSecrets Bitnami Shell image pull secrets
   ##
   image:
     registry: docker.io
     repository: bitnami/bitnami-shell
+<<<<<<< HEAD
     tag: 10-debian-10-r181
     pullPolicy: Always
+=======
+    tag: 11-debian-11-r26
+    digest: ""
+    pullPolicy: IfNotPresent
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -661,13 +980,18 @@ volumePermissions:
     ##
     pullSecrets: []
   ## Init container's resource requests and limits
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param volumePermissions.resources.limits The resources limits for the init container
   ## @param volumePermissions.resources.requests The requested resources for the init container
   ##
   resources:
     limits: {}
     requests: {}
+<<<<<<< HEAD
   ## Init container Container Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   ## @param volumePermissions.securityContext.runAsUser Set init container's Security Context runAsUser
@@ -681,6 +1005,38 @@ volumePermissions:
 ## @section Other Parameters
 
 ## Wordpress Pod Disruption Budget configuration
+=======
+  ## Init container' Security Context
+  ## Note: the chown of the data folder is done to containerSecurityContext.runAsUser
+  ## and not the below volumePermissions.containerSecurityContext.runAsUser
+  ## @param volumePermissions.containerSecurityContext.runAsUser User ID for the init container
+  ##
+  containerSecurityContext:
+    runAsUser: 0
+
+## @section Other Parameters
+##
+
+## WordPress Service Account
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+##
+serviceAccount:
+  ## @param serviceAccount.create Enable creation of ServiceAccount for WordPress pod
+  ##
+  create: false
+  ## @param serviceAccount.name The name of the ServiceAccount to use.
+  ## If not set and create is true, a name is generated using the common.names.fullname template
+  ##
+  name: ""
+  ## @param serviceAccount.automountServiceAccountToken Allows auto mount of ServiceAccountToken on the serviceAccount created
+  ## Can be set to false if pods using this serviceAccount do not need to use K8s API
+  ##
+  automountServiceAccountToken: true
+  ## @param serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  ##
+  annotations: {}
+## WordPress Pod Disruption Budget configuration
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
 ## @param pdb.create Enable a Pod Disruption Budget creation
 ## @param pdb.minAvailable Minimum number/percentage of pods that should remain scheduled
@@ -690,7 +1046,11 @@ pdb:
   create: false
   minAvailable: 1
   maxUnavailable: ""
+<<<<<<< HEAD
 ## Wordpress Autoscaling configuration
+=======
+## WordPress Autoscaling configuration
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
 ## @param autoscaling.enabled Enable Horizontal POD autoscaling for WordPress
 ## @param autoscaling.minReplicas Minimum number of WordPress replicas
@@ -704,15 +1064,23 @@ autoscaling:
   maxReplicas: 11
   targetCPU: 50
   targetMemory: 50
+<<<<<<< HEAD
 
 ## @section Metrics Parameters
 
+=======
+
+## @section Metrics Parameters
+##
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Prometheus Exporter / Metrics configuration
 ##
 metrics:
   ## @param metrics.enabled Start a sidecar prometheus exporter to expose metrics
   ##
   enabled: false
+<<<<<<< HEAD
   ## Bitnami Apache Exporter image
   ## ref: https://hub.docker.com/r/bitnami/apache-exporter/tags/
   ## @param metrics.image.registry Apache Exporter image registry
@@ -720,11 +1088,26 @@ metrics:
   ## @param metrics.image.tag Apache Exporter image tag (immutable tags are recommended)
   ## @param metrics.image.pullPolicy Apache Exporter image pull policy
   ## @param metrics.image.pullSecrets Apache Exporter image pull secrets
+=======
+  ## Bitnami Apache exporter image
+  ## ref: https://hub.docker.com/r/bitnami/apache-exporter/tags/
+  ## @param metrics.image.registry Apache exporter image registry
+  ## @param metrics.image.repository Apache exporter image repository
+  ## @param metrics.image.tag Apache exporter image tag (immutable tags are recommended)
+  ## @param metrics.image.digest Apache exporter image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+  ## @param metrics.image.pullPolicy Apache exporter image pull policy
+  ## @param metrics.image.pullSecrets Apache exporter image pull secrets
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   image:
     registry: docker.io
     repository: bitnami/apache-exporter
+<<<<<<< HEAD
     tag: 0.10.0-debian-10-r35
+=======
+    tag: 0.11.0-debian-11-r30
+    digest: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -734,8 +1117,70 @@ metrics:
     ##   - myRegistryKeySecretName
     ##
     pullSecrets: []
+<<<<<<< HEAD
   ## Prometheus exporter container's resource requests and limits
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## @param metrics.containerPorts.metrics Prometheus exporter container port
+  ##
+  containerPorts:
+    metrics: 9117
+  ## Configure extra options for Prometheus exporter containers' liveness, readiness and startup probes
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
+  ## @param metrics.livenessProbe.enabled Enable livenessProbe on Prometheus exporter containers
+  ## @param metrics.livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
+  ## @param metrics.livenessProbe.periodSeconds Period seconds for livenessProbe
+  ## @param metrics.livenessProbe.timeoutSeconds Timeout seconds for livenessProbe
+  ## @param metrics.livenessProbe.failureThreshold Failure threshold for livenessProbe
+  ## @param metrics.livenessProbe.successThreshold Success threshold for livenessProbe
+  ##
+  livenessProbe:
+    enabled: true
+    initialDelaySeconds: 15
+    periodSeconds: 10
+    timeoutSeconds: 5
+    failureThreshold: 3
+    successThreshold: 1
+  ## @param metrics.readinessProbe.enabled Enable readinessProbe on Prometheus exporter containers
+  ## @param metrics.readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
+  ## @param metrics.readinessProbe.periodSeconds Period seconds for readinessProbe
+  ## @param metrics.readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
+  ## @param metrics.readinessProbe.failureThreshold Failure threshold for readinessProbe
+  ## @param metrics.readinessProbe.successThreshold Success threshold for readinessProbe
+  ##
+  readinessProbe:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 10
+    timeoutSeconds: 3
+    failureThreshold: 3
+    successThreshold: 1
+  ## @param metrics.startupProbe.enabled Enable startupProbe on Prometheus exporter containers
+  ## @param metrics.startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+  ## @param metrics.startupProbe.periodSeconds Period seconds for startupProbe
+  ## @param metrics.startupProbe.timeoutSeconds Timeout seconds for startupProbe
+  ## @param metrics.startupProbe.failureThreshold Failure threshold for startupProbe
+  ## @param metrics.startupProbe.successThreshold Success threshold for startupProbe
+  ##
+  startupProbe:
+    enabled: false
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 1
+    failureThreshold: 15
+    successThreshold: 1
+  ## @param metrics.customLivenessProbe Custom livenessProbe that overrides the default one
+  ##
+  customLivenessProbe: {}
+  ## @param metrics.customReadinessProbe Custom readinessProbe that overrides the default one
+  ##
+  customReadinessProbe: {}
+  ## @param metrics.customStartupProbe Custom startupProbe that overrides the default one
+  ##
+  customStartupProbe: {}
+  ## Prometheus exporter container's resource requests and limits
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param metrics.resources.limits The resources limits for the Prometheus exporter container
   ## @param metrics.resources.requests The requested resources for the Prometheus exporter container
   ##
@@ -745,13 +1190,21 @@ metrics:
   ## Prometheus exporter service parameters
   ##
   service:
+<<<<<<< HEAD
     ## @param metrics.service.port Metrics service port
     ##
     port: 9117
+=======
+    ## @param metrics.service.ports.metrics Prometheus metrics service port
+    ##
+    ports:
+      metrics: 9150
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## @param metrics.service.annotations [object] Additional custom annotations for Metrics service
     ##
     annotations:
       prometheus.io/scrape: "true"
+<<<<<<< HEAD
       prometheus.io/port: "{{ .Values.metrics.service.port }}"
   ## Prometheus Service Monitor
   ## ref: https://github.com/coreos/prometheus-operator
@@ -777,10 +1230,153 @@ metrics:
     ##
     honorLabels: false
     ## @param metrics.serviceMonitor.additionalLabels Additional custom labels for the ServiceMonitor
+=======
+      prometheus.io/port: "{{ .Values.metrics.containerPorts.metrics }}"
+  ## Prometheus Operator ServiceMonitor configuration
+  ##
+  serviceMonitor:
+    ## @param metrics.serviceMonitor.enabled Create ServiceMonitor Resource for scraping metrics using Prometheus Operator
     ##
-    additionalLabels: {}
+    enabled: false
+    ## @param metrics.serviceMonitor.namespace Namespace for the ServiceMonitor Resource (defaults to the Release Namespace)
+    ##
+    namespace: ""
+    ## @param metrics.serviceMonitor.interval Interval at which metrics should be scraped.
+    ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
+    ##
+    interval: ""
+    ## @param metrics.serviceMonitor.scrapeTimeout Timeout after which the scrape is ended
+    ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
+    ##
+    scrapeTimeout: ""
+    ## @param metrics.serviceMonitor.labels Additional labels that can be used so ServiceMonitor will be discovered by Prometheus
+    ##
+    labels: {}
+    ## @param metrics.serviceMonitor.selector Prometheus instance selector labels
+    ## ref: https://github.com/bitnami/charts/tree/master/bitnami/prometheus-operator#prometheus-configuration
+    ##
+    selector: {}
+    ## @param metrics.serviceMonitor.relabelings RelabelConfigs to apply to samples before scraping
+    ##
+    relabelings: []
+    ## @param metrics.serviceMonitor.metricRelabelings MetricRelabelConfigs to apply to samples before ingestion
+    ##
+    metricRelabelings: []
+    ## @param metrics.serviceMonitor.honorLabels Specify honorLabels parameter to add the scrape endpoint
+    ##
+    honorLabels: false
+    ## @param metrics.serviceMonitor.jobLabel The name of the label on the target service to use as the job name in prometheus.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
+    ##
+    jobLabel: ""
+
+## @section NetworkPolicy parameters
+##
+
+<<<<<<< HEAD
+## @section Database Parameters
+=======
+## Add networkpolicies
+##
+networkPolicy:
+  ## @param networkPolicy.enabled Enable network policies
+  ## If ingress.enabled or metrics.enabled are true, configure networkPolicy.ingress and networkPolicy.metrics selectors respectively to allow communication
+  ##
+  enabled: false
+  ## @param networkPolicy.metrics.enabled Enable network policy for metrics (prometheus)
+  ## @param networkPolicy.metrics.namespaceSelector [object] Monitoring namespace selector labels. These labels will be used to identify the prometheus' namespace.
+  ## @param networkPolicy.metrics.podSelector [object] Monitoring pod selector labels. These labels will be used to identify the Prometheus pods.
+  ##
+  metrics:
+    enabled: false
+    ## e.g:
+    ## podSelector:
+    ##   label: monitoring
+    ##
+    podSelector: {}
+    ## e.g:
+    ## namespaceSelector:
+    ##   label: monitoring
+    ##
+    namespaceSelector: {}
+  ## @param networkPolicy.ingress.enabled Enable network policy for Ingress Proxies
+  ## @param networkPolicy.ingress.namespaceSelector [object] Ingress Proxy namespace selector labels. These labels will be used to identify the Ingress Proxy's namespace.
+  ## @param networkPolicy.ingress.podSelector [object] Ingress Proxy pods selector labels. These labels will be used to identify the Ingress Proxy pods.
+  ##
+  ingress:
+    enabled: false
+    ## e.g:
+    ## podSelector:
+    ##   label: ingress
+    ##
+    podSelector: {}
+    ## e.g:
+    ## namespaceSelector:
+    ##   label: ingress
+    ##
+    namespaceSelector: {}
+  ## @param networkPolicy.ingressRules.backendOnlyAccessibleByFrontend Enable ingress rule that makes the backend (mariadb) only accessible by testlink's pods.
+  ## @param networkPolicy.ingressRules.customBackendSelector [object] Backend selector labels. These labels will be used to identify the backend pods.
+  ## @param networkPolicy.ingressRules.accessOnlyFrom.enabled Enable ingress rule that makes testlink only accessible from a particular origin
+  ## @param networkPolicy.ingressRules.accessOnlyFrom.namespaceSelector [object] Namespace selector label that is allowed to access testlink. This label will be used to identified the allowed namespace(s).
+  ## @param networkPolicy.ingressRules.accessOnlyFrom.podSelector [object] Pods selector label that is allowed to access testlink. This label will be used to identified the allowed pod(s).
+  ## @param networkPolicy.ingressRules.customRules [object] Custom network policy ingress rule
+  ##
+  ingressRules:
+    ## mariadb backend only can be accessed from testlink
+    ##
+    backendOnlyAccessibleByFrontend: false
+    ## Additional custom backend selector
+    ## e.g:
+    ## customBackendSelector:
+    ##   - to:
+    ##       - namespaceSelector:
+    ##           matchLabels:
+    ##             label: example
+    ##
+    customBackendSelector: {}
+    ## Allow only from the indicated:
+    ##
+    accessOnlyFrom:
+      enabled: false
+      ## e.g:
+      ## podSelector:
+      ##   label: access
+      ##
+      podSelector: {}
+      ## e.g:
+      ## namespaceSelector:
+      ##   label: access
+      ##
+      namespaceSelector: {}
+    ## custom ingress rules
+    ## e.g:
+    ## customRules:
+    ##   - from:
+    ##       - namespaceSelector:
+    ##           matchLabels:
+    ##             label: example
+    ##
+    customRules: {}
+  ## @param networkPolicy.egressRules.denyConnectionsToExternal Enable egress rule that denies outgoing traffic outside the cluster, except for DNS (port 53).
+  ## @param networkPolicy.egressRules.customRules [object] Custom network policy rule
+  ##
+  egressRules:
+    # Deny connections to external. This is not compatible with an external database.
+    denyConnectionsToExternal: false
+    ## Additional custom egress rules
+    ## e.g:
+    ## customRules:
+    ##   - to:
+    ##       - namespaceSelector:
+    ##           matchLabels:
+    ##             label: example
+    ##
+    customRules: {}
 
 ## @section Database Parameters
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## MariaDB chart configuration
 ## ref: https://github.com/bitnami/charts/blob/master/bitnami/mariadb/values.yaml
@@ -798,9 +1394,16 @@ mariadb:
   ## @param mariadb.auth.database MariaDB custom database
   ## @param mariadb.auth.username MariaDB custom user name
   ## @param mariadb.auth.password MariaDB custom user password
+<<<<<<< HEAD
   ## ref: https://github.com/bitnami/bitnami-docker-mariadb#setting-the-root-password-on-first-run
   ##      https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#creating-a-database-on-first-run
   ##      https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#creating-a-database-user-on-first-run
+=======
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mariadb#setting-the-root-password-on-first-run
+  ##      https://github.com/bitnami/containers/blob/main/bitnami/mariadb/README.md#creating-a-database-on-first-run
+  ##      https://github.com/bitnami/containers/blob/main/bitnami/mariadb/README.md#creating-a-database-user-on-first-run
+  ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   auth:
     rootPassword: ""
     database: bitnami_wordpress
@@ -810,7 +1413,11 @@ mariadb:
   ##
   primary:
     ## MariaDB Primary Persistence parameters
+<<<<<<< HEAD
     ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+=======
+    ## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## @param mariadb.primary.persistence.enabled Enable persistence on MariaDB using PVC(s)
     ## @param mariadb.primary.persistence.storageClass Persistent Volume storage class
     ## @param mariadb.primary.persistence.accessModes [array] Persistent Volume access modes
@@ -841,7 +1448,11 @@ externalDatabase:
   ## @param externalDatabase.database External Database database name
   ##
   database: bitnami_wordpress
+<<<<<<< HEAD
   ## @param externalDatabase.existingSecret The name of an existing secret with database credentials
+=======
+  ## @param externalDatabase.existingSecret The name of an existing secret with database credentials. Evaluated as a template
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## NOTE: Must contain key `mariadb-password`
   ## NOTE: When it's set, the `externalDatabase.password` parameter is ignored
   ##
@@ -853,6 +1464,19 @@ memcached:
   ## @param memcached.enabled Deploy a Memcached server for caching database queries
   ##
   enabled: false
+  ## Authentication parameters
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/memcached#creating-the-memcached-admin-user
+  ##
+  auth:
+    ## @param memcached.auth.enabled Enable Memcached authentication
+    ##
+    enabled: false
+    ## @param memcached.auth.username Memcached admin user
+    ##
+    username: ""
+    ## @param memcached.auth.password Memcached admin password
+    ##
+    password: ""
   ## Service parameters
   ##
   service:

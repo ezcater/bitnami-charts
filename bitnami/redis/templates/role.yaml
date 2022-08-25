@@ -12,14 +12,23 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 rules:
+<<<<<<< HEAD
   {{- if .Values.podSecurityPolicy.enabled }}
+=======
+  {{- $pspAvailable := (semverCompare "<1.25-0" (include "common.capabilities.kubeVersion" .)) -}}
+  {{- if and $pspAvailable .Values.podSecurityPolicy.enabled }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   - apiGroups:
       - '{{ template "podSecurityPolicy.apiGroup" . }}'
     resources:
       - 'podsecuritypolicies'
     verbs:
       - 'use'
+<<<<<<< HEAD
     resourceNames: [{{ template "common.names.fullname" . }}]
+=======
+    resourceNames: [{{ printf "%s-master" (include "common.names.fullname" .) }}]
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   {{- end }}
   {{- if .Values.rbac.rules }}
   {{- include "common.tplvalues.render" ( dict "value" .Values.rbac.rules "context" $ ) | nindent 2 }}

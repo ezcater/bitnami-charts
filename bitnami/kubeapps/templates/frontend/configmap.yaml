@@ -13,7 +13,7 @@ metadata:
   {{- end }}
 data:
   k8s-api-proxy.conf: |-
-    # Disable buffering for log streaming
+    # Deactivate buffering for log streaming
     proxy_buffering off;
     # Hide Www-Authenticate to prevent it triggering a basic auth prompt in
     # the browser with some clusters
@@ -22,7 +22,7 @@ data:
     # Keep the connection open with the API server even if idle (the default is 60 seconds)
     # Setting it to 1 hour which should be enough for our current use case of deploying/upgrading apps
     # If we enable other use-cases in the future we might need to bump this value
-    # More info here https://github.com/kubeapps/kubeapps/issues/766
+    # More info here https://github.com/vmware-tanzu/kubeapps/issues/766
     proxy_read_timeout 1h;
 
     {{- if .Values.frontend.proxypassAccessTokenAsBearer }}
@@ -31,9 +31,13 @@ data:
     {{- end }}
 {{- range .Values.clusters }}
   {{- if .certificateAuthorityData }}
-  {{ .name }}-ca.pem: {{ .certificateAuthorityData }}
+  {{ printf "%s-ca.pem" .name }}: {{ .certificateAuthorityData }}
   {{- end }}
+<<<<<<< HEAD:bitnami/kubeapps/templates/frontend/configmap.yaml
 {{- end}}
+=======
+{{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0:bitnami/kubeapps/templates/kubeapps-frontend-config.yaml
   vhost.conf: |-
     # Retain the default nginx handling of requests without a "Connection" header
     map $http_upgrade $connection_upgrade {
@@ -46,13 +50,22 @@ data:
     proxy_set_header Connection $connection_upgrade;
 
     server {
+<<<<<<< HEAD:bitnami/kubeapps/templates/frontend/configmap.yaml
       listen {{ .Values.frontend.containerPort }};
+=======
+      listen {{ .Values.frontend.containerPorts.http }};
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0:bitnami/kubeapps/templates/kubeapps-frontend-config.yaml
     {{- if .Values.frontend.largeClientHeaderBuffers }}
       large_client_header_buffers {{ .Values.frontend.largeClientHeaderBuffers }};
     {{- end }}
     {{- if .Values.enableIPv6 }}
+<<<<<<< HEAD:bitnami/kubeapps/templates/frontend/configmap.yaml
       listen [::]:{{ .Values.frontend.containerPort }};
     {{- end}}
+=======
+      listen [::]:{{ .Values.frontend.containerPorts.http }};
+    {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0:bitnami/kubeapps/templates/kubeapps-frontend-config.yaml
       server_name _;
 
       location /healthz {
@@ -61,10 +74,14 @@ data:
         return 200 "healthy\n";
       }
 
+      # Only proxy to k8s API endpoints if operators are enabled.
+    {{- if $.Values.featureFlags.operators }}
+
       # Ensure each cluster can be reached (should only be
       # used with an auth-proxy where k8s credentials never leave
       # the cluster). See clusters option.
     {{- range .Values.clusters }}
+
       location ~* /api/clusters/{{ .name }} {
     {{/* We need to split the API service URL(s) into the base url and the path segment so
            those configurations using a path can be appropriately rewritten below while
@@ -79,37 +96,43 @@ data:
            exist, even with the `default` function.
            See https://github.com/helm/helm/issues/8026#issuecomment-756538254 */}}
     {{- $pinnipedConfig := .pinnipedConfig | default dict }}
-    {{- if and $.Values.pinnipedProxy.enabled $pinnipedConfig.enable }}
+    {{- if and $.Values.pinnipedProxy.enabled (or $pinnipedConfig.enabled $pinnipedConfig.enable) }}
         # If pinniped proxy is enabled *and* the current cluster is configured
         # to exchange credentials then we route via pinnipedProxy to exchange
-        # credentials for client certificates.
+        # credentials for client certificates. Note, we are currently still supporting
+        # the deprecated `pinnipedConfig.enable` until the next feature release.
+        # All documentation should now reference the cluster-specific `pinnipedConfig.enabled`.
     {{- if .apiServiceURL }}
         proxy_set_header PINNIPED_PROXY_API_SERVER_URL {{ .apiServiceURL }};
     {{- end }}
     {{- if .certificateAuthorityData }}
         proxy_set_header PINNIPED_PROXY_API_SERVER_CERT {{ .certificateAuthorityData }};
     {{- end }}
+<<<<<<< HEAD:bitnami/kubeapps/templates/frontend/configmap.yaml
         proxy_pass http://{{ template "kubeapps.pinniped-proxy.fullname" $ }}.{{ $.Release.Namespace }}:{{ $.Values.pinnipedProxy.containerPort }};
+=======
+        proxy_pass {{ printf "http://%s.%s:%d" (include "kubeapps.pinniped-proxy.fullname" $) $.Release.Namespace (int $.Values.pinnipedProxy.service.ports.pinnipedProxy) }};
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0:bitnami/kubeapps/templates/kubeapps-frontend-config.yaml
     {{- else }}
         # Otherwise we route directly through to the clusters with existing credentials.
         proxy_pass {{ $apiServiceBaseURL }};
     {{- if .certificateAuthorityData }}
-        proxy_ssl_trusted_certificate "./server_blocks/{{ .name }}-ca.pem";
+        proxy_ssl_trusted_certificate {{ printf "./server_blocks/%s-ca.pem" .name | quote }};
     {{- end }}
     {{- end }}
         include "./server_blocks/k8s-api-proxy.conf";
       }
     {{- end }}
+    {{- end }}
 
-      # Forward '/api/assetsvc' to '/assetsvc'
-      # but preserving the encoding (eg. '%2F' is not converted to '/')
-      # see https://serverfault.com/a/906479
-      # Ex: from "/api/assetsvc/what$2Fever?param=value"
-      #     it matches as $1="/what$2Fever" and $args="param=value"
-      #     downstream services will receive "/assetsvc/what$2Fever?param=value"
-      location ~* /api/assetsvc {
+      location ~* /apis {
         rewrite ^ $request_uri; # pass the encoded url downstream as is,
-        rewrite /api/assetsvc([^?]*) /assetsvc$1?$args break;
+        rewrite /apis/([^?]*) /$1 break;
+        rewrite /apis / break;
+
+    {{- if .Values.frontend.proxypassExtraSetHeader }}
+        proxy_set_header {{ .Values.frontend.proxypassExtraSetHeader }};
+    {{- end }}
 
     {{- if .Values.frontend.proxypassExtraSetHeader }}
         proxy_set_header {{ .Values.frontend.proxypassExtraSetHeader }};
@@ -120,9 +143,14 @@ data:
         proxy_set_header Authorization "Bearer $http_x_forwarded_access_token";
     {{- end }}
 
+<<<<<<< HEAD:bitnami/kubeapps/templates/frontend/configmap.yaml
         proxy_pass {{ include "kubeapps.frontend-config.proxy_pass" . -}};
+=======
+        proxy_pass {{ include "kubeapps.kubeappsapis.proxy_pass" . -}};
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0:bitnami/kubeapps/templates/kubeapps-frontend-config.yaml
       }
 
+  {{- if .Values.kubeops.enabled }}
       location ~* /api/kubeops {
         # Keep the connection open with the API server even if idle (the default is 60 seconds)
         # Setting it to 10 minutes which should be enough for our current use case of deploying/upgrading/deleting apps
@@ -133,6 +161,7 @@ data:
     {{- if .Values.frontend.proxypassExtraSetHeader }}
         proxy_set_header {{ .Values.frontend.proxypassExtraSetHeader }};
     {{- end }}
+<<<<<<< HEAD:bitnami/kubeapps/templates/frontend/configmap.yaml
 
     {{- if .Values.frontend.proxypassAccessTokenAsBearer }}
         # Google Kubernetes Engine requires the access_token as the Bearer when talking to the k8s api server.
@@ -151,13 +180,19 @@ data:
     {{- if .Values.frontend.proxypassExtraSetHeader }}
         proxy_set_header {{ .Values.frontend.proxypassExtraSetHeader }};
     {{- end }}
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0:bitnami/kubeapps/templates/kubeapps-frontend-config.yaml
 
     {{- if .Values.frontend.proxypassAccessTokenAsBearer }}
         # Google Kubernetes Engine requires the access_token as the Bearer when talking to the k8s api server.
         proxy_set_header Authorization "Bearer $http_x_forwarded_access_token";
     {{- end }}
 
+<<<<<<< HEAD:bitnami/kubeapps/templates/frontend/configmap.yaml
         proxy_pass {{ include "kubeapps.kubeappsapis.proxy_pass" . -}};
+=======
+        proxy_pass {{ include "kubeapps.frontend-config.proxy_pass" . -}};
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0:bitnami/kubeapps/templates/kubeapps-frontend-config.yaml
       }
     {{- end }}
 
@@ -177,11 +212,12 @@ data:
 
         proxy_pass {{ include "kubeapps.frontend-config.proxy_pass" . -}};
       }
+  {{- end }}
 
       location / {
         # Add the Authorization header if exists
         add_header Authorization $http_authorization;
 
-        proxy_pass http://{{ template "kubeapps.dashboard.fullname" . }}:{{ .Values.dashboard.service.port }};
+        proxy_pass {{ printf "http://%s:%d" (include "kubeapps.dashboard.fullname" .) (int .Values.dashboard.service.ports.http) }};
       }
     }

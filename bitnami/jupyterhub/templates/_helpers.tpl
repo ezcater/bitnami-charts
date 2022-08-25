@@ -60,6 +60,42 @@ Return the proper Docker Image Registry Secret Names
 {{- end -}}
 
 {{/*
+<<<<<<< HEAD
+=======
+Return the proper Docker Image Registry Secret Names
+{{ include "jupyterhub.imagePullSecretsList" ( dict "images" (list .Values.path.to.the.image1, .Values.path.to.the.image2) "global" .Values.global) }}
+*/}}
+{{- define "jupyterhub.imagePullSecretsList" -}}
+  {{- $pullSecrets := list }}
+
+  {{- if .global }}
+    {{- range .global.imagePullSecrets -}}
+      {{- $pullSecrets = append $pullSecrets . -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- range .images -}}
+    {{- range .pullSecrets -}}
+      {{- $pullSecrets = append $pullSecrets . -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- if (not (empty $pullSecrets)) }}
+    {{- range $pullSecrets }}
+  - {{ . }}
+    {{- end }}
+  {{- end }}
+{{- end -}}
+
+{{/*
+Return the proper Docker Image Registry Secret Names list
+*/}}
+{{- define "jupyterhub.imagePullSecrets.list" -}}
+{{- include "jupyterhub.imagePullSecretsList" (dict "images" (list .Values.hub.image .Values.proxy.image .Values.auxiliaryImage) "global" .Values.global) -}}
+{{- end -}}
+
+{{/*
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 Create the name of the service account to use
 */}}
 {{- define "jupyterhub.hubServiceAccountName" -}}
@@ -109,14 +145,19 @@ Create a default fully qualified postgresql name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "jupyterhub.postgresql.fullname" -}}
+<<<<<<< HEAD
 {{- $name := default "postgresql" .Values.postgresql.nameOverride -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+=======
+{{- include "common.names.dependency.fullname" (dict "chartName" "postgresql" "chartValues" .Values.postgresql "context" $) -}}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- end -}}
 
 {{/*
 Get the Postgresql credentials secret.
 */}}
 {{- define "jupyterhub.databaseSecretName" -}}
+<<<<<<< HEAD
 {{- if and (.Values.postgresql.enabled) (not .Values.postgresql.existingSecret) -}}
     {{- printf "%s" (include "jupyterhub.postgresql.fullname" .) -}}
 {{- else if and (.Values.postgresql.enabled) (.Values.postgresql.existingSecret) -}}
@@ -126,6 +167,42 @@ Get the Postgresql credentials secret.
         {{- printf "%s" .Values.externalDatabase.existingSecret -}}
     {{- else -}}
         {{ printf "%s-%s" .Release.Name "externaldb" }}
+=======
+{{- if .Values.postgresql.enabled }}
+    {{- if .Values.global.postgresql }}
+        {{- if .Values.global.postgresql.auth }}
+            {{- if .Values.global.postgresql.auth.existingSecret }}
+                {{- tpl .Values.global.postgresql.auth.existingSecret $ -}}
+            {{- else -}}
+                {{- default (include "jupyterhub.postgresql.fullname" .) (tpl .Values.postgresql.auth.existingSecret $) -}}
+            {{- end -}}
+        {{- else -}}
+            {{- default (include "jupyterhub.postgresql.fullname" .) (tpl .Values.postgresql.auth.existingSecret $) -}}
+        {{- end -}}
+    {{- else -}}
+        {{- default (include "jupyterhub.postgresql.fullname" .) (tpl .Values.postgresql.auth.existingSecret $) -}}
+    {{- end -}}
+{{- else -}}
+    {{- default (printf "%s-externaldb" .Release.Name) (tpl .Values.externalDatabase.existingSecret $) -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Add environment variables to configure database values
+*/}}
+{{- define "jupyterhub.databaseSecretKey" -}}
+{{- if .Values.postgresql.enabled -}}
+    {{- print "password" -}}
+{{- else -}}
+    {{- if .Values.externalDatabase.existingSecret -}}
+        {{- if .Values.externalDatabase.existingSecretPasswordKey -}}
+            {{- printf "%s" .Values.externalDatabase.existingSecretPasswordKey -}}
+        {{- else -}}
+            {{- print "db-password" -}}
+        {{- end -}}
+    {{- else -}}
+        {{- print "db-password" -}}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     {{- end -}}
 {{- end -}}
 {{- end -}}

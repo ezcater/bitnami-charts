@@ -1,4 +1,5 @@
 {{- if .Values.autoscaling.enabled }}
+<<<<<<< HEAD
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
@@ -6,6 +7,14 @@ metadata:
   namespace: {{ .Release.Namespace | quote }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: replica
+=======
+apiVersion: {{ include "common.capabilities.hpa.apiVersion" ( dict "context" $ ) }}
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ template "common.names.fullname" . }}
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" (dict "value" .Values.commonLabels "context" $) | nindent 4 }}
     {{- end }}
@@ -24,12 +33,34 @@ spec:
     - type: Resource
       resource:
         name: cpu
+<<<<<<< HEAD
         targetAverageUtilization: {{ .Values.autoscaling.targetCPU }}
+=======
+        {{- if semverCompare "<1.23-0" (include "common.capabilities.kubeVersion" .) }}
+        targetAverageUtilization: {{ .Values.autoscaling.targetCPU }}
+        {{- else }}
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.autoscaling.targetCPU }}
+        {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     {{- end }}
     {{- if .Values.autoscaling.targetMemory }}
     - type: Resource
       resource:
         name: memory
+<<<<<<< HEAD
         targetAverageUtilization: {{ .Values.autoscaling.targetMemory }}
     {{- end }}
 {{- end }}
+=======
+        {{- if semverCompare "<1.23-0" (include "common.capabilities.kubeVersion" .) }}
+        targetAverageUtilization: {{ .Values.autoscaling.targetMemory }}
+        {{- else }}
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.autoscaling.targetMemory }}
+        {{- end }}
+    {{- end }}
+{{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

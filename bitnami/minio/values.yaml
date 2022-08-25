@@ -6,7 +6,10 @@
 ## @param global.imageRegistry Global Docker image registry
 ## @param global.imagePullSecrets Global Docker registry secret names as an array
 ## @param global.storageClass Global StorageClass for Persistent Volume(s)
+<<<<<<< HEAD
 ## @param global.minio Global MinIO&reg; credentials
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 global:
   imageRegistry: ""
@@ -16,6 +19,7 @@ global:
   ##
   imagePullSecrets: []
   storageClass: ""
+<<<<<<< HEAD
   ## e.g:
   ## minio:
   ##   existingSecret: ""
@@ -48,6 +52,33 @@ clusterDomain: cluster.local
 ##
 extraDeploy: []
 
+=======
+
+## @section Common parameters
+
+## @param nameOverride String to partially override common.names.fullname template (will maintain the release name)
+##
+nameOverride: ""
+## @param fullnameOverride String to fully override common.names.fullname template
+##
+fullnameOverride: ""
+## @param commonLabels Labels to add to all deployed objects
+##
+commonLabels: {}
+## @param commonAnnotations Annotations to add to all deployed objects
+##
+commonAnnotations: {}
+## @param kubeVersion Force target Kubernetes version (using Helm capabilities if not set)
+##
+kubeVersion: ""
+## @param clusterDomain Default Kubernetes cluster domain
+##
+clusterDomain: cluster.local
+## @param extraDeploy Array of extra objects to deploy with the release
+##
+extraDeploy: []
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @section MinIO&reg; parameters
 
 ## Bitnami MinIO&reg; image version
@@ -55,6 +86,10 @@ extraDeploy: []
 ## @param image.registry MinIO&reg; image registry
 ## @param image.repository MinIO&reg; image repository
 ## @param image.tag MinIO&reg; image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+## @param image.digest MinIO&reg; image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param image.pullPolicy Image pull policy
 ## @param image.pullSecrets Specify docker-registry secret names as an array
 ## @param image.debug Specify if debug logs should be enabled
@@ -62,10 +97,15 @@ extraDeploy: []
 image:
   registry: docker.io
   repository: bitnami/minio
+<<<<<<< HEAD
   tag: 2021.6.17-debian-10-r58
+=======
+  tag: 2022.8.13-debian-11-r0
+  digest: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
   ##
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
@@ -84,15 +124,25 @@ image:
 ## @param clientImage.registry MinIO&reg; Client image registry
 ## @param clientImage.repository MinIO&reg; Client image repository
 ## @param clientImage.tag MinIO&reg; Client image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+## @param clientImage.digest MinIO&reg; Client image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 clientImage:
   registry: docker.io
   repository: bitnami/minio-client
+<<<<<<< HEAD
   tag: 2021.7.27-debian-10-r28
+=======
+  tag: 2022.8.11-debian-11-r1
+  digest: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param mode MinIO&reg; server mode (`standalone` or `distributed`)
 ## ref: https://docs.minio.io/docs/distributed-minio-quickstart-guide
 ##
 mode: standalone
+<<<<<<< HEAD
 ## MinIO&reg; credentials
 ##
 accessKey:
@@ -122,6 +172,29 @@ useCredentialsFile: false
 ## @param forceNewKeys Force admin credentials (access and secret key) to be reconfigured every time they change in the secrets
 ##
 forceNewKeys: false
+=======
+## MinIO&reg; authentication parameters
+##
+auth:
+  ## @param auth.rootUser MinIO&reg; root username
+  ##
+  rootUser: admin
+  ## @param auth.rootPassword Password for MinIO&reg; root user
+  ##
+  rootPassword: ""
+  ## @param auth.existingSecret Use existing secret for credentials details (`auth.rootUser` and `auth.rootPassword` will be ignored and picked up from this secret). The secret has to contain the keys `root-user` and `root-password`)
+  ##
+  existingSecret: ""
+  ## @param auth.forcePassword Force users to specify required passwords
+  ##
+  forcePassword: false
+  ## @param auth.useCredentialsFiles Mount credentials as a files instead of using an environment variable
+  ##
+  useCredentialsFiles: false
+  ## @param auth.forceNewKeys Force root credentials (user and password) to be reconfigured every time they change in the secrets
+  ##
+  forceNewKeys: false
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param defaultBuckets Comma, semi-colon or space separated list of buckets to create at initialization (only in standalone mode)
 ## e.g:
 ## defaultBuckets: "my-bucket, my-second-bucket"
@@ -137,6 +210,7 @@ tls:
   ## @param tls.enabled Enable tls in front of the container
   ##
   enabled: false
+<<<<<<< HEAD
   ## @param tls.existingSecret Name of an existing secret holding the certificate information
   ##
   existingSecret: ""
@@ -148,12 +222,28 @@ tls:
   ## Custom mount path where the certificates will be located, if empty will default to /certs
   mountPath: ""
 ## @param extraEnv Extra environment variables to be set on MinIO&reg; container
+=======
+  ## @param tls.autoGenerated Generate automatically self-signed TLS certificates
+  ##
+  autoGenerated: false
+  ## @param tls.existingSecret Name of an existing secret holding the certificate information
+  ##
+  existingSecret: ""
+  ## @param tls.mountPath The mount path where the secret will be located
+  ## Custom mount path where the certificates will be located, if empty will default to /certs
+  mountPath: ""
+## @param extraEnvVars Extra environment variables to be set on MinIO&reg; container
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## e.g:
-## extraEnv:
+## extraEnvVars:
 ##   - name: FOO
 ##     value: "bar"
 ##
+<<<<<<< HEAD
 extraEnv: {}
+=======
+extraEnvVars: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param extraEnvVarsCM ConfigMap with extra environment variables
 ##
 extraEnvVarsCM: ""
@@ -173,12 +263,24 @@ args: []
 ## https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
 ##
 schedulerName: ""
+<<<<<<< HEAD
+=======
+## @param terminationGracePeriodSeconds In seconds, time the given to the MinIO pod needs to terminate gracefully
+## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
+##
+terminationGracePeriodSeconds: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## MinIO&reg; deployment parameters
 ## Only when 'mode' is 'standalone' or 'gateway.enabled' is 'true'
 ##
 deployment:
+<<<<<<< HEAD
   ## @param deployment.updateStrategy.type Set to Recreate if you use persistent volume that cannot be mounted by more than one pods to make sure the pods is destroyed first.
   ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
+=======
+  ## @param deployment.updateStrategy.type Deployment strategy type
+  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## e.g:
   ## updateStrategy:
   ##  type: RollingUpdate
@@ -192,10 +294,24 @@ deployment:
 ## Only when mode is 'distributed'
 ##
 statefulset:
+<<<<<<< HEAD
   ## @param statefulset.updateStrategy Update strategy, can be set to `RollingUpdate` or `OnDelete`
   ## ref: https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/#updating-statefulsets
   ##
   updateStrategy: RollingUpdate
+=======
+  ## @param statefulset.updateStrategy.type StatefulSet strategy type
+  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
+  ## e.g:
+  ## updateStrategy:
+  ##  type: RollingUpdate
+  ##  rollingUpdate:
+  ##    maxSurge: 25%
+  ##    maxUnavailable: 25%
+  ##
+  updateStrategy:
+    type: RollingUpdate
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param statefulset.podManagementPolicy StatefulSet controller supports relax its ordering guarantees while preserving its uniqueness and identity guarantees. There are two valid pod management policies: OrderedReady and Parallel
   ## ref: https://kubernetes.io/docs/tutorials/stateful-application/basic-stateful-set/#pod-management-policy
   ##
@@ -209,13 +325,213 @@ statefulset:
   ## @param statefulset.drivesPerNode Number of drives attached to every node (only for MinIO&reg; distributed mode)
   ##
   drivesPerNode: 1
+<<<<<<< HEAD
+=======
+
+## MinIO&reg; provisioning
+##
+provisioning:
+  ## @param provisioning.enabled Enable MinIO&reg; provisioning Job
+  ##
+  enabled: false
+  ## @param provisioning.schedulerName Name of the k8s scheduler (other than default) for MinIO&reg; provisioning
+  ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+  ##
+  schedulerName: ""
+  ## @param provisioning.podAnnotations Provisioning Pod annotations.
+  ##
+  podAnnotations: {}
+  ## @param provisioning.command Default provisioning container command (useful when using custom images). Use array form
+  ##
+  command: []
+  ## @param provisioning.args Default provisioning container args (useful when using custom images). Use array form
+  ##
+  args: []
+  ## @param provisioning.extraCommands Optionally specify extra list of additional commands for MinIO&reg; provisioning pod
+  ##
+  extraCommands: []
+  ## @param provisioning.extraVolumes Optionally specify extra list of additional volumes for MinIO&reg; provisioning pod
+  ##
+  extraVolumes: []
+  ## @param provisioning.extraVolumeMounts Optionally specify extra list of additional volumeMounts for MinIO&reg; provisioning container
+  ##
+  extraVolumeMounts: []
+  ## We usually recommend not to specify default resources and to leave this as a conscious
+  ## choice for the user. This also increases chances charts run on environments with little
+  ## resources, such as Minikube. If you do want to specify resources, uncomment the following
+  ## lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  ## @param provisioning.resources.limits The resources limits for the container
+  ## @param provisioning.resources.requests The requested resources for the container
+  ##
+  resources:
+    ## Example:
+    ## limits:
+    ##    cpu: 100m
+    ##    memory: 64Mi
+    limits: {}
+    ## Examples:
+    ## requests:
+    ##    cpu: 200m
+    ##    memory: 128Mi
+    requests: {}
+  ## @param provisioning.policies MinIO&reg; policies provisioning
+  ## https://docs.min.io/docs/minio-admin-complete-guide.html#policy
+  ## e.g.
+  ## policies:
+  ##   - name: custom-bucket-specific-policy
+  ##     statements:
+  ##       - resources:
+  ##           - "arn:aws:s3:::my-bucket"
+  ##         actions:
+  ##           - "s3:GetBucketLocation"
+  ##           - "s3:ListBucket"
+  ##           - "s3:ListBucketMultipartUploads"
+  ##       - resources:
+  ##           - "arn:aws:s3:::my-bucket/*"
+  ##         # Allowed values: "Allow" | "Deny"
+  ##         # Defaults to "Deny" if not specified
+  ##         effect: "Allow"
+  ##         actions:
+  ##           - "s3:AbortMultipartUpload"
+  ##           - "s3:DeleteObject"
+  ##           - "s3:GetObject"
+  ##           - "s3:ListMultipartUploadParts"
+  ##           - "s3:PutObject"
+  policies: []
+  ## @param provisioning.users MinIO&reg; users provisioning. Can be used in addition to provisioning.usersExistingSecrets.
+  ## https://docs.min.io/docs/minio-admin-complete-guide.html#user
+  ## e.g.
+  ## users:
+  ##   - username: test-username
+  ##     password: test-password
+  ##     disabled: false
+  ##     policies:
+  ##       - readwrite
+  ##       - consoleAdmin
+  ##       - diagnostics
+  ##     # When set to true, it will replace all policies with the specified.
+  ##     # When false, the policies will be added to the existing.
+  ##     setPolicies: false
+  users: []
+  ## @param provisioning.usersExistingSecrets Array if existing secrets containing MinIO&reg; users to be provisioned. Can be used in addition to provisioning.users.
+  ## https://docs.min.io/docs/minio-admin-complete-guide.html#user
+  ##
+  ## Instead of configuring users inside values.yaml, referring to existing Kubernetes secrets containing user
+  ## configurations is possible.
+  ## e.g.
+  ## usersExistingSecrets:
+  ##   - centralized-minio-users
+  ##
+  ## All provided Kubernetes secrets require a specific data structure. The same data from the provisioning.users example above
+  ##  can be defined via secrets with the following data structure. The secret keys have no meaning to the provisioning job except that
+  ## they are used as filenames.
+  ##   ## apiVersion: v1
+  ##   ## kind: Secret
+  ##   ## metadata:
+  ##   ##   name: centralized-minio-users
+  ##   ## type: Opaque
+  ##   ## stringData:
+  ##   ##   username1: |
+  ##   ##     username=test-username
+  ##   ##     password=test-password
+  ##   ##     disabled=false
+  ##   ##     policies=readwrite,consoleAdmin,diagnostics
+  ##   ##     setPolicies=false
+  usersExistingSecrets: []
+  ## @param provisioning.groups MinIO&reg; groups provisioning
+  ## https://docs.min.io/docs/minio-admin-complete-guide.html#group
+  ## e.g.
+  ## groups
+  ##   - name: test-group
+  ##     disabled: false
+  ##     members:
+  ##       - test-username
+  ##     policies:
+  ##       - readwrite
+  ##     # When set to true, it will replace all policies with the specified.
+  ##     # When false, the policies will be added to the existing.
+  ##     setPolicies: false
+  groups: []
+  ## @param provisioning.buckets MinIO&reg; buckets, versioning, lifecycle, quota and tags provisioning
+  ## Buckets https://docs.min.io/docs/minio-client-complete-guide.html#mb
+  ## Lifecycle https://docs.min.io/docs/minio-client-complete-guide.html#ilm
+  ## Quotas https://docs.min.io/docs/minio-admin-complete-guide.html#bucket
+  ## Tags https://docs.min.io/docs/minio-client-complete-guide.html#tag
+  ## Versioning https://docs.min.io/docs/minio-client-complete-guide.html#version
+  ## e.g.
+  ## buckets:
+  ##   - name: test-bucket
+  ##     region: us-east-1
+  ##     # Only when mode is 'distributed'
+  ##     # ref: https://docs.minio.io/docs/distributed-minio-quickstart-guide
+  ##     versioning: false
+  ##     # Versioning is automatically enabled if withLock is true
+  ##     # ref: https://docs.min.io/docs/minio-bucket-versioning-guide.html
+  ##     withLock: true
+  ##     # Only when mode is 'distributed'
+  ##     # ref: https://docs.minio.io/docs/distributed-minio-quickstart-guide
+  ##     lifecycle:
+  ##       - id: TestPrefix7dRetention
+  ##         prefix: test-prefix
+  ##         disabled: false
+  ##         expiry:
+  ##           days: 7
+  ##           # Days !OR! date
+  ##           # date: "2021-11-11T00:00:00Z"
+  ##           nonconcurrentDays: 3
+  ##     # Only when mode is 'distributed'
+  ##     # ref: https://docs.minio.io/docs/distributed-minio-quickstart-guide
+  ##     quota:
+  ##       # hard or clear(+ omit size)
+  ##       type: hard
+  ##       size: 10GiB
+  ##     tags:
+  ##       key1: value1
+  buckets: []
+  ## @param provisioning.config MinIO&reg; config provisioning
+  ## https://docs.min.io/docs/minio-server-configuration-guide.html
+  ## e.g.
+  ## config:
+  ##   - name: region
+  ##     options:
+  ##       name: us-east-1
+  config: []
+  ## MinIO&reg; pod Security Context
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  ## @param provisioning.podSecurityContext.enabled Enable pod Security Context
+  ## @param provisioning.podSecurityContext.fsGroup Group ID for the container
+  ##
+  podSecurityContext:
+    enabled: true
+    fsGroup: 1001
+  ## MinIO&reg; container Security Context
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  ## @param provisioning.containerSecurityContext.enabled Enable container Security Context
+  ## @param provisioning.containerSecurityContext.runAsUser User ID for the container
+  ## @param provisioning.containerSecurityContext.runAsNonRoot Avoid running as root User
+  ##
+  containerSecurityContext:
+    enabled: true
+    runAsUser: 1001
+    runAsNonRoot: true
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param hostAliases MinIO&reg; pod host aliases
 ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 ##
 hostAliases: []
+<<<<<<< HEAD
 ## @param containerPort MinIO&reg; container port to open
 ##
 containerPort: 9000
+=======
+## @param containerPorts.api MinIO&reg; container port to open for MinIO&reg; API
+## @param containerPorts.console MinIO&reg; container port to open for MinIO&reg; Console
+##
+containerPorts:
+  api: 9000
+  console: 9001
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## MinIO&reg; pod Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 ## @param podSecurityContext.enabled Enable pod Security Context
@@ -282,8 +598,20 @@ nodeSelector: {}
 ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 ##
 tolerations: []
+<<<<<<< HEAD
 ## MinIO&reg; containers' resource requests and limits
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+## @param topologySpreadConstraints Topology Spread Constraints for MinIO&reg; pods assignment spread across your cluster among failure-domains
+## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/#spread-constraints-for-pods
+##
+topologySpreadConstraints: []
+## @param priorityClassName MinIO&reg; pods' priorityClassName
+##
+priorityClassName: ""
+## MinIO&reg; containers' resource requests and limits
+## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## We usually recommend not to specify default resources and to leave this as a conscious
 ## choice for the user. This also increases chances charts run on environments with little
 ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -359,6 +687,12 @@ customReadinessProbe: {}
 ## @param customStartupProbe Override default startup probe
 ##
 customStartupProbe: {}
+<<<<<<< HEAD
+=======
+## @param lifecycleHooks for the MinIO&reg container(s) to automate configuration before or after startup
+##
+lifecycleHooks: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param extraVolumes Optionally specify extra list of additional volumes for MinIO&reg; pods
 ##
 extraVolumes: []
@@ -387,15 +721,22 @@ initContainers: []
 ##         containerPort: 1234
 ##
 sidecars: []
+<<<<<<< HEAD
 
 ## @section Traffic exposure parameters
 
+=======
+
+## @section Traffic exposure parameters
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## MinIO&reg; Service properties
 ##
 service:
   ## @param service.type MinIO&reg; service type
   ##
   type: ClusterIP
+<<<<<<< HEAD
   ## @param service.port MinIO&reg; service port
   ##
   port: 9000
@@ -405,6 +746,28 @@ service:
   nodePort: ""
   ## @param service.loadBalancerIP loadBalancerIP if service type is `LoadBalancer` (optional, cloud specific)
   ## ref: http://kubernetes.io/docs/user-guide/services/#type-loadbalancer
+=======
+  ## @param service.ports.api MinIO&reg; API service port
+  ## @param service.ports.console MinIO&reg; Console service port
+  ##
+  ports:
+    api: 9000
+    console: 9001
+  ## @param service.nodePorts.api Specify the MinIO&reg API nodePort value for the LoadBalancer and NodePort service types
+  ## @param service.nodePorts.console Specify the MinIO&reg Console nodePort value for the LoadBalancer and NodePort service types
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+  ##
+  nodePorts:
+    api: ""
+    console: ""
+  ## @param service.clusterIP Service Cluster IP
+  ## e.g.:
+  ## clusterIP: None
+  ##
+  clusterIP: ""
+  ## @param service.loadBalancerIP loadBalancerIP if service type is `LoadBalancer` (optional, cloud specific)
+  ## ref: https://kubernetes.io/docs/user-guide/services/#type-loadbalancer
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   loadBalancerIP: ""
   ## @param service.loadBalancerSourceRanges Addresses that are allowed when service is LoadBalancer
@@ -415,28 +778,53 @@ service:
   ##
   loadBalancerSourceRanges: []
   ## @param service.externalTrafficPolicy Enable client source IP preservation
+<<<<<<< HEAD
   ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
   ##
   externalTrafficPolicy: Cluster
+=======
+  ## ref https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+  ##
+  externalTrafficPolicy: Cluster
+  ## @param service.extraPorts Extra ports to expose in the service (normally used with the `sidecar` value)
+  ##
+  extraPorts: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param service.annotations Annotations for MinIO&reg; service
   ## This can be used to set the LoadBalancer service type to internal only.
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
   ##
   annotations: {}
 ## Configure the ingress resource that allows you to access the
+<<<<<<< HEAD
 ## MinIO&reg; installation. Set up the URL
 ## ref: http://kubernetes.io/docs/user-guide/ingress/
+=======
+## MinIO&reg; Console. Set up the URL
+## ref: https://kubernetes.io/docs/user-guide/ingress/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 ingress:
   ## @param ingress.enabled Enable ingress controller resource
   ##
   enabled: false
+<<<<<<< HEAD
   ## @param ingress.certManager Set this to true in order to add the corresponding annotations for cert-manager
   ##
   certManager: false
   ## @param ingress.apiVersion Force Ingress API version (automatically detected if not set)
   ##
   apiVersion: ""
+=======
+  ## @param ingress.apiVersion Force Ingress API version (automatically detected if not set)
+  ##
+  apiVersion: ""
+  ## @param ingress.ingressClassName IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+)
+  ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster.
+  ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
+  ##
+  ingressClassName: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param ingress.hostname Default host for the ingress resource
   ##
   hostname: minio.local
@@ -449,19 +837,42 @@ ingress:
   ## @param ingress.servicePort Service port to be used
   ## Default is http. Alternative is https.
   ##
+<<<<<<< HEAD
   servicePort: minio
   ## @param ingress.annotations Ingress annotations
+=======
+  servicePort: minio-console
+  ## @param ingress.annotations Additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## For a full list of possible ingress annotations, please see
   ## ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md
+  ## Use this parameter to set the required annotations for cert-manager, see
+  ## ref: https://cert-manager.io/docs/usage/ingress/#supported-annotations
   ##
-  ## If certManager is set to true, annotation kubernetes.io/tls-acme: "true" will automatically be set
+  ## e.g:
+  ## annotations:
+  ##   kubernetes.io/ingress.class: nginx
+  ##   cert-manager.io/cluster-issuer: cluster-issuer-name
   ##
   annotations: {}
   ## @param ingress.tls Enable TLS configuration for the hostname defined at `ingress.hostname` parameter
+<<<<<<< HEAD
   ## TLS certificates will be retrieved from a TLS secret with name: {{- printf "%s-tls" .Values.ingress.hostname }}
   ## You can use the ingress.secrets parameter to create this TLS secret or relay on cert-manager to create it
   ##
   tls: false
+=======
+  ## TLS certificates will be retrieved from a TLS secret with name: `{{- printf "%s-tls" .Values.ingress.hostname }}`
+  ## You can:
+  ##   - Use the `ingress.secrets` parameter to create this TLS secret
+  ##   - Rely on cert-manager to create it by setting the corresponding annotations
+  ##   - Rely on Helm to create self-signed certificates by setting `ingress.selfSigned=true`
+  ##
+  tls: false
+  ## @param ingress.selfSigned Create a TLS secret for this ingress record using self-signed certificates generated by Helm
+  ##
+  selfSigned: false
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param ingress.extraHosts The list of additional hostnames to be covered with this ingress record.
   ## Most likely the hostname above will be enough, but in the event more hosts are needed, this is an array
   ## e.g:
@@ -504,6 +915,132 @@ ingress:
   ##     certificate: ""
   ##
   secrets: []
+<<<<<<< HEAD
+=======
+  ## @param ingress.extraRules Additional rules to be covered with this ingress record
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-rules
+  ## e.g:
+  ## extraRules:
+  ## - host: example.local
+  ##     http:
+  ##       path: /
+  ##       backend:
+  ##         service:
+  ##           name: example-svc
+  ##           port:
+  ##             name: http
+  ##
+  extraRules: []
+
+## Configure the ingress resource that allows you to access the
+## MinIO&reg; API. Set up the URL
+## ref: https://kubernetes.io/docs/user-guide/ingress/
+##
+apiIngress:
+  ## @param apiIngress.enabled Enable ingress controller resource
+  ##
+  enabled: false
+  ## @param apiIngress.apiVersion Force Ingress API version (automatically detected if not set)
+  ##
+  apiVersion: ""
+  ## @param apiIngress.ingressClassName IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+)
+  ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster.
+  ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
+  ##
+  ingressClassName: ""
+  ## @param apiIngress.hostname Default host for the ingress resource
+  ##
+  hostname: minio.local
+  ## @param apiIngress.path The Path to MinIO&reg;. You may need to set this to '/*' in order to use this with ALB ingress controllers.
+  ##
+  path: /
+  ## @param apiIngress.pathType Ingress path type
+  ##
+  pathType: ImplementationSpecific
+  ## @param apiIngress.servicePort Service port to be used
+  ## Default is http. Alternative is https.
+  ##
+  servicePort: minio-api
+  ## @param apiIngress.annotations Additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations.
+  ## For a full list of possible ingress annotations, please see
+  ## ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md
+  ## Use this parameter to set the required annotations for cert-manager, see
+  ## ref: https://cert-manager.io/docs/usage/ingress/#supported-annotations
+  ##
+  ## e.g:
+  ## annotations:
+  ##   kubernetes.io/ingress.class: nginx
+  ##   cert-manager.io/cluster-issuer: cluster-issuer-name
+  ##
+  annotations: {}
+  ## @param apiIngress.tls Enable TLS configuration for the hostname defined at `apiIngress.hostname` parameter
+  ## TLS certificates will be retrieved from a TLS secret with name: `{{- printf "%s-tls" .Values.apiIngress.hostname }}`
+  ## You can:
+  ##   - Use the `ingress.secrets` parameter to create this TLS secret
+  ##   - Rely on cert-manager to create it by setting the corresponding annotations
+  ##   - Rely on Helm to create self-signed certificates by setting `ingress.selfSigned=true`
+  ##
+  tls: false
+  ## @param apiIngress.selfSigned Create a TLS secret for this ingress record using self-signed certificates generated by Helm
+  ##
+  selfSigned: false
+  ## @param apiIngress.extraHosts The list of additional hostnames to be covered with this ingress record.
+  ## Most likely the hostname above will be enough, but in the event more hosts are needed, this is an array
+  ## e.g:
+  ## extraHosts:
+  ##   - name: minio.local
+  ##     path: /
+  ##
+  extraHosts: []
+  ## @param apiIngress.extraPaths Any additional paths that may need to be added to the ingress under the main host
+  ## For example: The ALB ingress controller requires a special rule for handling SSL redirection.
+  ## extraPaths:
+  ## - path: /*
+  ##   backend:
+  ##     serviceName: ssl-redirect
+  ##     servicePort: use-annotation
+  ##
+  extraPaths: []
+  ## @param apiIngress.extraTls The tls configuration for additional hostnames to be covered with this ingress record.
+  ## see: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
+  ## e.g:
+  ## extraTls:
+  ## - hosts:
+  ##     - minio.local
+  ##   secretName: minio.local-tls
+  ##
+  extraTls: []
+  ## @param apiIngress.secrets If you're providing your own certificates, please use this to add the certificates as secrets
+  ## key and certificate are expected in PEM format
+  ## name should line up with a secretName set further up
+  ##
+  ## If it is not set and you're using cert-manager, this is unneeded, as it will create a secret for you with valid certificates
+  ## If it is not set and you're NOT using cert-manager either, self-signed certificates will be created valid for 365 days
+  ## It is also possible to create and manage the certificates outside of this helm chart
+  ## Please see README.md for more information
+  ##
+  ## Example
+  ## secrets:
+  ##   - name: minio.local-tls
+  ##     key: ""
+  ##     certificate: ""
+  ##
+  secrets: []
+  ## @param apiIngress.extraRules Additional rules to be covered with this ingress record
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-rules
+  ## e.g:
+  ## extraRules:
+  ## - host: example.local
+  ##     http:
+  ##       path: /
+  ##       backend:
+  ##         service:
+  ##           name: example-svc
+  ##           port:
+  ##             name: http
+  ##
+  extraRules: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## NetworkPolicy parameters
 ##
 networkPolicy:
@@ -515,11 +1052,20 @@ networkPolicy:
   ## listening on. When true, MinIO&reg; will accept connections from any source (with the correct destination port).
   ##
   allowExternal: true
+  ## @param networkPolicy.extraFromClauses Allows to add extra 'from' clauses to the NetworkPolicy
+  extraFromClauses: {}
+  ## Example
+  ## extraFromClauses:
+  ## - podSelector:
+  ##     matchLabels:
+  ##       a: b
+
+## @section Persistence parameters
 
 ## @section Persistence parameters
 
 ## Enable persistence using Persistent Volume Claims
-## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
 ##
 persistence:
   ## @param persistence.enabled Enable MinIO&reg; data persistence using PVC. If false, use emptyDir
@@ -562,14 +1108,24 @@ volumePermissions:
   ## @param volumePermissions.image.registry Init container volume-permissions image registry
   ## @param volumePermissions.image.repository Init container volume-permissions image repository
   ## @param volumePermissions.image.tag Init container volume-permissions image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+  ## @param volumePermissions.image.digest Init container volume-permissions image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param volumePermissions.image.pullPolicy Init container volume-permissions image pull policy
   ## @param volumePermissions.image.pullSecrets Specify docker-registry secret names as an array
   ##
   image:
     registry: docker.io
     repository: bitnami/bitnami-shell
+<<<<<<< HEAD
     tag: 10-debian-10-r172
     pullPolicy: Always
+=======
+    tag: 11-debian-11-r26
+    digest: ""
+    pullPolicy: IfNotPresent
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -579,7 +1135,11 @@ volumePermissions:
     ##
     pullSecrets: []
   ## Init container' resource requests and limits
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## We usually recommend not to specify default resources and to leave this as a conscious
   ## choice for the user. This also increases chances charts run on environments with little
   ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -614,10 +1174,21 @@ serviceAccount:
   ## If not set and create is true, a name is generated using the common.names.fullname template
   ##
   name: ""
+  ## @param serviceAccount.automountServiceAccountToken Enable/disable auto mounting of the service account token
+  ##
+  automountServiceAccountToken: true
+  ## @param serviceAccount.annotations Custom annotations for MinIO&reg; ServiceAccount
+  ##
+  annotations: {}
 
 ## @section Other parameters
 
+<<<<<<< HEAD
 ## MinIO&reg; Pod Disruption Budget configuration (only in distributed mode)
+=======
+## MinIO&reg; Pod Disruption Budget configuration in distributed mode.
+## If MinIO&reg; Gateway is enabled, creates a Pod Disruption Budget for the Gateway instead (mutually exclusive with distributed mode).
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
 ##
 pdb:
@@ -645,6 +1216,7 @@ metrics:
     ##
     enabled: false
     ## @param metrics.serviceMonitor.namespace Namespace which Prometheus is running in
+<<<<<<< HEAD
     ##
     namespace: ""
     ## @param metrics.serviceMonitor.path HTTP path to scrape for metrics
@@ -665,11 +1237,72 @@ metrics:
     honorLabels: false
     ## @param metrics.serviceMonitor.additionalLabels Used to pass Labels that are required by the installed Prometheus Operator
     ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#prometheusspec
+=======
+    ##
+    namespace: ""
+    ## @param metrics.serviceMonitor.labels Extra labels for the ServiceMonitor
+    ##
+    labels: {}
+    ## @param metrics.serviceMonitor.jobLabel The name of the label on the target service to use as the job name in Prometheus
+    ##
+    jobLabel: ""
+    ## @param metrics.serviceMonitor.path HTTP path to scrape for metrics
+    ##
+    path: /minio/v2/metrics/cluster
+    ## @param metrics.serviceMonitor.interval Interval at which metrics should be scraped
+    ##
+    interval: 30s
+    ## @param metrics.serviceMonitor.scrapeTimeout Specify the timeout after which the scrape is ended
+    ## e.g:
+    ## scrapeTimeout: 30s
+    scrapeTimeout: ""
+    ## @param metrics.serviceMonitor.metricRelabelings MetricRelabelConfigs to apply to samples before ingestion
+    ##
+    metricRelabelings: []
+    ## @param metrics.serviceMonitor.relabelings Metrics relabelings to add to the scrape endpoint, applied before scraping
+    ##
+    relabelings: []
+    ## @param metrics.serviceMonitor.honorLabels Specify honorLabels parameter to add the scrape endpoint
+    ##
+    honorLabels: false
+    ## @param metrics.serviceMonitor.selector Prometheus instance selector labels
+    ## ref: https://github.com/bitnami/charts/tree/master/bitnami/prometheus-operator#prometheus-configuration
+    ##
+    selector: {}
+
+  ## Prometheus Operator PrometheusRule configuration
+  ##
+  prometheusRule:
+    ## @param metrics.prometheusRule.enabled Create a Prometheus Operator PrometheusRule (also requires `metrics.enabled` to be `true` and `metrics.prometheusRule.rules`)
+    ##
+    enabled: false
+    ## @param metrics.prometheusRule.namespace Namespace for the PrometheusRule Resource (defaults to the Release Namespace)
+    ##
+    namespace: ""
+    ## @param metrics.prometheusRule.additionalLabels Additional labels that can be used so PrometheusRule will be discovered by Prometheus
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     additionalLabels: {}
+    ## @param metrics.prometheusRule.rules Prometheus Rule definitions
+      # - alert: minio cluster nodes offline
+      #   annotations:
+      #     summary: "minio cluster nodes offline"
+      #     description: "minio cluster nodes offline, pod {{`{{`}} $labels.pod {{`}}`}} service {{`{{`}} $labels.job {{`}}`}} offline"
+      #   for: 10m
+      #   expr: minio_cluster_nodes_offline_total > 0
+      #   labels:
+      #     severity: critical
+      #     group: PaaS
+    ##
+    rules: []
 
 ## @section Gateway parameters
 
+<<<<<<< HEAD
+## @section Gateway parameters
+
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 gateway:
   ## @param gateway.enabled Use MinIO&reg; as Gateway for other storage systems
   ##
@@ -699,12 +1332,24 @@ gateway:
     maxReplicas: "4"
     targetCPU: ""
     targetMemory: ""
+<<<<<<< HEAD
+=======
+  ## @param gateway.priorityClassName Pod priority class name for MinIO&reg; Gateway
+  ##
+  priorityClassName: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Gateway authentication configuration
   ##
   auth:
     ## Authentication configuration for Azure. Ignored unless type=azure
+<<<<<<< HEAD
     ## @param gateway.auth.azure.accessKey Access Key to access MinIO using Azure Gateway
     ## @param gateway.auth.azure.secretKey Secret Key to access MinIO using Azure Gateway
+=======
+    ## @param gateway.auth.azure.accessKey Access key to access MinIO&reg; using Azure Gateway
+    ## @param gateway.auth.azure.secretKey Secret key to access MinIO&reg; using Azure Gateway
+    ## @param gateway.auth.azure.serviceEndpoint Azure Blob Storage custom endpoint
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## @param gateway.auth.azure.storageAccountName Azure Storage Account Name to use to access Azure Blob Storage
     ## @param gateway.auth.azure.storageAccountKey Azure Storage Account Key to use to access Azure Blob Storage
     ## @param gateway.auth.azure.storageAccountNameExistingSecret Existing Secret name to extract Azure Storage Account Name from to access Azure Blob Storage
@@ -715,6 +1360,7 @@ gateway:
     azure:
       accessKey: ""
       secretKey: ""
+      serviceEndpoint: ""
       storageAccountName: ""
       storageAccountKey: ""
       storageAccountNameExistingSecret: ""
@@ -722,8 +1368,13 @@ gateway:
       storageAccountKeyExistingSecret: ""
       storageAccountKeyExistingSecretKey: ""
     ## Authentication configuration for GCS. Ignored unless type=gcs
+<<<<<<< HEAD
     ## @param gateway.auth.gcs.accessKey Access Key to access MinIO using GCS Gateway
     ## @param gateway.auth.gcs.secretKey Secret Key to access MinIO using GCS Gateway
+=======
+    ## @param gateway.auth.gcs.accessKey Access key to access MinIO&reg; using GCS Gateway
+    ## @param gateway.auth.gcs.secretKey Secret key to access MinIO&reg; using GCS Gateway
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## @param gateway.auth.gcs.keyJSON Service Account key to access GCS
     ## @param gateway.auth.gcs.projectID GCP Project ID to use
     ##
@@ -733,15 +1384,25 @@ gateway:
       keyJSON: ""
       projectID: ""
     ## Authentication configuration for NAS. Ignored unless type=nas
+<<<<<<< HEAD
     ## @param gateway.auth.nas.accessKey Access Key to access MinIO using NAS Gateway
     ## @param gateway.auth.nas.secretKey Secret Key to access MinIO using NAS Gateway
+=======
+    ## @param gateway.auth.nas.accessKey Access key to access MinIO&reg; using NAS Gateway
+    ## @param gateway.auth.nas.secretKey Secret key to access MinIO&reg; using NAS Gateway
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     nas:
       accessKey: ""
       secretKey: ""
     ## Authentication configuration for S3. Ignored unless type=s3
+<<<<<<< HEAD
     ## @param gateway.auth.s3.accessKey Access Key to use to access AWS S3
     ## @param gateway.auth.s3.secretKey Secret Key to use to access AWS S3
+=======
+    ## @param gateway.auth.s3.accessKey Access key to use to access AWS S3
+    ## @param gateway.auth.s3.secretKey Secret key to use to access AWS S3
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## @param gateway.auth.s3.serviceEndpoint AWS S3 endpoint
     ##
     s3:

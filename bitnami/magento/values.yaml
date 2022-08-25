@@ -6,6 +6,7 @@
 ## @param global.imageRegistry Global Docker image registry
 ## @param global.imagePullSecrets Global Docker registry secret names as an array
 ## @param global.storageClass Global StorageClass for Persistent Volume(s)
+<<<<<<< HEAD
 ##
 global:
   imageRegistry: ""
@@ -23,10 +24,35 @@ global:
 kubeVersion: ""
 ## @param nameOverride String to partially override magento.fullname template
 ##
+=======
+##
+global:
+  imageRegistry: ""
+  ## E.g.
+  ## imagePullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
+  imagePullSecrets: []
+  storageClass: ""
+
+## @section Common parameters
+
+## @param kubeVersion Force target Kubernetes version (using Helm capabilities if not set)
+##
+kubeVersion: ""
+## @param nameOverride String to partially override magento.fullname template
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 nameOverride: ""
 ## @param fullnameOverride String to fully override magento.fullname template
 ##
 fullnameOverride: ""
+<<<<<<< HEAD
+=======
+## @param namespaceOverride String to fully override common.names.namespace
+##
+namespaceOverride: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param commonAnnotations Annotations to add to all deployed objects
 ##
 commonAnnotations: {}
@@ -36,6 +62,23 @@ commonLabels: {}
 ## @param extraDeploy Array of extra objects to deploy with the release (evaluated as a template).
 ##
 extraDeploy: []
+<<<<<<< HEAD
+=======
+## Enable diagnostic mode in the deployment
+##
+diagnosticMode:
+  ## @param diagnosticMode.enabled Enable diagnostic mode (all probes will be disabled and the command will be overridden)
+  ##
+  enabled: false
+  ## @param diagnosticMode.command Command to override all containers in the deployment
+  ##
+  command:
+    - sleep
+  ## @param diagnosticMode.args Args to override all containers in the deployment
+  ##
+  args:
+    - infinity
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## @section Magento parameters
 
@@ -51,10 +94,14 @@ extraDeploy: []
 image:
   registry: docker.io
   repository: bitnami/magento
+<<<<<<< HEAD
   tag: 2.4.3-debian-10-r0
+=======
+  tag: 2.4.5-debian-11-r0
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
   ##
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets (secrets must be manually created in the namespace)
@@ -80,6 +127,7 @@ hostAliases:
 ##
 replicaCount: 1
 ## @param magentoSkipInstall Skip Magento installation wizard. Useful for migrations and restoring from SQL dump
+<<<<<<< HEAD
 ## ref: https://github.com/bitnami/bitnami-docker-magento#configuration
 ##
 magentoSkipInstall: false
@@ -89,14 +137,26 @@ magentoSkipInstall: false
 magentoHost: ""
 ## @param magentoUsername User of the application
 ## ref: https://github.com/bitnami/bitnami-docker-magento#configuration
+=======
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/magento#configuration
+##
+magentoSkipInstall: false
+## @param magentoHost Magento host to create application URLs
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/magento#configuration
+##
+magentoHost: ""
+## @param magentoUsername User of the application
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/magento#configuration
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 magentoUsername: user
 ## @param magentoPassword Application password
 ## Defaults to a random 10-character alphanumeric string if not set
-## ref: https://github.com/bitnami/bitnami-docker-magento#configuration
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/magento#configuration
 ##
 magentoPassword: ""
 ## @param magentoEmail Admin email
+<<<<<<< HEAD
 ## ref: https://github.com/bitnami/bitnami-docker-magento#configuration
 ##
 magentoEmail: user@example.com
@@ -130,12 +190,48 @@ magentoDeployStaticContent: false
 magentoUseHttps: false
 ## @param magentoUseSecureAdmin Use SSL to access the Magento Admin. Valid values: `true`, `false`
 ## ref: https://github.com/bitnami/bitnami-docker-magento#configuration
+=======
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/magento#configuration
+##
+magentoEmail: user@example.com
+## @param magentoFirstName Magento Admin First Name
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/magento#configuration
+##
+magentoFirstName: ""
+## @param magentoLastName Magento Admin Last Name
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/magento#configuration
+##
+magentoLastName: ""
+## @param magentoAdminUri Magento prefix to access Magento Admin
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/magento#configuration
+##
+magentoAdminUri: ""
+## @param magentoMode Magento mode
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/magento#configuration
+##
+magentoMode: ""
+## @param magentoExtraInstallArgs Magento extra install args
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/magento#configuration
+##
+magentoExtraInstallArgs: ""
+## @param magentoDeployStaticContent Deploy static content during the first deployment, to optimize page load time
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/magento#configuration
+##
+magentoDeployStaticContent: false
+## @param magentoUseHttps Use SSL to access the Magento Store. Valid values: `true`, `false`
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/magento#configuration
+##
+magentoUseHttps: false
+## @param magentoUseSecureAdmin Use SSL to access the Magento Admin. Valid values: `true`, `false`
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/magento#configuration
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 magentoUseSecureAdmin: false
 ## @param magentoSkipReindex Skip Magento Indexer reindex step during the initialization. Valid values: `true`, `false`
 ##
 magentoSkipReindex: false
 ## @param allowEmptyPassword Allow DB blank passwords
+<<<<<<< HEAD
 ## ref: https://github.com/bitnami/bitnami-docker-magento#environment-variables
 ##
 allowEmptyPassword: false
@@ -144,6 +240,16 @@ allowEmptyPassword: false
 command: []
 ## @param args Override default container args (useful when using custom images)
 ##
+=======
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/magento#environment-variables
+##
+allowEmptyPassword: false
+## @param command Override default container command (useful when using custom images)
+##
+command: []
+## @param args Override default container args (useful when using custom images)
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 args: []
 ## @param updateStrategy.type Update strategy - only really applicable for deployments with RWO PVs attached
 ## If replicas = 1, an update can get "stuck", as the previous pod remains attached to the
@@ -170,6 +276,16 @@ extraVolumes: []
 ## @param extraVolumeMounts Array of extra volume mounts to be added to the container (evaluated as template). Normally used with `extraVolumes`
 ##
 extraVolumeMounts: []
+<<<<<<< HEAD
+=======
+## @param extraContainerPorts Array of additional container ports for the Magento container
+## e.g:
+## extraContainerPorts:
+##   - name: myservice
+##     containerPort: 9090
+##
+extraContainerPorts: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param initContainers Add additional init containers to the pod (evaluated as a template)
 ##
 initContainers: []
@@ -180,6 +296,7 @@ sidecars: []
 ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 ##
 tolerations: []
+<<<<<<< HEAD
 ## @param existingSecret Name of a secret with the application password
 ##
 existingSecret: ""
@@ -193,6 +310,32 @@ containerPorts:
 ## ref: https://kubernetes.io/docs/user-guide/services/
 ##
 sessionAffinity: "None"
+=======
+## @param priorityClassName %%MAIN_CONTAINER_NAME%% pods' priorityClassName
+##
+priorityClassName: ""
+## @param schedulerName Name of the k8s scheduler (other than default)
+## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+##
+schedulerName: ""
+## @param terminationGracePeriodSeconds In seconds, time the given to the %%MAIN_CONTAINER_NAME%% pod needs to terminate gracefully
+## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
+##
+terminationGracePeriodSeconds: ""
+## @param topologySpreadConstraints Topology Spread Constraints for pod assignment
+## https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+## The value is evaluated as a template
+##
+topologySpreadConstraints: []
+## @param existingSecret Name of a secret with the application password
+##
+existingSecret: ""
+## @param containerPorts [object] Container ports
+##
+containerPorts:
+  http: 8080
+  https: 8443
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param podAffinityPreset Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`
 ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
 ##
@@ -206,6 +349,7 @@ podAntiAffinityPreset: soft
 ##
 nodeAffinityPreset:
   ## @param nodeAffinityPreset.type Node affinity preset type. Ignored if `affinity` is set. Allowed values: `soft` or `hard`
+<<<<<<< HEAD
   ##
   type: ""
   ## @param nodeAffinityPreset.key Node label key to match Ignored if `affinity` is set.
@@ -219,6 +363,21 @@ nodeAffinityPreset:
   ##   - e2e-az1
   ##   - e2e-az2
   ##
+=======
+  ##
+  type: ""
+  ## @param nodeAffinityPreset.key Node label key to match Ignored if `affinity` is set.
+  ## E.g.
+  ## key: "kubernetes.io/e2e-az-name"
+  ##
+  key: ""
+  ## @param nodeAffinityPreset.values Node label values to match. Ignored if `affinity` is set.
+  ## E.g.
+  ## values:
+  ##   - e2e-az1
+  ##   - e2e-az2
+  ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   values: []
 ## @param affinity Affinity for pod assignment
 ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
@@ -230,7 +389,11 @@ affinity: {}
 ##
 nodeSelector: {}
 ## Configure resource requests and limits
+<<<<<<< HEAD
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## We usually recommend not to specify default resources and to leave this as a conscious
 ## choice for the user. This also increases chances charts run on environments with little
 ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -261,14 +424,25 @@ podSecurityContext:
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
 ## @param containerSecurityContext.enabled Enable Magento containers' Security Context
 ## @param containerSecurityContext.runAsUser Magento containers' Security Context
+<<<<<<< HEAD
+=======
+## @param containerSecurityContext.runAsNonRoot Set %%MAIN_CONTAINER_NAME%% container's Security Context runAsNonRoot
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 containerSecurityContext:
   enabled: true
   runAsUser: 1001
+<<<<<<< HEAD
 ## Configure extra options for liveness probe
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 ## @param livenessProbe.enabled Enable livenessProbe
 ## @param livenessProbe.path Request path for livenessProbe
+=======
+  runAsNonRoot: true
+## Configure extra options for liveness probe
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+## @param livenessProbe.enabled Enable livenessProbe
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
 ## @param livenessProbe.periodSeconds Period seconds for livenessProbe
 ## @param livenessProbe.timeoutSeconds Timeout seconds for livenessProbe
@@ -277,7 +451,10 @@ containerSecurityContext:
 ##
 livenessProbe:
   enabled: true
+<<<<<<< HEAD
   path: /index.php
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   initialDelaySeconds: 300
   periodSeconds: 10
   timeoutSeconds: 5
@@ -286,7 +463,10 @@ livenessProbe:
 ## Configure extra options for readiness probe
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 ## @param readinessProbe.enabled Enable readinessProbe
+<<<<<<< HEAD
 ## @param readinessProbe.path Request path for readinessProbe
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
 ## @param readinessProbe.periodSeconds Period seconds for readinessProbe
 ## @param readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
@@ -295,7 +475,10 @@ livenessProbe:
 ##
 readinessProbe:
   enabled: true
+<<<<<<< HEAD
   path: /index.php
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   initialDelaySeconds: 30
   periodSeconds: 5
   timeoutSeconds: 3
@@ -304,7 +487,10 @@ readinessProbe:
 ## Configure extra options for startupProbe probe
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 ## @param startupProbe.enabled Enable startupProbe
+<<<<<<< HEAD
 ## @param startupProbe.path Request path for startupProbe
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
 ## @param startupProbe.periodSeconds Period seconds for startupProbe
 ## @param startupProbe.timeoutSeconds Timeout seconds for startupProbe
@@ -313,7 +499,10 @@ readinessProbe:
 ##
 startupProbe:
   enabled: false
+<<<<<<< HEAD
   path: /index.php
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   initialDelaySeconds: 0
   periodSeconds: 10
   timeoutSeconds: 3
@@ -339,7 +528,109 @@ podAnnotations: {}
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 ##
 podLabels: {}
+<<<<<<< HEAD
 
+=======
+
+## @section NetworkPolicy parameters
+
+## Add networkpolicies
+##
+networkPolicy:
+  ## @param networkPolicy.enabled Enable network policies
+  ## If ingress.enabled or metrics.enabled are true, configure networkPolicy.ingress and networkPolicy.metrics selectors respectively to allow communication
+  ##
+  enabled: false
+  ## @param networkPolicy.metrics.enabled Enable network policy for metrics (prometheus)
+  ## @param networkPolicy.metrics.namespaceSelector magento Monitoring namespace selector labels. These labels will be used to identify the prometheus' namespace.
+  ## @param networkPolicy.metrics.podSelector magento Monitoring pod selector labels. These labels will be used to identify the Prometheus pods.
+  ##
+  metrics:
+    enabled: false
+    ## e.g:
+    ## podSelector:
+    ##   label: monitoring
+    ##
+    podSelector: {}
+    ## e.g:
+    ## namespaceSelector:
+    ##   label: monitoring
+    ##
+    namespaceSelector: {}
+  ## @param networkPolicy.ingress.enabled Enable network policy for Ingress Proxies
+  ## @param networkPolicy.ingress.namespaceSelector magento Ingress Proxy namespace selector labels. These labels will be used to identify the Ingress Proxy's namespace.
+  ## @param networkPolicy.ingress.podSelector magento Ingress Proxy pods selector labels. These labels will be used to identify the Ingress Proxy pods.
+  ##
+  ingress:
+    enabled: false
+    ## e.g:
+    ## podSelector:
+    ##   label: ingress
+    ##
+    podSelector: {}
+    ## e.g:
+    ## namespaceSelector:
+    ##   label: ingress
+    ##
+    namespaceSelector: {}
+  ## @param networkPolicy.ingressRules.backendOnlyAccessibleByFrontend Enable ingress rule that makes the backend (mariadb, elasticsearch) only accessible by magento's pods.
+  ## @param networkPolicy.ingressRules.customBackendSelector magento Backend selector labels. These labels will be used to identify the backend pods.
+  ## @param networkPolicy.ingressRules.accessOnlyFrom.enabled Enable ingress rule that makes magento only accessible from a particular origin
+  ## @param networkPolicy.ingressRules.accessOnlyFrom.namespaceSelector magento Namespace selector label that is allowed to access magento. This label will be used to identified the allowed namespace(s).
+  ## @param networkPolicy.ingressRules.accessOnlyFrom.podSelector magento Pods selector label that is allowed to access magento. This label will be used to identified the allowed pod(s).
+  ## @param networkPolicy.ingressRules.customRules magento Custom network policy ingress rule
+  ##
+  ingressRules:
+    ## mariadb and elacticsearch backends only can be accessed from magento
+    ##
+    backendOnlyAccessibleByFrontend: false
+    ## Additional custom backend selector
+    ## e.g:
+    ## customBackendSelector:
+    ##   - to:
+    ##       - namespaceSelector:
+    ##           matchLabels:
+    ##             label: example
+    customBackendSelector: {}
+    ## Allow only from the indicated:
+    ##
+    accessOnlyFrom:
+      enabled: false
+      ## e.g:
+      ## podSelector:
+      ##   label: access
+      ##
+      podSelector: {}
+      ## e.g:
+      ## namespaceSelector:
+      ##   label: access
+      ##
+      namespaceSelector: {}
+    ## custom ingress rules
+    ## e.g:
+    ## customRules:
+    ##   - from:
+    ##       - namespaceSelector:
+    ##           matchLabels:
+    ##             label: example
+    customRules: {}
+  ## @param networkPolicy.egressRules.denyConnectionsToExternal Enable egress rule that denies outgoing traffic outside the cluster, except for DNS (port 53).
+  ## @param networkPolicy.egressRules.customRules magento Custom network policy rule
+  ##
+  egressRules:
+    # Deny connections to external. This is not compatible with an external database.
+    denyConnectionsToExternal: false
+    ## Additional custom egress rules
+    ## e.g:
+    ## customRules:
+    ##   - to:
+    ##       - namespaceSelector:
+    ##           matchLabels:
+    ##             label: example
+    customRules: {}
+
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @section Database parameters
 
 ## MariaDB chart configuration
@@ -350,8 +641,13 @@ mariadb:
   ## To use an external database set this to false and configure the externalDatabase parameters
   ##
   enabled: true
+<<<<<<< HEAD
   ## Override MariaDB default image as 10.5 is not supported https://devdocs.magento.com/guides/v2.4/install-gde/system-requirements.html#database
   ## ref: https://github.com/bitnami/bitnami-docker-mariadb
+=======
+  ## Override MariaDB default image as 10.6 is not supported https://devdocs.magento.com/guides/v2.4/install-gde/system-requirements.html#database
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mariadb
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param mariadb.image.registry MariaDB image registry
   ## @param mariadb.image.repository MariaDB image repository
   ## @param mariadb.image.tag MariaDB image tag (immutable tags are recommended)
@@ -359,7 +655,11 @@ mariadb:
   image:
     registry: docker.io
     repository: bitnami/mariadb
+<<<<<<< HEAD
     tag: 10.3.31-debian-10-r20
+=======
+    tag: 10.4.25-debian-11-r26
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param mariadb.architecture MariaDB architecture. Allowed values: `standalone` or `replication`
   ##
   architecture: standalone
@@ -367,6 +667,7 @@ mariadb:
   ##
   auth:
     ## @param mariadb.auth.rootPassword Password for the MariaDB `root` user
+<<<<<<< HEAD
     ## ref: https://github.com/bitnami/bitnami-docker-mariadb#setting-the-root-password-on-first-run
     ##
     rootPassword: ""
@@ -376,6 +677,17 @@ mariadb:
     database: bitnami_magento
     ## @param mariadb.auth.username Database user to create
     ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#creating-a-database-user-on-first-run
+=======
+    ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mariadb#setting-the-root-password-on-first-run
+    ##
+    rootPassword: ""
+    ## @param mariadb.auth.database Database name to create
+    ## ref: https://github.com/bitnami/containers/blob/main/bitnami/mariadb/README.md#creating-a-database-on-first-run
+    ##
+    database: bitnami_magento
+    ## @param mariadb.auth.username Database user to create
+    ## ref: https://github.com/bitnami/containers/blob/main/bitnami/mariadb/README.md#creating-a-database-user-on-first-run
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     username: bn_magento
     ## @param mariadb.auth.password Password for the database
@@ -383,7 +695,11 @@ mariadb:
     password: ""
   primary:
     ## Enable persistence using Persistent Volume Claims
+<<<<<<< HEAD
     ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+=======
+    ## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## @param mariadb.primary.persistence.enabled Enable database persistence using PVC
     ## @param mariadb.primary.persistence.storageClass MariaDB primary persistent volume storage Class
     ## @param mariadb.primary.persistence.accessModes Database Persistent Volume Access Modes
@@ -428,6 +744,12 @@ externalDatabase:
   ## @param externalDatabase.database Name of the existing database
   ##
   database: bitnami_magento
+<<<<<<< HEAD
+=======
+  ## @param externalDatabase.existingSecret Name of an existing secret resource containing the DB password
+  ##
+  existingSecret: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## @section Elasticsearch parameters
 
@@ -439,25 +761,58 @@ elasticsearch:
   ## To use an external server set this to false and configure the externalElasticsearch parameters
   ##
   enabled: true
+<<<<<<< HEAD
+=======
+  ## Override Elasticsearch default image as version 8 is not supported https://devdocs.magento.com/guides/v2.4/install-gde/system-requirements.html#database
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/elasticsearch
+  ## @param elasticsearch.image.registry Elasticsearch image registry
+  ## @param elasticsearch.image.repository Elasticsearch image repository
+  ## @param elasticsearch.image.tag Elasticsearch image tag (immutable tags are recommended)
+  ##
+  image:
+    registry: docker.io
+    repository: bitnami/elasticsearch
+    tag: 7.17.5-debian-11-r15
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param elasticsearch.sysctlImage.enabled Enable kernel settings modifier image for Elasticsearch
   ##
   sysctlImage:
     enabled: true
   ## Elasticsearch master-eligible node parameters
+<<<<<<< HEAD
   ## @param elasticsearch.master.replicas Desired number of Elasticsearch master-eligible nodes
+=======
+  ## @param elasticsearch.master.replicaCount Desired number of Elasticsearch master-eligible nodes
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   master:
-    replicas: 1
+    replicaCount: 1
   ## Elasticsearch coordinating-only node parameters
+<<<<<<< HEAD
   ## @param elasticsearch.coordinating.replicas Desired number of Elasticsearch coordinating-only nodes
+=======
+  ## @param elasticsearch.coordinating.replicaCount Desired number of Elasticsearch coordinating-only nodes
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   coordinating:
-    replicas: 1
+    replicaCount: 1
   ## Elasticsearch data node parameters
+<<<<<<< HEAD
   ## @param elasticsearch.data.replicas Desired number of Elasticsearch data nodes
   ##
   data:
     replicas: 1
+=======
+  ## @param elasticsearch.data.replicaCount Desired number of Elasticsearch data nodes
+  ##
+  data:
+    replicaCount: 1
+  ## Elasticsearch ingest node parameters
+  ## @param elasticsearch.ingest.replicaCount Desired number of Elasticsearch ingest nodes
+  ##
+  ingest:
+    replicaCount: 1
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## External elasticsearch configuration
 ##
 externalElasticsearch:
@@ -471,7 +826,11 @@ externalElasticsearch:
 ## @section Persistence parameters
 
 ## Enable persistence using Persistent Volume Claims
+<<<<<<< HEAD
 ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+=======
+## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 persistence:
   ## @param persistence.enabled Enable persistence using PVC
@@ -485,11 +844,20 @@ persistence:
   ##   GKE, AWS & OpenStack)
   ##
   storageClass: ""
+<<<<<<< HEAD
   ## @param persistence.accessMode PVC Access Mode for Magento volume
   ## Requires persistence.enabled: true
   ## If defined, PVC must be created manually before volume will be bound
   ##
   accessMode: ReadWriteOnce
+=======
+  ## @param persistence.accessModes PVC Access Modes for Magento volume
+  ## Requires persistence.enabled: true
+  ## If defined, PVC must be created manually before volume will be bound
+  ##
+  accessModes:
+    - ReadWriteOnce
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param persistence.size PVC Storage Request for Magento volume
   ##
   size: 8Gi
@@ -504,6 +872,26 @@ persistence:
   ## Default: nil.
   ##
   hostPath: ""
+<<<<<<< HEAD
+=======
+  ## @param persistence.annotations Persistent Volume Claim annotations
+  ##
+  annotations: {}
+  ## @param persistence.subPath The subdirectory of the volume to mount to, useful in dev environments and one PV for multiple services
+  ##
+  subPath: ""
+  ## @param persistence.selector Selector to match an existing Persistent Volume for WordPress data PVC
+  ## If set, the PVC can't have a PV dynamically provisioned for it
+  ## E.g.
+  ## selector:
+  ##   matchLabels:
+  ##     app: my-app
+  ##
+  selector: {}
+  ## @param persistence.dataSource Custom PVC data source
+  ##
+  dataSource: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## @section Volume Permissions parameters
 
@@ -523,8 +911,13 @@ volumePermissions:
   image:
     registry: docker.io
     repository: bitnami/bitnami-shell
+<<<<<<< HEAD
     tag: 10-debian-10-r174
     pullPolicy: Always
+=======
+    tag: 11-debian-11-r23
+    pullPolicy: IfNotPresent
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## Optionally specify an array of imagePullSecrets (secrets must be manually created in the namespace)
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
     ## Example:
@@ -533,7 +926,11 @@ volumePermissions:
     ##
     pullSecrets: []
   ## Init containers' resource requests and limits
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## We usually recommend not to specify default resources and to leave this as a conscious
   ## choice for the user. This also increases chances charts run on environments with little
   ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -560,6 +957,7 @@ volumePermissions:
 ##
 service:
   ## @param service.type Kubernetes Service type
+<<<<<<< HEAD
   ##
   type: LoadBalancer
   ## @param service.port Service HTTP port
@@ -583,6 +981,16 @@ service:
   ## ref: http://kubernetes.io/docs/user-guide/services/#type-loadbalancer
   ##
   loadBalancerIP: ""
+=======
+  ##
+  type: LoadBalancer
+  ## @param service.ports.http Service HTTP port
+  ## @param service.ports.https Service HTTPS port
+  ##
+  ports:
+    http: 8080
+    https: 8443
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param service.nodePorts.http Kubernetes http node port
   ## @param service.nodePorts.https Kubernetes https node port
   ## e.g:
@@ -593,21 +1001,63 @@ service:
   nodePorts:
     http: ""
     https: ""
+<<<<<<< HEAD
   ## @param service.externalTrafficPolicy Enable client source IP preservation
   ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
   ##
   externalTrafficPolicy: Cluster
+=======
+  ## @param service.clusterIP Static clusterIP or None for headless services
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#choosing-your-own-ip-address
+  ## e.g:
+  ## clusterIP: None
+  ##
+  clusterIP: ""
+  ## @param service.loadBalancerSourceRanges Control hosts connecting to "LoadBalancer" only
+  ## loadBalancerSourceRanges:
+  ##   - 0.0.0.0/0
+  ##
+  loadBalancerSourceRanges: []
+  ## @param service.loadBalancerIP loadBalancerIP for the Magento Service (optional, cloud specific)
+  ## ref: https://kubernetes.io/docs/user-guide/services/#type-loadbalancer
+  ##
+  loadBalancerIP: ""
+  ## @param service.externalTrafficPolicy Enable client source IP preservation
+  ## ref https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+  ##
+  externalTrafficPolicy: Cluster
+  ## @param service.extraPorts Extra ports to expose (normally used with the `sidecar` value)
+  ##
+  extraPorts: []
+  ## @param service.annotations Additional custom annotations for %%MAIN_CONTAINER_NAME%% service
+  ##
+  annotations: {}
+  ## @param service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+  ## If "ClientIP", consecutive client requests will be directed to the same Pod
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+  ##
+  sessionAffinity: None
+  ## @param service.sessionAffinityConfig Additional settings for the sessionAffinity
+  ## sessionAffinityConfig:
+  ##   clientIP:
+  ##     timeoutSeconds: 300
+  ##
+  sessionAffinityConfig: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Configure the ingress resource that allows you to access the
 ## Magento installation. Set up the URL
-## ref: http://kubernetes.io/docs/user-guide/ingress/
+## ref: https://kubernetes.io/docs/user-guide/ingress/
 ##
 ingress:
   ## @param ingress.enabled Enable ingress controller resource
   ##
   enabled: false
+<<<<<<< HEAD
   ## @param ingress.certManager Add annotations for cert-manager
   ##
   certManager: false
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param ingress.pathType Default path type for the ingress resource
   ##
   pathType: ImplementationSpecific
@@ -620,22 +1070,41 @@ ingress:
   ## @param ingress.path Default path for the ingress resource
   ##
   path: /
+<<<<<<< HEAD
   ## @param ingress.annotations Ingress annotations
+=======
+  ## @param ingress.annotations Additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## For a full list of possible ingress annotations, please see
   ## ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md
+  ## Use this parameter to set the required annotations for cert-manager, see
+  ## ref: https://cert-manager.io/docs/usage/ingress/#supported-annotations
   ##
+<<<<<<< HEAD
   ## If tls is set to true, annotation ingress.kubernetes.io/secure-backends: "true" will automatically be set
   ## If certManager is set to true, annotation kubernetes.io/tls-acme: "true" will automatically be set
   ## e.g:
   ##  kubernetes.io/ingress.class: nginx
+=======
+  ## e.g:
+  ## annotations:
+  ##   kubernetes.io/ingress.class: nginx
+  ##   cert-manager.io/cluster-issuer: cluster-issuer-name
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   annotations: {}
   ## @param ingress.tls Enable TLS for `ingress.hostname` parameter
   ## TLS certificates will be retrieved from a TLS secret with name: {{- printf "%s-tls" .Values.ingress.hostname }}
-  ## You can use the ingress.secrets parameter to create this TLS secret, relay on cert-manager to create it, or
+  ## You can use the ingress.secrets parameter to create this TLS secret, rely on cert-manager to create it, or
   ## let the chart create self-signed certificates for you
   ##
   tls: false
+<<<<<<< HEAD
+=======
+  ## @param ingress.selfSigned Create a TLS secret for this ingress record using self-signed certificates generated by Helm
+  ##
+  selfSigned: false
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param ingress.extraHosts The list of additional hostnames to be covered with this ingress record.
   ## Most likely the hostname above will be enough, but in the event more hosts are needed, this is an array
   ## Example:
@@ -644,6 +1113,22 @@ ingress:
   ##   path: /
   ##
   extraHosts: []
+<<<<<<< HEAD
+=======
+  ## @param ingress.extraPaths An array with additional arbitrary paths that may need to be added to the ingress under the main host
+  ## e.g:
+  ## extraPaths:
+  ## - path: /*
+  ##   backend:
+  ##     serviceName: ssl-redirect
+  ##     servicePort: use-annotation
+  ##
+  extraPaths: []
+  ## @param ingress.extraRules The list of additional rules to be added to this ingress record. Evaluated as a template
+  ## Useful when looking for additional customization, such as using different backend
+  ##
+  extraRules: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param ingress.extraTls The tls configuration for additional hostnames to be covered with this ingress record.
   ## see: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
   ## Example:
@@ -667,6 +1152,14 @@ ingress:
   ##   certificate:
   ##
   secrets: []
+<<<<<<< HEAD
+=======
+  ## @param ingress.ingressClassName IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+)
+  ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
+  ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
+  ##
+  ingressClassName: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## @section Metrics parameters
 
@@ -685,10 +1178,14 @@ metrics:
   image:
     registry: docker.io
     repository: bitnami/apache-exporter
+<<<<<<< HEAD
     tag: 0.10.0-debian-10-r28
+=======
+    tag: 0.11.0-debian-11-r28
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-    ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets (secrets must be manually created in the namespace)
@@ -699,7 +1196,11 @@ metrics:
     ##
     pullSecrets: []
   ## Metrics exporter resource requests and limits
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## We usually recommend not to specify default resources and to leave this as a conscious
   ## choice for the user. This also increases chances charts run on environments with little
   ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -783,10 +1284,14 @@ certificates:
   image:
     registry: docker.io
     repository: bitnami/bitnami-shell
+<<<<<<< HEAD
     tag: 10-debian-10-r174
+=======
+    tag: 11-debian-11-r23
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-    ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets (secrets must be manually created in the namespace)

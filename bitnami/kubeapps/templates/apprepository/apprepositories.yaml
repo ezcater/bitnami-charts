@@ -1,13 +1,21 @@
+<<<<<<< HEAD
+=======
+{{- if .Values.packaging.helm.enabled }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- range .Values.apprepository.initialRepos }}
 apiVersion: kubeapps.com/v1alpha1
 kind: AppRepository
 metadata:
   name: {{ .name }}
+<<<<<<< HEAD
   {{- if .namespace }}
   namespace: {{ .namespace | quote }}
   {{- else }}
   namespace: {{ $.Release.Namespace | quote }}
   {{- end }}
+=======
+  namespace: {{ default (include "kubeapps.globalReposNamespace" $) .namespace | quote }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   labels: {{- include "common.labels.standard" $ | nindent 4 }}
     {{- if $.Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" $.Values.commonLabels "context" $ ) | nindent 4 }}
@@ -44,8 +52,16 @@ spec:
       {{- if .nodeSelector }}
       nodeSelector: {{- toYaml .nodeSelector | nindent 8 }}
       {{- end }}
+<<<<<<< HEAD
   {{- end }}
   {{- if or .caCert .authorizationHeader }}
+=======
+      {{- if .tolerations }}
+      tolerations: {{- toYaml .tolerations | nindent 8 }}
+      {{- end }}
+  {{- end }}
+  {{- if or .caCert .authorizationHeader .basicAuth }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   auth:
     {{- if .caCert }}
     customCA:
@@ -53,12 +69,26 @@ spec:
         key: ca.crt
         name: {{ printf "apprepo-%s-secrets" .name }}
     {{- end }}
+<<<<<<< HEAD
     {{- if .authorizationHeader }}
+=======
+    {{- if or .authorizationHeader .basicAuth }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     header:
       secretKeyRef:
         key: authorizationHeader
         name: {{ printf "apprepo-%s-secrets" .name }}
     {{- end }}
   {{- end }}
+<<<<<<< HEAD
 ---
 {{ end -}}
+=======
+  {{- if .filterRule }}
+  filterRule:
+    {{- toYaml .filterRule | nindent 4 }}
+  {{- end }}
+---
+{{ end -}}
+{{- end -}}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

@@ -2,7 +2,7 @@ apiVersion: {{ include "common.capabilities.statefulset.apiVersion" . }}
 kind: StatefulSet
 metadata:
   name: {{ include "mariadb.primary.fullname" . }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ .Release.Namespace | quote }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: primary
     {{- if .Values.commonLabels }}
@@ -18,14 +18,9 @@ spec:
     matchLabels: {{ include "common.labels.matchLabels" . | nindent 6 }}
       app.kubernetes.io/component: primary
   serviceName: {{ include "mariadb.primary.fullname" . }}
-  updateStrategy:
-    type: {{ .Values.primary.updateStrategy }}
-    {{- if (eq "Recreate" .Values.primary.updateStrategy) }}
-    rollingUpdate: null
-    {{- else if .Values.primary.rollingUpdatePartition }}
-    rollingUpdate:
-      partition: {{ .Values.primary.rollingUpdatePartition }}
-    {{- end }}
+  {{- if .Values.primary.updateStrategy }}
+  updateStrategy: {{- toYaml .Values.primary.updateStrategy | nindent 4 }}
+  {{- end }}
   template:
     metadata:
       annotations:
@@ -37,6 +32,9 @@ spec:
         {{- end }}
       labels: {{- include "common.labels.standard" . | nindent 8 }}
         app.kubernetes.io/component: primary
+        {{- if .Values.primary.podLabels }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.primary.podLabels "context" $) | nindent 8 }}
+        {{- end }}
         {{- if .Values.commonLabels }}
         {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 8 }}
         {{- end }}
@@ -45,8 +43,8 @@ spec:
       {{- if .Values.primary.hostAliases }}
       hostAliases: {{- include "common.tplvalues.render" (dict "value" .Values.primary.hostAliases "context" $) | nindent 8 }}
       {{- end }}
-      {{- if .Values.schedulerName }}
-      schedulerName: {{ .Values.schedulerName | quote }}
+      {{- if or .Values.primary.schedulerName .Values.schedulerName }}
+      schedulerName: {{ (coalesce .Values.primary.schedulerName .Values.schedulerName) | quote }}
       {{- end }}
       serviceAccountName: {{ template "mariadb.serviceAccountName" . }}
       {{- if .Values.primary.affinity }}
@@ -63,6 +61,12 @@ spec:
       {{- if .Values.primary.tolerations }}
       tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.primary.tolerations "context" $) | nindent 8 }}
       {{- end }}
+<<<<<<< HEAD
+=======
+      {{- if .Values.primary.schedulerName }}
+      schedulerName: {{ .Values.primary.schedulerName }}
+      {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       {{- if .Values.primary.topologySpreadConstraints }}
       topologySpreadConstraints: {{- include "common.tplvalues.render" (dict "value" .Values.primary.topologySpreadConstraints "context" $) | nindent 8 }}
       {{- end }}
@@ -117,6 +121,9 @@ spec:
           args: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.args "context" $) | nindent 12 }}
           {{- else if .Values.primary.args }}
           args: {{- include "common.tplvalues.render" (dict "value" .Values.primary.args "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.primary.lifecycleHooks }}
+          lifecycle: {{- include "common.tplvalues.render" (dict "value" .Values.primary.lifecycleHooks "context" $) | nindent 12 }}
           {{- end }}
           env:
             - name: BITNAMI_DEBUG
@@ -191,6 +198,24 @@ spec:
             - name: mysql
               containerPort: 3306
           {{- if not .Values.diagnosticMode.enabled }}
+<<<<<<< HEAD
+=======
+          {{- if .Values.primary.startupProbe.enabled }}
+          startupProbe: {{- omit .Values.primary.startupProbe "enabled" | toYaml | nindent 12 }}
+            exec:
+              command:
+                - /bin/bash
+                - -ec
+                - |
+                  password_aux="${MARIADB_ROOT_PASSWORD:-}"
+                  if [[ -f "${MARIADB_ROOT_PASSWORD_FILE:-}" ]]; then
+                      password_aux=$(cat "$MARIADB_ROOT_PASSWORD_FILE")
+                  fi
+                  mysqladmin status -uroot -p"${password_aux}"
+          {{- else if .Values.primary.customStartupProbe }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" .Values.primary.customStartupProbe "context" $) | nindent 12 }}
+          {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           {{- if .Values.primary.livenessProbe.enabled }}
           livenessProbe: {{- omit .Values.primary.livenessProbe "enabled" | toYaml | nindent 12 }}
             exec:
@@ -251,6 +276,9 @@ spec:
         - name: metrics
           image: {{ include "mariadb.metrics.image" . }}
           imagePullPolicy: {{ .Values.metrics.image.pullPolicy | quote }}
+          {{- if .Values.metrics.containerSecurityContext.enabled }}
+          securityContext: {{- omit .Values.metrics.containerSecurityContext "enabled" | toYaml | nindent 12 }}
+          {{- end }}
           env:
             {{- if .Values.auth.usePasswordFiles }}
             - name: MARIADB_ROOT_PASSWORD_FILE
@@ -296,10 +324,13 @@ spec:
           {{- if .Values.metrics.resources }}
           resources: {{- toYaml .Values.metrics.resources | nindent 12 }}
           {{- end }}
-          {{- if and .Values.auth.usePasswordFiles (not .Values.auth.customPasswordFiles) }}
           volumeMounts:
+          {{- if and .Values.auth.usePasswordFiles (not .Values.auth.customPasswordFiles) }}
             - name: mariadb-credentials
               mountPath: /opt/bitnami/mysqld-exporter/secrets/
+          {{- end }}
+          {{- if .Values.metrics.extraVolumeMounts.primary }}
+          {{- include "common.tplvalues.render" (dict "value" .Values.metrics.extraVolumeMounts.primary "context" $) | nindent 12 }}
           {{- end }}
         {{- end }}
         {{- if .Values.primary.sidecars }}
@@ -346,6 +377,9 @@ spec:
         name: data
         labels: {{ include "common.labels.matchLabels" . | nindent 10 }}
           app.kubernetes.io/component: primary
+        {{- if .Values.primary.persistence.annotations }}
+        annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.primary.persistence.annotations "context" $ ) | nindent 10 }}
+        {{- end }}
       spec:
         accessModes:
           {{- range .Values.primary.persistence.accessModes }}

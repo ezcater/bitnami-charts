@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ** Please be patient while the chart is being deployed **
 
 Watch the RabbitMQ Cluster Operator Deployment status using the command:
@@ -5,4 +6,19 @@ Watch the RabbitMQ Cluster Operator Deployment status using the command:
     kubectl get deploy -w --namespace {{ .Release.Namespace }} -l app.kubernetes.io/name={{ include "common.names.name" . }},app.kubernetes.io/instance={{ .Release.Name }}
 
 {{ include "common.warnings.rollingTag" .Values.image }}
+=======
+CHART NAME: {{ .Chart.Name }}
+CHART VERSION: {{ .Chart.Version }}
+APP VERSION: {{ .Chart.AppVersion }}
+
+** Please be patient while the chart is being deployed **
+
+Watch the RabbitMQ Cluster Operator and RabbitMQ Messaging Topology Operator Deployment status using the command:
+
+    kubectl get deploy -w --namespace {{ include "common.names.namespace" . }} -l app.kubernetes.io/name={{ include "common.names.name" . }},app.kubernetes.io/instance={{ .Release.Name }}
+
+{{ include "common.warnings.rollingTag" .Values.clusterOperator.image }}
+{{ include "common.warnings.rollingTag" .Values.msgTopologyOperator.image }}
+{{ include "common.warnings.rollingTag" .Values.credentialUpdaterImage }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{ include "common.warnings.rollingTag" .Values.rabbitmqImage }}

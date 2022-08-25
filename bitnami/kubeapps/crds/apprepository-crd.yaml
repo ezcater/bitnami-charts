@@ -28,7 +28,11 @@ spec:
               properties:
                 type:
                   type: string
+<<<<<<< HEAD
                   enum: [ "helm", "oci" ]
+=======
+                  enum: ["helm", "oci"]
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
                 url:
                   type: string
                 description:

@@ -24,6 +24,15 @@ nameOverride: ""
 ## @param fullnameOverride String to fully override scdf.fullname template.
 ##
 fullnameOverride: ""
+<<<<<<< HEAD
+=======
+## @param commonAnnotations Annotations to add to all deployed objects
+##
+commonAnnotations: {}
+## @param commonLabels Labels to add to all deployed objects
+##
+commonLabels: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param kubeVersion Force target Kubernetes version (using Helm capabilities if not set)
 ##
 kubeVersion: ""
@@ -44,6 +53,10 @@ server:
   ## @param server.image.registry Spring Cloud Dataflow image registry
   ## @param server.image.repository Spring Cloud Dataflow image repository
   ## @param server.image.tag Spring Cloud Dataflow image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+  ## @param server.image.digest Spring Cloud Dataflow image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param server.image.pullPolicy Spring Cloud Dataflow image pull policy
   ## @param server.image.pullSecrets Specify docker-registry secret names as an array
   ## @param server.image.debug Enable image debug mode
@@ -51,9 +64,14 @@ server:
   image:
     registry: docker.io
     repository: bitnami/spring-cloud-dataflow
+<<<<<<< HEAD
     tag: 2.8.2-debian-10-r0
+=======
+    tag: 2.9.4-debian-11-r25
+    digest: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## Specify a imagePullPolicy. Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-    ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
@@ -77,11 +95,20 @@ server:
     ## @param server.composedTaskRunner.image.registry Spring Cloud Dataflow Composed Task Runner image registry
     ## @param server.composedTaskRunner.image.repository Spring Cloud Dataflow Composed Task Runner image repository
     ## @param server.composedTaskRunner.image.tag Spring Cloud Dataflow Composed Task Runner image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+    ## @param server.composedTaskRunner.image.digest Spring Cloud Dataflow Composed Task Runner image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     image:
       registry: docker.io
       repository: bitnami/spring-cloud-dataflow-composed-task-runner
+<<<<<<< HEAD
       tag: 2.8.1-debian-10-r62
+=======
+      tag: 2.9.4-debian-11-r23
+      digest: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Spring Cloud Dataflow Server configuration parameters
   ##
   configuration:
@@ -111,11 +138,39 @@ server:
     ## @param server.configuration.metricsDashboard Endpoint to the metricsDashboard instance
     ##
     metricsDashboard: ""
+<<<<<<< HEAD
+=======
+    ## @param server.configuration.defaultSpringApplicationJSON Injects default values for environment variable SPRING_APPLICATION_JSON
+    ## {
+    ##   "maven": {
+    ##     "local-repository": null,
+    ##     "remote-repositories": {
+    ##       "repo1": {
+    ##         "url": "https://repo.spring.io/libs-snapshot"
+    ##       }
+    ##     }
+    ##   }
+    ## }
+    ##
+    defaultSpringApplicationJSON: true
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param server.existingConfigmap ConfigMap with Spring Cloud Dataflow Server Configuration
   ## NOTE: When it's set the server.configuration.* and deployer.*
   ##  parameters are ignored,
   ##
   existingConfigmap: ""
+<<<<<<< HEAD
+=======
+  ## @param server.command Override default container command (useful when using custom images)
+  ##
+  command: []
+  ## @param server.args Override default container args (useful when using custom images)
+  ##
+  args: []
+  ## @param server.lifecycleHooks for the Dataflow server container(s) to automate configuration before or after startup
+  ##
+  lifecycleHooks: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param server.extraEnvVars Extra environment variables to be set on Dataflow server container
   ## E.g:
   ## extraEnvVars:
@@ -132,9 +187,12 @@ server:
   ## @param server.replicaCount Number of Dataflow server replicas to deploy
   ##
   replicaCount: 1
+<<<<<<< HEAD
   ## @param server.strategyType StrategyType, can be set to RollingUpdate or Recreate by default
   ##
   strategyType: RollingUpdate
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param server.podAffinityPreset Dataflow server pod affinity preset. Ignored if `server.affinity` is set. Allowed values: `soft` or `hard`
   ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
   ##
@@ -182,24 +240,67 @@ server:
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   ##
   podAnnotations: {}
+<<<<<<< HEAD
+=======
+  ## @param server.updateStrategy.type Deployment strategy type for Dataflow server pods.
+  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
+  ## e.g:
+  ## updateStrategy:
+  ##  type: RollingUpdate
+  ##  rollingUpdate:
+  ##    maxSurge: 25%
+  ##    maxUnavailable: 25%
+  ##
+  updateStrategy:
+    type: RollingUpdate
+  ## @param server.podLabels Extra labels for Dataflow Server pods
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  ##
+  podLabels: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param server.priorityClassName Dataflow Server pods' priority
   ## ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
   ##
   priorityClassName: ""
+<<<<<<< HEAD
   ## Dataflow Server pods' Security Context.
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+=======
+  ## @param server.schedulerName Name of the k8s scheduler (other than default)
+  ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+  ##
+  schedulerName: ""
+  ## @param server.topologySpreadConstraints Topology Spread Constraints for pod assignment
+  ## https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  ## The value is evaluated as a template
+  ##
+  topologySpreadConstraints: []
+  ## Dataflow Server pods' Security Context.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  ## @param server.podSecurityContext.enabled Enabled Dataflow Server pods' Security Context
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param server.podSecurityContext.fsGroup Group ID for the volumes of the pod
   ##
   podSecurityContext:
+    enabled: true
     fsGroup: 1001
   ## Dataflow Server containers' Security Context (only main container).
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+<<<<<<< HEAD
+=======
+  ## @param server.containerSecurityContext.enabled Enabled Dataflow Server containers' Security Context
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param server.containerSecurityContext.runAsUser Set Dataflow Server container's Security Context runAsUser
   ##
   containerSecurityContext:
+    enabled: true
     runAsUser: 1001
   ## Dataflow Server containers' resource requests and limits.
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## We usually recommend not to specify default resources and to leave this as a conscious
   ## choice for the user. This also increases chances charts run on environments with little
   ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -218,6 +319,25 @@ server:
     ##    cpu: 100m
     ##    memory: 128Mi
     requests: {}
+<<<<<<< HEAD
+=======
+  ## Dataflow Server pods' startup probes. Evaluated as a template.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  ## @param server.startupProbe.enabled Enable startupProbe
+  ## @param server.startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+  ## @param server.startupProbe.periodSeconds Period seconds for startupProbe
+  ## @param server.startupProbe.timeoutSeconds Timeout seconds for startupProbe
+  ## @param server.startupProbe.failureThreshold Failure threshold for startupProbe
+  ## @param server.startupProbe.successThreshold Success threshold for startupProbe
+  ##
+  startupProbe:
+    enabled: false
+    initialDelaySeconds: 120
+    timeoutSeconds: 1
+    periodSeconds: 20
+    failureThreshold: 6
+    successThreshold: 1
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Dataflow Server pods' liveness probes. Evaluated as a template.
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
   ## @param server.livenessProbe.enabled Enable livenessProbe
@@ -250,6 +370,12 @@ server:
     periodSeconds: 20
     failureThreshold: 6
     successThreshold: 1
+<<<<<<< HEAD
+=======
+  ## @param server.customStartupProbe Override default startup probe
+  ##
+  customStartupProbe: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param server.customLivenessProbe Override default liveness probe
   ##
   customLivenessProbe: {}
@@ -275,7 +401,11 @@ server:
     ##
     clusterIP: ""
     ## @param server.service.externalTrafficPolicy Enable client source IP preservation
+<<<<<<< HEAD
     ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+=======
+    ## ref https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     externalTrafficPolicy: Cluster
     ## @param server.service.loadBalancerIP Load balancer IP if service type is `LoadBalancer`
@@ -290,9 +420,28 @@ server:
     ## - 10.10.10.0/24
     ##
     loadBalancerSourceRanges: []
+<<<<<<< HEAD
     ## @param server.service.annotations Provide any additional annotations which may be required. Evaluated as a template.
     ##
     annotations: {}
+=======
+    ## @param server.service.extraPorts Extra ports to expose (normally used with the `sidecar` value)
+    ##
+    extraPorts: []
+    ## @param server.service.annotations Provide any additional annotations which may be required. Evaluated as a template.
+    ##
+    annotations: {}
+    ## @param server.service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+    ## If "ClientIP", consecutive client requests will be directed to the same Pod
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+    ##
+    sessionAffinity: None
+    ## @param server.service.sessionAffinityConfig Additional settings for the sessionAffinity
+    ## sessionAffinityConfig:
+    ##   clientIP:
+    ##     timeoutSeconds: 300
+    sessionAffinityConfig: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Configure the ingress resource that allows you to access Dataflow Server
   ##
   ingress:
@@ -302,6 +451,7 @@ server:
     ## @param server.ingress.path The Path to WordPress. You may need to set this to '/*' in order to use this with ALB ingress controllers.
     ##
     path: /
+<<<<<<< HEAD
     ## @param server.ingress.pathType Ingress path type
     ##
     pathType: ImplementationSpecific
@@ -312,10 +462,31 @@ server:
     ##
     hostname: dataflow.local
     ## @param server.ingress.annotations Ingress annotations
+=======
+    ## @param server.ingress.apiVersion Force Ingress API version (automatically detected if not set)
+    ##
+    apiVersion: ""
+    ## @param server.ingress.pathType Ingress path type
+    ##
+    pathType: ImplementationSpecific
+    ## DEPRECATED: Use server.ingress.annotations instead of server.ingress.certManager
+    ## certManager: false
+    ##
+
+    ## @param server.ingress.hostname Default host for the ingress resource
+    ##
+    hostname: dataflow.local
+    ## @param server.ingress.annotations Additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## For a full list of possible ingress annotations, please see
     ## ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md
+    ## Use this parameter to set the required annotations for cert-manager, see
+    ## ref: https://cert-manager.io/docs/usage/ingress/#supported-annotations
     ##
-    ## If certManager is set to true, annotation kubernetes.io/tls-acme: "true" will automatically be set
+    ## e.g:
+    ## annotations:
+    ##   kubernetes.io/ingress.class: nginx
+    ##   cert-manager.io/cluster-issuer: cluster-issuer-name
     ##
     annotations: {}
     ## @param server.ingress.tls Enable TLS configuration for the hostname defined at ingress.hostname parameter
@@ -323,6 +494,12 @@ server:
     ## You can use the ingress.secrets parameter to create this TLS secret or relay on cert-manager to create it
     ##
     tls: false
+<<<<<<< HEAD
+=======
+    ## @param server.ingress.certManager Add the corresponding annotations for cert-manager integration
+    ##
+    certManager: false
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## @param server.ingress.extraHosts The list of additional hostnames to be covered with this ingress record.
     ## Most likely the hostname above will be enough, but in the event more hosts are needed, this is an array
     ## extraHosts:
@@ -330,6 +507,18 @@ server:
     ##   path: /
     ##
     extraHosts: []
+<<<<<<< HEAD
+=======
+    ## @param server.ingress.extraPaths An array with additional arbitrary paths that may need to be added to the ingress under the main host
+    ## e.g:
+    ## extraPaths:
+    ## - path: /*
+    ##   backend:
+    ##     serviceName: ssl-redirect
+    ##     servicePort: use-annotation
+    ##
+    extraPaths: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## @param server.ingress.extraTls The tls configuration for additional hostnames to be covered with this ingress record.
     ## see: https://kubernetes.io/docs/concepts/services-networking/ingress/#tls
     ## extraTls:
@@ -353,6 +542,28 @@ server:
     ##   certificate:
     ##
     secrets: []
+<<<<<<< HEAD
+=======
+    ## @param server.ingress.ingressClassName IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+)
+    ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
+    ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
+    ##
+    ingressClassName: ""
+    ## @param server.ingress.extraRules Additional rules to be covered with this ingress record
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-rules
+    ## e.g:
+    ## extraRules:
+    ## - host: example.local
+    ##     http:
+    ##       path: /
+    ##       backend:
+    ##         service:
+    ##           name: example-svc
+    ##           port:
+    ##             name: http
+    ##
+    extraRules: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param server.initContainers Add init containers to the Dataflow Server pods
   ## Example:
   ## initContainers:
@@ -434,9 +645,17 @@ server:
   ##   password: ""
   ##
   proxy: {}
+  ## @param server.applicationProperties Specify common application properties added by SCDF server to streams and/or tasks
+  ## ref: https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/#spring-cloud-dataflow-global-properties
+  applicationProperties: {}
 
 ## @section Dataflow Skipper parameters
 
+<<<<<<< HEAD
+## @section Dataflow Skipper parameters
+
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Spring Cloud Skipper parameters.
 ##
 skipper:
@@ -453,6 +672,10 @@ skipper:
   ## @param skipper.image.registry Spring Cloud Skipper image registry
   ## @param skipper.image.repository Spring Cloud Skipper image repository
   ## @param skipper.image.tag Spring Cloud Skipper image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+  ## @param skipper.image.digest Spring Cloud Skipper image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param skipper.image.pullPolicy Spring Cloud Skipper image pull policy
   ## @param skipper.image.pullSecrets Specify docker-registry secret names as an array
   ## @param skipper.image.debug Enable image debug mode
@@ -460,9 +683,14 @@ skipper:
   image:
     registry: docker.io
     repository: bitnami/spring-cloud-skipper
+<<<<<<< HEAD
     tag: 2.7.1-debian-10-r62
+=======
+    tag: 2.8.4-debian-11-r25
+    digest: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## Specify a imagePullPolicy. Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-    ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
@@ -490,6 +718,18 @@ skipper:
   ##  parameters are ignored,
   ##
   existingConfigmap: ""
+<<<<<<< HEAD
+=======
+  ## @param skipper.command Override default container command (useful when using custom images)
+  ##
+  command: []
+  ## @param skipper.args Override default container args (useful when using custom images)
+  ##
+  args: []
+  ## @param skipper.lifecycleHooks for the Skipper container(s) to automate configuration before or after startup
+  ##
+  lifecycleHooks: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param skipper.extraEnvVars Extra environment variables to be set on Skipper server container
   ## E.g:
   ## extraEnvVars:
@@ -506,9 +746,12 @@ skipper:
   ## @param skipper.replicaCount Number of Skipper server replicas to deploy
   ##
   replicaCount: 1
+<<<<<<< HEAD
   ## @param skipper.strategyType Deployment Strategy Type
   ##
   strategyType: RollingUpdate
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param skipper.podAffinityPreset Skipper pod affinity preset. Ignored if `skipper.affinity` is set. Allowed values: `soft` or `hard`
   ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
   ##
@@ -553,24 +796,67 @@ skipper:
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   ##
   podAnnotations: {}
+<<<<<<< HEAD
+=======
+  ## @param skipper.updateStrategy.type Deployment strategy type for Skipper server pods.
+  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
+  ## e.g:
+  ## updateStrategy:
+  ##  type: RollingUpdate
+  ##  rollingUpdate:
+  ##    maxSurge: 25%
+  ##    maxUnavailable: 25%
+  ##
+  updateStrategy:
+    type: RollingUpdate
+  ## @param skipper.podLabels Extra labels for Skipper pods
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  ##
+  podLabels: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param skipper.priorityClassName Controller priorityClassName
   ## ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
   ##
   priorityClassName: ""
+<<<<<<< HEAD
   ## Skipper pods' Security Context.
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+=======
+  ## @param skipper.schedulerName Name of the k8s scheduler (other than default)
+  ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+  ##
+  schedulerName: ""
+  ## @param skipper.topologySpreadConstraints Topology Spread Constraints for pod assignment
+  ## https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  ## The value is evaluated as a template
+  ##
+  topologySpreadConstraints: []
+  ## Skipper pods' Security Context.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  ## @param skipper.podSecurityContext.enabled Enabled Skipper pods' Security Context
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param skipper.podSecurityContext.fsGroup Group ID for the volumes of the pod
   ##
   podSecurityContext:
+    enabled: true
     fsGroup: 1001
   ## Skipper containers' Security Context (only main container).
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+<<<<<<< HEAD
+=======
+  ## @param skipper.containerSecurityContext.enabled Enabled Datafkiw Skipper containers' Security Context
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param skipper.containerSecurityContext.runAsUser Set Dataflow Skipper container's Security Context runAsUser
   ##
   containerSecurityContext:
+    enabled: true
     runAsUser: 1001
   ## Skipper containers' resource requests and limits.
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## We usually recommend not to specify default resources and to leave this as a conscious
   ## choice for the user. This also increases chances charts run on environments with little
   ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -589,6 +875,25 @@ skipper:
     ##    cpu: 100m
     ##    memory: 128Mi
     requests: {}
+<<<<<<< HEAD
+=======
+  ## Configure extra options for startup probe
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  ## @param skipper.startupProbe.enabled Enable startupProbe
+  ## @param skipper.startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+  ## @param skipper.startupProbe.periodSeconds Period seconds for startupProbe
+  ## @param skipper.startupProbe.timeoutSeconds Timeout seconds for startupProbe
+  ## @param skipper.startupProbe.failureThreshold Failure threshold for startupProbe
+  ## @param skipper.startupProbe.successThreshold Success threshold for startupProbe
+  ##
+  startupProbe:
+    enabled: false
+    initialDelaySeconds: 120
+    timeoutSeconds: 1
+    periodSeconds: 20
+    failureThreshold: 6
+    successThreshold: 1
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Configure extra options for liveness probe
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
   ## @param skipper.livenessProbe.enabled Enable livenessProbe
@@ -621,6 +926,12 @@ skipper:
     periodSeconds: 20
     failureThreshold: 6
     successThreshold: 1
+<<<<<<< HEAD
+=======
+  ## @param skipper.customStartupProbe Override default startup probe
+  ##
+  customStartupProbe: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param skipper.customLivenessProbe Override default liveness probe
   ##
   customLivenessProbe: {}
@@ -646,7 +957,11 @@ skipper:
     ##
     clusterIP: ""
     ## @param skipper.service.externalTrafficPolicy Enable client source IP preservation
+<<<<<<< HEAD
     ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+=======
+    ## ref https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     externalTrafficPolicy: Cluster
     ## @param skipper.service.loadBalancerIP Load balancer IP if service type is `LoadBalancer`
@@ -659,11 +974,32 @@ skipper:
     ## e.g:
     ## loadBalancerSourceRanges:
     ## - 10.10.10.0/24
+<<<<<<< HEAD
     ##
     loadBalancerSourceRanges: []
     ## @param skipper.service.annotations Annotations for Skipper server service
     ##
     annotations: {}
+=======
+    ##
+    loadBalancerSourceRanges: []
+    ## @param skipper.service.extraPorts Extra ports to expose (normally used with the `sidecar` value)
+    ##
+    extraPorts: []
+    ## @param skipper.service.annotations Annotations for Skipper server service
+    ##
+    annotations: {}
+    ## @param skipper.service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+    ## If "ClientIP", consecutive client requests will be directed to the same Pod
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+    ##
+    sessionAffinity: None
+    ## @param skipper.service.sessionAffinityConfig Additional settings for the sessionAffinity
+    ## sessionAffinityConfig:
+    ##   clientIP:
+    ##     timeoutSeconds: 300
+    sessionAffinityConfig: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param skipper.initContainers Add init containers to the Dataflow Skipper pods
   ## Example:
   ## initContainers:
@@ -753,7 +1089,11 @@ externalSkipper:
 ##
 deployer:
   ## Streaming applications resource requests and limits.
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param deployer.resources.limits [object] Streaming applications resource limits
   ## @param deployer.resources.requests Streaming applications resource requests
   ##
@@ -766,6 +1106,7 @@ deployer:
     ##    cpu: 100m
     ##    memory: 128Mi
     requests: {}
+<<<<<<< HEAD
   ## Configure extra options for liveness probe
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
   ## @param deployer.livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
@@ -775,6 +1116,17 @@ deployer:
   ## Configure extra options for readiness probe
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
   ## @param deployer.readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
+=======
+  ## Configure extra options for readiness probe
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  ## @param deployer.readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
+  ##
+  readinessProbe:
+    initialDelaySeconds: 120
+  ## Configure extra options for liveness probe
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  ## @param deployer.livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   livenessProbe:
     initialDelaySeconds: 90
@@ -784,7 +1136,11 @@ deployer:
   nodeSelector: ""
   ## @param deployer.tolerations Streaming applications tolerations
   ##
+<<<<<<< HEAD
   tolerations: {}
+=======
+  tolerations: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param deployer.volumeMounts Streaming applications extra volume mounts
   ##
   volumeMounts: {}
@@ -792,6 +1148,7 @@ deployer:
   ##
   volumes: {}
   ## @param deployer.environmentVariables Streaming applications environment variables
+<<<<<<< HEAD
   ## RabbitMQ/Kafka envs. Multiple values are comma separated.
   ##
   environmentVariables: ""
@@ -799,15 +1156,50 @@ deployer:
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   ## @param deployer.podSecurityContext.runAsUser Set Dataflow Streams container's Security Context runAsUser
   ##
+=======
+  ## RabbitMQ/Kafka envs.
+  ## Example:
+  ## environmentVariables:
+  ##   - JAVA_TOOL_OPTIONS=-Xmx1024m
+  ##   - SPRING_REDIS_HOST=redis
+  ##   - SPRING_REDIS_PORT=6379
+  ##
+  environmentVariables: []
+  ## Streams containers' Security Context. This security context will be use in every deployed stream.
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  ## @param deployer.podSecurityContext.enabled Enabled pods' Security Context of the deployed pods batch or stream pods
+  ## @param deployer.podSecurityContext.runAsUser Set Dataflow Streams container's Security Context runAsUser
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   podSecurityContext:
+    enabled: true
     runAsUser: 1001
+<<<<<<< HEAD
+=======
+  ## @param deployer.imagePullSecrets Streaming applications imagePullSecrets
+  ##
+  imagePullSecrets: []
+  ## @param deployer.secretRefs Streaming applications secretRefs
+  ##
+  secretRefs: []
+  ## @param deployer.entryPointStyle An entry point style affects how application properties are passed to the container to be deployed. Allowed values: exec (default), shell, boot
+  ## ref: https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/#_entry_point_style
+  entryPointStyle: exec
+  ## @param deployer.imagePullPolicy An image pull policy defines when a Docker image should be pulled to the local registry. Allowed values: IfNotPresent (default), Always, Never
+  ## ref: https://docs.spring.io/spring-cloud-dataflow/docs/current/reference/htmlsingle/#_image_pull_policy
+  imagePullPolicy: IfNotPresent
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## @section RBAC parameters
 
 ## K8s Service Account.
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+## @param serviceAccount.create Enable the creation of a ServiceAccount for Dataflow server and Skipper server pods
+## @param serviceAccount.name Name of the created serviceAccount. If not set and create is true, a name is generated using the scdf.fullname template
+## @param serviceAccount.automountServiceAccountToken Automount service account token for the server service account
+## @param serviceAccount.annotations Annotations for service account. Evaluated as a template. Only used if `create` is `true`.
 ##
 serviceAccount:
+<<<<<<< HEAD
   ## @param serviceAccount.create Enable the creation of a ServiceAccount for Dataflow server and Skipper server pods
   ##
   create: true
@@ -815,6 +1207,12 @@ serviceAccount:
   ## If not set and create is true, a name is generated using the scdf.fullname template
   ##
   name: ""
+=======
+  create: true
+  name: ""
+  automountServiceAccountToken: true
+  annotations: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Role Based Access
 ## ref: https://kubernetes.io/docs/admin/authorization/rbac/
 ##
@@ -838,15 +1236,24 @@ metrics:
   ## @param metrics.image.registry Prometheus Rsocket Proxy image registry
   ## @param metrics.image.repository Prometheus Rsocket Proxy image repository
   ## @param metrics.image.tag Prometheus Rsocket Proxy image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+  ## @param metrics.image.digest Prometheus Rsocket Proxy image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param metrics.image.pullPolicy Prometheus Rsocket Proxy image pull policy
   ## @param metrics.image.pullSecrets Specify docker-registry secret names as an array
   ##
   image:
     registry: docker.io
     repository: bitnami/prometheus-rsocket-proxy
+<<<<<<< HEAD
     tag: 1.3.0-debian-10-r248
+=======
+    tag: 1.4.0-debian-11-r26
+    digest: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## Specify a imagePullPolicy. Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-    ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
@@ -858,7 +1265,11 @@ metrics:
     ##
     pullSecrets: []
   ## Prometheus Rsocket Proxy containers' resource requests and limits.
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## We usually recommend not to specify default resources and to leave this as a conscious
   ## choice for the user. This also increases chances charts run on environments with little
   ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -916,6 +1327,13 @@ metrics:
   ## ref: https://kubernetes.io/docs/user-guide/node-selection/
   ##
   nodeSelector: {}
+<<<<<<< HEAD
+=======
+  ## @param metrics.hostAliases Prometheus Proxy pods host aliases
+  ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
+  ##
+  hostAliases: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param metrics.tolerations Prometheus Rsocket Proxy tolerations for pod assignment
   ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   ##
@@ -924,10 +1342,101 @@ metrics:
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   ##
   podAnnotations: {}
+<<<<<<< HEAD
+=======
+  ## @param metrics.podLabels Extra labels for Prometheus Proxy pods
+  ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+  ##
+  podLabels: {}
+  ## Configure Pods Security Context
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  ## @param metrics.podSecurityContext.enabled Enabled Prometheus Proxy pods' Security Context
+  ## @param metrics.podSecurityContext.fsGroup Set Prometheus Proxy pod's Security Context fsGroup
+  ##
+  podSecurityContext:
+    enabled: false
+    fsGroup: 1001
+  ## Configure Container Security Context
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  ## @param metrics.containerSecurityContext.enabled Enabled Prometheus Proxy containers' Security Context
+  ## @param metrics.containerSecurityContext.runAsUser Set Prometheus Proxy containers' Security Context runAsUser
+  ##
+  containerSecurityContext:
+    enabled: false
+    runAsUser: 1001
+  ## @param metrics.command Override default container command (useful when using custom images)
+  ##
+  command: []
+  ## @param metrics.args Override default container args (useful when using custom images)
+  ##
+  args: []
+  ## @param metrics.lifecycleHooks for the Prometheus Proxy container(s) to automate configuration before or after startup
+  ##
+  lifecycleHooks: {}
+  ## @param metrics.extraEnvVars Array with extra environment variables to add to Prometheus Proxy nodes
+  ## e.g:
+  ## extraEnvVars:
+  ##   - name: FOO
+  ##     value: "bar"
+  ##
+  extraEnvVars: []
+  ## @param metrics.extraEnvVarsCM Name of existing ConfigMap containing extra env vars for Prometheus Proxy nodes
+  ##
+  extraEnvVarsCM: ""
+  ## @param metrics.extraEnvVarsSecret Name of existing Secret containing extra env vars for Prometheus Proxy nodes
+  ##
+  extraEnvVarsSecret: ""
+  ## @param metrics.extraVolumes Optionally specify extra list of additional volumes for the Prometheus Proxy pod(s)
+  ##
+  extraVolumes: []
+  ## @param metrics.extraVolumeMounts Optionally specify extra list of additional volumeMounts for the Prometheus Proxy container(s)
+  ##
+  extraVolumeMounts: []
+  ## Prometheus Proxy container ports
+  ## @param metrics.containerPorts.http Prometheus Proxy HTTP container port
+  ## @param metrics.containerPorts.rsocket Prometheus Proxy Rsocket container port
+  ##
+  containerPorts:
+    http: 8080
+    rsocket: 7001
+  ## @param metrics.sidecars Add additional sidecar containers to the Prometheus Proxy pod(s)
+  ## e.g:
+  ## sidecars:
+  ##   - name: your-image-name
+  ##     image: your-image
+  ##     imagePullPolicy: Always
+  ##     ports:
+  ##       - name: portname
+  ##         containerPort: 1234
+  ##
+  sidecars: []
+  ## @param metrics.initContainers Add additional init containers to the Prometheus Proxy pod(s)
+  ## ref: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+  ## e.g:
+  ## initContainers:
+  ##  - name: your-image-name
+  ##    image: your-image
+  ##    imagePullPolicy: Always
+  ##    command: ['sh', '-c', 'echo "hello world"']
+  ##
+  initContainers: []
+  ## @param metrics.updateStrategy.type Prometheus Proxy deployment strategy type.
+  ## ref: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#strategy
+  ## e.g:
+  ## updateStrategy:
+  ##  type: RollingUpdate
+  ##  rollingUpdate:
+  ##    maxSurge: 25%
+  ##    maxUnavailable: 25%
+  ##
+  updateStrategy:
+    type: RollingUpdate
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param metrics.priorityClassName Prometheus Rsocket Proxy pods' priority.
   ## ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
   ##
   priorityClassName: ""
+<<<<<<< HEAD
   service:
     ## @param metrics.service.httpPort Prometheus Rsocket Proxy HTTP port
     ##
@@ -935,18 +1444,83 @@ metrics:
     ## @param metrics.service.rsocketPort Prometheus Rsocket Proxy Rsocket port
     ##
     rsocketPort: 7001
+=======
+  ## @param metrics.schedulerName Name of the k8s scheduler (other than default)
+  ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+  ##
+  schedulerName: ""
+  ## @param metrics.topologySpreadConstraints Topology Spread Constraints for pod assignment
+  ## https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  ## The value is evaluated as a template
+  ##
+  topologySpreadConstraints: []
+  ## Prometheus Proxy service parameters
+  ##
+  service:
+    ## @param metrics.service.type Prometheus Proxy service type
+    ##
+    type: ClusterIP
+    ## @param metrics.service.ports.http Prometheus Rsocket Proxy HTTP port
+    ## @param metrics.service.ports.rsocket Prometheus Rsocket Proxy Rsocket port
+    ##
+    ports:
+      http: 8080
+      rsocket: 7001
+    ## Node ports to expose
+    ## @param metrics.service.nodePorts.http Node port for HTTP
+    ## @param metrics.service.nodePorts.rsocket Node port for Rsocket
+    ## NOTE: choose port between <30000-32767>
+    ##
+    nodePorts:
+      http: ""
+      rsocket: ""
+    ## @param metrics.service.clusterIP Prometheys Proxy service Cluster IP
+    ## e.g.:
+    ## clusterIP: None
+    ##
+    clusterIP: ""
+    ## @param metrics.service.loadBalancerIP Prometheys Proxy service Load Balancer IP
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer
+    ##
+    loadBalancerIP: ""
+    ## @param metrics.service.loadBalancerSourceRanges Prometheys Proxy service Load Balancer sources
+    ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
+    ## e.g:
+    ## loadBalancerSourceRanges:
+    ##   - 10.10.10.0/24
+    ##
+    loadBalancerSourceRanges: []
+    ## @param metrics.service.externalTrafficPolicy Prometheys Proxy service external traffic policy
+    ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+    ##
+    externalTrafficPolicy: Cluster
+    ## @param metrics.service.extraPorts Extra ports to expose (normally used with the `sidecar` value)
+    ##
+    extraPorts: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## @param metrics.service.annotations [object] Annotations for the Prometheus Rsocket Proxy service
     ##
     annotations:
       prometheus.io/scrape: 'true'
-      prometheus.io/port: '{{ .Values.metrics.service.httpPort }}'
+      prometheus.io/port: '{{ .Values.metrics.service.ports.http }}'
       prometheus.io/path: '/metrics/proxy'
+    ## @param metrics.service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+    ## If "ClientIP", consecutive client requests will be directed to the same Pod
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+    ##
+    sessionAffinity: None
+    ## @param metrics.service.sessionAffinityConfig Additional settings for the sessionAffinity
+    ## sessionAffinityConfig:
+    ##   clientIP:
+    ##     timeoutSeconds: 300
+    sessionAffinityConfig: {}
   ## Prometheus Operator ServiceMonitor configuration
   ##
   serviceMonitor:
     ## @param metrics.serviceMonitor.enabled if `true`, creates a Prometheus Operator ServiceMonitor (also requires `metrics.enabled` to be `true`)
     ##
     enabled: false
+<<<<<<< HEAD
     ## @param metrics.serviceMonitor.extraLabels Labels to add to ServiceMonitor, in case prometheus operator is configured with serviceMonitorSelector
     ## ref: https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#prometheusspec
     ##
@@ -954,6 +1528,14 @@ metrics:
     ## @param metrics.serviceMonitor.namespace Namespace in which ServiceMonitor is created if different from release
     ##
     namespace: ""
+=======
+    ## @param metrics.serviceMonitor.namespace Namespace in which ServiceMonitor is created if different from release
+    ##
+    namespace: ""
+    ## @param metrics.serviceMonitor.jobLabel The name of the label on the target service to use as the job name in prometheus.
+    ##
+    jobLabel: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## @param metrics.serviceMonitor.interval Interval at which metrics should be scraped.
     ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
     ## e.g:
@@ -966,6 +1548,30 @@ metrics:
     ## scrapeTimeout: 10s
     ##
     scrapeTimeout: ""
+<<<<<<< HEAD
+=======
+    ## @param metrics.serviceMonitor.relabelings RelabelConfigs to apply to samples before scraping
+    ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
+    ##
+    relabelings: []
+    ## @param metrics.serviceMonitor.metricRelabelings MetricRelabelConfigs to apply to samples before ingestion
+    ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
+    ##
+    metricRelabelings: []
+    ## @param metrics.serviceMonitor.selector ServiceMonitor selector labels
+    ## ref: https://github.com/bitnami/charts/tree/master/bitnami/prometheus-operator#prometheus-configuration
+    ##
+    ## selector:
+    ##   prometheus: my-prometheus
+    ##
+    selector: {}
+    ## @param metrics.serviceMonitor.labels Extra labels for the ServiceMonitor
+    ##
+    labels: {}
+    ## @param metrics.serviceMonitor.honorLabels honorLabels chooses the metric's labels on collisions with target labels
+    ##
+    honorLabels: false
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Prometheus Rsocket Proxy Pod Disruption Budget configuration
   ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
   ##
@@ -992,9 +1598,15 @@ metrics:
     maxReplicas: ""
     targetCPU: ""
     targetMemory: ""
+<<<<<<< HEAD
 
 ## @section Init Container parameters
 
+=======
+
+## @section Init Container parameters
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Init containers parameters:
 ## wait-for-backends: Wait for the database and other services (such as Kafka or RabbitMQ) used when enabling streaming
 ##
@@ -1005,16 +1617,28 @@ waitForBackends:
   ## @param waitForBackends.image.registry Init container wait-for-backend image registry
   ## @param waitForBackends.image.repository Init container wait-for-backend image name
   ## @param waitForBackends.image.tag Init container wait-for-backend image tag
+<<<<<<< HEAD
+=======
+  ## @param waitForBackends.image.digest Init container wait-for-backend image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param waitForBackends.image.pullPolicy Init container wait-for-backend image pull policy
   ## @param waitForBackends.image.pullSecrets Specify docker-registry secret names as an array
   ##
   image:
     registry: docker.io
     repository: bitnami/kubectl
+<<<<<<< HEAD
     tag: 1.19.14-debian-10-r18
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+=======
+    tag: 1.24.3-debian-11-r8
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets (secrets must be manually created in the namespace)
@@ -1025,7 +1649,11 @@ waitForBackends:
     ##
     pullSecrets: []
   ## Init container resource requests and limits.
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## We usually recommend not to specify default resources and to leave this as a conscious
   ## choice for the user. This also increases chances charts run on environments with little
   ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -1061,18 +1689,30 @@ mariadb:
   ##
   auth:
     ## @param mariadb.auth.rootPassword Password for the MariaDB `root` user
+<<<<<<< HEAD
     ## ref: https://github.com/bitnami/bitnami-docker-mariadb#setting-the-root-password-on-first-run
     ##
     rootPassword: ""
     ## @param mariadb.auth.username Username of new user to create
     ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#creating-a-database-on-first-run
+=======
+    ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mariadb#setting-the-root-password-on-first-run
+    ##
+    rootPassword: ""
+    ## @param mariadb.auth.username Username of new user to create
+    ## ref: https://github.com/bitnami/containers/blob/main/bitnami/mariadb/README.md#creating-a-database-on-first-run
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     username: dataflow
     ## @param mariadb.auth.password Password for the new user
     ##
     password: change-me
     ## @param mariadb.auth.database Database name to create
+<<<<<<< HEAD
     ## ref: https://github.com/bitnami/bitnami-docker-mariadb#creating-a-database-on-first-run
+=======
+    ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mariadb#creating-a-database-on-first-run
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     database: dataflow
     ## @param mariadb.auth.forcePassword Force users to specify required passwords in the database
@@ -1092,6 +1732,16 @@ mariadb:
       CREATE DATABASE IF NOT EXISTS `skipper`;
       GRANT ALL ON skipper.* to 'skipper'@'%';
       FLUSH PRIVILEGES;
+<<<<<<< HEAD
+=======
+## Flyway Configuration
+## @param flyway.enabled Enable/disable flyway running Dataflow and Skipper Database creation scripts on startup
+## All database creation scripts are ignored on startup when flyway.enabled is set to false
+## This feature can be used in scenario, where Database tables are already present in Mariadb or ExternalDatabase.
+##
+flyway:
+  enabled: true
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## External Database Configuration
 ## All of these values are ignored when mariadb.enabled is set to true
 ##
@@ -1106,10 +1756,17 @@ externalDatabase:
   ##
   driver: ""
   ## @param externalDatabase.scheme The scheme is a vendor-specific or shared protocol string that follows the "jdbc:" of the URL
+<<<<<<< HEAD
   ##
   scheme: ""
   ## @param externalDatabase.password Password for the above username
   ##
+=======
+  ##
+  scheme: ""
+  ## @param externalDatabase.password Password for the above username
+  ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   password: ""
   ## @param externalDatabase.existingPasswordSecret Existing secret with database password
   ##

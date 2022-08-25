@@ -23,9 +23,23 @@ spec:
     {{- if .Values.hub.networkPolicy.extraIngress }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.hub.networkPolicy.extraIngress "context" $ ) | nindent 4 }}
     {{- end }}
+<<<<<<< HEAD
     # Pods with label "hub.jupyter.org/network-access-hub" --> Hub
     - ports:
         - port: {{ .Values.hub.containerPort }}
+=======
+    {{- if .Values.hub.metrics.serviceMonitor.enabled }}
+    # Prometheus pods with label "app.kubernetes.io/component: prometheus" --> Hub
+    - from:
+      - namespaceSelector: {}
+        podSelector:
+          matchLabels:
+            app.kubernetes.io/component: prometheus
+    {{- end }}
+    # Pods with label "hub.jupyter.org/network-access-hub" --> Hub
+    - ports:
+        - port: {{ coalesce .Values.hub.containerPorts.http .Values.hub.containerPort }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       from:
         - podSelector:
             matchLabels:
@@ -61,9 +75,15 @@ spec:
     ## PostgreSQL access
     - ports:
         - protocol: UDP
+<<<<<<< HEAD
           port: {{ .Values.postgresql.service.port }}
         - protocol: TCP
           port: {{ .Values.postgresql.service.port }}
+=======
+          port: {{ .Values.postgresql.service.ports.postgresql }}
+        - protocol: TCP
+          port: {{ .Values.postgresql.service.ports.postgresql }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     {{- if .Values.hub.networkPolicy.extraEgress }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.hub.networkPolicy.extraEgress "context" $ ) | nindent 4 }}
     {{- end }}

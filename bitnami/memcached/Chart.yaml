@@ -1,14 +1,18 @@
 annotations:
   category: Infrastructure
 apiVersion: v2
+<<<<<<< HEAD
 appVersion: 1.6.10
+=======
+appVersion: 1.6.16
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
-    version: 1.x.x
-description: Chart for Memcached
+    version: 2.x.x
+description: Memcached is an high-performance, distributed memory object caching system, generic in nature, but intended for use in speeding up dynamic web applications by alleviating database load.
 engine: gotpl
 home: https://github.com/bitnami/charts/tree/master/bitnami/memcached
 icon: https://bitnami.com/assets/stacks/memcached/img/memcached-stack-220x234.png
@@ -16,10 +20,14 @@ keywords:
   - memcached
   - cache
 maintainers:
-  - email: containers@bitnami.com
-    name: Bitnami
+  - name: Bitnami
+    url: https://github.com/bitnami/charts
 name: memcached
 sources:
-  - https://github.com/bitnami/bitnami-docker-memcached
+  - https://github.com/bitnami/containers/tree/main/bitnami/memcached
   - http://memcached.org/
+<<<<<<< HEAD
 version: 5.14.2
+=======
+version: 6.2.0
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

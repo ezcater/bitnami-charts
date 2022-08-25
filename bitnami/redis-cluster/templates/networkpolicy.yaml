@@ -4,6 +4,7 @@ apiVersion: {{ template "networkPolicy.apiVersion" . }}
 metadata:
   name: {{ template "common.names.fullname" . }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
+  namespace: {{ .Release.Namespace | quote }}
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
@@ -25,16 +26,21 @@ spec:
         protocol: UDP
     # Allow outbound connections to other cluster pods
     - ports:
-        - port: {{ .Values.redis.port }}
-        - port: {{ .Values.redis.busPort }}
+        - port: {{ .Values.redis.containerPorts.redis }}
+        - port: {{ .Values.redis.containerPorts.bus }}
       to:
         - podSelector:
             matchLabels: {{- include "common.labels.matchLabels" . | nindent 14 }}
   ingress:
     # Allow inbound connections
     - ports:
+<<<<<<< HEAD
         - port: {{ .Values.redis.port }}
         - port: {{ .Values.redis.busPort }}
+=======
+        - port: {{ .Values.redis.containerPorts.redis }}
+        - port: {{ .Values.redis.containerPorts.bus }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       from:
         {{- if not .Values.networkPolicy.allowExternal }}
         - podSelector:

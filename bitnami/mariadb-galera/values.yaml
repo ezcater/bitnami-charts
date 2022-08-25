@@ -18,12 +18,30 @@ global:
 
 ## @section Common parameters
 
+<<<<<<< HEAD
+=======
+## @param kubeVersion Force target Kubernetes version (using Helm capabilities if not set)
+##
+kubeVersion: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param nameOverride String to partially override common.names.fullname template with a string (will prepend the release name)
 ##
 nameOverride: ""
 ## @param fullnameOverride String to fully override common.names.fullname template with a string
 ##
 fullnameOverride: ""
+<<<<<<< HEAD
+=======
+## @param namespaceOverride String to fully override common.names.namespace
+##
+namespaceOverride: ""
+## @param commonAnnotations Annotations to add to all deployed objects
+##
+commonAnnotations: {}
+## @param commonLabels Labels to add to all deployed objects
+##
+commonLabels: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param schedulerName Name of the Kubernetes scheduler (other than default)
 ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
 ##
@@ -57,6 +75,10 @@ diagnosticMode:
 ## @param image.registry MariaDB Galera image registry
 ## @param image.repository MariaDB Galera image repository
 ## @param image.tag MariaDB Galera image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+## @param image.digest MariaDB Galera image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param image.pullPolicy MariaDB Galera image pull policy
 ## @param image.pullSecrets Specify docker-registry secret names as an array
 ## @param image.debug Specify if debug logs should be enabled
@@ -64,10 +86,15 @@ diagnosticMode:
 image:
   registry: docker.io
   repository: bitnami/mariadb-galera
+<<<<<<< HEAD
   tag: 10.5.12-debian-10-r1
+=======
+  tag: 10.6.9-debian-11-r1
+  digest: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
   ##
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets (secrets must be manually created in the namespace)
@@ -94,20 +121,41 @@ service:
   ## @param service.type Kubernetes service type
   ##
   type: ClusterIP
+<<<<<<< HEAD
   ## @param service.port MariaDB service port
   ##
   port: 3306
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param service.clusterIP Specific cluster IP when service type is cluster IP. Use `None` for headless service
   ## e.g:
   ## clusterIP: None
   ##
   clusterIP: ""
+<<<<<<< HEAD
   ## @param service.nodePort Specify the nodePort value for the LoadBalancer and NodePort service types.
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
   ## e.g:
   ## nodePort: 30001
   ##
   nodePort: ""
+=======
+  ## @param service.ports.mysql MariaDB service port
+  ##
+  ports:
+    mysql: 3306
+  ## @param service.nodePorts.mysql Specify the nodePort value for the LoadBalancer and NodePort service types.
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
+  ## e.g:
+  ## nodePort:
+  ##    mysql: 30001
+  ##
+  nodePorts:
+    mysql: ""
+  ## @param service.extraPorts Extra ports to expose (normally used with the `sidecar` value)
+  ##
+  extraPorts: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param service.externalIPs External IP list to use with ClusterIP service type
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#external-ips
   ##
@@ -124,21 +172,58 @@ service:
   ## - 10.10.10.0/24
   ##
   loadBalancerSourceRanges: []
+<<<<<<< HEAD
+=======
+  ## @param service.externalTrafficPolicy %%MAIN_CONTAINER_NAME%% service external traffic policy
+  ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+  ##
+  externalTrafficPolicy: Cluster
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param service.annotations Additional annotations for MariaDB Galera service
   ## This can be used toset the LoadBalancer service type to internal only.
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
   ##
   annotations: {}
+<<<<<<< HEAD
   ## Headless service properties
   ##
   headless:
     ## @param service.headless.annotations Annotations for the headless service. May be useful for setting `service.alpha.kubernetes.io/tolerate-unready-endpoints="true"` when using peer-finder.
     ##
     annotations: {}
+=======
+  ## @param service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+  ## If "ClientIP", consecutive client requests will be directed to the same Pod
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+  ##
+  sessionAffinity: None
+  ## @param service.sessionAffinityConfig Additional settings for the sessionAffinity
+  ## sessionAffinityConfig:
+  ##   clientIP:
+  ##     timeoutSeconds: 300
+  ##
+  sessionAffinityConfig: {}
+  ## Headless service properties
+  ##
+  headless:
+    ## @param service.headless.annotations Annotations for the headless service.
+    ## Useful for setting `service.alpha.kubernetes.io/tolerate-unready-endpoints="true"` when using peer-finder.
+    ##
+    annotations: {}
+    ## @param service.headless.publishNotReadyAddresses Publish not Ready MariaDB Galera pods' IPs in the headless service.
+    ## Required for peer discovery during cluster bootstrap (1st chart installation), optional afterwards.
+    ##
+    publishNotReadyAddresses: true
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Pods Service Account
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+## @param serviceAccount.create Specify whether a ServiceAccount should be created
+## @param serviceAccount.name Name of the service account to use. If not set and create is true, a name is generated using the fullname template.
+## @param serviceAccount.automountServiceAccountToken Automount service account token for the server service account
+## @param serviceAccount.annotations Annotations for service account. Evaluated as a template. Only used if `create` is `true`.
 ##
 serviceAccount:
+<<<<<<< HEAD
   ## @param serviceAccount.create Specify whether a ServiceAccount should be created
   ##
   create: false
@@ -146,6 +231,18 @@ serviceAccount:
   ## If not set and create is true, a name is generated using the common.names.fullname template
   ##
   name: ""
+=======
+  create: false
+  name: ""
+  automountServiceAccountToken: false
+  annotations: {}
+## @param command Override default container command (useful when using custom images)
+##
+command: []
+## @param args Override default container args (useful when using custom images)
+##
+args: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param extraEnvVars Array containing extra env vars to configure MariaDB Galera replicas
 ## For example:
 ## extraEnvVars:
@@ -168,14 +265,32 @@ rbac:
   create: false
 ## Pod Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+<<<<<<< HEAD
 ## @param securityContext.enabled Enable security context
 ## @param securityContext.fsGroup Group ID for the container filesystem
 ## @param securityContext.runAsUser User ID for the container
+=======
+## @param podSecurityContext.enabled Enable security context
+## @param podSecurityContext.fsGroup Group ID for the container filesystem
+## @param podSecurityContext.runAsUser User ID for the container
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
-securityContext:
+podSecurityContext:
   enabled: true
   fsGroup: 1001
   runAsUser: 1001
+<<<<<<< HEAD
+=======
+## Configure Container Security Context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+## @param containerSecurityContext.enabled Enabled galera's container Security Context
+## @param containerSecurityContext.runAsUser Set galera's container Security Context runAsUser
+## @param containerSecurityContext.runAsNonRoot Set galera's container Security Context runAsNonRoot
+containerSecurityContext:
+  enabled: true
+  runAsUser: 1001
+  runAsNonRoot: true
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Database credentials for root (admin) user
 ##
 rootUser:
@@ -184,7 +299,7 @@ rootUser:
   user: root
   ## @param rootUser.password Password for the admin user. Ignored if existing secret is provided.
   ## Password is ignored if existingSecret is specified.
-  ## ref: https://github.com/bitnami/bitnami-docker-mariadb-galera#setting-the-root-password-on-first-run
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mariadb-galera#setting-the-root-password-on-first-run
   ##
   password: ""
   ## @param rootUser.forcePassword Option to force users to specify a password. That is required for 'helm upgrade' to work properly.
@@ -210,14 +325,22 @@ customPasswordFiles: {}
 ##
 db:
   ## @param db.user Username of new user to create
+<<<<<<< HEAD
   ## ref: https://github.com/bitnami/bitnami-docker-mariadb-galera#creating-a-database-user-on-first-run
+=======
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mariadb-galera#creating-a-database-user-on-first-run
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   user: ""
   ## @param db.password Password for the new user. Ignored if existing secret is provided.
   ##
   password: ""
   ## @param db.name Name for new database to create
+<<<<<<< HEAD
   ## ref: https://github.com/bitnami/bitnami-docker-mariadb-galera#creating-a-database-on-first-run
+=======
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mariadb-galera#creating-a-database-on-first-run
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   name: my_database
   ## @param db.forcePassword Option to force users to specify a password. That is required for 'helm upgrade' to work properly.
@@ -231,12 +354,21 @@ galera:
   ##
   name: galera
   ## Bootstraping options
-  ## ref: https://github.com/bitnami/bitnami-docker-mariadb-galera#bootstraping
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mariadb-galera#bootstraping
   ##
   bootstrap:
+<<<<<<< HEAD
     ## @param galera.bootstrap.bootstrapFromNode Node to bootstrap from, you will need to change this parameter in case you want to bootstrap from other node
     ##
     bootstrapFromNode: ""
+=======
+    ## @param galera.bootstrap.forceBootstrap Option to force the boostraping from the indicated node in `galera.bootstarp.bootstrapFromNode`
+    ##
+    forceBootstrap: false
+    ## @param galera.bootstrap.bootstrapFromNode Node to bootstrap from, you will need to change this parameter in case you want to bootstrap from other node
+    ##
+    bootstrapFromNode: 0
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## @param galera.bootstrap.forceSafeToBootstrap Force `safe_to_bootstrap: 1` in `grastate.date` file
     ## This will set safe_to_bootstrap=1 in the node indicated by bootstrapFromNode.
     ##
@@ -245,7 +377,11 @@ galera:
   ##
   mariabackup:
     ## @param galera.mariabackup.user MariaBackup username
+<<<<<<< HEAD
     ## ref: https://github.com/bitnami/bitnami-docker-mariadb-galera#setting-up-a-multi-master-cluster
+=======
+    ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mariadb-galera#setting-up-a-multi-master-cluster
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     user: mariabackup
     ## @param galera.mariabackup.password MariaBackup password. Password is ignored if existingSecret is specified.
@@ -257,7 +393,11 @@ galera:
     forcePassword: false
 ## LDAP configuration
 ## @param ldap.enabled Enable LDAP support
+<<<<<<< HEAD
 ## @param ldap.uri LDAP URL beginning in the form `ldap
+=======
+## @param ldap.uri LDAP URL beginning in the form `ldap`
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param ldap.base LDAP base DN
 ## @param ldap.binddn LDAP bind DN
 ## @param ldap.bindpw LDAP bind password
@@ -508,9 +648,37 @@ nodeSelector: {}
 ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 ##
 tolerations: []
-## Enable persistence using Persistent Volume Claims
-## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+<<<<<<< HEAD
+=======
+## @param topologySpreadConstraints Topology Spread Constraints for pods assignment
+## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+## E.g.
+## topologySpreadConstraints:
+##   - maxSkew: 1
+##     topologyKey: topology.kubernetes.io/zone
+##     whenUnsatisfiable: DoNotSchedule
 ##
+topologySpreadConstraints: []
+## @param lifecycleHooks for the galera container(s) to automate configuration before or after startup
+##
+lifecycleHooks: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
+## Enable persistence using Persistent Volume Claims
+## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
+##
+## Galera container port
+## @param containerPorts.mysql mariadb database container port
+## @param containerPorts.galera galera cluster container port
+## @param containerPorts.ist galera IST container port
+## @param containerPorts.sst galera SST container port
+##
+containerPorts:
+  mysql: 3306
+  # Note: Container image is not aware of changes in the following container's ports
+  galera: 4567
+  ist: 4568
+  sst: 4444
+
 persistence:
   ## @param persistence.enabled Enable persistence using PVC
   ##
@@ -541,6 +709,12 @@ persistence:
   ## @param persistence.annotations Persistent Volume Claim annotations
   ##
   annotations: {}
+<<<<<<< HEAD
+=======
+  ## @param persistence.labels Persistent Volume Claim Labels
+  ##
+  labels: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param persistence.accessModes Persistent Volume Access Modes
   ##
   accessModes:
@@ -551,16 +725,36 @@ persistence:
 ## @param priorityClassName Priority Class Name for Statefulset
 ##
 priorityClassName: ""
+<<<<<<< HEAD
 ## @param extraInitContainers Additional init containers (this value is evaluated as a template)
 ## extraInitContainers:
+=======
+## @param initContainers Additional init containers (this value is evaluated as a template)
+## initContainers:
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## - name: do-something
 ##   image: bitnami/minideb
 ##   command: ['do', 'something']
 ##
+<<<<<<< HEAD
 extraInitContainers: []
 ## @param extraContainers Additional containers (this value is evaluated as a template)
 ##
 extraContainers: []
+=======
+initContainers: []
+## @param sidecars Add additional sidecar containers (this value is evaluated as a template)
+## e.g:
+## sidecars:
+##   - name: your-image-name
+##     image: your-image
+##     imagePullPolicy: Always
+##     ports:
+##       - name: portname
+##         containerPort: 1234
+##
+sidecars: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## extraVolumes and extraVolumeMounts allows you to mount other volumes
 ## @param extraVolumes Extra volumes
 ## @param extraVolumeMounts Mount extra volume(s)
@@ -661,6 +855,18 @@ startupProbe:
   ## Let's wait 600 seconds by default, it should give enough time in any cluster for mysql to init
   ##
   failureThreshold: 48
+<<<<<<< HEAD
+=======
+## @param customStartupProbe Custom liveness probe for the Web component
+##
+customStartupProbe: {}
+## @param customLivenessProbe Custom liveness probe for the Web component
+##
+customLivenessProbe: {}
+## @param customReadinessProbe Custom rediness probe for the Web component
+##
+customReadinessProbe: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Pod disruption budget configuration
 ##
 podDisruptionBudget:
@@ -684,13 +890,22 @@ metrics:
   ## @param metrics.image.registry MariaDB Prometheus exporter image registry
   ## @param metrics.image.repository MariaDB Prometheus exporter image repository
   ## @param metrics.image.tag MariaDB Prometheus exporter image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+  ## @param metrics.image.digest MariaDB Prometheus exporter image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param metrics.image.pullPolicy MariaDB Prometheus exporter image pull policy
   ## @param metrics.image.pullSecrets MariaDB Prometheus exporter image pull secrets
   ##
   image:
     registry: docker.io
     repository: bitnami/mysqld-exporter
+<<<<<<< HEAD
     tag: 0.13.0-debian-10-r75
+=======
+    tag: 0.14.0-debian-11-r27
+    digest: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets (secrets must be manually created in the namespace)
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -707,7 +922,11 @@ metrics:
   ##
   extraFlags: []
   ## MySQL Prometheus exporter containers' resource requests and limits
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## We usually recommend not to specify default resources and to leave this as a conscious
   ## choice for the user. This also increases chances charts run on environments with little
   ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -737,6 +956,30 @@ metrics:
     annotations:
       prometheus.io/scrape: "true"
       prometheus.io/port: "9104"
+<<<<<<< HEAD
+=======
+    ## @param metrics.service.loadBalancerIP Load Balancer IP if the Prometheus metrics server type is `LoadBalancer`
+    ## ref: https://kubernetes.io/docs/user-guide/services/#type-loadbalancer
+    ##
+    loadBalancerIP: ""
+    ## @param metrics.service.clusterIP Prometheus metrics service Cluster IP
+    ## e.g.:
+    ## clusterIP: None
+    ##
+    clusterIP: ""
+    ## @param metrics.service.loadBalancerSourceRanges Prometheus metrics service Load Balancer sources
+    ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
+    ## e.g:
+    ## loadBalancerSourceRanges:
+    ##   - 10.10.10.0/24
+    ##
+    loadBalancerSourceRanges: []
+    ## @param metrics.service.externalTrafficPolicy Prometheus metrics service external traffic policy
+    ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+    ##
+    externalTrafficPolicy: Cluster
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Prometheus Operator ServiceMonitor configuration
   ##
   serviceMonitor:
@@ -746,6 +989,12 @@ metrics:
     ## @param metrics.serviceMonitor.namespace Optional namespace which Prometheus is running in
     ##
     namespace: ""
+<<<<<<< HEAD
+=======
+    ## @param metrics.serviceMonitor.jobLabel The name of the label on the target service to use as the job name in prometheus.
+    ##
+    jobLabel: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## @param metrics.serviceMonitor.interval How frequently to scrape metrics (use by default, falling back to Prometheus' default)
     ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
     ## e.g:
@@ -781,16 +1030,30 @@ metrics:
     ##    replacement: 'example_prefix_$1'
     ##
     metricRelabelings: []
+<<<<<<< HEAD
+=======
+    ## @param metrics.serviceMonitor.honorLabels honorLabels chooses the metric's labels on collisions with target labels
+    ##
+    honorLabels: false
+    ## @param metrics.serviceMonitor.labels ServiceMonitor extra labels
+    ##
+    labels: {}
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Prometheus Operator PrometheusRule configuration
   ##
   prometheusRules:
     ## @param metrics.prometheusRules.enabled if `true`, creates a Prometheus Operator PrometheusRule (also requires `metrics.enabled` to be `true`, and makes little sense without ServiceMonitor)
     ##
     enabled: false
+<<<<<<< HEAD
     ## @param metrics.prometheusRules.selector [object] Additional labels to add to the PrometheusRule so it is picked up by the operator
+=======
+    ## @param metrics.prometheusRules.additionalLabels [object] Additional labels to add to the PrometheusRule so it is picked up by the operator
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## If using the [Helm Chart](https://github.com/helm/charts/tree/master/stable/prometheus-operator) this is the name of the Helm release and 'app: prometheus-operator'
     ##
-    selector:
+    additionalLabels:
       app: prometheus-operator
       release: prometheus
     ## @param metrics.prometheusRules.rules PrometheusRule rules to configure

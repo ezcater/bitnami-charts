@@ -2,6 +2,10 @@
 ## Global Docker image parameters
 ## Please, note that this will override the image parameters, including dependencies, configured to use the global value
 ## Current available global Docker image parameters: imageRegistry, imagePullSecrets and storageClass
+<<<<<<< HEAD
+=======
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## @param global.imageRegistry Global Docker image registry
 ## @param global.imagePullSecrets Global Docker registry secret names as an array
@@ -17,6 +21,10 @@ global:
   storageClass: ""
 
 ## @section Common parameters
+<<<<<<< HEAD
+=======
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## @param nameOverride String to partially override common.names.fullname
 ##
@@ -24,6 +32,12 @@ nameOverride: ""
 ## @param fullnameOverride String to fully override common.names.fullname
 ##
 fullnameOverride: ""
+<<<<<<< HEAD
+=======
+## @param kubeVersion Force target Kubernetes version (using Helm capabilities if not set)
+##
+kubeVersion: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param commonLabels Labels to add to all deployed objects (sub-charts are not considered)
 ##
 commonLabels: {}
@@ -53,12 +67,20 @@ diagnosticMode:
     - infinity
 
 ## @section Cassandra parameters
+<<<<<<< HEAD
+=======
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## Bitnami Cassandra image
 ## ref: https://hub.docker.com/r/bitnami/cassandra/tags/
 ## @param image.registry Cassandra image registry
 ## @param image.repository Cassandra image repository
 ## @param image.tag Cassandra image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+## @param image.digest Cassandra image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param image.pullPolicy image pull policy
 ## @param image.pullSecrets Cassandra image pull secrets
 ## @param image.debug Enable image debug mode
@@ -66,10 +88,18 @@ diagnosticMode:
 image:
   registry: docker.io
   repository: bitnami/cassandra
+<<<<<<< HEAD
   tag: 4.0.0-debian-10-r17
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+=======
+  tag: 4.0.5-debian-11-r8
+  digest: ""
+  ## Specify a imagePullPolicy
+  ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+  ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
@@ -110,6 +140,10 @@ dbUser:
   ##   ##
   ##   keyMapping:
   ##     cassandra-password: myCassandraPasswordKey
+<<<<<<< HEAD
+=======
+  ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   existingSecret: ""
 
 ## @param initDBConfigMap ConfigMap with cql scripts. Useful for creating a keyspace and pre-populating data
@@ -131,6 +165,10 @@ existingConfiguration: ""
 ## @param cluster.internodeEncryption DEPRECATED: use tls.internode and tls.client instead. Encryption values.
 ## @param cluster.clientEncryption Client Encryption
 ## @param cluster.extraSeeds For an external/second cassandra ring.
+<<<<<<< HEAD
+=======
+## @param cluster.enableUDF Enable User defined functions
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 cluster:
   name: cassandra
@@ -147,7 +185,14 @@ cluster:
   ## extraSeeds:
   ##   - hostname/IP
   ##   - hostname/IP
+<<<<<<< HEAD
   extraSeeds: []
+=======
+  ##
+  extraSeeds: []
+  enableUDF: false
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## JVM Settings
 ## @param jvm.extraOpts Set the value for Java Virtual Machine extra options
 ## @param jvm.maxHeapSize Set Java Virtual Machine maximum heap size (MAX_HEAP_SIZE). Calculated automatically if `nil`
@@ -160,6 +205,10 @@ jvm:
   ## - calculate 1/2 ram and cap to 1024MB
   ## - calculate 1/4 ram and cap to 8192MB
   ## - pick the max
+<<<<<<< HEAD
+=======
+  ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   maxHeapSize: ""
   ## newHeapSize:
   ## A good guideline is 100 MB per CPU core.
@@ -180,6 +229,7 @@ args: []
 ##
 extraEnvVars: []
 ## @param extraEnvVarsCM Name of existing ConfigMap containing extra env vars
+<<<<<<< HEAD
 ##
 extraEnvVarsCM: ""
 ## @param extraEnvVarsSecret Name of existing Secret containing extra env vars
@@ -203,6 +253,29 @@ hostAliases: []
 ## https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#partitions
 ##
 rollingUpdatePartition: ""
+=======
+##
+extraEnvVarsCM: ""
+## @param extraEnvVarsSecret Name of existing Secret containing extra env vars
+##
+extraEnvVarsSecret: ""
+
+## @section Statefulset parameters
+##
+
+## @param replicaCount Number of Cassandra replicas
+##
+replicaCount: 1
+## @param updateStrategy.type updateStrategy for Cassandra statefulset
+## ref: https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
+##
+updateStrategy:
+  type: RollingUpdate
+## @param hostAliases Add deployment host aliases
+## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
+##
+hostAliases: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param podManagementPolicy StatefulSet pod management policy
 ##
 podManagementPolicy: OrderedReady
@@ -272,13 +345,22 @@ podSecurityContext:
 ## Configure Container Security Context (only main container)
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
 ## @param containerSecurityContext.enabled Enabled Cassandra containers' Security Context
+<<<<<<< HEAD
 ## @param containerSecurityContext.runAsUser et Cassandra container's Security Context runAsUser
+=======
+## @param containerSecurityContext.runAsUser Set Cassandra container's Security Context runAsUser
+## @param containerSecurityContext.runAsNonRoot Force the container to be run as non root
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 containerSecurityContext:
   enabled: true
   runAsUser: 1001
+<<<<<<< HEAD
+=======
+  runAsNonRoot: true
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Cassandra pods' resource requests and limits
-## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+## ref: https://kubernetes.io/docs/user-guide/compute-resources/
 ## Minimum memory for development is 4GB and 2 CPU cores
 ## Minimum memory for production is 8GB and 4 CPU cores
 ## ref: http://docs.datastax.com/en/archived/cassandra/2.0/cassandra/architecture/architecturePlanningHardware_c.html
@@ -295,11 +377,19 @@ resources:
   ## limits:
   ##    cpu: 2
   ##    memory: 4Gi
+<<<<<<< HEAD
+=======
+  ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   limits: {}
   ## Examples:
   ## requests:
   ##    cpu: 2
   ##    memory: 4Gi
+<<<<<<< HEAD
+=======
+  ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   requests: {}
 ## Configure extra options for Cassandra containers' liveness and readiness probes
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
@@ -314,7 +404,7 @@ livenessProbe:
   enabled: true
   initialDelaySeconds: 60
   periodSeconds: 30
-  timeoutSeconds: 5
+  timeoutSeconds: 30
   successThreshold: 1
   failureThreshold: 5
 ## @param readinessProbe.enabled Enable readinessProbe
@@ -328,15 +418,51 @@ readinessProbe:
   enabled: true
   initialDelaySeconds: 60
   periodSeconds: 10
-  timeoutSeconds: 5
+  timeoutSeconds: 30
   successThreshold: 1
   failureThreshold: 5
+<<<<<<< HEAD
+=======
+## Configure extra options for startup probe
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
+## @param startupProbe.enabled Enable startupProbe
+## @param startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+## @param startupProbe.periodSeconds Period seconds for startupProbe
+## @param startupProbe.timeoutSeconds Timeout seconds for startupProbe
+## @param startupProbe.failureThreshold Failure threshold for startupProbe
+## @param startupProbe.successThreshold Success threshold for startupProbe
+##
+startupProbe:
+  enabled: false
+  initialDelaySeconds: 0
+  periodSeconds: 10
+  timeoutSeconds: 5
+  successThreshold: 1
+  failureThreshold: 60
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param customLivenessProbe Custom livenessProbe that overrides the default one
 ##
 customLivenessProbe: {}
 ## @param customReadinessProbe Custom readinessProbe that overrides the default one
 ##
 customReadinessProbe: {}
+<<<<<<< HEAD
+=======
+## @param customStartupProbe [object] Override default startup probe
+##
+customStartupProbe: {}
+## @param lifecycleHooks [object] Override default etcd container hooks
+##
+lifecycleHooks: {}
+## @param schedulerName Alternative scheduler
+## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+##
+schedulerName: ""
+## @param terminationGracePeriodSeconds In seconds, time the given to the Cassandra pod needs to terminate gracefully
+## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
+##
+terminationGracePeriodSeconds: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param extraVolumes Optionally specify extra list of additional volumes for cassandra container
 ##
 extraVolumes: []
@@ -380,6 +506,7 @@ containerPorts:
   cql: 9042
 
 ## @section RBAC parameters
+<<<<<<< HEAD
 
 ## Cassandra pods ServiceAccount
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
@@ -398,18 +525,52 @@ serviceAccount:
 
 ## @section Traffic Exposure Parameters
 
+=======
+##
+
+## Cassandra pods ServiceAccount
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+##
+serviceAccount:
+  ## @param serviceAccount.create Enable the creation of a ServiceAccount for Cassandra pods
+  ##
+  create: true
+  ## @param serviceAccount.name The name of the ServiceAccount to use.
+  ## If not set and create is true, a name is generated using the cassandra.fullname template
+  ##
+  name: ""
+  ## @param serviceAccount.annotations Annotations for Cassandra Service Account
+  ##
+  annotations: {}
+  ## @param serviceAccount.automountServiceAccountToken Automount API credentials for a service account.
+  ##
+  automountServiceAccountToken: true
+
+## @section Traffic Exposure Parameters
+##
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Cassandra service parameters
 ##
 service:
   ## @param service.type Cassandra service type
   ##
   type: ClusterIP
+<<<<<<< HEAD
   ## @param service.port Cassandra service CQL Port
   ##
   port: 9042
   ## @param service.metricsPort Cassandra service metrics port
   ##
   metricsPort: 8080
+=======
+  ## @param service.ports.cql Cassandra service CQL Port
+  ## @param service.ports.metrics Cassandra service metrics port
+  ##
+  ports:
+    cql: 9042
+    metrics: 8080
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Node ports to expose
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
   ## @param service.nodePorts.cql Node port for CQL
@@ -418,15 +579,54 @@ service:
   nodePorts:
     cql: ""
     metrics: ""
+<<<<<<< HEAD
+=======
+  ## @param service.extraPorts Extra ports to expose in the service (normally used with the `sidecar` value)
+  ##
+  extraPorts: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param service.loadBalancerIP LoadBalancerIP if service type is `LoadBalancer`
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
   ##
   loadBalancerIP: ""
+<<<<<<< HEAD
+=======
+  ## @param service.loadBalancerSourceRanges Service Load Balancer sources
+  ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
+  ## e.g:
+  ## loadBalancerSourceRanges:
+  ##   - 10.10.10.0/24
+  ##
+  loadBalancerSourceRanges: []
+  ## @param service.clusterIP Service Cluster IP
+  ## e.g.:
+  ## clusterIP: None
+  ##
+  clusterIP: ""
+  ## @param service.externalTrafficPolicy Service external traffic policy
+  ## ref https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+  ##
+  externalTrafficPolicy: Cluster
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param service.annotations Provide any additional annotations which may be required.
   ## This can be used to set the LoadBalancer service type to internal only.
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
   ##
   annotations: {}
+<<<<<<< HEAD
+=======
+  ## @param service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+  ## If "ClientIP", consecutive client requests will be directed to the same Pod
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+  ##
+  sessionAffinity: None
+  ## @param service.sessionAffinityConfig Additional settings for the sessionAffinity
+  ## sessionAffinityConfig:
+  ##   clientIP:
+  ##     timeoutSeconds: 300
+  ##
+  sessionAffinityConfig: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Network policies
 ## Ref: https://kubernetes.io/docs/concepts/services-networking/network-policies/
 ##
@@ -436,17 +636,30 @@ networkPolicy:
   enabled: false
   ## @param networkPolicy.allowExternal Don't require client label for connections
   ## The Policy model to apply. When set to false, only pods with the correct
+<<<<<<< HEAD
   ## client label will have network access to the port Redis&trade; is listening
   ## on. When true, Redis&trade; will accept connections from any source
+=======
+  ## client label will have network access to the port Redis&reg; is listening
+  ## on. When true, Redis&reg; will accept connections from any source
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## (with the correct destination port).
   ##
   allowExternal: true
 
 ## @section Persistence parameters
+<<<<<<< HEAD
 
 ## Enable persistence using Persistent Volume Claims
 ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
 ##
+=======
+##
+
+## Enable persistence using Persistent Volume Claims
+## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 persistence:
   ## @param persistence.enabled Enable Cassandra data persistence using PVC, use a Persistent Volume Claim, If false, use emptyDir
   ##
@@ -461,7 +674,11 @@ persistence:
   storageClass: ""
   ## @param persistence.commitStorageClass PVC Storage Class for Cassandra Commit Log volume
   ## Storage class to use with CASSANDRA_COMMITLOG_DIR to reduce the concurrence for writing data and commit logs
+<<<<<<< HEAD
   ## ref: https://github.com/bitnami/bitnami-docker-cassandra
+=======
+  ## ref: https://github.com/bitnami/containers/tree/main/bitnami/cassandra
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## If set to "-", commitStorageClass: "", which disables dynamic provisioning
   ## If undefined (the default) or set to null, no storageClassName spec is
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
@@ -478,6 +695,7 @@ persistence:
   ## @param persistence.size PVC Storage Request for Cassandra data volume
   ##
   size: 8Gi
+<<<<<<< HEAD
   ## @skip persistence.commitLogsize PVC Storage Request for Cassandra commit log volume
   ##
   # commitLogsize: 2Gi
@@ -489,6 +707,21 @@ persistence:
   # commitLogMountPath: /bitnami/cassandra/commitlog
 
 ## @section Volume Permissions parameters
+=======
+  ## @param persistence.commitLogsize PVC Storage Request for Cassandra commit log volume. Unset by default
+  ##
+  commitLogsize: 2Gi
+  ## @param persistence.mountPath The path the data volume will be mounted at
+  ##
+  mountPath: /bitnami/cassandra
+  ## @param persistence.commitLogMountPath The path the commit log volume will be mounted at. Unset by default. Set it to '/bitnami/cassandra/commitlog' to enable a separate commit log volume
+  ##
+  # commitLogMountPath: /bitnami/cassandra/commitlog
+  commitLogMountPath: ""
+
+## @section Volume Permissions parameters
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## Init containers parameters:
 ## volumePermissions: Change the owner and group of the persistent volume mountpoint to runAsUser:fsGroup values from the securityContext section.
@@ -497,6 +730,7 @@ volumePermissions:
   ## @param volumePermissions.enabled Enable init container that changes the owner and group of the persistent volume
   ##
   enabled: false
+<<<<<<< HEAD
   ## @param volumePermissions.image.registry Init container volume
   ## @param volumePermissions.image.repository Init container volume
   ## @param volumePermissions.image.tag Init container volume
@@ -525,16 +759,56 @@ volumePermissions:
   ## @param volumePermissions.resources.limits The resources limits for the container
   ## @param volumePermissions.resources.requests The requested resources for the container
   ##
+=======
+  ## @param volumePermissions.image.registry Init container volume image registry
+  ## @param volumePermissions.image.repository Init container volume image repository
+  ## @param volumePermissions.image.tag Init container volume image tag (immutable tags are recommended)
+  ## @param volumePermissions.image.digest Init container volume image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+  ## @param volumePermissions.image.pullPolicy Init container volume pull policy
+  ## @param volumePermissions.image.pullSecrets Specify docker-registry secret names as an array
+  ##
+  image:
+    registry: docker.io
+    repository: bitnami/bitnami-shell
+    tag: 11-debian-11-r23
+    digest: ""
+    pullPolicy: IfNotPresent
+    ## Optionally specify an array of imagePullSecrets.
+    ## Secrets must be manually created in the namespace.
+    ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+    ## e.g:
+    ## pullSecrets:
+    ##   - myRegistryKeySecretName
+    ##
+    pullSecrets: []
+  ## Init container' resource requests and limits
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+  ## We usually recommend not to specify default resources and to leave this as a conscious
+  ## choice for the user. This also increases chances charts run on environments with little
+  ## resources, such as Minikube. If you do want to specify resources, uncomment the following
+  ## lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  ## @param volumePermissions.resources.limits The resources limits for the container
+  ## @param volumePermissions.resources.requests The requested resources for the container
+  ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   resources:
     ## Example:
     ## limits:
     ##    cpu: 100m
     ##    memory: 128Mi
+<<<<<<< HEAD
+=======
+    ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     limits: {}
     ## Examples:
     ## requests:
     ##    cpu: 100m
     ##    memory: 128Mi
+<<<<<<< HEAD
+=======
+    ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     requests: {}
   ## Init container Security Context
   ## Note: the chown of the data folder is done to securityContext.runAsUser
@@ -551,6 +825,10 @@ volumePermissions:
     runAsUser: 0
 
 ## @section Metrics parameters
+<<<<<<< HEAD
+=======
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## Cassandra Prometheus exporter configuration
 ##
@@ -563,6 +841,10 @@ metrics:
   ## @param metrics.image.registry Cassandra exporter image registry
   ## @param metrics.image.repository Cassandra exporter image name
   ## @param metrics.image.tag Cassandra exporter image tag
+<<<<<<< HEAD
+=======
+  ## @param metrics.image.digest Cassandra exporter image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param metrics.image.pullPolicy image pull policy
   ## @param metrics.image.pullSecrets Specify docker-registry secret names as an array
   ##
@@ -570,7 +852,12 @@ metrics:
     registry: docker.io
     pullPolicy: IfNotPresent
     repository: bitnami/cassandra-exporter
+<<<<<<< HEAD
     tag: 2.3.4-debian-10-r497
+=======
+    tag: 2.3.8-debian-11-r26
+    digest: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -580,7 +867,11 @@ metrics:
     ##
     pullSecrets: []
   ## Cassandra Prometheus exporter resource requests and limits
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## We usually recommend not to specify default resources and to leave this as a conscious
   ## choice for the user. This also increases chances charts run on environments with little
   ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -593,18 +884,31 @@ metrics:
     ## limits:
     ##    cpu: 100m
     ##    memory: 128Mi
+<<<<<<< HEAD
+=======
+    ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     limits: {}
     ## Examples:
     ## requests:
     ##    cpu: 100m
     ##    memory: 128Mi
+<<<<<<< HEAD
+=======
+    ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     requests: {}
   ## @param metrics.podAnnotations [object] Metrics exporter pod Annotation and Labels
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   ##
   podAnnotations:
+<<<<<<< HEAD
     prometheus.io/scrape: 'true'
     prometheus.io/port: '8080'
+=======
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8080"
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Prometheus Operator ServiceMonitor configuration
   ##
   serviceMonitor:
@@ -631,8 +935,33 @@ metrics:
     ## e.g:
     ## selector:
     ##   prometheus: my-prometheus
+<<<<<<< HEAD
     ##
     selector: {}
+=======
+    ##
+    selector: {}
+    ## @param metrics.serviceMonitor.metricRelabelings Specify Metric Relabelings to add to the scrape endpoint
+    ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
+    ##
+    metricRelabelings: []
+    ## @param metrics.serviceMonitor.relabelings RelabelConfigs to apply to samples before scraping
+    ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
+    ##
+    relabelings: []
+    ## @param metrics.serviceMonitor.honorLabels Specify honorLabels parameter to add the scrape endpoint
+    ##
+    honorLabels: false
+    ## @param metrics.serviceMonitor.jobLabel The name of the label on the target service to use as the job name in prometheus.
+    ##
+    jobLabel: ""
+    ## DEPRECATED - metrics.serviceMonitor.additionalLabels will be remove in a future release, please use metrics.serviceMonitor.labels instead.
+    ## @param metrics.serviceMonitor.labels Used to pass Labels that are required by the installed Prometheus Operator
+    ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#prometheusspec
+    ##
+    labels: {}
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Metrics container ports to open
   ## If hostNetwork true: the hostPort is set identical to the containerPort
   ## @param metrics.containerPorts.http HTTP Port on the Host and Container
@@ -643,6 +972,7 @@ metrics:
     jmx: 5555
 
 ## @section TLS/SSL parameters
+<<<<<<< HEAD
 
 ## TLS/SSL parameters
 ## @param tls.internodeEncryption Set internode encryption
@@ -655,6 +985,23 @@ metrics:
 ## @param tls.resources.limits The resources limits for the TLS init container
 ## @param tls.resources.requests The requested resources for the TLS init container
 ##
+=======
+##
+
+## TLS/SSL parameters
+## @param tls.internodeEncryption Set internode encryption
+## @param tls.clientEncryption Set client-server encryption
+## @param tls.autoGenerated Generate automatically self-signed TLS certificates. Currently only supports PEM certificates
+## @param tls.existingSecret Existing secret that contains Cassandra Keystore and truststore
+## @param tls.passwordsSecret Secret containing the Keystore and Truststore passwords if needed
+## @param tls.keystorePassword Password for the keystore, if needed.
+## @param tls.truststorePassword Password for the truststore, if needed.
+## @param tls.resources.limits The resources limits for the TLS init container
+## @param tls.resources.requests The requested resources for the TLS init container
+## @param tls.certificatesSecret Secret with the TLS certificates.
+## @param tls.tlsEncryptionSecretName Secret with the encryption of the TLS certificates
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 tls:
   internodeEncryption: none
   clientEncryption: false
@@ -663,6 +1010,11 @@ tls:
   passwordsSecret: ""
   keystorePassword: ""
   truststorePassword: ""
+<<<<<<< HEAD
+=======
+  certificatesSecret: ""
+  tlsEncryptionSecretName: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## We usually recommend not to specify default resources and to leave this as a conscious
   ## choice for the user. This also increases chances charts run on environments with little
   ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -673,9 +1025,17 @@ tls:
     ## limits:
     ##    cpu: 100m
     ##    memory: 128Mi
+<<<<<<< HEAD
+=======
+    ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     limits: {}
     ## Examples:
     ## requests:
     ##    cpu: 100m
     ##    memory: 128Mi
+<<<<<<< HEAD
+=======
+    ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     requests: {}

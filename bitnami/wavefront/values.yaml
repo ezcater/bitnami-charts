@@ -2,6 +2,7 @@
 ## Global Docker image parameters
 ## Please, note that this will override the image parameters, including dependencies, configured to use the global value
 ## Current available global Docker image parameters: imageRegistry, imagePullSecrets and storageClass
+<<<<<<< HEAD
 
 ## @param global.imageRegistry Global Docker image registry
 ## @param global.imagePullSecrets Global Docker registry secret names as an array
@@ -30,6 +31,62 @@ extraDeploy: []
 
 ## @section Wavefront Common parameters
 
+=======
+##
+
+## @param global.imageRegistry Global Docker image registry
+## @param global.imagePullSecrets Global Docker registry secret names as an array
+## @param global.storageClass Global StorageClass for Persistent Volume(s)
+##
+global:
+  imageRegistry: ""
+  ## E.g.
+  ## imagePullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
+  imagePullSecrets: []
+  storageClass: ""
+
+## @section Common parameters
+##
+
+## @param kubeVersion Force target Kubernetes version (using Helm capabilities if not set)
+##
+kubeVersion: ""
+## @param nameOverride String to partially override %%COMPONENT_NAME%%.fullname template with a string (will prepend the release name)
+##
+nameOverride: ""
+## @param fullnameOverride String to fully override %%COMPONENT_NAME%%.fullname template with a string
+##
+fullnameOverride: ""
+## @param commonLabels Add labels to all the deployed resources
+##
+commonLabels: {}
+## @param commonAnnotations Add annotations to all the deployed resources
+##
+commonAnnotations: {}
+## @param extraDeploy Extra objects to deploy (value evaluated as a template)
+##
+extraDeploy: []
+## Enable diagnostic mode in the deployment(s)/statefulset(s)
+##
+diagnosticMode:
+  ## @param diagnosticMode.enabled Enable diagnostic mode (all probes will be disabled and the command will be overridden)
+  ##
+  enabled: false
+  ## @param diagnosticMode.command Command to override all containers in the the deployment(s)/statefulset(s)
+  ##
+  command:
+    - sleep
+  ## @param diagnosticMode.args Args to override all containers in the the deployment(s)/statefulset(s)
+  ##
+  args:
+    - infinity
+
+## @section Wavefront Common parameters
+##
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param clusterName This is a unique name for the cluster (required)
 ## All metrics will receive a `cluster` tag with this value
 ##
@@ -42,6 +99,7 @@ wavefront:
   url: https://YOUR_CLUSTER.wavefront.com
   token: YOUR_API_TOKEN
   existingSecret: ""
+<<<<<<< HEAD
 ## @param podSecurityPolicy.create Specifies whether PodSecurityPolicy resources should be created
 ##
 podSecurityPolicy:
@@ -65,10 +123,58 @@ projectPacific:
   enabled: false
 ## @param tkgi.enabled Properties for TKGI environments. If enabled, a role binding to handle pod security policy will be installed within the TKGI cluster
 ##
+=======
+## @param podSecurityPolicy.create Whether to create a PodSecurityPolicy. WARNING: PodSecurityPolicy is deprecated in Kubernetes v1.21 or later, unavailable in v1.25 or later
+##
+podSecurityPolicy:
+  create: false
+
+## RBAC configuration
+##
+rbac:
+  ## @param rbac.create Specifies whether RBAC resources should be created
+  ##
+  create: true
+  ## @param rbac.rules Custom RBAC rules to set
+  ## e.g:
+  ## rules:
+  ##   - apiGroups:
+  ##       - ""
+  ##     resources:
+  ##       - pods
+  ##     verbs:
+  ##       - get
+  ##       - list
+  ##
+  rules: []
+
+## Pods Service Account
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+## @param serviceAccount.create Specifies whether a ServiceAccount should be created
+## @param serviceAccount.name Name of the service account to use. If not set and create is true, a name is generated using the fullname template.
+## @param serviceAccount.automountServiceAccountToken Automount service account token for the server service account
+## @param serviceAccount.annotations Annotations for service account. Evaluated as a template. Only used if `create` is `true`.
+serviceAccount:
+  create: true
+  name: ""
+  automountServiceAccountToken: true
+  annotations: {}
+## @param projectPacific.enabled Enable and create role binding for Tanzu Kubernetes cluster
+## If enabled, a role binding to handle pod security policy will be installed within the Kubernetes cluster
+##
+projectPacific:
+  enabled: false
+## @param tkgi.enabled Properties for TKGI environments. If enabled, a role binding to handle pod security policy will be installed within the TKGI cluster
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 tkgi:
   enabled: false
 
 ## @section Collector parameters
+<<<<<<< HEAD
+=======
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## Wavefront Collector is responsible to get all Kubernetes metrics from your cluster.
 ## It will capture Kubernetes resources metrics available from the kubelets,
@@ -78,19 +184,32 @@ collector:
   ## @param collector.enabled Setup and enable the Wavefront collector to gather metrics
   ##
   enabled: true
+<<<<<<< HEAD
   ## @param collector.image.registry Wavefront collector Image registry
   ## @param collector.image.repository Wavefront collector Image repository
   ## @param collector.image.tag Wavefront collector Image tag (immutable tags are recommended)
   ## @param collector.image.pullPolicy Image pull policy
+=======
+  ## @param collector.image.registry Wavefront collector image registry
+  ## @param collector.image.repository Wavefront collector image repository
+  ## @param collector.image.tag Wavefront collector image tag (immutable tags are recommended)
+  ## @param collector.image.digest Wavefront collector image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+  ## @param collector.image.pullPolicy image pull policy
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param collector.image.pullSecrets Specify docker-registry secret names as an array
   ##
   image:
     registry: docker.io
     repository: bitnami/wavefront-kubernetes-collector
+<<<<<<< HEAD
     tag: 1.5.0-scratch-r2
+=======
+    tag: 1.11.0-scratch-r10
+    digest: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-    ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
@@ -215,6 +334,12 @@ collector:
     ## @param collector.events.enabled Events can also be collected and sent to Wavefront
     ##
     enabled: false
+<<<<<<< HEAD
+=======
+    ## @param collector.events.filters Optional filtering of events collected
+    ##
+    filters: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Rules based discovery configuration
   ## Ref: https://github.com/wavefrontHQ/wavefront-kubernetes-collector/blob/master/docs/discovery.md
   ##
@@ -274,8 +399,20 @@ collector:
     ##       password = "PASSWORD"
     ##
     config: []
+<<<<<<< HEAD
   ## @param collector.existingConfigmap Name of existing ConfigMap with collector configuration
   ##
+=======
+  ## @param collector.controlplane.enabled Enable metrics for control plane dashboard
+  ## @param collector.controlplane.collection.interval The collection interval for the control plane
+  ##
+  controlplane:
+    enabled: true
+    collection:
+      interval: 120s
+  ## @param collector.existingConfigmap Name of existing ConfigMap with collector configuration
+  ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   existingConfigmap: ""
   ## @param collector.command Override default container command (useful when using custom images)
   ##
@@ -284,7 +421,11 @@ collector:
   ##
   args: []
   ## Wavefront Collector resource requests and limits
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## We usually recommend not to specify default resources and to leave this as a conscious
   ## choice for the user. This also increases chances charts run on environments with little
   ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -297,22 +438,39 @@ collector:
     ## limits:
     ##    cpu: 200m
     ##    memory: 256Mi
+<<<<<<< HEAD
+=======
+    ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     limits: {}
     ## Examples:
     ## requests:
     ##    cpu: 200m
     ##    memory: 10Mi
+<<<<<<< HEAD
+=======
+    ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     requests: {}
   ## Container Security Context configuration
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
   ## @param collector.containerSecurityContext.enabled Enable Container Security Context configuration
   ## @param collector.containerSecurityContext.runAsUser Set Container's Security Context runAsUser
   ## @param collector.containerSecurityContext.runAsNonRoot Set Container's Security Context runAsNonRoot
+<<<<<<< HEAD
+=======
+  ## @param collector.containerSecurityContext.readOnlyRootFilesystem Mount / (root) as a readonly filesystem on container
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   containerSecurityContext:
     enabled: true
     runAsUser: 1001
     runAsNonRoot: true
+<<<<<<< HEAD
+=======
+    readOnlyRootFilesystem: true
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Pod Security Context configuration
   ## @param collector.podSecurityContext.enabled Enable Pod Security Context configuration
   ## @param collector.podSecurityContext.fsGroup Group ID for the volumes of the pod
@@ -360,6 +518,22 @@ collector:
   ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   ##
   tolerations: []
+<<<<<<< HEAD
+=======
+  ## @param collector.schedulerName Name of the k8s scheduler (other than default)
+  ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+  ##
+  schedulerName: ""
+  ## @param collector.terminationGracePeriodSeconds In seconds, time the given to the %%MAIN_CONTAINER_NAME%% pod needs to terminate gracefully
+  ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
+  ##
+  terminationGracePeriodSeconds: ""
+  ## @param collector.topologySpreadConstraints Topology Spread Constraints for pod assignment
+  ## https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  ## The value is evaluated as a template
+  ##
+  topologySpreadConstraints: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param collector.podLabels Wavefront collector pod extra labels
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   ##
@@ -381,6 +555,12 @@ collector:
   ## @param collector.customReadinessProbe Override default readiness probe
   ##
   customReadinessProbe: {}
+<<<<<<< HEAD
+=======
+  ## @param collector.customStartupProbe Override default startup probe
+  ##
+  customStartupProbe: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param collector.updateStrategy.type Update strategy - only really applicable for deployments with RWO PVs attached
   ## If replicas = 1, an update can get "stuck", as the previous pod remains attached to the
   ## PV, and the "incoming" pod can never start. Changing the strategy to "Recreate" will
@@ -430,6 +610,10 @@ collector:
   sidecars: []
 
 ## @section Proxy parameters
+<<<<<<< HEAD
+=======
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## Wavefront Proxy is a metrics forwarder that is used to relay metrics to the Wavefront SaaS service.
 ## It can receive metrics from the Wavefront Collector as well as other metrics collection services
@@ -445,16 +629,25 @@ proxy:
   ## @param proxy.image.registry Wavefront proxy image registry
   ## @param proxy.image.repository Wavefront proxy image repository
   ## @param proxy.image.tag Wavefront proxy image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+  ## @param proxy.image.digest Wavefront proxy image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param proxy.image.pullPolicy Wavefront proxy image pull policy
   ## @param proxy.image.pullSecrets Specify docker-registry secret names as an array
   ##
   image:
     registry: docker.io
     repository: bitnami/wavefront-proxy
+<<<<<<< HEAD
     tag: 10.7.0-debian-10-r45
+=======
+    tag: 11.3.0-debian-11-r15
+    digest: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-    ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
@@ -470,7 +663,11 @@ proxy:
   ##
   hostAliases: []
   ## Wavefront Proxy resource requests and limits
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## We usually recommend not to specify default resources and to leave this as a conscious
   ## choice for the user. This also increases chances charts run on environments with little
   ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -483,22 +680,39 @@ proxy:
     ## limits:
     ##    cpu: 100m
     ##    memory: 4Gi
+<<<<<<< HEAD
+=======
+    ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     limits: {}
     ## Examples:
     ## requests:
     ##    cpu: 100m
     ##    memory: 1Gi
+<<<<<<< HEAD
+=======
+    ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     requests: {}
   ## Container Security Context configuration
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
   ## @param proxy.containerSecurityContext.enabled Enable Container Security Context configuration
   ## @param proxy.containerSecurityContext.runAsUser Set Container's Security Context runAsUser
   ## @param proxy.containerSecurityContext.runAsNonRoot Set Container's Security Context runAsNonRoot
+<<<<<<< HEAD
+=======
+  ## @param proxy.containerSecurityContext.readOnlyRootFilesystem Mount / (root) as a readonly filesystem on Proxy container
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   containerSecurityContext:
     enabled: true
     runAsUser: 1001
     runAsNonRoot: true
+<<<<<<< HEAD
+=======
+    readOnlyRootFilesystem: true
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Pod Security Context configuration
   ## @param proxy.podSecurityContext.enabled Enable Pod Security Context configuration
   ## @param proxy.podSecurityContext.fsGroup Group ID for the volumes of the pod
@@ -546,6 +760,22 @@ proxy:
   ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
   ##
   tolerations: []
+<<<<<<< HEAD
+=======
+  ## @param proxy.schedulerName Name of the k8s scheduler (other than default)
+  ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+  ##
+  schedulerName: ""
+  ## @param proxy.terminationGracePeriodSeconds In seconds, time the given to the %%MAIN_CONTAINER_NAME%% pod needs to terminate gracefully
+  ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
+  ##
+  terminationGracePeriodSeconds: ""
+  ## @param proxy.topologySpreadConstraints Topology Spread Constraints for pod assignment
+  ## https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  ## The value is evaluated as a template
+  ##
+  topologySpreadConstraints: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param proxy.podLabels Wavefront proxy pod extra labels
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
   ##
@@ -593,12 +823,37 @@ proxy:
     periodSeconds: 20
     failureThreshold: 6
     successThreshold: 1
+<<<<<<< HEAD
+=======
+  ## Wavefront Proxy startup probe. Evaluated as a template.
+  ## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
+  ## @param proxy.startupProbe.enabled Enable startupProbe
+  ## @param proxy.startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+  ## @param proxy.startupProbe.periodSeconds Period seconds for startupProbe
+  ## @param proxy.startupProbe.timeoutSeconds Timeout seconds for startupProbe
+  ## @param proxy.startupProbe.failureThreshold Failure threshold for startupProbe
+  ## @param proxy.startupProbe.successThreshold Success threshold for startupProbe
+  ##
+  startupProbe:
+    enabled: false
+    initialDelaySeconds: 10
+    timeoutSeconds: 1
+    periodSeconds: 20
+    failureThreshold: 6
+    successThreshold: 1
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param proxy.customLivenessProbe Override default liveness probe
   ##
   customLivenessProbe: {}
   ## @param proxy.customReadinessProbe Override default readiness probe
   ##
   customReadinessProbe: {}
+<<<<<<< HEAD
+=======
+  ## @param proxy.customStartupProbe Override default startup probe
+  ##
+  customStartupProbe: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param proxy.updateStrategy.type Update strategy - only really applicable for deployments with RWO PVs attached
   ## If replicas = 1, an update can get "stuck", as the previous pod remains attached to the
   ## PV, and the "incoming" pod can never start. Changing the strategy to "Recreate" will
@@ -646,9 +901,16 @@ proxy:
   ##         containerPort: 1234
   ##
   sidecars: []
+<<<<<<< HEAD
   ## @param proxy.replicas Replicas to deploy for Wavefront proxy (usually 1)
   ##
   replicas: 1
+=======
+  ## @param proxy.replicaCount ReplicaCount to deploy for Wavefront proxy (usually 1)
+  ## DEPRECATED: proxy.replicas has been deprecated, and will be removed in the next major release.
+  ##
+  replicaCount: 1
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param proxy.port The port number the proxy will listen on for metrics in Wavefront data format
   ##
   port: 2878
@@ -725,6 +987,12 @@ proxy:
   ## deltaCounterPort: 50000
   ##
   deltaCounterPort: ""
+<<<<<<< HEAD
+=======
+  ## @param proxy.command Override default container command (useful when using custom images)
+  ##
+  command: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param proxy.args Any configuration property can be passed to the proxy via command line args in the format: `--<property_name> <value>`
   ## Multiple properties can be specified separated by whitespace
   ## Ref: https://docs.wavefront.com/proxies_configuring.html
@@ -763,6 +1031,10 @@ proxy:
   preprocessor: {}
 
 ## @section Kube State Metrics parameters
+<<<<<<< HEAD
+=======
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## kube-state-metrics are used to get metrics about the state of the Kubernetes scheduler
 ## @param kube-state-metrics.enabled If enabled the kube-state-metrics chart will be installed as a subchart and the collector will be configured to capture metrics.

@@ -51,47 +51,42 @@ Fully qualified app name for LDAP
 {{/*
 Return the proper PostgreSQL image name
 */}}
-{{- define "postgresql-ha.postgresqlImage" -}}
-{{- include "common.images.image" ( dict "imageRoot" .Values.postgresqlImage "global" .Values.global ) -}}
+{{- define "postgresql-ha.postgresql.image" -}}
+{{- include "common.images.image" ( dict "imageRoot" .Values.postgresql.image "global" .Values.global ) -}}
 {{- end -}}
 
 {{/*
 Return the proper Pgpool image name
 */}}
-{{- define "postgresql-ha.pgpoolImage" -}}
-{{- include "common.images.image" ( dict "imageRoot" .Values.pgpoolImage "global" .Values.global ) -}}
+{{- define "postgresql-ha.pgpool.image" -}}
+{{- include "common.images.image" ( dict "imageRoot" .Values.pgpool.image "global" .Values.global ) -}}
 {{- end -}}
 
 {{/*
 Return the proper PostgreSQL Prometheus exporter image name
 */}}
-{{- define "postgresql-ha.volumePermissionsImage" -}}
-{{- include "common.images.image" ( dict "imageRoot" .Values.volumePermissionsImage "global" .Values.global ) -}}
+{{- define "postgresql-ha.volumePermissions.image" -}}
+{{- include "common.images.image" ( dict "imageRoot" .Values.volumePermissions.image "global" .Values.global ) -}}
 {{- end -}}
 
 {{/*
 Return the proper PostgreSQL Prometheus exporter image name
 */}}
-{{- define "postgresql-ha.metricsImage" -}}
-{{- include "common.images.image" ( dict "imageRoot" .Values.metricsImage "global" .Values.global ) -}}
+{{- define "postgresql-ha.metrics.image" -}}
+{{- include "common.images.image" ( dict "imageRoot" .Values.metrics.image "global" .Values.global ) -}}
 {{- end -}}
 
 {{/*
 Return the proper Docker Image Registry Secret Names
 */}}
-{{- define "postgresql-ha.imagePullSecrets" -}}
-{{- include "common.images.pullSecrets" (dict "images" (list .Values.postgresqlImage .Values.pgpoolImage .Values.volumePermissionsImage .Values.metricsImage) "global" .Values.global) -}}
+{{- define "postgresql-ha.image.pullSecrets" -}}
+{{- include "common.images.pullSecrets" (dict "images" (list .Values.postgresql.image .Values.pgpool.image .Values.volumePermissions.image .Values.metrics.image) "global" .Values.global) -}}
 {{- end -}}
 
 {{/*
 Return the PostgreSQL username
 */}}
 {{- define "postgresql-ha.postgresqlUsername" -}}
-{{/*
-Helm 2.11 supports the assignment of a value to a variable defined in a different scope,
-but Helm 2.9 and 2.10 doesn't support it, so we need to implement this if-else logic.
-Also, we can't use a single if because lazy evaluation is not an option
-*/}}
 {{- if .Values.global -}}
     {{- if .Values.global.postgresql -}}
         {{- if .Values.global.postgresql.username -}}
@@ -135,6 +130,13 @@ Return true if PostgreSQL postgres user password has been provided
         {{- if .Values.global.postgresql.postgresPassword -}}
             {{- true -}}
         {{- end -}}
+        {{- if .Values.postgresql.postgresPassword -}}
+            {{- true -}}
+        {{- end -}}
+    {{- else -}}
+        {{- if .Values.postgresql.postgresPassword -}}
+            {{- true -}}
+        {{- end -}}
     {{- end -}}
 {{- else -}}
     {{- if .Values.postgresql.postgresPassword -}}
@@ -147,11 +149,6 @@ Return true if PostgreSQL postgres user password has been provided
 Return the PostgreSQL password
 */}}
 {{- define "postgresql-ha.postgresqlPassword" -}}
-{{/*
-Helm 2.11 supports the assignment of a value to a variable defined in a different scope,
-but Helm 2.9 and 2.10 doesn't support it, so we need to implement this if-else logic.
-Also, we can't use a single if because lazy evaluation is not an option
-*/}}
 {{- if .Values.global }}
     {{- if .Values.global.postgresql }}
         {{- if .Values.global.postgresql.password }}
@@ -171,11 +168,6 @@ Also, we can't use a single if because lazy evaluation is not an option
 Return the Pgpool Admin username
 */}}
 {{- define "postgresql-ha.pgpoolAdminUsername" -}}
-{{/*
-Helm 2.11 supports the assignment of a value to a variable defined in a different scope,
-but Helm 2.9 and 2.10 doesn't support it, so we need to implement this if-else logic.
-Also, we can't use a single if because lazy evaluation is not an option
-*/}}
 {{- if .Values.global -}}
     {{- if .Values.global.pgpool -}}
         {{- if .Values.global.pgpool.adminUsername -}}
@@ -195,11 +187,6 @@ Also, we can't use a single if because lazy evaluation is not an option
 Return the Pgpool Admin password
 */}}
 {{- define "postgresql-ha.pgpoolAdminPassword" -}}
-{{/*
-Helm 2.11 supports the assignment of a value to a variable defined in a different scope,
-but Helm 2.9 and 2.10 doesn't support it, so we need to implement this if-else logic.
-Also, we can't use a single if because lazy evaluation is not an option
-*/}}
 {{- if .Values.global -}}
     {{- if .Values.global.pgpool -}}
         {{- if .Values.global.pgpool.adminPassword -}}
@@ -217,6 +204,16 @@ Also, we can't use a single if because lazy evaluation is not an option
 
 {{/*
 Get the metrics ConfigMap name.
+<<<<<<< HEAD
+*/}}
+{{- define "postgresql.metricsCM" -}}
+{{- printf "%s-metrics" (include "common.names.fullname" .) -}}
+{{- end -}}
+
+{{/*
+Return the PostgreSQL database to create
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 */}}
 {{- define "postgresql.metricsCM" -}}
 {{- printf "%s-metrics" (include "common.names.fullname" .) -}}
@@ -226,11 +223,6 @@ Get the metrics ConfigMap name.
 Return the PostgreSQL database to create
 */}}
 {{- define "postgresql-ha.postgresqlDatabase" -}}
-{{/*
-Helm 2.11 supports the assignment of a value to a variable defined in a different scope,
-but Helm 2.9 and 2.10 doesn't support it, so we need to implement this if-else logic.
-Also, we can't use a single if because lazy evaluation is not an option
-*/}}
 {{- $postgresqlDatabase := default "postgres" .Values.postgresql.database -}}
 {{- if .Values.global -}}
     {{- if .Values.global.postgresql -}}
@@ -251,11 +243,6 @@ Also, we can't use a single if because lazy evaluation is not an option
 Return the PostgreSQL repmgr username
 */}}
 {{- define "postgresql-ha.postgresqlRepmgrUsername" -}}
-{{/*
-Helm 2.11 supports the assignment of a value to a variable defined in a different scope,
-but Helm 2.9 and 2.10 doesn't support it, so we need to implement this if-else logic.
-Also, we can't use a single if because lazy evaluation is not an option
-*/}}
 {{- if .Values.global -}}
     {{- if .Values.global.postgresql -}}
         {{- if .Values.global.postgresql.repmgrUsername -}}
@@ -275,11 +262,6 @@ Also, we can't use a single if because lazy evaluation is not an option
 Return the PostgreSQL repmgr password
 */}}
 {{- define "postgresql-ha.postgresqlRepmgrPassword" -}}
-{{/*
-Helm 2.11 supports the assignment of a value to a variable defined in a different scope,
-but Helm 2.9 and 2.10 doesn't support it, so we need to implement this if-else logic.
-Also, we can't use a single if because lazy evaluation is not an option
-*/}}
 {{- if .Values.global -}}
     {{- if .Values.global.postgresql -}}
         {{- if .Values.global.postgresql.repmgrPassword -}}
@@ -299,11 +281,6 @@ Also, we can't use a single if because lazy evaluation is not an option
 Return the database to use for repmgr
 */}}
 {{- define "postgresql-ha.repmgrDatabase" -}}
-{{/*
-Helm 2.11 supports the assignment of a value to a variable defined in a different scope,
-but Helm 2.9 and 2.10 doesn't support it, so we need to implement this if-else logic.
-Also, we can't use a single if because lazy evaluation is not an option
-*/}}
 {{- if .Values.global -}}
     {{- if .Values.global.postgresql -}}
         {{- if .Values.global.postgresql.repmgrDatabase -}}
@@ -341,11 +318,6 @@ Return true if a secret object should be created for PostgreSQL
 Return the PostgreSQL credentials secret.
 */}}
 {{- define "postgresql-ha.postgresqlSecretName" -}}
-{{/*
-Helm 2.11 supports the assignment of a value to a variable defined in a different scope,
-but Helm 2.9 and 2.10 doesn't support it, so we need to implement this if-else logic.
-Also, we can't use a single if because lazy evaluation is not an option
-*/}}
 {{- if .Values.global -}}
     {{- if .Values.global.postgresql -}}
         {{- if .Values.global.postgresql.existingSecret -}}
@@ -391,11 +363,6 @@ Return true if a secret object should be created for Pgpool
 Return the Pgpool credentials secret.
 */}}
 {{- define "postgresql-ha.pgpoolSecretName" -}}
-{{/*
-Helm 2.11 supports the assignment of a value to a variable defined in a different scope,
-but Helm 2.9 and 2.10 doesn't support it, so we need to implement this if-else logic.
-Also, we can't use a single if because lazy evaluation is not an option
-*/}}
 {{- if .Values.global -}}
     {{- if .Values.global.pgpool -}}
         {{- if .Values.global.pgpool.existingSecret -}}
@@ -496,11 +463,6 @@ Get the pgpool initialization scripts Secret name.
 Return the LDAP bind password
 */}}
 {{- define "postgresql-ha.ldapPassword" -}}
-{{/*
-Helm 2.11 supports the assignment of a value to a variable defined in a different scope,
-but Helm 2.9 and 2.10 doesn't support it, so we need to implement this if-else logic.
-Also, we can't use a single if because lazy evaluation is not an option
-*/}}
 {{- if .Values.global }}
     {{- if .Values.global.ldap }}
         {{- if .Values.global.ldap.bindpw }}
@@ -520,11 +482,6 @@ Also, we can't use a single if because lazy evaluation is not an option
 Return the LDAP credentials secret.
 */}}
 {{- define "postgresql-ha.ldapSecretName" -}}
-{{/*
-Helm 2.11 supports the assignment of a value to a variable defined in a different scope,
-but Helm 2.9 and 2.10 doesn't support it, so we need to implement this if-else logic.
-Also, we can't use a single if because lazy evaluation is not an option
-*/}}
 {{- if .Values.global }}
     {{- if .Values.global.ldap }}
         {{- if .Values.global.ldap.existingSecret }}
@@ -548,22 +505,12 @@ Also, we can't use a single if because lazy evaluation is not an option
 {{- end -}}
 {{- end -}}
 
-{{/*
-Return the appropriate apiVersion for networkPolicy
-*/}}
-{{- define "postgresql-ha.networkPolicy.apiVersion" -}}
-{{- if semverCompare ">=1.4-0, <1.7-0" .Capabilities.KubeVersion.GitVersion -}}
-"extensions/v1beta1"
-{{- else if semverCompare "^1.7-0" .Capabilities.KubeVersion.GitVersion -}}
-"networking.k8s.io/v1"
-{{- end -}}
-{{- end -}}
-
 {{/* Check if there are rolling tags in the images */}}
 {{- define "postgresql-ha.checkRollingTags" -}}
-{{- include "common.warnings.rollingTag" .Values.postgresqlImage -}}
-{{- include "common.warnings.rollingTag" .Values.pgpoolImage -}}
-{{- include "common.warnings.rollingTag" .Values.metricsImage -}}
+{{- include "common.warnings.rollingTag" .Values.postgresql.image -}}
+{{- include "common.warnings.rollingTag" .Values.pgpool.image -}}
+{{- include "common.warnings.rollingTag" .Values.metrics.image -}}
+{{- include "common.warnings.rollingTag" .Values.volumePermissions.image -}}
 {{- end -}}
 
 {{/*
@@ -597,15 +544,19 @@ postgresql-ha: Nodes hostnames
 
 {{/* Validate values of PostgreSQL HA - must provide mandatory LDAP parameters when LDAP is enabled */}}
 {{- define "postgresql-ha.validateValues.ldap" -}}
+<<<<<<< HEAD
 {{- if and .Values.ldap.enabled (or (empty .Values.ldap.uri) (empty .Values.ldap.base) (empty .Values.ldap.binddn) (and (empty .Values.ldap.bindpw) (empty .Values.ldap.existingSecret))) -}}
+=======
+{{- if and .Values.ldap.enabled (or (empty .Values.ldap.uri) (and (empty .Values.ldap.basedn) (empty .Values.ldap.base)) (empty .Values.ldap.binddn) (and (empty .Values.ldap.bindpw) (empty .Values.ldap.existingSecret))) -}}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 postgresql-ha: LDAP
     Invalid LDAP configuration. When enabling LDAP support, the parameters "ldap.uri",
-    "ldap.base", "ldap.binddn", and "ldap.bindpw" are mandatory. Please provide them:
+    "ldap.basedn", "ldap.binddn", and "ldap.bindpw" are mandatory. Please provide them:
 
     $ helm install {{ .Release.Name }} bitnami/postgresql-ha \
       --set ldap.enabled=true \
       --set ldap.uri="ldap://my_ldap_server" \
-      --set ldap.base="dc=example\,dc=org" \
+      --set ldap.basedn="dc=example\,dc=org" \
       --set ldap.binddn="cn=admin\,dc=example\,dc=org" \
       --set ldap.bindpw="admin"
 {{- end -}}
@@ -763,6 +714,7 @@ Return the path to the cert key file.
 */}}
 {{- define "postgresql-ha.postgresql.tlsCertKey" -}}
 {{- required "Certificate Key filename is required when TLS in enabled" .Values.postgresql.tls.certKeyFilename | printf "/opt/bitnami/postgresql/certs/%s" -}}
+<<<<<<< HEAD
 {{- end -}}
 
 {{/*
@@ -770,4 +722,6 @@ Return the path to the CA cert file.
 */}}
 {{- define "postgresql-ha.postgresql.tlsCACert" -}}
 {{- printf "/opt/bitnami/postgresql/certs/%s" .Values.postgresql.tls.certCAFilename -}}
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- end -}}

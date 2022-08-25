@@ -1,20 +1,34 @@
 annotations:
   category: Infrastructure
 apiVersion: v2
+<<<<<<< HEAD
 appVersion: 2.5.0
+=======
+appVersion: 2.8.1
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 dependencies:
   - condition: postgresql.enabled
     name: postgresql
     repository: https://charts.bitnami.com/bitnami
-    version: 10.x.x
+    version: 11.x.x
+  - name: common
+    repository: https://charts.bitnami.com/bitnami
+    tags:
+      - bitnami-common
+    version: 2.x.x
   - condition: cassandra.enabled
     name: cassandra
     repository: https://charts.bitnami.com/bitnami
+<<<<<<< HEAD
     version: 8.x.x
   - name: common
     repository: https://charts.bitnami.com/bitnami
     version: 1.x.x
 description: Kong is a scalable, open source API layer (aka API gateway or API middleware) that runs in front of any RESTful API. Extra functionalities beyond the core platform are extended through plugins. Kong is built on top of reliable technologies like NGINX and provides an easy-to-use RESTful API to operate and configure the system.
+=======
+    version: 9.x.x
+description: Kong is an open source Microservice API gateway and platform designed for managing microservices requests of high-availability, fault-tolerance, and distributed systems.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 engine: gotpl
 home: https://github.com/bitnami/charts/tree/master/bitnami/kong
 icon: https://bitnami.com/assets/stacks/kong/img/kong-stack-220x234.png
@@ -28,10 +42,14 @@ keywords:
   - www
   - reverse proxy
 maintainers:
-  - email: containers@bitnami.com
-    name: Bitnami
+  - name: Bitnami
+    url: https://github.com/bitnami/charts
 name: kong
 sources:
-  - https://github.com/bitnami/bitnami-docker-kong
+  - https://github.com/bitnami/containers/tree/main/bitnami/kong
   - https://konghq.com/
+<<<<<<< HEAD
 version: 4.0.4
+=======
+version: 6.4.0
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

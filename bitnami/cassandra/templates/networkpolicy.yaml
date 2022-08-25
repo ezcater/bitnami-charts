@@ -1,9 +1,9 @@
 {{- if .Values.networkPolicy.enabled }}
 kind: NetworkPolicy
-apiVersion: {{ include "networkPolicy.apiVersion" . }}
+apiVersion: {{ include "common.capabilities.networkPolicy.apiVersion" . }}
 metadata:
   name: {{ include "common.names.fullname" . }}
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ .Release.Namespace | quote }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
@@ -18,7 +18,11 @@ spec:
     # Allow inbound connections
     # CQL port
     - ports:
+<<<<<<< HEAD
         - port: {{ .Values.service.port }}
+=======
+        - port: {{ .Values.service.ports.cql }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       from:
       {{- if not .Values.networkPolicy.allowExternal }}
         - podSelector:

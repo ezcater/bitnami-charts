@@ -18,6 +18,7 @@ spec:
   clusterIP: None
   ports:
     - name: http
+<<<<<<< HEAD
       port: {{ .Values.queryFrontend.service.port }}
       targetPort: http
       protocol: TCP
@@ -25,5 +26,17 @@ spec:
       port: {{ .Values.queryFrontend.service.grpcPort }}
       targetPort: grpc
       protocol: TCP
+=======
+      port: {{ .Values.queryFrontend.service.ports.http }}
+      targetPort: http
+      protocol: TCP
+    - name: grpc
+      port: {{ .Values.queryFrontend.service.ports.grpc }}
+      targetPort: grpc
+      protocol: TCP
+    {{- if .Values.queryFrontend.service.extraPorts }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.queryFrontend.service.extraPorts "context" $) | nindent 4 }}
+    {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   selector: {{- include "common.labels.matchLabels" . | nindent 4 }}
     app.kubernetes.io/component: query-frontend

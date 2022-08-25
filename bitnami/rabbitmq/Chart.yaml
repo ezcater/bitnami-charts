@@ -1,14 +1,18 @@
 annotations:
   category: Infrastructure
 apiVersion: v2
+<<<<<<< HEAD
 appVersion: 3.9.5
+=======
+appVersion: 3.10.7
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
-    version: 1.x.x
-description: Open source message broker software that implements the Advanced Message Queuing Protocol (AMQP)
+    version: 2.x.x
+description: RabbitMQ is an open source general-purpose message broker that is designed for consistent, highly-available messaging scenarios (both synchronous and asynchronous).
 engine: gotpl
 home: https://github.com/bitnami/charts/tree/master/bitnami/rabbitmq
 icon: https://bitnami.com/assets/stacks/rabbitmq/img/rabbitmq-stack-220x234.png
@@ -17,10 +21,14 @@ keywords:
   - message queue
   - AMQP
 maintainers:
-  - email: containers@bitnami.com
-    name: Bitnami
+  - name: Bitnami
+    url: https://github.com/bitnami/charts
 name: rabbitmq
 sources:
-  - https://github.com/bitnami/bitnami-docker-rabbitmq
+  - https://github.com/bitnami/containers/tree/main/bitnami/rabbitmq
   - https://www.rabbitmq.com
+<<<<<<< HEAD
 version: 8.21.0
+=======
+version: 10.3.0
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

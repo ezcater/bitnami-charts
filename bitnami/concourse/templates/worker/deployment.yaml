@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 {{- if and .Values.worker.enabled (or (not .Values.web.enabled) (include "concourse.host" .)) -}}
+=======
+{{- if and .Values.worker.enabled (or (not .Values.web.enabled) (include "concourse.host" .)) }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- if eq .Values.worker.mode "deployment" }}
 apiVersion: {{ include "common.capabilities.deployment.apiVersion" . }}
 kind: Deployment
@@ -33,7 +37,11 @@ spec:
         {{- end }}
     spec:
       serviceAccountName: {{ template "concourse.worker.serviceAccountName" . }}
+<<<<<<< HEAD
       {{- include "imagePullSecrets" . | nindent 6 }}
+=======
+      {{- include "concourse.imagePullSecrets" . | nindent 6 }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       {{- if .Values.worker.hostAliases }}
       hostAliases: {{- include "common.tplvalues.render" (dict "value" .Values.worker.hostAliases "context" $) | nindent 8 }}
       {{- end }}
@@ -51,13 +59,28 @@ spec:
       {{- if .Values.worker.tolerations }}
       tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.worker.tolerations "context" $) | nindent 8 }}
       {{- end }}
+<<<<<<< HEAD
       {{- if .Values.worker.priorityClassName }}
       priorityClassName: {{ .Values.worker.priorityClassName | quote }}
+=======
+      {{- if .Values.worker.topologySpreadConstraints }}
+      topologySpreadConstraints: {{- include "common.tplvalues.render" (dict "value" .Values.worker.topologySpreadConstraints "context" .) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.worker.priorityClassName }}
+      priorityClassName: {{ .Values.worker.priorityClassName }}
+      {{- end }}
+      {{- if .Values.worker.schedulerName }}
+      schedulerName: {{ .Values.worker.schedulerName | quote }}
+      {{- end }}
+      {{- if .Values.worker.terminationGracePeriodSeconds }}
+      terminationGracePeriodSeconds: {{ .Values.worker.terminationGracePeriodSeconds }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       {{- end }}
       {{- if .Values.worker.podSecurityContext.enabled }}
       securityContext: {{- omit .Values.worker.podSecurityContext "enabled" | toYaml | nindent 8 }}
       {{- end }}
       initContainers:
+<<<<<<< HEAD
         {{- if and (.Values.volumePermissions.enabled) (.Values.worker.persistence.enabled) }}
         - name: volume-permissions
           image: {{ include "concourse.volumePermissions.image" . }}
@@ -78,6 +101,10 @@ spec:
         {{- end }}
         {{- if .Values.worker.initContainers }}
           {{- include "common.tplvalues.render" (dict "value" .Values.worker.initContainers "context" $) | nindent 8 }}
+=======
+        {{- if .Values.worker.initContainers }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.worker.initContainers "context" $) | nindent 8 }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
         {{- end }}
       containers:
         - name: concourse
@@ -89,13 +116,25 @@ spec:
           {{- if .Values.worker.containerSecurityContext.enabled }}
           securityContext: {{- omit .Values.worker.containerSecurityContext "enabled" | toYaml | nindent 12 }}
           {{- end }}
+<<<<<<< HEAD
           {{- if .Values.worker.command }}
+=======
+          {{- if .Values.diagnosticMode.enabled }}
+          command: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.command "context" $) | nindent 12 }}
+          {{- else if .Values.worker.command }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           command: {{- include "common.tplvalues.render" (dict "value" .Values.worker.command "context" $) | nindent 12 }}
           {{- else }}
           command:
             - /opt/bitnami/concourse/bin/concourse
           {{- end }}
+<<<<<<< HEAD
           {{- if .Values.worker.args }}
+=======
+          {{- if .Values.diagnosticMode.enabled }}
+          args: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.args "context" $) | nindent 12 }}
+          {{- else if .Values.worker.args }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           args: {{- include "common.tplvalues.render" (dict "value" .Values.worker.args "context" $) | nindent 12 }}
           {{- else }}
           args:
@@ -109,20 +148,34 @@ spec:
             - name: CONCOURSE_WORK_DIR
               value: "/bitnami/concourse/workdir"
             - name: CONCOURSE_HEALTHCHECK_BIND_PORT
+<<<<<<< HEAD
               value: {{ .Values.worker.healthCheckContainerPort | quote }}
+=======
+              value: {{ .Values.worker.containerPorts.health | quote }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             {{- if .Values.worker.logLevel }}
             - name: CONCOURSE_LOG_LEVEL
               value: {{ .Values.worker.logLevel | quote }}
             {{- end }}
             - name: CONCOURSE_TSA_HOST
+<<<<<<< HEAD
               value: {{ template "concourse.web.tsa.address" . }}
+=======
+              value: {{ include "concourse.web.tsa.address" . | quote }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             {{- if .Values.worker.bindIp }}
             - name: CONCOURSE_BIND_IP
               value: {{ .Values.worker.bindIp | quote }}
             {{- end }}
+<<<<<<< HEAD
             {{- if .Values.worker.containerPort }}
             - name: CONCOURSE_BIND_PORT
               value: {{ .Values.worker.containerPort | quote }}
+=======
+            {{- if .Values.worker.containerPorts.garden }}
+            - name: CONCOURSE_BIND_PORT
+              value: {{ .Values.worker.containerPorts.garden | quote }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             {{- end }}
             {{- if .Values.worker.baggageclaim.logLevel }}
             - name: CONCOURSE_BAGGAGECLAIM_LOG_LEVEL
@@ -132,6 +185,7 @@ spec:
             - name: CONCOURSE_BAGGAGECLAIM_BIND_IP
               value: {{ .Values.worker.baggageclaim.bindIp | quote }}
             {{- end }}
+<<<<<<< HEAD
             {{- if .Values.worker.baggageclaim.containerPort }}
             - name: CONCOURSE_BAGGAGECLAIM_BIND_PORT
               value: {{ .Values.worker.baggageclaim.containerPort | quote }}
@@ -143,6 +197,19 @@ spec:
             {{- if .Values.worker.baggageclaim.debugContainerPort }}
             - name: CONCOURSE_BAGGAGECLAIM_DEBUG_BIND_PORT
               value: {{ .Values.worker.baggageclaim.debugContainerPort | quote }}
+=======
+            {{- if .Values.worker.containerPorts.baggageclaim }}
+            - name: CONCOURSE_BAGGAGECLAIM_BIND_PORT
+              value: {{ .Values.worker.containerPorts.baggageclaim | quote }}
+            {{- end }}
+            {{- if .Values.worker.baggageclaim.debugBindIp }}
+            - name: CONCOURSE_BAGGAGECLAIM_DEBUG_BIND_IP
+              value: {{ .Values.worker.baggageclaim.debugBindIp | quote }}
+            {{- end }}
+            {{- if .Values.worker.containerPorts.pprof }}
+            - name: CONCOURSE_BAGGAGECLAIM_DEBUG_BIND_PORT
+              value: {{ .Values.worker.containerPorts.pprof | quote }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             {{- end }}
             {{- if .Values.worker.baggageclaim.volumes }}
             - name: CONCOURSE_BAGGAGECLAIM_VOLUMES
@@ -185,6 +252,7 @@ spec:
           {{- end }}
           ports:
             - name: http
+<<<<<<< HEAD
               containerPort: {{ .Values.worker.containerPort }}
             - name: healthz
               containerPort: {{ .Values.worker.healthCheckContainerPort }}
@@ -199,10 +267,29 @@ spec:
             failureThreshold: {{ .Values.worker.livenessProbe.failureThreshold }}
             successThreshold: {{ .Values.worker.livenessProbe.successThreshold }}
           {{- else if .Values.worker.customLivenessProbe }}
+=======
+              containerPort: {{ .Values.worker.containerPorts.garden }}
+            - name: healthz
+              containerPort: {{ .Values.worker.containerPorts.health }}
+          {{- if not .Values.diagnosticMode.enabled }}
+          {{- if .Values.worker.startupProbe.enabled }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.worker.startupProbe "enabled") "context" $) | nindent 12 }}
+            tcpSocket:
+              port: healthz
+          {{- else if .Values.worker.customStartupProbe }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" .Values.worker.customStartupProbe "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.worker.livenessProbe.enabled }}
+          livenessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.worker.livenessProbe "enabled") "context" $) | nindent 12 }}
+            httpGet:
+              path: /
+              port: healthz
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           {{- else if .Values.worker.customLivenessProbe }}
           livenessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.worker.customLivenessProbe "context" $) | nindent 12 }}
           {{- end }}
           {{- if .Values.worker.readinessProbe.enabled }}
+<<<<<<< HEAD
           readinessProbe:
             httpGet:
               path: "/"
@@ -215,6 +302,16 @@ spec:
           {{- else if .Values.worker.customReadinessProbe }}
           readinessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.worker.customReadinessProbe "context" $) | nindent 12 }}
           {{- end }}
+=======
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.worker.readinessProbe "enabled") "context" $) | nindent 12 }}
+            httpGet:
+              path: /
+              port: healthz
+          {{- else if .Values.worker.customReadinessProbe }}
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.worker.customReadinessProbe "context" $) | nindent 12 }}
+          {{- end }}
+          {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           volumeMounts:
             - name: concourse-work-dir
               mountPath: /bitnami/concourse/workdir

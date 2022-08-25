@@ -4,7 +4,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "redmine.mariadb.fullname" -}}
-{{- printf "%s-%s" .Release.Name "mariadb" | trunc 63 | trimSuffix "-" -}}
+{{- include "common.names.dependency.fullname" (dict "chartName" "mariadb" "chartValues" .Values.mariadb "context" $) -}}
 {{- end -}}
 
 {{/*
@@ -12,7 +12,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "redmine.postgresql.fullname" -}}
-{{- printf "%s-%s" .Release.Name "postgresql" | trunc 63 | trimSuffix "-" -}}
+{{- include "common.names.dependency.fullname" (dict "chartName" "postgresql" "chartValues" .Values.postgresql "context" $) -}}
 {{- end -}}
 
 {{/*
@@ -27,6 +27,7 @@ Return the proper Docker Image Registry Secret Names
 */}}
 {{- define "redmine.imagePullSecrets" -}}
 {{- include "common.images.pullSecrets" (dict "images" (list .Values.image .Values.certificates.image) "global" .Values.global) -}}
+<<<<<<< HEAD
 {{- end -}}
 
 {{/*
@@ -34,6 +35,8 @@ Return  the proper Storage Class
 */}}
 {{- define "redmine.storageClass" -}}
 {{- include "common.storage.class" (dict "persistence" .Values.persistence "global" .Values.global) -}}
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- end -}}
 
 {{/*
@@ -51,11 +54,7 @@ Create the name of the service account to use
 Return the name of the Secret used to store the passwords
 */}}
 {{- define "redmine.secretName" -}}
-{{- if .Values.existingSecret -}}
-{{ .Values.existingSecret }}
-{{- else -}}
-{{ include "common.names.fullname" . }}
-{{- end -}}
+{{- default (include "common.names.fullname" .) .Values.existingSecret -}}
 {{- end -}}
 
 {{/*
@@ -96,10 +95,10 @@ credentials for the external database or not
 Return the database host for Redmine
 */}}
 {{- define "redmine.database.host" -}}
-{{- if and (eq .Values.databaseType "mariadb") (.Values.mariadb.enabled) -}}
-    {{- printf "%s" (include "redmine.mariadb.fullname" .) -}}
-{{- else if and (eq .Values.databaseType "postgresql") (.Values.postgresql.enabled) -}}
-    {{- printf "%s" (include "redmine.postgresql.fullname" .) -}}
+{{- if and (eq .Values.databaseType "mariadb") .Values.mariadb.enabled -}}
+    {{- include "redmine.mariadb.fullname" . | quote -}}
+{{- else if and (eq .Values.databaseType "postgresql") .Values.postgresql.enabled -}}
+    {{- include "redmine.postgresql.fullname" . | quote  -}}
 {{- else }}
     {{- .Values.externalDatabase.host | quote }}
 {{- end -}}
@@ -109,10 +108,17 @@ Return the database host for Redmine
 Return the database port for Redmine
 */}}
 {{- define "redmine.database.port" -}}
+<<<<<<< HEAD
 {{- if and (eq .Values.databaseType "mariadb") (.Values.mariadb.enabled) -}}
     {{- printf "3306" -}}
 {{- else if and (eq .Values.databaseType "postgresql") (.Values.postgresql.enabled) -}}
     {{- printf "5432" -}}
+=======
+{{- if and (eq .Values.databaseType "mariadb") .Values.mariadb.enabled -}}
+    {{- print "3306" -}}
+{{- else if and (eq .Values.databaseType "postgresql") .Values.postgresql.enabled -}}
+    {{- print "5432" -}}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- else }}
     {{- .Values.externalDatabase.port }}
 {{- end -}}
@@ -122,12 +128,20 @@ Return the database port for Redmine
 Return the database name for Redmine
 */}}
 {{- define "redmine.database.name" -}}
-{{- if and (eq .Values.databaseType "mariadb") (.Values.mariadb.enabled) -}}
+{{- if and (eq .Values.databaseType "mariadb") .Values.mariadb.enabled -}}
     {{- .Values.mariadb.auth.database | quote }}
-{{- else if and (eq .Values.databaseType "postgresql") (.Values.postgresql.enabled) -}}
-    {{- .Values.postgresql.postgresqlDatabase | quote }}
+{{- else if and (eq .Values.databaseType "postgresql") .Values.postgresql.enabled -}}
+    {{- if .Values.global.postgresql }}
+        {{- if .Values.global.postgresql.auth }}
+            {{- coalesce .Values.global.postgresql.auth.database .Values.postgresql.auth.database | quote -}}
+        {{- else -}}
+            {{- .Values.postgresql.auth.database | quote -}}
+        {{- end -}}
+    {{- else -}}
+        {{- .Values.postgresql.auth.database | quote -}}
+    {{- end -}}
 {{- else }}
-    {{- .Values.externalDatabase.name | quote }}
+    {{- .Values.externalDatabase.database | quote }}
 {{- end -}}
 {{- end -}}
 
@@ -135,10 +149,18 @@ Return the database name for Redmine
 Return the database username for Redmine
 */}}
 {{- define "redmine.database.username" -}}
-{{- if and (eq .Values.databaseType "mariadb") (.Values.mariadb.enabled) -}}
+{{- if and (eq .Values.databaseType "mariadb") .Values.mariadb.enabled -}}
     {{- .Values.mariadb.auth.username | quote }}
-{{- else if and (eq .Values.databaseType "postgresql") (.Values.postgresql.enabled) -}}
-    {{- .Values.postgresql.postgresqlUsername | quote }}
+{{- else if and (eq .Values.databaseType "postgresql") .Values.postgresql.enabled -}}
+    {{- if .Values.global.postgresql }}
+        {{- if .Values.global.postgresql.auth }}
+            {{- coalesce .Values.global.postgresql.auth.username .Values.postgresql.auth.username | quote -}}
+        {{- else -}}
+            {{- .Values.postgresql.auth.username | quote -}}
+        {{- end -}}
+    {{- else -}}
+        {{- .Values.postgresql.auth.username | quote -}}
+    {{- end -}}
 {{- else }}
     {{- .Values.externalDatabase.user | quote }}
 {{- end -}}
@@ -148,17 +170,25 @@ Return the database username for Redmine
 Return the name of the database secret with its credentials
 */}}
 {{- define "redmine.database.secretName" -}}
-{{- if and (eq .Values.databaseType "mariadb") (.Values.mariadb.enabled) -}}
+{{- if and (eq .Values.databaseType "mariadb") .Values.mariadb.enabled -}}
     {{- if .Values.mariadb.existingSecret -}}
         {{- printf "%s" .Values.mariadb.existingSecret -}}
     {{- else -}}
         {{- printf "%s" (include "redmine.mariadb.fullname" .) -}}
     {{- end -}}
-{{- else if and (eq .Values.databaseType "postgresql") (.Values.postgresql.enabled) -}}
-    {{- if .Values.postgresql.existingSecret -}}
-        {{- printf "%s" .Values.postgresql.existingSecret -}}
+{{- else if and (eq .Values.databaseType "postgresql") .Values.postgresql.enabled -}}
+    {{- if .Values.global.postgresql }}
+        {{- if .Values.global.postgresql.auth }}
+            {{- if .Values.global.postgresql.auth.existingSecret }}
+                {{- tpl .Values.global.postgresql.auth.existingSecret $ -}}
+            {{- else -}}
+                {{- default (include "redmine.postgresql.fullname" .) (tpl .Values.postgresql.auth.existingSecret $) -}}
+            {{- end -}}
+        {{- else -}}
+            {{- default (include "redmine.postgresql.fullname" .) (tpl .Values.postgresql.auth.existingSecret $) -}}
+        {{- end -}}
     {{- else -}}
-        {{- printf "%s" (include "redmine.postgresql.fullname" .) -}}
+        {{- default (include "redmine.postgresql.fullname" .) (tpl .Values.postgresql.auth.existingSecret $) -}}
     {{- end -}}
 {{- else -}}
     {{- if .Values.externalDatabase.existingSecret -}}
@@ -168,3 +198,27 @@ Return the name of the database secret with its credentials
     {{- end -}}
 {{- end -}}
 {{- end -}}
+<<<<<<< HEAD
+=======
+
+{{/*
+Add environment variables to configure database values
+*/}}
+{{- define "redmine.database.secretKey" -}}
+{{- if and (eq .Values.databaseType "mariadb") .Values.mariadb.enabled -}}
+    {{- print "mariadb-password" -}}
+{{- else if and (eq .Values.databaseType "postgresql") .Values.postgresql.enabled -}}
+    {{- print "password" -}}
+{{- else -}}
+    {{- if .Values.externalDatabase.existingSecret -}}
+        {{- if .Values.externalDatabase.existingSecretPasswordKey -}}
+            {{- printf "%s" .Values.externalDatabase.existingSecretPasswordKey -}}
+        {{- else -}}
+            {{- print "password" -}}
+        {{- end -}}
+    {{- else -}}
+        {{- print "password" -}}
+    {{- end -}}
+{{- end -}}
+{{- end -}}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

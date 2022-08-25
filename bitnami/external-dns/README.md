@@ -1,7 +1,13 @@
-# external-dns
+<!--- app-name: ExternalDNS -->
 
-[ExternalDNS](https://github.com/kubernetes-sigs/external-dns) is a Kubernetes addon that configures public DNS servers with information about exposed Kubernetes services to make them discoverable.
+# ExternalDNS packaged by Bitnami
 
+ExternalDNS is a Kubernetes addon that configures public DNS servers with information about exposed Kubernetes services to make them discoverable.
+
+[Overview of ExternalDNS](https://github.com/kubernetes-incubator/external-dns)
+
+Trademarks: This software listing is packaged by Bitnami. The respective trademarks mentioned in the offering are owned by the respective companies, and use of them does not imply any affiliation or endorsement.
+                           
 ## TL;DR
 
 ```console
@@ -11,14 +17,14 @@ $ helm install my-release bitnami/external-dns
 
 ## Introduction
 
-This chart bootstraps a [ExternalDNS](https://github.com/bitnami/bitnami-docker-external-dns) deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+This chart bootstraps a [ExternalDNS](https://github.com/bitnami/containers/tree/main/bitnami/external-dns) deployment on a [Kubernetes](https://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
-Bitnami charts can be used with [Kubeapps](https://kubeapps.com/) for deployment and management of Helm Charts in clusters. This chart has been tested to work with NGINX Ingress, cert-manager, fluentd and Prometheus on top of the [BKPR](https://kubeprod.io/).
+Bitnami charts can be used with [Kubeapps](https://kubeapps.dev/) for deployment and management of Helm Charts in clusters.
 
 ## Prerequisites
 
-- Kubernetes 1.12+
-- Helm 3.1.0
+- Kubernetes 1.19+
+- Helm 3.2.0+
 
 ## Installing the Chart
 
@@ -54,6 +60,7 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Common parameters
 
+<<<<<<< HEAD
 | Name               | Description                                                                                  | Value           |
 | ------------------ | -------------------------------------------------------------------------------------------- | --------------- |
 | `nameOverride`     | String to partially override external-dns.fullname template (will maintain the release name) | `""`            |
@@ -62,11 +69,27 @@ The command removes all the Kubernetes components associated with the chart and 
 
 
 ### etcd parameters
+=======
+| Name                    | Description                                                                                  | Value           |
+| ----------------------- | -------------------------------------------------------------------------------------------- | --------------- |
+| `nameOverride`          | String to partially override external-dns.fullname template (will maintain the release name) | `""`            |
+| `fullnameOverride`      | String to fully override external-dns.fullname template                                      | `""`            |
+| `clusterDomain`         | Kubernetes Cluster Domain                                                                    | `cluster.local` |
+| `commonLabels`          | Labels to add to all deployed objects                                                        | `{}`            |
+| `commonAnnotations`     | Annotations to add to all deployed objects                                                   | `{}`            |
+| `extraDeploy`           | Array of extra objects to deploy with the release (evaluated as a template).                 | `[]`            |
+| `kubeVersion`           | Force target Kubernetes version (using Helm capabilities if not set)                         | `""`            |
+| `watchReleaseNamespace` | Watch only namepsace used for the release                                                    | `false`         |
+
+
+### external-dns parameters
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 | Name                                          | Description                                                                                                                                                                  | Value                     |
 | --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- |
 | `image.registry`                              | ExternalDNS image registry                                                                                                                                                   | `docker.io`               |
 | `image.repository`                            | ExternalDNS image repository                                                                                                                                                 | `bitnami/external-dns`    |
+<<<<<<< HEAD
 | `image.tag`                                   | ExternalDNS Image tag (immutable tags are recommended)                                                                                                                       | `0.9.0-debian-10-r20`     |
 | `image.pullPolicy`                            | ExternalDNS image pull policy                                                                                                                                                | `IfNotPresent`            |
 | `image.pullSecrets`                           | ExternalDNS image pull secrets                                                                                                                                               | `[]`                      |
@@ -75,6 +98,23 @@ The command removes all the Kubernetes components associated with the chart and 
 | `provider`                                    | DNS provider where the DNS records will be created.                                                                                                                          | `aws`                     |
 | `namespace`                                   | Limit sources of endpoints to a specific namespace (default: all namespaces)                                                                                                 | `""`                      |
 | `fqdnTemplates`                               | Templated strings that are used to generate DNS names from sources that don't define a hostname themselves                                                                   | `[]`                      |
+=======
+| `image.tag`                                   | ExternalDNS Image tag (immutable tags are recommended)                                                                                                                       | `0.12.2-debian-11-r5`     |
+| `image.digest`                                | ExternalDNS image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag                                                                  | `""`                      |
+| `image.pullPolicy`                            | ExternalDNS image pull policy                                                                                                                                                | `IfNotPresent`            |
+| `image.pullSecrets`                           | ExternalDNS image pull secrets                                                                                                                                               | `[]`                      |
+| `hostAliases`                                 | Deployment pod host aliases                                                                                                                                                  | `[]`                      |
+| `updateStrategy`                              | update strategy type                                                                                                                                                         | `{}`                      |
+| `command`                                     | Override kiam default command                                                                                                                                                | `[]`                      |
+| `args`                                        | Override kiam default args                                                                                                                                                   | `[]`                      |
+| `sources`                                     | K8s resources type to be observed for new DNS entries by ExternalDNS                                                                                                         | `[]`                      |
+| `provider`                                    | DNS provider where the DNS records will be created.                                                                                                                          | `aws`                     |
+| `initContainers`                              | Attach additional init containers to the pod (evaluated as a template)                                                                                                       | `[]`                      |
+| `sidecars`                                    | Attach additional containers to the pod (evaluated as a template)                                                                                                            | `[]`                      |
+| `namespace`                                   | Limit sources of endpoints to a specific namespace (default: all namespaces)                                                                                                 | `""`                      |
+| `fqdnTemplates`                               | Templated strings that are used to generate DNS names from sources that don't define a hostname themselves                                                                   | `[]`                      |
+| `containerPorts.http`                         | HTTP Container port                                                                                                                                                          | `7979`                    |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 | `combineFQDNAnnotation`                       | Combine FQDN template and annotations instead of overwriting                                                                                                                 | `false`                   |
 | `ignoreHostnameAnnotation`                    | Ignore hostname annotation when generating DNS names, valid only when fqdn-template is set                                                                                   | `false`                   |
 | `publishInternalServices`                     | Allow external-dns to publish DNS records for ClusterIP services                                                                                                             | `false`                   |
@@ -93,8 +133,15 @@ The command removes all the Kubernetes components associated with the chart and 
 | `aws.region`                                  | When using the AWS provider, `AWS_DEFAULT_REGION` to set in the environment (optional)                                                                                       | `us-east-1`               |
 | `aws.zoneType`                                | When using the AWS provider, filter for zones of this type (optional, options: public, private)                                                                              | `""`                      |
 | `aws.assumeRoleArn`                           | When using the AWS provider, assume role by specifying --aws-assume-role to the external-dns daemon                                                                          | `""`                      |
+<<<<<<< HEAD
 | `aws.apiRetries`                              | Maximum number of retries for AWS API calls before giving up                                                                                                                 | `3`                       |
 | `aws.batchChangeSize`                         | When using the AWS provider, set the maximum number of changes that will be applied in each batch                                                                            | `1000`                    |
+=======
+| `aws.roleArn`                                 | Specify role ARN to the external-dns daemon                                                                                                                                  | `""`                      |
+| `aws.apiRetries`                              | Maximum number of retries for AWS API calls before giving up                                                                                                                 | `3`                       |
+| `aws.batchChangeSize`                         | When using the AWS provider, set the maximum number of changes that will be applied in each batch                                                                            | `1000`                    |
+| `aws.zonesCacheDuration`                      | If the list of Route53 zones managed by ExternalDNS doesn't change frequently, cache it by setting a TTL                                                                     | `0`                       |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 | `aws.zoneTags`                                | When using the AWS provider, filter for zones with these tags                                                                                                                | `[]`                      |
 | `aws.preferCNAME`                             | When using the AWS provider, replaces Alias records with CNAME (options: true, false)                                                                                        | `""`                      |
 | `aws.evaluateTargetHealth`                    | When using the AWS provider, sets the evaluate target health flag (options: true, false)                                                                                     | `""`                      |
@@ -138,6 +185,10 @@ The command removes all the Kubernetes components associated with the chart and 
 | `google.serviceAccountSecret`                 | When using the Google provider, specify the existing secret which contains credentials.json (optional)                                                                       | `""`                      |
 | `google.serviceAccountSecretKey`              | When using the Google provider with an existing secret, specify the key name (optional)                                                                                      | `credentials.json`        |
 | `google.serviceAccountKey`                    | When using the Google provider, specify the service account key JSON file. In this case a new secret will be created holding this service account (optional)                 | `""`                      |
+<<<<<<< HEAD
+=======
+| `google.zoneVisibility`                       | When using the Google provider, fiter for zones of a specific visibility (private or public)                                                                                 | `""`                      |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 | `hetzner.token`                               | When using the Hetzner provider, specify your token here. (required when `hetzner.secretName` is not provided. In this case a new secret will be created holding the token.) | `""`                      |
 | `hetzner.secretName`                          | When using the Hetzner provider, specify the existing secret which contains your token. Disables the usage of `hetzner.token` (optional)                                     | `""`                      |
 | `hetzner.secretKey`                           | When using the Hetzner provider with an existing secret, specify the key name (optional)                                                                                     | `hetzner_token`           |
@@ -145,6 +196,10 @@ The command removes all the Kubernetes components associated with the chart and 
 | `infoblox.wapiPassword`                       | When using the Infoblox provider, specify the Infoblox WAPI password (required when provider=infoblox)                                                                       | `""`                      |
 | `infoblox.gridHost`                           | When using the Infoblox provider, specify the Infoblox Grid host (required when provider=infoblox)                                                                           | `""`                      |
 | `infoblox.view`                               | Infoblox view                                                                                                                                                                | `""`                      |
+<<<<<<< HEAD
+=======
+| `infoblox.secretName`                         | Existing secret name, when in place wapiUsername and wapiPassword are not required                                                                                           | `""`                      |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 | `infoblox.domainFilter`                       | When using the Infoblox provider, specify the domain (optional)                                                                                                              | `""`                      |
 | `infoblox.noSslVerify`                        | When using the Infoblox provider, disable SSL verification (optional)                                                                                                        | `false`                   |
 | `infoblox.wapiPort`                           | When using the Infoblox provider, specify the Infoblox WAPI port (optional)                                                                                                  | `""`                      |
@@ -155,10 +210,27 @@ The command removes all the Kubernetes components associated with the chart and 
 | `linode.apiToken`                             | When using the Linode provider, `LINODE_TOKEN` to set (optional)                                                                                                             | `""`                      |
 | `linode.secretName`                           | Use an existing secret with key "linode_api_token" defined.                                                                                                                  | `""`                      |
 | `ns1.minTTL`                                  | When using the ns1 provider, specify minimal TTL, as an integer, for records                                                                                                 | `10`                      |
+<<<<<<< HEAD
 | `ovh.consumerKey`                             | When using the OVH provider, specify the existing consumer key. (required when provider=ovh and `ovh.secretName` is not provided.)                                           | `""`                      |
 | `ovh.applicationKey`                          | When using the OVH provider with an existing application, specify the application key. (required when provider=ovh and `ovh.secretName` is not provided.)                    | `""`                      |
 | `ovh.applicationSecret`                       | When using the OVH provider with an existing application, specify the application secret. (required when provider=ovh and `ovh.secretName` is not provided.)                 | `""`                      |
 | `ovh.secretName`                              | When using the OVH provider, it's the name of the secret containing `ovh_consumer_key`, `ovh_application_key` and `ovh_application_secret`. Disables usage of other `ovh.    | `""`                      |
+=======
+| `ns1.apiKey`                                  | When using the ns1 provider, specify the API key to use                                                                                                                      | `""`                      |
+| `ns1.secretName`                              | Use an existing secret with key "ns1-api-key" defined.                                                                                                                       | `""`                      |
+| `oci.region`                                  | When using the OCI provider, specify the region, where your zone is located in.                                                                                              | `""`                      |
+| `oci.tenancyOCID`                             | When using the OCI provider, specify your Tenancy OCID                                                                                                                       | `""`                      |
+| `oci.userOCID`                                | When using the OCI provider, specify your User OCID                                                                                                                          | `""`                      |
+| `oci.compartmentOCID`                         | When using the OCI provider, specify your Compartment OCID where your DNS Zone is located in.                                                                                | `""`                      |
+| `oci.privateKey`                              | When using the OCI provider, paste in your RSA private key file for the Oracle API                                                                                           | `""`                      |
+| `oci.privateKeyFingerprint`                   | When using the OCI provider, put in the fingerprint of your privateKey                                                                                                       | `""`                      |
+| `oci.privateKeyPassphrase`                    | When using the OCI provider and your privateKey has a passphrase, put it in here. (optional)                                                                                 | `""`                      |
+| `oci.secretName`                              | When using the OCI provider, it's the name of the secret containing `oci.yaml` file.                                                                                         | `""`                      |
+| `ovh.consumerKey`                             | When using the OVH provider, specify the existing consumer key. (required when provider=ovh and `ovh.secretName` is not provided.)                                           | `""`                      |
+| `ovh.applicationKey`                          | When using the OVH provider with an existing application, specify the application key. (required when provider=ovh and `ovh.secretName` is not provided.)                    | `""`                      |
+| `ovh.applicationSecret`                       | When using the OVH provider with an existing application, specify the application secret. (required when provider=ovh and `ovh.secretName` is not provided.)                 | `""`                      |
+| `ovh.secretName`                              | When using the OVH provider, it's the name of the secret containing `ovh_consumer_key`, `ovh_application_key` and `ovh_application_secret`. Disables usage of other `ovh`.   | `""`                      |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 | `scaleway.scwAccessKey`                       | When using the Scaleway provider, specify an existing access key. (required when provider=scaleway)                                                                          | `""`                      |
 | `scaleway.scwSecretKey`                       | When using the Scaleway provider, specify an existing secret key. (required when provider=scaleway)                                                                          | `""`                      |
 | `scaleway.scwDefaultOrganizationId`           | When using the Scaleway provider, specify the existing organization id. (required when provider=scaleway)                                                                    | `""`                      |
@@ -192,6 +264,10 @@ The command removes all the Kubernetes components associated with the chart and 
 | `zoneNameFilters`                             | Filter target zones by zone domain (optional)                                                                                                                                | `[]`                      |
 | `zoneIdFilters`                               | Limit possible target zones by zone id (optional)                                                                                                                            | `[]`                      |
 | `annotationFilter`                            | Filter sources managed by external-dns via annotation using label selector (optional)                                                                                        | `""`                      |
+<<<<<<< HEAD
+=======
+| `labelFilter`                                 | Select sources managed by external-dns using label selector (optional)                                                                                                       | `""`                      |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 | `dryRun`                                      | When enabled, prints DNS record changes rather than actually performing them (optional)                                                                                      | `false`                   |
 | `triggerLoopOnEvent`                          | When enabled, triggers run loop on create/update/delete events in addition to regular interval (optional)                                                                    | `false`                   |
 | `interval`                                    | Interval update period to use                                                                                                                                                | `1m`                      |
@@ -204,8 +280,18 @@ The command removes all the Kubernetes components associated with the chart and 
 | `txtOwnerId`                                  | A name that identifies this instance of ExternalDNS. Currently used by registry types: txt & aws-sd (optional)                                                               | `""`                      |
 | `forceTxtOwnerId`                             | (backward compatibility) When using the non-TXT registry, it will pass the value defined by `txtOwnerId` down to the application (optional)                                  | `false`                   |
 | `extraArgs`                                   | Extra arguments to be passed to external-dns                                                                                                                                 | `{}`                      |
+<<<<<<< HEAD
 | `extraEnv`                                    | Extra environment variables to be passed to external-dns                                                                                                                     | `[]`                      |
 | `replicas`                                    | Desired number of ExternalDNS replicas                                                                                                                                       | `1`                       |
+=======
+| `extraEnvVars`                                | An array to add extra env vars                                                                                                                                               | `[]`                      |
+| `extraEnvVarsCM`                              | ConfigMap containing extra env vars                                                                                                                                          | `""`                      |
+| `extraEnvVarsSecret`                          | Secret containing extra env vars (in case of sensitive data)                                                                                                                 | `""`                      |
+| `lifecycleHooks`                              | Override default etcd container hooks                                                                                                                                        | `{}`                      |
+| `schedulerName`                               | Alternative scheduler                                                                                                                                                        | `""`                      |
+| `topologySpreadConstraints`                   | Topology Spread Constraints for pod assignment                                                                                                                               | `[]`                      |
+| `replicaCount`                                | Desired number of ExternalDNS replicas                                                                                                                                       | `1`                       |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 | `podAffinityPreset`                           | Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                                                                          | `""`                      |
 | `podAntiAffinityPreset`                       | Pod anti-affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                                                                     | `soft`                    |
 | `nodeAffinityPreset.type`                     | Node affinity preset type. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                                                                    | `""`                      |
@@ -223,43 +309,85 @@ The command removes all the Kubernetes components associated with the chart and 
 | `crd.kind`                                    | Sets the kind for the CRD to watch                                                                                                                                           | `""`                      |
 | `service.enabled`                             | Whether to create Service resource or not                                                                                                                                    | `true`                    |
 | `service.type`                                | Kubernetes Service type                                                                                                                                                      | `ClusterIP`               |
+<<<<<<< HEAD
 | `service.port`                                | ExternalDNS client port                                                                                                                                                      | `7979`                    |
 | `service.nodePort`                            | Port to bind to for NodePort service type (client port)                                                                                                                      | `""`                      |
+=======
+| `service.ports.http`                          | ExternalDNS client port                                                                                                                                                      | `7979`                    |
+| `service.nodePorts.http`                      | Port to bind to for NodePort service type (client port)                                                                                                                      | `""`                      |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 | `service.clusterIP`                           | IP address to assign to service                                                                                                                                              | `""`                      |
 | `service.externalIPs`                         | Service external IP addresses                                                                                                                                                | `[]`                      |
 | `service.loadBalancerIP`                      | IP address to assign to load balancer (if supported)                                                                                                                         | `""`                      |
 | `service.loadBalancerSourceRanges`            | List of IP CIDRs allowed access to load balancer (if supported)                                                                                                              | `[]`                      |
+<<<<<<< HEAD
 | `service.annotations`                         | Annotations to add to service                                                                                                                                                | `{}`                      |
 | `service.labels`                              | Provide any additional labels which may be required.                                                                                                                         | `{}`                      |
+=======
+| `service.externalTrafficPolicy`               | Enable client source IP preservation                                                                                                                                         | `Cluster`                 |
+| `service.extraPorts`                          | Extra ports to expose in the service (normally used with the `sidecar` value)                                                                                                | `[]`                      |
+| `service.annotations`                         | Annotations to add to service                                                                                                                                                | `{}`                      |
+| `service.labels`                              | Provide any additional labels which may be required.                                                                                                                         | `{}`                      |
+| `service.sessionAffinity`                     | Session Affinity for Kubernetes service, can be "None" or "ClientIP"                                                                                                         | `None`                    |
+| `service.sessionAffinityConfig`               | Additional settings for the sessionAffinity                                                                                                                                  | `{}`                      |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 | `serviceAccount.create`                       | Determine whether a Service Account should be created or it should reuse a exiting one.                                                                                      | `true`                    |
 | `serviceAccount.name`                         | ServiceAccount to use. A name is generated using the external-dns.fullname template if it is not set                                                                         | `""`                      |
 | `serviceAccount.annotations`                  | Additional Service Account annotations                                                                                                                                       | `{}`                      |
 | `serviceAccount.automountServiceAccountToken` | Automount API credentials for a service account.                                                                                                                             | `true`                    |
+<<<<<<< HEAD
 | `rbac.create`                                 | Whether to create & use RBAC resources or not                                                                                                                                | `true`                    |
 | `rbac.clusterRole`                            | Whether to create Cluster Role. When set to false creates a Role in `namespace`                                                                                              | `true`                    |
 | `rbac.apiVersion`                             | Version of the RBAC API                                                                                                                                                      | `v1`                      |
 | `rbac.pspEnabled`                             | PodSecurityPolicy                                                                                                                                                            | `false`                   |
 | `securityContext`                             | Security context for the container                                                                                                                                           | `{}`                      |
+=======
+| `serviceAccount.labels`                       | Additional labels to be included on the service account                                                                                                                      | `{}`                      |
+| `rbac.create`                                 | Whether to create & use RBAC resources or not                                                                                                                                | `true`                    |
+| `rbac.clusterRole`                            | Whether to create Cluster Role. When set to false creates a Role in `namespace`                                                                                              | `true`                    |
+| `rbac.apiVersion`                             | Version of the RBAC API                                                                                                                                                      | `v1`                      |
+| `rbac.pspEnabled`                             | Whether to create a PodSecurityPolicy. WARNING: PodSecurityPolicy is deprecated in Kubernetes v1.21 or later, unavailable in v1.25 or later                                  | `false`                   |
+| `containerSecurityContext`                    | Security context for the container                                                                                                                                           | `{}`                      |
+| `podSecurityContext.enabled`                  | Enable pod security context                                                                                                                                                  | `true`                    |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 | `podSecurityContext.fsGroup`                  | Group ID for the container                                                                                                                                                   | `1001`                    |
 | `podSecurityContext.runAsUser`                | User ID for the container                                                                                                                                                    | `1001`                    |
 | `resources.limits`                            | The resources limits for the container                                                                                                                                       | `{}`                      |
 | `resources.requests`                          | The requested resources for the container                                                                                                                                    | `{}`                      |
 | `livenessProbe.enabled`                       | Enable livenessProbe                                                                                                                                                         | `true`                    |
+<<<<<<< HEAD
 | `livenessProbe.httpGet.path`                  | Request path for livenessProbe                                                                                                                                               | `/healthz`                |
 | `livenessProbe.httpGet.port`                  | Port for livenessProbe                                                                                                                                                       | `http`                    |
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 | `livenessProbe.initialDelaySeconds`           | Initial delay seconds for livenessProbe                                                                                                                                      | `10`                      |
 | `livenessProbe.periodSeconds`                 | Period seconds for livenessProbe                                                                                                                                             | `10`                      |
 | `livenessProbe.timeoutSeconds`                | Timeout seconds for livenessProbe                                                                                                                                            | `5`                       |
 | `livenessProbe.failureThreshold`              | Failure threshold for livenessProbe                                                                                                                                          | `2`                       |
 | `livenessProbe.successThreshold`              | Success threshold for livenessProbe                                                                                                                                          | `1`                       |
 | `readinessProbe.enabled`                      | Enable readinessProbe                                                                                                                                                        | `true`                    |
+<<<<<<< HEAD
 | `readinessProbe.httpGet.path`                 | Request path for readinessProbe                                                                                                                                              | `/healthz`                |
 | `readinessProbe.httpGet.port`                 | Port for readinessProbe                                                                                                                                                      | `http`                    |
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 | `readinessProbe.initialDelaySeconds`          | Initial delay seconds for readinessProbe                                                                                                                                     | `5`                       |
 | `readinessProbe.periodSeconds`                | Period seconds for readinessProbe                                                                                                                                            | `10`                      |
 | `readinessProbe.timeoutSeconds`               | Timeout seconds for readinessProbe                                                                                                                                           | `5`                       |
 | `readinessProbe.failureThreshold`             | Failure threshold for readinessProbe                                                                                                                                         | `6`                       |
 | `readinessProbe.successThreshold`             | Success threshold for readinessProbe                                                                                                                                         | `1`                       |
+<<<<<<< HEAD
+=======
+| `startupProbe.enabled`                        | Enable startupProbe                                                                                                                                                          | `false`                   |
+| `startupProbe.initialDelaySeconds`            | Initial delay seconds for startupProbe                                                                                                                                       | `5`                       |
+| `startupProbe.periodSeconds`                  | Period seconds for startupProbe                                                                                                                                              | `10`                      |
+| `startupProbe.timeoutSeconds`                 | Timeout seconds for startupProbe                                                                                                                                             | `5`                       |
+| `startupProbe.failureThreshold`               | Failure threshold for startupProbe                                                                                                                                           | `6`                       |
+| `startupProbe.successThreshold`               | Success threshold for startupProbe                                                                                                                                           | `1`                       |
+| `customLivenessProbe`                         | Override default liveness probe                                                                                                                                              | `{}`                      |
+| `customReadinessProbe`                        | Override default readiness probe                                                                                                                                             | `{}`                      |
+| `customStartupProbe`                          | Override default startup probe                                                                                                                                               | `{}`                      |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 | `extraVolumes`                                | A list of volumes to be added to the pod                                                                                                                                     | `[]`                      |
 | `extraVolumeMounts`                           | A list of volume mounts to be added to the pod                                                                                                                               | `[]`                      |
 | `podDisruptionBudget`                         | Configure PodDisruptionBudget                                                                                                                                                | `{}`                      |
@@ -270,6 +398,14 @@ The command removes all the Kubernetes components associated with the chart and 
 | `metrics.serviceMonitor.interval`             | Interval at which metrics should be scraped                                                                                                                                  | `""`                      |
 | `metrics.serviceMonitor.scrapeTimeout`        | Timeout after which the scrape is ended                                                                                                                                      | `""`                      |
 | `metrics.serviceMonitor.selector`             | Additional labels for ServiceMonitor object                                                                                                                                  | `{}`                      |
+<<<<<<< HEAD
+=======
+| `metrics.serviceMonitor.metricRelabelings`    | Specify Metric Relabelings to add to the scrape endpoint                                                                                                                     | `[]`                      |
+| `metrics.serviceMonitor.relabelings`          | Prometheus relabeling rules                                                                                                                                                  | `[]`                      |
+| `metrics.serviceMonitor.honorLabels`          | Specify honorLabels parameter to add the scrape endpoint                                                                                                                     | `false`                   |
+| `metrics.serviceMonitor.labels`               | Used to pass Labels that are required by the installed Prometheus Operator                                                                                                   | `{}`                      |
+| `metrics.serviceMonitor.jobLabel`             | The name of the label on the target service to use as the job name in prometheus.                                                                                            | `""`                      |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
@@ -331,10 +467,21 @@ $ helm install my-release \
 
 ## Troubleshooting
 
-Find more information about how to deal with common errors related to Bitnami’s Helm charts in [this troubleshooting guide](https://docs.bitnami.com/general/how-to/troubleshoot-helm-chart-issues).
-
+Find more information about how to deal with common errors related to Bitnami's Helm charts in [this troubleshooting guide](https://docs.bitnami.com/general/how-to/troubleshoot-helm-chart-issues).
 ## Upgrading
 
+<<<<<<< HEAD
+=======
+### To 6.0.0
+
+Some of the chart values were changed to adapt to the latest Bitnami standards. More specifically:
+
+- `containerPort` was changed to `containerPorts.http`
+- `service.port` was changed to `service.ports.http`
+
+No issues should be expected when upgrading.
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ### To 5.0.0
 
 The CRD was updated according to the latest changes in the upstream project. As a consequence, the CRD API version was moved from `apiextensions.k8s.io/v1beta1` to `apiextensions.k8s.io/v1`. If you deployed the Helm Chart using `crd.create=true` you need to manually delete the old CRD before upgrading the release.
@@ -396,3 +543,19 @@ Other mayor changes included in this major version are:
   - `aws.credentialsPath` -> `aws.credentials.mountPath`
   - `designate.customCA.directory` -> `designate.customCA.mountPath`
 - Support to Prometheus metrics is added.
+
+## License
+
+Copyright &copy; 2022 Bitnami
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

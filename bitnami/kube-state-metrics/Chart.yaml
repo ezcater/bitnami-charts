@@ -1,13 +1,17 @@
 annotations:
   category: Analytics
 apiVersion: v2
+<<<<<<< HEAD
 appVersion: 2.2.0
+=======
+appVersion: 2.5.0
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
-    version: 1.x.x
+    version: 2.x.x
 description: kube-state-metrics is a simple service that listens to the Kubernetes API server and generates metrics about the state of the objects.
 engine: gotpl
 home: https://github.com/bitnami/charts/tree/master/bitnami/kube-state-metrics
@@ -17,10 +21,14 @@ keywords:
   - kube-state-metrics
   - monitoring
 maintainers:
-  - email: containers@bitnami.com
-    name: Bitnami
+  - name: Bitnami
+    url: https://github.com/bitnami/charts
 name: kube-state-metrics
 sources:
-  - https://github.com/bitnami/bitnami-docker-kube-state-metrics
+  - https://github.com/bitnami/containers/tree/main/bitnami/kube-state-metrics
   - https://github.com/kubernetes/kube-state-metrics
+<<<<<<< HEAD
 version: 2.1.7
+=======
+version: 3.2.0
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

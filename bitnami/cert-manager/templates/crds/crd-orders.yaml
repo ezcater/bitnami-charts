@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+# Source: https://github.com/cert-manager/cert-manager/tree/master/deploy/crds
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- if .Values.installCRDs }}
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -6,6 +10,10 @@ metadata:
   annotations:
     cert-manager.io/inject-ca-from-secret: '{{ template "certmanager.webhook.caRef" . }}'
   labels: {{- include "common.labels.standard" . | nindent 4 }}
+<<<<<<< HEAD
+=======
+    app: {{ template "common.names.name" . }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 spec:
   group: acme.cert-manager.io
   names:
@@ -17,6 +25,7 @@ spec:
       - cert-manager
       - cert-manager-acme
   scope: Namespaced
+<<<<<<< HEAD
   conversion:
     # a Webhook strategy instruct API server to call an external webhook for any conversion between custom resources.
     strategy: Webhook
@@ -501,6 +510,9 @@ spec:
                   type: string
       served: true
       storage: false
+=======
+  versions:
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     - name: v1
       subresources:
         status: {}
@@ -659,10 +671,13 @@ spec:
                   type: string
       served: true
       storage: true
+<<<<<<< HEAD
 status:
   acceptedNames:
     kind: ""
     plural: ""
   conditions: []
   storedVersions: []
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- end -}}

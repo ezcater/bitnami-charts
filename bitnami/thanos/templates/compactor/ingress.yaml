@@ -2,6 +2,7 @@
 apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
+<<<<<<< HEAD
   name: thanos-compactor
   labels: {{- include "common.labels.standard" . | nindent 4 }}
   annotations:
@@ -13,6 +14,24 @@ metadata:
     {{- end }}
 spec:
   {{- if and .Values.compactor.ingress.ingressClassName }}
+=======
+  name: {{ include "common.names.fullname" . }}-compactor
+  namespace: {{ .Release.Namespace | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    app.kubernetes.io/component: compactor
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
+    {{- if .Values.compactor.ingress.annotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.compactor.ingress.annotations "context" $ ) | nindent 4 }}
+    {{- end }}
+spec:
+  {{- if and .Values.bucketweb.ingress.ingressClassName (include "common.ingress.supportsIngressClassname" .) }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ingressClassName: {{ .Values.compactor.ingress.ingressClassName | quote }}
   {{- end }}
   rules:
@@ -24,7 +43,11 @@ spec:
             {{- if eq "true" (include "common.ingress.supportsPathType" .) }}
             pathType: {{ .Values.compactor.ingress.pathType }}
             {{- end }}
+<<<<<<< HEAD
             backend: {{- include "common.ingress.backend" (dict "serviceName" "thanos-compactor" "servicePort" "http" "context" $)  | nindent 14 }}
+=======
+            backend: {{- include "common.ingress.backend" (dict "serviceName" (printf "%s-%s"  (include "common.names.fullname" .) "compactor") "servicePort" "http" "context" $)  | nindent 14 }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     {{- end }}
     {{- range .Values.compactor.ingress.extraHosts }}
     - host: {{ .name }}
@@ -34,11 +57,22 @@ spec:
             {{- if eq "true" (include "common.ingress.supportsPathType" $) }}
             pathType: {{ default "ImplementationSpecific" .pathType }}
             {{- end }}
+<<<<<<< HEAD
             backend: {{- include "common.ingress.backend" (dict "serviceName" "thanos-compactor" "servicePort" "http" "context" $) | nindent 14 }}
     {{- end }}
   {{- if or .Values.compactor.ingress.tls .Values.compactor.ingress.extraTls .Values.compactor.ingress.hosts }}
   tls:
     {{- if or .Values.compactor.ingress.secrets .Values.compactor.ingress.tls }}
+=======
+            backend: {{- include "common.ingress.backend" (dict "serviceName" (printf "%s-%s"  (include "common.names.fullname" $) "compactor") "servicePort" "http" "context" $)  | nindent 14 }}
+    {{- end }}
+    {{- if .Values.compactor.ingress.extraRules }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.compactor.ingress.extraRules "context" $) | nindent 4 }}
+    {{- end }}
+  {{- if or (and .Values.compactor.ingress.tls (or (include "common.ingress.certManagerRequest" ( dict "annotations" .Values.compactor.ingress.annotations )) .Values.compactor.ingress.selfSigned)) .Values.compactor.ingress.extraTls }}
+  tls:
+    {{- if and .Values.compactor.ingress.tls (or (include "common.ingress.certManagerRequest" ( dict "annotations" .Values.compactor.ingress.annotations )) .Values.compactor.ingress.selfSigned) }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     - hosts:
         - {{ .Values.compactor.ingress.hostname }}
       secretName: {{ printf "%s-tls" .Values.compactor.ingress.hostname }}
@@ -47,4 +81,8 @@ spec:
     {{- toYaml .Values.compactor.ingress.extraTls | nindent 4 }}
     {{- end }}
   {{- end }}
+<<<<<<< HEAD
 {{- end }}
+=======
+{{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

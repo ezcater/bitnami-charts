@@ -26,9 +26,15 @@ spec:
           protocol: UDP
     # Allow outbound connections to other cluster pods
     - ports:
+<<<<<<< HEAD
         - port: {{ .Values.master.containerPort }}
         {{- if .Values.sentinel.enabled }}
         - port: {{ .Values.sentinel.containerPort }}
+=======
+        - port: {{ .Values.master.containerPorts.redis }}
+        {{- if .Values.sentinel.enabled }}
+        - port: {{ .Values.sentinel.containerPorts.sentinel }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
         {{- end }}
       to:
         - podSelector:
@@ -41,9 +47,15 @@ spec:
   ingress:
     # Allow inbound connections
     - ports:
+<<<<<<< HEAD
         - port: {{ .Values.master.containerPort }}
         {{- if .Values.sentinel.enabled }}
         - port: {{ .Values.sentinel.containerPort }}
+=======
+        - port: {{ .Values.master.containerPorts.redis }}
+        {{- if .Values.sentinel.enabled }}
+        - port: {{ .Values.sentinel.containerPorts.sentinel }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
         {{- end }}
       {{- if not .Values.networkPolicy.allowExternal }}
       from:

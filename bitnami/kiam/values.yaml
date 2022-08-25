@@ -18,6 +18,12 @@ global:
 
 ## @section Common parameters
 
+<<<<<<< HEAD
+=======
+## @param kubeVersion Force target Kubernetes version (using Helm capabilities if not set)
+##
+kubeVersion: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param nameOverride Release name override
 ##
 nameOverride: ""
@@ -34,21 +40,48 @@ commonAnnotations: {}
 ##
 extraDeploy: []
 
+<<<<<<< HEAD
+=======
+## Enable diagnostic mode in the deployment(s)/statefulset(s)
+##
+diagnosticMode:
+  ## @param diagnosticMode.enabled Enable diagnostic mode (all probes will be disabled and the command will be overridden)
+  ##
+  enabled: false
+  ## @param diagnosticMode.command Command to override all containers in the the deployment(s)/statefulset(s)
+  ##
+  command:
+    - sleep
+  ## @param diagnosticMode.args Args to override all containers in the the deployment(s)/statefulset(s)
+  ##
+  args:
+    - infinity
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @section kiam image parameters
 
 ## @param image.registry kiam image registry
 ## @param image.repository kiam image name
 ## @param image.tag kiam image tag
+<<<<<<< HEAD
+=======
+## @param image.digest kiam image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param image.pullPolicy kiam image pull policy
 ## @param image.pullSecrets Specify docker-registry secret names as an array
 ##
 image:
   registry: docker.io
   repository: bitnami/kiam
+<<<<<<< HEAD
   tag: 3.6.0-debian-10-r287
+=======
+  tag: 4.2.0-debian-11-r24
+  digest: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
   ##
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
@@ -93,7 +126,11 @@ server:
   ## @param server.sslCertHostPath Path to the host system SSL certificates (necessary for contacting the AWS metadata server)
   ##
   sslCertHostPath: /etc/ssl/certs
+<<<<<<< HEAD
   ## @param server.podSecurityPolicy.create Create a PodSecurityPolicy resource
+=======
+  ## @param server.podSecurityPolicy.create Whether to create a PodSecurityPolicy. WARNING: PodSecurityPolicy is deprecated in Kubernetes v1.21 or later, unavailable in v1.25 or later
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param server.podSecurityPolicy.allowedHostPaths Extra host paths to allow in the PodSecurityPolicy
   ##
   podSecurityPolicy:
@@ -103,8 +140,37 @@ server:
   ## Ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
   ##
   priorityClassName: ""
+<<<<<<< HEAD
   ## Configure extra options for liveness probe
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+=======
+  ## @param server.schedulerName Name of the k8s scheduler (other than default)
+  ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+  ##
+  schedulerName: ""
+  ## @param server.topologySpreadConstraints Topology Spread Constraints for pod assignment
+  ## https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  ## The value is evaluated as a template
+  ##
+  topologySpreadConstraints: []
+  ## Configure extra options for startup probe
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  ## @param server.startupProbe.enabled Enable startupProbe
+  ## @param server.startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+  ## @param server.startupProbe.periodSeconds Period seconds for startupProbe
+  ## @param server.startupProbe.timeoutSeconds Timeout seconds for startupProbe
+  ## @param server.startupProbe.failureThreshold Failure threshold for startupProbe
+  ## @param server.startupProbe.successThreshold Success threshold for startupProbe
+  ##
+  startupProbe:
+    enabled: false
+    initialDelaySeconds: 5
+    periodSeconds: 30
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 5
+  ## Configure extra options for liveness probe
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param server.livenessProbe.enabled Enable livenessProbe
   ## @param server.livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
   ## @param server.livenessProbe.periodSeconds Period seconds for livenessProbe
@@ -135,8 +201,22 @@ server:
     timeoutSeconds: 5
     successThreshold: 1
     failureThreshold: 5
+<<<<<<< HEAD
   ## @param server.extraArgs Extra arguments to add to the default kiam command
   ##
+=======
+  ## @param server.customStartupProbe Override default startup probe
+  ##
+  customStartupProbe: {}
+  ## @param server.customLivenessProbe Override default liveness probe
+  ##
+  customLivenessProbe: {}
+  ## @param server.customReadinessProbe Override default readiness probe
+  ##
+  customReadinessProbe: {}
+  ## @param server.extraArgs Extra arguments to add to the default kiam command
+  ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   extraArgs: {}
   ## @param server.command Override kiam default command
   ##
@@ -147,9 +227,15 @@ server:
   ## @param server.tlsFiles [object] Base64-encoded PEM values for server's CA certificate(s), certificate and private key
   ##
   tlsFiles:
+<<<<<<< HEAD
     ca:
     cert:
     key:
+=======
+    ca: ""
+    cert: ""
+    key: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param server.gatewayTimeoutCreation Timeout when creating the kiam gateway
   ##
   gatewayTimeoutCreation: 1s
@@ -180,7 +266,11 @@ server:
     keyFileName: key.pem
     caFileName: ca.pem
   ## Kiam server resource requests and limits
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## We usually recommend not to specify default resources and to leave this as a conscious
   ## choice for the user. This also increases chances charts run on environments with little
   ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -267,12 +357,15 @@ server:
   ## @param server.lifecycleHooks lifecycleHooks for the kiam server container to automate configuration before or after startup.
   ##
   lifecycleHooks: {}
+<<<<<<< HEAD
   ## @param server.customLivenessProbe Override default liveness probe
   ##
   customLivenessProbe: {}
   ## @param server.customReadinessProbe Override default readiness probe
   ##
   customReadinessProbe: {}
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param server.updateStrategy.type Update strategy - only really applicable for deployments with RWO PVs attached
   ## If replicas = 1, an update can get "stuck", as the previous pod remains attached to the
   ## PV, and the "incoming" pod can never start. Changing the strategy to "Recreate" will
@@ -329,20 +422,33 @@ server:
     ## @param server.service.type Kubernetes service type
     ##
     type: ClusterIP
+<<<<<<< HEAD
     ## @param server.service.port Service HTTPS port
+=======
+    ## @param server.service.port Service grpc-lb port
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     port: 8443
     ## @param server.service.nodePorts [object] Specify the nodePort values for the LoadBalancer and NodePort service types.
     ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
     ##
     nodePorts:
+<<<<<<< HEAD
       http:
       metrics:
+=======
+      http: ""
+      metrics: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## @param server.service.clusterIP kiam service clusterIP IP
     ##
     clusterIP: None
     ## @param server.service.loadBalancerIP loadBalancerIP if service type is `LoadBalancer`
+<<<<<<< HEAD
     ## ref: http://kubernetes.io/docs/user-guide/services/#type-loadbalancer
+=======
+    ## ref: https://kubernetes.io/docs/user-guide/services/#type-loadbalancer
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     loadBalancerIP: ""
     ## @param server.service.loadBalancerSourceRanges Address that are allowed when service is LoadBalancer
@@ -352,13 +458,22 @@ server:
     ##   - 10.10.10.0/24
     ##
     loadBalancerSourceRanges: []
+<<<<<<< HEAD
     ## @param server.service.externalTrafficPolicy Enable client source IP preservation
     ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+=======
+    ## @param server.service.extraPorts Extra ports to expose (normally used with the `sidecar` value)
+    ##
+    extraPorts: []
+    ## @param server.service.externalTrafficPolicy Enable client source IP preservation
+    ## ref https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     externalTrafficPolicy: Cluster
     ## @param server.service.annotations Annotations for kiam service
     ##
     annotations: {}
+<<<<<<< HEAD
 
   ## @section kiam server Service Account parameters
 
@@ -372,6 +487,34 @@ server:
     ## If not set and create is true, a name is generated using the fullname template
     ##
     name: ""
+=======
+    ## @param server.service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+    ## If "ClientIP", consecutive client requests will be directed to the same Pod
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+    ##
+    sessionAffinity: None
+    ## @param server.service.sessionAffinityConfig Additional settings for the sessionAffinity
+    ## sessionAffinityConfig:
+    ##   clientIP:
+    ##     timeoutSeconds: 300
+    ##
+    sessionAffinityConfig: {}
+
+  ## @section kiam server Service Account parameters
+
+  ## Kiam server Service Account
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+  ## @param server.serviceAccount.create Specifies whether a ServiceAccount should be created
+  ## @param server.serviceAccount.name Name of the service account to use. If not set and create is true, a name is generated using the fullname template.
+  ## @param server.serviceAccount.automountServiceAccountToken Automount service account token for the server service account
+  ## @param server.serviceAccount.annotations Annotations for service account. Evaluated as a template. Only used if `create` is `true`.
+  ##
+  serviceAccount:
+    create: true
+    name: ""
+    automountServiceAccountToken: true
+    annotations: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
   ## @section kiam server metrics parameters
 
@@ -399,6 +542,12 @@ server:
       ## @param server.metrics.serviceMonitor.namespace Namespace in which Prometheus is running
       ##
       namespace: ""
+<<<<<<< HEAD
+=======
+      ## @param server.metrics.serviceMonitor.jobLabel The name of the label on the target service to use as the job name in prometheus.
+      ##
+      jobLabel: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       ## @param server.metrics.serviceMonitor.interval Interval at which metrics should be scraped
       ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
       ##
@@ -419,6 +568,15 @@ server:
       ## ref: https://github.com/bitnami/charts/tree/master/bitnami/prometheus-operator#prometheus-configuration
       ##
       selector: {}
+<<<<<<< HEAD
+=======
+      ## @param server.metrics.serviceMonitor.labels Extra labels for the ServiceMonitor
+      ##
+      labels: {}
+      ## @param server.metrics.serviceMonitor.honorLabels honorLabels chooses the metric's labels on collisions with target labels
+      ##
+      honorLabels: false
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## @section kiam agent parameters
 
@@ -438,8 +596,22 @@ agent:
   ## Ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/
   ##
   priorityClassName: ""
+<<<<<<< HEAD
   ## @param agent.allowRouteRegExp Regexp with the allowed paths for agents to redirect
   ##
+=======
+  ## @param agent.schedulerName Name of the k8s scheduler (other than default)
+  ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+  ##
+  schedulerName: ""
+  ## @param agent.topologySpreadConstraints Topology Spread Constraints for pod assignment
+  ## https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  ## The value is evaluated as a template
+  ##
+  topologySpreadConstraints: []
+  ## @param agent.allowRouteRegExp Regexp with the allowed paths for agents to redirect
+  ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   allowRouteRegExp: ""
   ## @param agent.hostAliases Add deployment host aliases
   ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
@@ -481,10 +653,17 @@ agent:
   ## @param agent.tlsFiles [object] Base64-encoded PEM values for server's CA certificate(s), certificate and private key
   ##
   tlsFiles:
+<<<<<<< HEAD
     ca:
     cert:
     key:
   ## @param agent.podSecurityPolicy.create Create a PodSecurityPolicy resource
+=======
+    ca: ""
+    cert: ""
+    key: ""
+  ## @param agent.podSecurityPolicy.create Whether to create a PodSecurityPolicy. WARNING: PodSecurityPolicy is deprecated in Kubernetes v1.21 or later, unavailable in v1.25 or later
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param agent.podSecurityPolicy.allowedHostPaths Extra host paths to allow in the PodSecurityPolicy
   ##
   podSecurityPolicy:
@@ -503,8 +682,29 @@ agent:
     certFileName: cert.pem
     keyFileName: key.pem
     caFileName: ca.pem
+<<<<<<< HEAD
   ## Configure extra options for liveness probe
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+=======
+  ## Configure extra options for startup probe
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+  ## @param agent.startupProbe.enabled Enable startupProbe
+  ## @param agent.startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+  ## @param agent.startupProbe.periodSeconds Period seconds for startupProbe
+  ## @param agent.startupProbe.timeoutSeconds Timeout seconds for startupProbe
+  ## @param agent.startupProbe.failureThreshold Failure threshold for startupProbe
+  ## @param agent.startupProbe.successThreshold Success threshold for startupProbe
+  ##
+  startupProbe:
+    enabled: false
+    initialDelaySeconds: 5
+    periodSeconds: 30
+    timeoutSeconds: 5
+    successThreshold: 1
+    failureThreshold: 5
+  ## Configure extra options for liveness probe
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param agent.livenessProbe.enabled Enable livenessProbe
   ## @param agent.livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
   ## @param agent.livenessProbe.periodSeconds Period seconds for livenessProbe
@@ -535,6 +735,18 @@ agent:
     timeoutSeconds: 5
     successThreshold: 1
     failureThreshold: 5
+<<<<<<< HEAD
+=======
+  ## @param agent.customStartupProbe Override default startup probe
+  ##
+  customStartupProbe: {}
+  ## @param agent.customLivenessProbe Override default liveness probe
+  ##
+  customLivenessProbe: {}
+  ## @param agent.customReadinessProbe Override default readiness probe
+  ##
+  customReadinessProbe: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param agent.extraArgs Extra arguments to add to the default kiam command
   ##
   extraArgs: {}
@@ -548,7 +760,11 @@ agent:
   ##
   args: []
   ## Container resource requests and limits
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## We usually recommend not to specify default resources and to leave this as a conscious
   ## choice for the user. This also increases chances charts run on environments with little
   ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -572,6 +788,7 @@ agent:
   ## @param agent.containerSecurityContext.enabled Enabled agent containers' Security Context
   ## @param agent.containerSecurityContext.runAsUser Set agent container's Security Context runAsUser
   ## @param agent.containerSecurityContext.runAsNonRoot Set agent container's Security Context runAsNonRoot
+<<<<<<< HEAD
   ## @param agent.containerSecurityContext.seLinuxOptions Set agent container's Security Context SE Linux options
   ##
   containerSecurityContext:
@@ -579,6 +796,19 @@ agent:
     runAsUser: 1001
     runAsNonRoot: true
     seLinuxOptions: {}
+=======
+  ## @param agent.containerSecurityContext.seLinuxOptions [object] Set agent container's Security Context SE Linux options
+  ## @param agent.containerSecurityContext.capabilities.add Add capabilities for the securityContext
+  ##
+  containerSecurityContext:
+    enabled: true
+    runAsUser: 0
+    runAsNonRoot: false
+    seLinuxOptions: {}
+    capabilities:
+      add:
+        - NET_ADMIN
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param agent.podSecurityContext.enabled Enabled agent pods' Security Context
   ## @param agent.podSecurityContext.fsGroup Set agent pod's Security Context fsGroup
   ##
@@ -635,12 +865,15 @@ agent:
   ## @param agent.lifecycleHooks LifecycleHooks to set additional configuration at startup.
   ##
   lifecycleHooks: {}
+<<<<<<< HEAD
   ## @param agent.customLivenessProbe Override default liveness probe
   ##
   customLivenessProbe: {}
   ## @param agent.customReadinessProbe Override default readiness probe
   ##
   customReadinessProbe: {}
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param agent.updateStrategy.type Update strategy - only really applicable for deployments with RWO PVs attached
   ## If replicas = 1, an update can get "stuck", as the previous pod remains attached to the
   ## PV, and the "incoming" pod can never start. Changing the strategy to "Recreate" will
@@ -701,12 +934,20 @@ agent:
     ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
     ##
     nodePorts:
+<<<<<<< HEAD
       metrics:
+=======
+      metrics: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## @param agent.service.clusterIP kiam service clusterIP IP
     ##
     clusterIP: ""
     ## @param agent.service.loadBalancerIP loadBalancerIP if service type is `LoadBalancer`
+<<<<<<< HEAD
     ## ref: http://kubernetes.io/docs/user-guide/services/#type-loadbalancer
+=======
+    ## ref: https://kubernetes.io/docs/user-guide/services/#type-loadbalancer
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     loadBalancerIP: ""
     ## @param agent.service.loadBalancerSourceRanges Address that are allowed when service is LoadBalancer
@@ -717,6 +958,7 @@ agent:
     ##
     loadBalancerSourceRanges: []
     ## @param agent.service.externalTrafficPolicy Enable client source IP preservation
+<<<<<<< HEAD
     ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
     ##
     externalTrafficPolicy: Cluster
@@ -734,6 +976,42 @@ agent:
     ## If not set and create is true, a name is generated using the fullname template
     ##
     name: ""
+=======
+    ## ref https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+    ##
+    externalTrafficPolicy: Cluster
+    ## @param agent.service.extraPorts Extra ports to expose (normally used with the `sidecar` value)
+    ##
+    extraPorts: []
+    ## @param agent.service.annotations Annotations for kiam service
+    ##
+    annotations: {}
+    ## @param agent.service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+    ## If "ClientIP", consecutive client requests will be directed to the same Pod
+    ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+    ##
+    sessionAffinity: None
+    ## @param agent.service.sessionAffinityConfig Additional settings for the sessionAffinity
+    ## sessionAffinityConfig:
+    ##   clientIP:
+    ##     timeoutSeconds: 300
+    ##
+    sessionAffinityConfig: {}
+
+  ## @section kiam agent Service Account parameters
+
+  ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+  ## @param agent.serviceAccount.create Specifies whether a ServiceAccount should be created
+  ## @param agent.serviceAccount.name Name of the service account to use. If not set and create is true, a name is generated using the fullname template.
+  ## @param agent.serviceAccount.automountServiceAccountToken Automount service account token for the server service account
+  ## @param agent.serviceAccount.annotations Annotations for service account. Evaluated as a template. Only used if `create` is `true`.
+  ##
+  serviceAccount:
+    create: true
+    name: ""
+    automountServiceAccountToken: true
+    annotations: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
   ## @section kiam agent metrics parameters
 
@@ -761,6 +1039,12 @@ agent:
       ## @param agent.metrics.serviceMonitor.namespace Namespace which Prometheus is running in
       ##
       namespace: ""
+<<<<<<< HEAD
+=======
+      ## @param agent.metrics.serviceMonitor.jobLabel The name of the label on the target service to use as the job name in prometheus.
+      ##
+      jobLabel: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       ## @param agent.metrics.serviceMonitor.interval Interval at which metrics should be scraped
       ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
       ##
@@ -781,6 +1065,15 @@ agent:
       ## ref: https://github.com/bitnami/charts/tree/master/bitnami/prometheus-operator#prometheus-configuration
       ##
       selector: {}
+<<<<<<< HEAD
+=======
+      ## @param agent.metrics.serviceMonitor.labels Extra labels for the ServiceMonitor
+      ##
+      labels: {}
+      ## @param agent.metrics.serviceMonitor.honorLabels honorLabels chooses the metric's labels on collisions with target labels
+      ##
+      honorLabels: false
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## @section RBAC parameters
 
