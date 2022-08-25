@@ -1,9 +1,13 @@
-# Odoo
+<!--- app-name: Odoo -->
 
-[Odoo](https://www.odoo.com/) is a suite of web-based open source business apps. The main Odoo Apps include an Open Source CRM, Website Builder, eCommerce, Project Management, Billing & Accounting, Point of Sale, Human Resources, Marketing, Manufacturing, Purchase Management, ...
+# Odoo packaged by Bitnami
 
-Odoo Apps can be used as stand-alone applications, but they also integrate seamlessly so you get a full-featured Open Source ERP when you install several Apps.
+Odoo is an open source ERP and CRM platform, formerly known as OpenERP, that can connect a wide variety of business operations such as sales, supply chain, finance, and project management.
 
+[Overview of Odoo](https://www.odoo.com/)
+
+Trademarks: This software listing is packaged by Bitnami. The respective trademarks mentioned in the offering are owned by the respective companies, and use of them does not imply any affiliation or endorsement.
+                           
 ## TL;DR
 
 ```console
@@ -13,14 +17,16 @@ $ helm install my-release bitnami/odoo
 
 ## Introduction
 
-This chart bootstraps a [Odoo](https://github.com/bitnami/bitnami-docker-odoo) deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+This chart bootstraps a [Odoo](https://github.com/bitnami/containers/tree/main/bitnami/odoo) deployment on a [Kubernetes](https://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
-Bitnami charts can be used with [Kubeapps](https://kubeapps.com/) for deployment and management of Helm Charts in clusters. This chart has been tested to work with NGINX Ingress, cert-manager, fluentd and Prometheus on top of the [BKPR](https://kubeprod.io/).
+Odoo Apps can be used as stand-alone applications, but they also integrate seamlessly so you get a full-featured Open Source ERP when you install several Apps.
+
+Bitnami charts can be used with [Kubeapps](https://kubeapps.dev/) for deployment and management of Helm Charts in clusters.
 
 ## Prerequisites
 
-- Kubernetes 1.12+
-- Helm 3.1.0
+- Kubernetes 1.19+
+- Helm 3.2.0+
 - PV provisioner support in the underlying infrastructure
 - ReadWriteMany volumes for deployment scaling
 
@@ -45,6 +51,9 @@ $ helm delete my-release
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
+> If persistence.resourcePolicy is set to keep, you should manually delete the PVCs.
+
+
 
 ## Parameters
 
@@ -59,6 +68,7 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Common parameters
 
+<<<<<<< HEAD
 | Name                | Description                                        | Value                         |
 | ------------------- | -------------------------------------------------- | ----------------------------- |
 | `kubeVersion`       | Override Kubernetes version                        | `""`                          |
@@ -73,6 +83,26 @@ The command removes all the Kubernetes components associated with the chart and 
 | `image.pullPolicy`  | Odoo image pull policy                             | `IfNotPresent`                |
 | `image.pullSecrets` | Odoo image pull secrets                            | `[]`                          |
 | `image.debug`       | Enable image debug mode                            | `false`                       |
+=======
+| Name                     | Description                                                                             | Value                        |
+| ------------------------ | --------------------------------------------------------------------------------------- | ---------------------------- |
+| `kubeVersion`            | Override Kubernetes version                                                             | `""`                         |
+| `nameOverride`           | String to partially override common.names.fullname                                      | `""`                         |
+| `fullnameOverride`       | String to fully override common.names.fullname                                          | `""`                         |
+| `commonLabels`           | Labels to add to all deployed objects                                                   | `{}`                         |
+| `commonAnnotations`      | Annotations to add to all deployed objects                                              | `{}`                         |
+| `clusterDomain`          | Default Kubernetes cluster domain                                                       | `cluster.local`              |
+| `extraDeploy`            | Array of extra objects to deploy with the release                                       | `[]`                         |
+| `diagnosticMode.enabled` | Enable diagnostic mode (all probes will be disabled and the command will be overridden) | `false`                      |
+| `diagnosticMode.command` | Command to override all containers in the the statefulset                               | `["sleep"]`                  |
+| `diagnosticMode.args`    | Args to override all containers in the the statefulset                                  | `["infinity"]`               |
+| `image.registry`         | Odoo image registry                                                                     | `docker.io`                  |
+| `image.repository`       | Odoo image repository                                                                   | `bitnami/odoo`               |
+| `image.tag`              | Odoo image tag (immutable tags are recommended)                                         | `15.0.20220810-debian-11-r0` |
+| `image.pullPolicy`       | Odoo image pull policy                                                                  | `IfNotPresent`               |
+| `image.pullSecrets`      | Odoo image pull secrets                                                                 | `[]`                         |
+| `image.debug`            | Enable image debug mode                                                                 | `false`                      |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 
 ### Odoo Configuration parameters
@@ -81,6 +111,10 @@ The command removes all the Kubernetes components associated with the chart and 
 | ----------------------- | -------------------------------------------------------------------- | ------------------ |
 | `odooEmail`             | Odoo user email                                                      | `user@example.com` |
 | `odooPassword`          | Odoo user password                                                   | `""`               |
+<<<<<<< HEAD
+=======
+| `odooSkipInstall`       | Skip Odoo installation wizard                                        | `false`            |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 | `loadDemoData`          | Whether to load demo data for all modules during initialization      | `false`            |
 | `customPostInitScripts` | Custom post-init.d user scripts                                      | `{}`               |
 | `smtpHost`              | SMTP server host                                                     | `""`               |
@@ -100,6 +134,7 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Odoo deployment parameters
 
+<<<<<<< HEAD
 | Name                                 | Description                                                                               | Value           |
 | ------------------------------------ | ----------------------------------------------------------------------------------------- | --------------- |
 | `replicaCount`                       | Number of Odoo replicas to deploy                                                         | `1`             |
@@ -154,10 +189,70 @@ The command removes all the Kubernetes components associated with the chart and 
 | `customLivenessProbe`                | Custom livenessProbe that overrides the default one                                       | `{}`            |
 | `customReadinessProbe`               | Custom readinessProbe that overrides the default one                                      | `{}`            |
 | `customStartupProbe`                 | Custom startupProbe that overrides the default one                                        | `{}`            |
+=======
+| Name                                 | Description                                                                                                              | Value           |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | --------------- |
+| `replicaCount`                       | Number of Odoo replicas to deploy                                                                                        | `1`             |
+| `containerPorts.http`                | Odoo HTTP container port                                                                                                 | `8069`          |
+| `resources.limits`                   | The resources limits for the Odoo container                                                                              | `{}`            |
+| `resources.requests`                 | The requested resources for the Odoo container                                                                           | `{}`            |
+| `podSecurityContext.enabled`         | Enabled Odoo pods' Security Context                                                                                      | `false`         |
+| `podSecurityContext.fsGroup`         | Set Odoo pod's Security Context fsGroup                                                                                  | `1001`          |
+| `containerSecurityContext.enabled`   | Enabled Odoo containers' Security Context                                                                                | `false`         |
+| `containerSecurityContext.runAsUser` | Set Odoo container's Security Context runAsUser                                                                          | `1001`          |
+| `livenessProbe.enabled`              | Enable livenessProbe                                                                                                     | `true`          |
+| `livenessProbe.path`                 | Path for to check for livenessProbe                                                                                      | `/`             |
+| `livenessProbe.initialDelaySeconds`  | Initial delay seconds for livenessProbe                                                                                  | `600`           |
+| `livenessProbe.periodSeconds`        | Period seconds for livenessProbe                                                                                         | `30`            |
+| `livenessProbe.timeoutSeconds`       | Timeout seconds for livenessProbe                                                                                        | `5`             |
+| `livenessProbe.failureThreshold`     | Failure threshold for livenessProbe                                                                                      | `6`             |
+| `livenessProbe.successThreshold`     | Success threshold for livenessProbe                                                                                      | `1`             |
+| `readinessProbe.enabled`             | Enable readinessProbe                                                                                                    | `true`          |
+| `readinessProbe.path`                | Path to check for readinessProbe                                                                                         | `/`             |
+| `readinessProbe.initialDelaySeconds` | Initial delay seconds for readinessProbe                                                                                 | `30`            |
+| `readinessProbe.periodSeconds`       | Period seconds for readinessProbe                                                                                        | `10`            |
+| `readinessProbe.timeoutSeconds`      | Timeout seconds for readinessProbe                                                                                       | `5`             |
+| `readinessProbe.failureThreshold`    | Failure threshold for readinessProbe                                                                                     | `6`             |
+| `readinessProbe.successThreshold`    | Success threshold for readinessProbe                                                                                     | `1`             |
+| `startupProbe.enabled`               | Enable startupProbe                                                                                                      | `false`         |
+| `startupProbe.path`                  | Path to check for startupProbe                                                                                           | `/`             |
+| `startupProbe.initialDelaySeconds`   | Initial delay seconds for startupProbe                                                                                   | `300`           |
+| `startupProbe.periodSeconds`         | Period seconds for startupProbe                                                                                          | `10`            |
+| `startupProbe.timeoutSeconds`        | Timeout seconds for startupProbe                                                                                         | `5`             |
+| `startupProbe.failureThreshold`      | Failure threshold for startupProbe                                                                                       | `6`             |
+| `startupProbe.successThreshold`      | Success threshold for startupProbe                                                                                       | `1`             |
+| `customLivenessProbe`                | Custom livenessProbe that overrides the default one                                                                      | `{}`            |
+| `customReadinessProbe`               | Custom readinessProbe that overrides the default one                                                                     | `{}`            |
+| `customStartupProbe`                 | Custom startupProbe that overrides the default one                                                                       | `{}`            |
+| `lifecycleHooks`                     | LifecycleHooks to set additional configuration at startup                                                                | `{}`            |
+| `hostAliases`                        | Odoo pod host aliases                                                                                                    | `[]`            |
+| `podLabels`                          | Extra labels for Odoo pods                                                                                               | `{}`            |
+| `podAnnotations`                     | Annotations for Odoo pods                                                                                                | `{}`            |
+| `podAffinityPreset`                  | Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                      | `""`            |
+| `podAntiAffinityPreset`              | Pod anti-affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                 | `soft`          |
+| `nodeAffinityPreset.type`            | Node affinity preset type. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                | `""`            |
+| `nodeAffinityPreset.key`             | Node label key to match. Ignored if `affinity` is set                                                                    | `""`            |
+| `nodeAffinityPreset.values`          | Node label values to match. Ignored if `affinity` is set                                                                 | `[]`            |
+| `affinity`                           | Affinity for pod assignment                                                                                              | `{}`            |
+| `nodeSelector`                       | Node labels for pod assignment                                                                                           | `{}`            |
+| `tolerations`                        | Tolerations for pod assignment                                                                                           | `[]`            |
+| `topologySpreadConstraints`          | Topology Spread Constraints for pod assignment spread across your cluster among failure-domains. Evaluated as a template | `[]`            |
+| `priorityClassName`                  | Odoo pods' Priority Class Name                                                                                           | `""`            |
+| `schedulerName`                      | Use an alternate scheduler, e.g. "stork".                                                                                | `""`            |
+| `terminationGracePeriodSeconds`      | Seconds Odoo pod needs to terminate gracefully                                                                           | `""`            |
+| `updateStrategy.type`                | Odoo deployment strategy type                                                                                            | `RollingUpdate` |
+| `updateStrategy.rollingUpdate`       | Odoo deployment rolling update configuration parameters                                                                  | `{}`            |
+| `extraVolumes`                       | Optionally specify extra list of additional volumes for Odoo pods                                                        | `[]`            |
+| `extraVolumeMounts`                  | Optionally specify extra list of additional volumeMounts for Odoo container(s)                                           | `[]`            |
+| `extraContainerPorts`                | Optionally specify extra list of additional ports for Odoo container(s)                                                  | `[]`            |
+| `sidecars`                           | Add additional sidecar containers to the Odoo pod                                                                        | `[]`            |
+| `initContainers`                     | Add additional init containers to the Odoo pods                                                                          | `[]`            |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 
 ### Traffic Exposure Parameters
 
+<<<<<<< HEAD
 | Name                               | Description                                                                                           | Value                    |
 | ---------------------------------- | ----------------------------------------------------------------------------------------------------- | ------------------------ |
 | `service.type`                     | Odoo service type                                                                                     | `LoadBalancer`           |
@@ -182,10 +277,40 @@ The command removes all the Kubernetes components associated with the chart and 
 | `ingress.extraPaths`               | An array with additional arbitrary paths that may need to be added to the ingress under the main host | `[]`                     |
 | `ingress.extraTls`                 | TLS configuration for additional hostname(s) to be covered with this ingress record                   | `[]`                     |
 | `ingress.secrets`                  | Custom TLS certificates as secrets                                                                    | `[]`                     |
+=======
+| Name                               | Description                                                                                                                      | Value                    |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| `service.type`                     | Odoo service type                                                                                                                | `LoadBalancer`           |
+| `service.ports.http`               | Odoo service HTTP port                                                                                                           | `80`                     |
+| `service.nodePorts.http`           | NodePort for the Odoo HTTP endpoint                                                                                              | `""`                     |
+| `service.sessionAffinity`          | Control where client requests go, to the same pod or round-robin                                                                 | `None`                   |
+| `service.sessionAffinityConfig`    | Additional settings for the sessionAffinity                                                                                      | `{}`                     |
+| `service.clusterIP`                | Odoo service Cluster IP                                                                                                          | `""`                     |
+| `service.loadBalancerIP`           | Odoo service Load Balancer IP                                                                                                    | `""`                     |
+| `service.loadBalancerSourceRanges` | Odoo service Load Balancer sources                                                                                               | `[]`                     |
+| `service.externalTrafficPolicy`    | Odoo service external traffic policy                                                                                             | `Cluster`                |
+| `service.annotations`              | Additional custom annotations for Odoo service                                                                                   | `{}`                     |
+| `service.extraPorts`               | Extra port to expose on Odoo service                                                                                             | `[]`                     |
+| `ingress.enabled`                  | Enable ingress record generation for Odoo                                                                                        | `false`                  |
+| `ingress.ingressClassName`         | IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+)                                                    | `""`                     |
+| `ingress.pathType`                 | Ingress path type                                                                                                                | `ImplementationSpecific` |
+| `ingress.apiVersion`               | Force Ingress API version (automatically detected if not set)                                                                    | `""`                     |
+| `ingress.hostname`                 | Default host for the ingress record                                                                                              | `odoo.local`             |
+| `ingress.path`                     | Default path for the ingress record                                                                                              | `/`                      |
+| `ingress.annotations`              | Additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations. | `{}`                     |
+| `ingress.tls`                      | Enable TLS configuration for the host defined at `ingress.hostname` parameter                                                    | `false`                  |
+| `ingress.selfSigned`               | Create a TLS secret for this ingress record using self-signed certificates generated by Helm                                     | `false`                  |
+| `ingress.extraHosts`               | An array with additional hostname(s) to be covered with the ingress record                                                       | `[]`                     |
+| `ingress.extraPaths`               | An array with additional arbitrary paths that may need to be added to the ingress under the main host                            | `[]`                     |
+| `ingress.extraTls`                 | TLS configuration for additional hostname(s) to be covered with this ingress record                                              | `[]`                     |
+| `ingress.secrets`                  | Custom TLS certificates as secrets                                                                                               | `[]`                     |
+| `ingress.extraRules`               | Additional rules to be covered with this ingress record                                                                          | `[]`                     |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 
 ### Persistence Parameters
 
+<<<<<<< HEAD
 | Name                                          | Description                                                                                     | Value           |
 | --------------------------------------------- | ----------------------------------------------------------------------------------------------- | --------------- |
 | `persistence.enabled`                         | Enable persistence using Persistent Volume Claims                                               | `true`          |
@@ -199,6 +324,35 @@ The command removes all the Kubernetes components associated with the chart and 
 | `volumePermissions.resources.limits`          | The resources limits for the init container                                                     | `{}`            |
 | `volumePermissions.resources.requests`        | The requested resources for the init container                                                  | `{}`            |
 | `volumePermissions.securityContext.runAsUser` | Set init container's Security Context runAsUser                                                 | `0`             |
+=======
+| Name                                                   | Description                                                                                                                           | Value           |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| `persistence.enabled`                                  | Enable persistence using Persistent Volume Claims                                                                                     | `true`          |
+| `persistence.resourcePolicy`                           | Setting it to "keep" to avoid removing PVCs during a helm delete operation. Leaving it empty will delete PVCs after the chart deleted | `""`            |
+| `persistence.storageClass`                             | Persistent Volume storage class                                                                                                       | `""`            |
+| `persistence.accessModes`                              | Persistent Volume access modes                                                                                                        | `[]`            |
+| `persistence.accessMode`                               | Persistent Volume access mode (DEPRECATED: use `persistence.accessModes` instead)                                                     | `ReadWriteOnce` |
+| `persistence.size`                                     | Persistent Volume size                                                                                                                | `10Gi`          |
+| `persistence.dataSource`                               | Custom PVC data source                                                                                                                | `{}`            |
+| `persistence.annotations`                              | Annotations for the PVC                                                                                                               | `{}`            |
+| `persistence.selector`                                 | Selector to match an existing Persistent Volume (this value is evaluated as a template)                                               | `{}`            |
+| `persistence.existingClaim`                            | The name of an existing PVC to use for persistence                                                                                    | `""`            |
+| `volumePermissions.enabled`                            | Enable init container that changes the owner/group of the PV mount point to `runAsUser:fsGroup`                                       | `false`         |
+| `volumePermissions.resources.limits`                   | The resources limits for the init container                                                                                           | `{}`            |
+| `volumePermissions.resources.requests`                 | The requested resources for the init container                                                                                        | `{}`            |
+| `volumePermissions.containerSecurityContext.enabled`   | Enable init container's Security Context                                                                                              | `true`          |
+| `volumePermissions.containerSecurityContext.runAsUser` | Set init container's Security Context runAsUser                                                                                       | `0`             |
+
+
+### RBAC Parameters
+
+| Name                                          | Description                                                                                              | Value   |
+| --------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------- |
+| `serviceAccount.create`                       | Specifies whether a ServiceAccount should be created                                                     | `true`  |
+| `serviceAccount.name`                         | The name of the ServiceAccount to create (name generated using common.names.fullname template otherwise) | `""`    |
+| `serviceAccount.automountServiceAccountToken` | Auto-mount the service account token in the pod                                                          | `false` |
+| `serviceAccount.annotations`                  | Additional custom annotations for the ServiceAccount                                                     | `{}`    |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 
 ### Other Parameters
@@ -217,6 +371,7 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Database Parameters
 
+<<<<<<< HEAD
 | Name                                          | Description                                                                       | Value           |
 | --------------------------------------------- | --------------------------------------------------------------------------------- | --------------- |
 | `postgresql.enabled`                          | Deploy PostgreSQL container(s)                                                    | `true`          |
@@ -241,6 +396,48 @@ The command removes all the Kubernetes components associated with the chart and 
 
 
 The above parameters map to the env variables defined in [bitnami/odoo](http://github.com/bitnami/bitnami-docker-odoo). For more information please refer to the [bitnami/odoo](http://github.com/bitnami/bitnami-docker-odoo) image documentation.
+=======
+| Name                                                 | Description                                                              | Value          |
+| ---------------------------------------------------- | ------------------------------------------------------------------------ | -------------- |
+| `postgresql.enabled`                                 | Switch to enable or disable the PostgreSQL helm chart                    | `true`         |
+| `postgresql.auth.username`                           | Name for a custom user to create                                         | `bn_odoo`      |
+| `postgresql.auth.password`                           | Password for the custom user to create                                   | `""`           |
+| `postgresql.auth.database`                           | Name for a custom database to create                                     | `bitnami_odoo` |
+| `postgresql.auth.existingSecret`                     | Name of existing secret to use for PostgreSQL credentials                | `""`           |
+| `postgresql.architecture`                            | PostgreSQL architecture (`standalone` or `replication`)                  | `standalone`   |
+| `externalDatabase.host`                              | Database host                                                            | `""`           |
+| `externalDatabase.port`                              | Database port number                                                     | `5432`         |
+| `externalDatabase.user`                              | Non-root username for Keycloak                                           | `bn_odoo`      |
+| `externalDatabase.password`                          | Password for the non-root username for Keycloak                          | `""`           |
+| `externalDatabase.database`                          | Keycloak database name                                                   | `bitnami_odoo` |
+| `externalDatabase.create`                            | Enable PostgreSQL user and database creation (when using an external db) | `true`         |
+| `externalDatabase.postgresqlPostgresUser`            | External Database admin username                                         | `postgres`     |
+| `externalDatabase.postgresqlPostgresPassword`        | External Database admin password                                         | `""`           |
+| `externalDatabase.existingSecret`                    | Name of an existing secret resource containing the database credentials  | `""`           |
+| `externalDatabase.existingSecretPasswordKey`         | Name of an existing secret key containing the non-root credentials       | `""`           |
+| `externalDatabase.existingSecretPostgresPasswordKey` | Name of an existing secret key containing the admin credentials          | `""`           |
+
+
+### NetworkPolicy parameters
+
+| Name                                                          | Description                                                                                                              | Value   |
+| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `networkPolicy.enabled`                                       | Enable network policies                                                                                                  | `false` |
+| `networkPolicy.ingress.enabled`                               | Enable network policy for Ingress Proxies                                                                                | `false` |
+| `networkPolicy.ingress.namespaceSelector`                     | Ingress Proxy namespace selector labels. These labels will be used to identify the Ingress Proxy's namespace.            | `{}`    |
+| `networkPolicy.ingress.podSelector`                           | Ingress Proxy pods selector labels. These labels will be used to identify the Ingress Proxy pods.                        | `{}`    |
+| `networkPolicy.ingressRules.backendOnlyAccessibleByFrontend`  | Enable ingress rule that makes the backend (mariadb) only accessible by Odoo's pods.                                     | `false` |
+| `networkPolicy.ingressRules.customBackendSelector`            | Backend selector labels. These labels will be used to identify the backend pods.                                         | `{}`    |
+| `networkPolicy.ingressRules.accessOnlyFrom.enabled`           | Enable ingress rule that makes Odoo only accessible from a particular origin                                             | `false` |
+| `networkPolicy.ingressRules.accessOnlyFrom.namespaceSelector` | Namespace selector label that is allowed to access Odoo. This label will be used to identified the allowed namespace(s). | `{}`    |
+| `networkPolicy.ingressRules.accessOnlyFrom.podSelector`       | Pods selector label that is allowed to access Odoo. This label will be used to identified the allowed pod(s).            | `{}`    |
+| `networkPolicy.ingressRules.customRules`                      | Custom network policy ingress rule                                                                                       | `{}`    |
+| `networkPolicy.egressRules.denyConnectionsToExternal`         | Enable egress rule that denies outgoing traffic outside the cluster, except for DNS (port 53).                           | `false` |
+| `networkPolicy.egressRules.customRules`                       | Custom network policy rule                                                                                               | `{}`    |
+
+
+The above parameters map to the env variables defined in [bitnami/odoo](https://github.com/bitnami/containers/tree/main/bitnami/odoo). For more information please refer to the [bitnami/odoo](https://github.com/bitnami/containers/tree/main/bitnami/odoo) image documentation.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
@@ -312,17 +509,18 @@ As an alternative, you can use of the preset configurations for pod affinity, po
 
 ## Persistence
 
-The [Bitnami Odoo](https://github.com/bitnami/bitnami-docker-odoo) image stores the Odoo data and configurations at the `/bitnami/odoo` path of the container.
+The [Bitnami Odoo](https://github.com/bitnami/containers/tree/main/bitnami/odoo) image stores the Odoo data and configurations at the `/bitnami/odoo` path of the container.
 
 Persistent Volume Claims are used to keep the data across deployments. This is known to work in GCE, AWS, and minikube.
 See the [Parameters](#parameters) section to configure the PVC or to disable persistence.
 
 ## Troubleshooting
 
-Find more information about how to deal with common errors related to Bitnami’s Helm charts in [this troubleshooting guide](https://docs.bitnami.com/general/how-to/troubleshoot-helm-chart-issues).
+Find more information about how to deal with common errors related to Bitnami's Helm charts in [this troubleshooting guide](https://docs.bitnami.com/general/how-to/troubleshoot-helm-chart-issues).
 
 ## Upgrading
 
+<<<<<<< HEAD
 ### 19.0.0
 
 The [Bitnami Odoo](https://github.com/bitnami/bitnami-docker-odoo) image was refactored and now the source code is published in GitHub in the [`rootfs`](https://github.com/bitnami/bitnami-docker-odoo/tree/master/14/debian-10/rootfs) folder of the container image repository.
@@ -430,75 +628,30 @@ As a consequence, backwards compatibility from previous versions is not guarante
   $ helm ls
   NAME  NAMESPACE REVISION  UPDATED                               STATUS    CHART         APP VERSION
   odoo  default   1         2020-10-21 13:11:29.028263 +0200 CEST deployed  odoo-14.0.21  13.0.20201010
+=======
+Refer to the [chart documentation for more information about how to upgrade from previous releases](https://docs.bitnami.com/kubernetes/apps/odoo/administration/upgrade/).
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
-  $ kubectl get pods
-  NAME                       READY   STATUS    RESTARTS   AGE
-  odoo-odoo-984f954b9-tk8t8   1/1     Running   0          16m
-  odoo-postgresql-0           1/1     Running   0          16m
-  ```
+## Community supported solution
 
-- Export both database and Odoo credentials in order to provide them in the update
+Please, note this Helm chart is a community-supported solution. This means that the Bitnami team is not actively working on new features/improvements nor providing support through GitHub Issues for this Helm chart. Any new issue will stay open for 20 days to allow the community to contribute, after 15 days without activity the issue will be marked as stale being closed after 5 days.
 
-  ```console
-  $ export POSTGRESQL_PASSWORD=$(kubectl get secret --namespace default odoo-postgresql -o jsonpath="{.data.postgresql-password}" | base64 --decode)
+The Bitnami team will review any PR that is created, feel free to create a PR if you find any issue or want to implement a new feature.
 
-  $ export ODOO_PASSWORD=$(kubectl get secret --namespace default odoo-odoo -o jsonpath="{.data.odoo-password}" | base64 --decode)
-  ```
+New versions are not going to be affected. Once a new version is released in the upstream project, the Bitnami container image will be updated to use the latest version.
 
-- The upgrade to the latest (`15.X.X`) version is going to fail
+## License
 
-  ```console
-  $ helm upgrade odoo bitnami/odoo --set odooPassword=$ODOO_PASSWORD --set postgresql.postgresqlPassword=$POSTGRESQL_PASSWORD
-  Error: UPGRADE FAILED: cannot patch "odoo-odoo" with kind Deployment: Deployment.apps "odoo-odoo" is invalid: spec.selector: Invalid value: v1.LabelSelector{MatchLabels:map[string]string{"app.kubernetes.io/instance":"odoo", "app.kubernetes.io/name":"odoo"}, MatchExpressions:[]v1.LabelSelectorRequirement(nil)}: field is immutable
-  ```
+Copyright &copy; 2022 Bitnami
 
-- Delete both the statefulset and recplicaset (PostgreSQL and Odoo respectively). Notice the option `--cascade=false` for the former.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-  ```console
-  $ kubectl delete deployment.apps/odoo-odoo
-  deployment.apps "odoo-odoo" deleted
+    http://www.apache.org/licenses/LICENSE-2.0
 
-  $ kubectl delete statefulset.apps/odoo-postgresql --cascade=false
-  statefulset.apps "odoo-postgresql" deleted
-  ```
-
-- Now the upgrade works
-
-  ```console
-  $ helm upgrade odoo bitnami/odoo --set odooPassword=$ODOO_PASSWORD --set postgresql.postgresqlPassword=$POSTGRESQL_PASSWORD
-  $ helm ls
-  NAME  NAMESPACE REVISION  UPDATED                                STATUS   CHART       APP VERSION
-  odoo  default   3         v2020-10-21 13:35:27.255118 +0200 CEST deployed odoo-15.0.0 13.0.20201010
-  ```
-
-- You can kill the existing PostgreSQL pod and the new statefulset is going to create a new one
-
-  ```console
-  $ kubectl delete pod odoo-postgresql-0
-  pod "odoo-postgresql-0" deleted
-
-  $ kubectl get pods
-  NAME                        READY   STATUS    RESTARTS   AGE
-  odoo-odoo-854b9cd5fb-282md   1/1     Running   0          9m12s
-  odoo-postgresql-0            1/1     Running   0          7m19s
-  ```
-
-Please, note that without the --cascade=false both objects (statefulset and pod) are going to be removed and both objects will be deployed again with the helm upgrade command
-
-### To 12.0.0
-
-Helm performs a lookup for the object based on its group (apps), version (v1), and kind (Deployment). Also known as its GroupVersionKind, or GVK. Changing the GVK is considered a compatibility breaker from Kubernetes' point of view, so you cannot "upgrade" those objects to the new GVK in-place. Earlier versions of Helm 3 did not perform the lookup correctly which has since been fixed to match the spec.
-
-In https://github.com/helm/charts/pull/17352 the `apiVersion` of the deployment resources was updated to `apps/v1` in tune with the api's deprecated, resulting in compatibility breakage.
-
-This major version signifies this change.
-
-### To 3.0.0
-
-Backwards compatibility is not guaranteed unless you modify the labels used on the chart's deployments.
-Use the workaround below to upgrade from versions previous to 3.0.0. The following example assumes that the release name is odoo:
-
-```console
-$ kubectl patch deployment odoo-odoo --type=json -p='[{"op": "remove", "path": "/spec/selector/matchLabels/chart"}]'
-$ kubectl patch deployment odoo-postgresql --type=json -p='[{"op": "remove", "path": "/spec/selector/matchLabels/chart"}]'
-```
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

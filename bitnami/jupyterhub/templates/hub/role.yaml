@@ -2,16 +2,27 @@
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
+<<<<<<< HEAD
+=======
+  name: {{ printf "%s-hub" (include "common.names.fullname" .) }}
+  namespace: {{ .Release.Namespace | quote }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: hub
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
+<<<<<<< HEAD
   name: {{ include "jupyterhub.hub.name" . }}
   {{- if .Values.commonAnnotations }}
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
   namespace: {{ .Release.Namespace | quote }}
+=======
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 rules:
   - apiGroups: [""]
     resources: ["pods", "persistentvolumeclaims"]
@@ -19,4 +30,10 @@ rules:
   - apiGroups: [""]       # "" indicates the core API group
     resources: ["events"]
     verbs: ["get", "watch", "list"]
+<<<<<<< HEAD
+=======
+  {{- if .Values.hub.rbac.rules }}
+  {{- include "common.tplvalues.render" ( dict "value" .Values.hub.rbac.rules "context" $ ) | nindent 2 }}
+  {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- end }}

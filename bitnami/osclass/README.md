@@ -1,7 +1,13 @@
-# Osclass
+<!--- app-name: Osclass -->
 
-[Osclass](https://osclass.org/) is a PHP script that allows you to quickly create and manage your own free classifieds site. Using this script, you can provide free advertising for items for sale, real estate, jobs, cars... Hundreds of free classified advertising sites are using Osclass.
+# Osclass packaged by Bitnami
 
+Osclass allows you to easily create a classifieds site without any technical knowledge. It provides support for presenting general ads or specialized ads, is customizable, extensible and multilingual.
+
+[Overview of Osclass](https://osclass-classifieds.com)
+
+Trademarks: This software listing is packaged by Bitnami. The respective trademarks mentioned in the offering are owned by the respective companies, and use of them does not imply any affiliation or endorsement.
+                           
 ## TL;DR
 
 ```console
@@ -11,16 +17,16 @@ $ helm install my-release bitnami/osclass
 
 ## Introduction
 
-This chart bootstraps an [Osclass](https://github.com/bitnami/bitnami-docker-osclass) deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+This chart bootstraps an [Osclass](https://github.com/bitnami/containers/tree/main/bitnami/osclass) deployment on a [Kubernetes](https://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
-It also packages the [Bitnami MariaDB chart](https://github.com/kubernetes/charts/tree/master/bitnami/mariadb) which is required for bootstrapping a MariaDB deployment for the database requirements of the Osclass application.
+It also packages the [Bitnami MariaDB chart](https://github.com/bitnami/charts/tree/master/bitnami/mariadb) which is required for bootstrapping a MariaDB deployment for the database requirements of the Osclass application.
 
-Bitnami charts can be used with [Kubeapps](https://kubeapps.com/) for deployment and management of Helm Charts in clusters. This chart has been tested to work with NGINX Ingress, cert-manager, fluentd and Prometheus on top of the [BKPR](https://kubeprod.io/).
+Bitnami charts can be used with [Kubeapps](https://kubeapps.dev/) for deployment and management of Helm Charts in clusters.
 
 ## Prerequisites
 
-- Kubernetes 1.12+
-- Helm 3.1.0
+- Kubernetes 1.19+
+- Helm 3.2.0+
 - PV provisioner support in the underlying infrastructure
 - ReadWriteMany volumes for deployment scaling
 
@@ -71,6 +77,7 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Osclass Image parameters
 
+<<<<<<< HEAD
 | Name                | Description                                        | Value                 |
 | ------------------- | -------------------------------------------------- | --------------------- |
 | `image.registry`    | Osclass image registry                             | `docker.io`           |
@@ -79,6 +86,17 @@ The command removes all the Kubernetes components associated with the chart and 
 | `image.pullPolicy`  | Osclass image pull policy                          | `IfNotPresent`        |
 | `image.pullSecrets` | Osclass image pull secrets                         | `[]`                  |
 | `image.debug`       | Enable Bitnami debug mode in Osclass image         | `false`               |
+=======
+| Name                | Description                                                                                             | Value                 |
+| ------------------- | ------------------------------------------------------------------------------------------------------- | --------------------- |
+| `image.registry`    | Osclass image registry                                                                                  | `docker.io`           |
+| `image.repository`  | Osclass image repository                                                                                | `bitnami/osclass`     |
+| `image.tag`         | Osclass image tag (immutable tags are recommended)                                                      | `8.0.2-debian-11-r22` |
+| `image.digest`      | Osclass image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag | `""`                  |
+| `image.pullPolicy`  | Osclass image pull policy                                                                               | `IfNotPresent`        |
+| `image.pullSecrets` | Osclass image pull secrets                                                                              | `[]`                  |
+| `image.debug`       | Enable Bitnami debug mode in Osclass image                                                              | `false`               |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 
 ### Osclass Configuration parameters
@@ -101,6 +119,7 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Osclass deployment parameters
 
+<<<<<<< HEAD
 | Name                                                 | Description                                                                               | Value                                    |
 | ---------------------------------------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------- |
 | `hostAliases`                                        | Osclass pod host aliases                                                                  | `[]`                                     |
@@ -169,10 +188,93 @@ The command removes all the Kubernetes components associated with the chart and 
 | `resources.limits`                                   | The resources limits for the Osclass container                                            | `{}`                                     |
 | `resources.requests`                                 | The requested resources for the Osclass container                                         | `{}`                                     |
 | `tolerations`                                        | Tolerations for pod assignment                                                            | `[]`                                     |
+=======
+| Name                                                 | Description                                                                                                     | Value                                    |
+| ---------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| `hostAliases`                                        | Osclass pod host aliases                                                                                        | `[]`                                     |
+| `podSecurityContext.enabled`                         | Enabled Osclass pods' Security Context                                                                          | `true`                                   |
+| `podSecurityContext.fsGroup`                         | Set Osclass pod's Security Context fsGroup                                                                      | `1001`                                   |
+| `containerSecurityContext.enabled`                   | Enabled Osclass containers' Security Context                                                                    | `true`                                   |
+| `containerSecurityContext.runAsUser`                 | Set Osclass container's Security Context runAsUser                                                              | `1001`                                   |
+| `containerSecurityContext.runAsNonRoot`              | Set Osclass container's Security Context runAsNonRoot                                                           | `true`                                   |
+| `startupProbe.enabled`                               | Enable startupProbe                                                                                             | `false`                                  |
+| `startupProbe.path`                                  | Path for the HTTP probe                                                                                         | `/oc-admin`                              |
+| `startupProbe.initialDelaySeconds`                   | Initial delay seconds for startupProbe                                                                          | `600`                                    |
+| `startupProbe.periodSeconds`                         | Period seconds for startupProbe                                                                                 | `10`                                     |
+| `startupProbe.timeoutSeconds`                        | Timeout seconds for startupProbe                                                                                | `5`                                      |
+| `startupProbe.failureThreshold`                      | Failure threshold for startupProbe                                                                              | `5`                                      |
+| `startupProbe.successThreshold`                      | Success threshold for startupProbe                                                                              | `1`                                      |
+| `livenessProbe.enabled`                              | Enable livenessProbe                                                                                            | `true`                                   |
+| `livenessProbe.path`                                 | Path for the HTTP probe                                                                                         | `/oc-admin`                              |
+| `livenessProbe.initialDelaySeconds`                  | Initial delay seconds for livenessProbe                                                                         | `600`                                    |
+| `livenessProbe.periodSeconds`                        | Period seconds for livenessProbe                                                                                | `10`                                     |
+| `livenessProbe.timeoutSeconds`                       | Timeout seconds for livenessProbe                                                                               | `5`                                      |
+| `livenessProbe.failureThreshold`                     | Failure threshold for livenessProbe                                                                             | `5`                                      |
+| `livenessProbe.successThreshold`                     | Success threshold for livenessProbe                                                                             | `1`                                      |
+| `readinessProbe.enabled`                             | Enable readinessProbe                                                                                           | `true`                                   |
+| `readinessProbe.path`                                | Path for the HTTP probe                                                                                         | `/oc-admin`                              |
+| `readinessProbe.initialDelaySeconds`                 | Initial delay seconds for readinessProbe                                                                        | `30`                                     |
+| `readinessProbe.periodSeconds`                       | Period seconds for readinessProbe                                                                               | `5`                                      |
+| `readinessProbe.timeoutSeconds`                      | Timeout seconds for readinessProbe                                                                              | `1`                                      |
+| `readinessProbe.failureThreshold`                    | Failure threshold for readinessProbe                                                                            | `5`                                      |
+| `readinessProbe.successThreshold`                    | Success threshold for readinessProbe                                                                            | `1`                                      |
+| `customStartupProbe`                                 | Custom livenessProbe that overrides the default one                                                             | `{}`                                     |
+| `customLivenessProbe`                                | Custom livenessProbe that overrides the default one                                                             | `{}`                                     |
+| `customReadinessProbe`                               | Custom readinessProbe that overrides the default one                                                            | `{}`                                     |
+| `certificates.customCertificate.certificateSecret`   | name of the secret with custom certificates                                                                     | `""`                                     |
+| `certificates.customCertificate.chainSecret.name`    | name of the secret with the chain                                                                               | `""`                                     |
+| `certificates.customCertificate.chainSecret.key`     | key of the secret with the chain                                                                                | `""`                                     |
+| `certificates.customCertificate.certificateLocation` | Location of the certificate inside the container                                                                | `/etc/ssl/certs/ssl-cert-snakeoil.pem`   |
+| `certificates.customCertificate.keyLocation`         | Location of the certificate key inside the container                                                            | `/etc/ssl/private/ssl-cert-snakeoil.key` |
+| `certificates.customCertificate.chainLocation`       | Location of the certificate chain inside the container                                                          | `/etc/ssl/certs/mychain.pem`             |
+| `certificates.customCAs`                             | Array with custom CAs                                                                                           | `[]`                                     |
+| `certificates.command`                               | Override certificate container command                                                                          | `[]`                                     |
+| `certificates.args`                                  | Override certificate container args                                                                             | `[]`                                     |
+| `certificates.extraEnvVars`                          | An array to add extra env vars                                                                                  | `[]`                                     |
+| `certificates.extraEnvVarsCM`                        | ConfigMap with extra environment variables                                                                      | `""`                                     |
+| `certificates.extraEnvVarsSecret`                    | Secret with extra environment variables                                                                         | `""`                                     |
+| `certificates.image.registry`                        | Apache Exporter image registry                                                                                  | `docker.io`                              |
+| `certificates.image.repository`                      | Apache Exporter image repository                                                                                | `bitnami/bitnami-shell`                  |
+| `certificates.image.tag`                             | Apache Exporter image tag (immutable tags are recommended)                                                      | `11-debian-11-r23`                       |
+| `certificates.image.digest`                          | Apache Exporter image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag | `""`                                     |
+| `certificates.image.pullPolicy`                      | Apache Exporter image pull policy                                                                               | `IfNotPresent`                           |
+| `certificates.image.pullSecrets`                     | Apache Exporter image pull secrets                                                                              | `[]`                                     |
+| `lifecycleHooks`                                     | lifecycleHooks for the container to automate configuration before or after startup.                             | `{}`                                     |
+| `podAnnotations`                                     | Annotations for Osclass pods                                                                                    | `{}`                                     |
+| `podLabels`                                          | Extra labels for Osclass pods                                                                                   | `{}`                                     |
+| `replicaCount`                                       | Number of Osclass replicas to deploy                                                                            | `1`                                      |
+| `containerPorts.http`                                | Osclass HTTP container port                                                                                     | `8080`                                   |
+| `containerPorts.https`                               | Osclass HTTPS container port                                                                                    | `8443`                                   |
+| `command`                                            | Override default container command (useful when using custom images)                                            | `[]`                                     |
+| `args`                                               | Override default container args (useful when using custom images)                                               | `[]`                                     |
+| `updateStrategy.type`                                | Osclass deployment strategy type                                                                                | `RollingUpdate`                          |
+| `updateStrategy.rollingUpdate`                       | Osclass deployment rolling update configuration parameters                                                      | `{}`                                     |
+| `extraEnvVars`                                       | Array with extra environment variables to add to the Osclass container                                          | `[]`                                     |
+| `extraEnvVarsCM`                                     | Name of existing ConfigMap containing extra env vars                                                            | `""`                                     |
+| `extraEnvVarsSecret`                                 | Name of existing Secret containing extra env vars                                                               | `""`                                     |
+| `extraVolumes`                                       | Optionally specify extra list of additional volumes for Osclass pods                                            | `[]`                                     |
+| `extraVolumeMounts`                                  | Optionally specify extra list of additional volumeMounts for Osclass container(s)                               | `[]`                                     |
+| `initContainers`                                     | Add additional init containers to the Osclass pods                                                              | `[]`                                     |
+| `sidecars`                                           | Add additional sidecar containers to the Osclass pod                                                            | `[]`                                     |
+| `podAffinityPreset`                                  | Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                             | `""`                                     |
+| `podAntiAffinityPreset`                              | Pod anti-affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                        | `soft`                                   |
+| `nodeAffinityPreset.type`                            | Node affinity preset type. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                       | `""`                                     |
+| `nodeAffinityPreset.key`                             | Node label key to match. Ignored if `affinity` is set                                                           | `""`                                     |
+| `nodeAffinityPreset.values`                          | Node label values to match. Ignored if `affinity` is set                                                        | `[]`                                     |
+| `affinity`                                           | Affinity for pod assignment                                                                                     | `{}`                                     |
+| `nodeSelector`                                       | Node labels for pod assignment                                                                                  | `{}`                                     |
+| `resources.limits`                                   | The resources limits for the Osclass container                                                                  | `{}`                                     |
+| `resources.requests`                                 | The requested resources for the Osclass container                                                               | `{}`                                     |
+| `tolerations`                                        | Tolerations for pod assignment                                                                                  | `[]`                                     |
+| `priorityClassName`                                  | Osclass pods' priorityClassName                                                                                 | `""`                                     |
+| `schedulerName`                                      | Name of the k8s scheduler (other than default)                                                                  | `""`                                     |
+| `topologySpreadConstraints`                          | Topology Spread Constraints for pod assignment                                                                  | `[]`                                     |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 
 ### Traffic Exposure Parameters
 
+<<<<<<< HEAD
 | Name                               | Description                                                                                           | Value                    |
 | ---------------------------------- | ----------------------------------------------------------------------------------------------------- | ------------------------ |
 | `service.type`                     | WordPress service type                                                                                | `LoadBalancer`           |
@@ -197,10 +299,41 @@ The command removes all the Kubernetes components associated with the chart and 
 | `ingress.extraPaths`               | An array with additional arbitrary paths that may need to be added to the ingress under the main host | `[]`                     |
 | `ingress.extraTls`                 | TLS configuration for additional hostname(s) to be covered with this ingress record                   | `[]`                     |
 | `ingress.secrets`                  | Custom TLS certificates as secrets                                                                    | `[]`                     |
+=======
+| Name                               | Description                                                                                                                      | Value                    |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| `service.type`                     | Osclass service type                                                                                                             | `LoadBalancer`           |
+| `service.ports.http`               | Osclass service HTTP port                                                                                                        | `80`                     |
+| `service.ports.https`              | Osclass service HTTPS port                                                                                                       | `443`                    |
+| `service.clusterIP`                | Osclass service Cluster IP                                                                                                       | `""`                     |
+| `service.loadBalancerIP`           | Osclass service Load Balancer IP                                                                                                 | `""`                     |
+| `service.loadBalancerSourceRanges` | Osclass service Load Balancer sources                                                                                            | `[]`                     |
+| `service.extraPorts`               | Extra ports to expose (normally used with the `sidecar` value)                                                                   | `[]`                     |
+| `service.annotations`              | Additional custom annotations for Osclass service                                                                                | `{}`                     |
+| `service.sessionAffinity`          | Control where client requests go, to the same pod or round-robin                                                                 | `None`                   |
+| `service.sessionAffinityConfig`    | Additional settings for the sessionAffinity                                                                                      | `{}`                     |
+| `service.nodePorts.http`           | Node port for HTTP                                                                                                               | `""`                     |
+| `service.nodePorts.https`          | Node port for HTTPS                                                                                                              | `""`                     |
+| `service.externalTrafficPolicy`    | Osclass service external traffic policy                                                                                          | `Cluster`                |
+| `ingress.enabled`                  | Enable ingress record generation for Osclass                                                                                     | `false`                  |
+| `ingress.pathType`                 | Ingress path type                                                                                                                | `ImplementationSpecific` |
+| `ingress.apiVersion`               | Force Ingress API version (automatically detected if not set)                                                                    | `""`                     |
+| `ingress.hostname`                 | Default host for the ingress record                                                                                              | `osclass.local`          |
+| `ingress.path`                     | Default path for the ingress record                                                                                              | `/`                      |
+| `ingress.annotations`              | Additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations. | `{}`                     |
+| `ingress.tls`                      | Enable TLS configuration for the host defined at `ingress.hostname` parameter                                                    | `false`                  |
+| `ingress.extraHosts`               | An array with additional hostname(s) to be covered with the ingress record                                                       | `[]`                     |
+| `ingress.extraPaths`               | An array with additional arbitrary paths that may need to be added to the ingress under the main host                            | `[]`                     |
+| `ingress.extraTls`                 | TLS configuration for additional hostname(s) to be covered with this ingress record                                              | `[]`                     |
+| `ingress.secrets`                  | Custom TLS certificates as secrets                                                                                               | `[]`                     |
+| `ingress.ingressClassName`         | IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+)                                                    | `""`                     |
+| `ingress.extraRules`               | Additional rules to be covered with this ingress record                                                                          | `[]`                     |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 
 ### Database Parameters
 
+<<<<<<< HEAD
 | Name                                       | Description                                                                                     | Value                   |
 | ------------------------------------------ | ----------------------------------------------------------------------------------------------- | ----------------------- |
 | `externalDatabase.host`                    | External Database server host                                                                   | `""`                    |
@@ -232,6 +365,42 @@ The command removes all the Kubernetes components associated with the chart and 
 | `volumePermissions.image.pullSecrets`      | Bitnami Shell image pull secrets                                                                | `[]`                    |
 | `volumePermissions.resources.limits`       | The resources limits for the init container                                                     | `{}`                    |
 | `volumePermissions.resources.requests`     | The requested resources for the init container                                                  | `{}`                    |
+=======
+| Name                                       | Description                                                                                                   | Value                   |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| `externalDatabase.host`                    | External Database server host                                                                                 | `""`                    |
+| `externalDatabase.port`                    | External Database server port                                                                                 | `3306`                  |
+| `externalDatabase.user`                    | External Database username                                                                                    | `bn_osclass`            |
+| `externalDatabase.password`                | External Database user password                                                                               | `""`                    |
+| `externalDatabase.database`                | External Database database name                                                                               | `bitnami_osclass`       |
+| `externalDatabase.existingSecret`          | Name of an existing secret resource containing the DB password                                                | `""`                    |
+| `mariadb.enabled`                          | Deploy a MariaDB server to satisfy the applications database requirements                                     | `true`                  |
+| `mariadb.architecture`                     | MariaDB architecture. Allowed values: `standalone` or `replication`                                           | `standalone`            |
+| `mariadb.auth.rootPassword`                | MariaDB root password                                                                                         | `""`                    |
+| `mariadb.auth.database`                    | MariaDB custom database                                                                                       | `bitnami_osclass`       |
+| `mariadb.auth.username`                    | MariaDB custom user name                                                                                      | `bn_osclass`            |
+| `mariadb.auth.password`                    | MariaDB custom user password                                                                                  | `""`                    |
+| `mariadb.primary.persistence.enabled`      | Enable persistence on MariaDB using PVC(s)                                                                    | `true`                  |
+| `mariadb.primary.persistence.storageClass` | Persistent Volume storage class                                                                               | `""`                    |
+| `mariadb.primary.persistence.accessModes`  | Persistent Volume access modes                                                                                | `[]`                    |
+| `mariadb.primary.persistence.size`         | Persistent Volume size                                                                                        | `8Gi`                   |
+| `persistence.enabled`                      | Enable persistence using Persistent Volume Claims                                                             | `true`                  |
+| `persistence.storageClass`                 | Persistent Volume storage class                                                                               | `""`                    |
+| `persistence.accessModes`                  | Persistent Volume access modes                                                                                | `[]`                    |
+| `persistence.size`                         | Persistent Volume size                                                                                        | `8Gi`                   |
+| `persistence.existingClaim`                | The name of an existing PVC to use for persistence                                                            | `""`                    |
+| `persistence.hostPath`                     | If defined, the osclass-data volume will mount to the specified hostPath.                                     | `""`                    |
+| `persistence.annotations`                  | Persistent Volume Claim annotations                                                                           | `{}`                    |
+| `volumePermissions.enabled`                | Enable init container that changes the owner/group of the PV mount point to `runAsUser:fsGroup`               | `false`                 |
+| `volumePermissions.image.registry`         | Bitnami Shell image registry                                                                                  | `docker.io`             |
+| `volumePermissions.image.repository`       | Bitnami Shell image repository                                                                                | `bitnami/bitnami-shell` |
+| `volumePermissions.image.tag`              | Bitnami Shell image tag (immutable tags are recommended)                                                      | `11-debian-11-r23`      |
+| `volumePermissions.image.digest`           | Bitnami Shell image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag | `""`                    |
+| `volumePermissions.image.pullPolicy`       | Bitnami Shell image pull policy                                                                               | `IfNotPresent`          |
+| `volumePermissions.image.pullSecrets`      | Bitnami Shell image pull secrets                                                                              | `[]`                    |
+| `volumePermissions.resources.limits`       | The resources limits for the init container                                                                   | `{}`                    |
+| `volumePermissions.resources.requests`     | The requested resources for the init container                                                                | `{}`                    |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 
 ### Other Parameters
@@ -250,6 +419,7 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Metrics Parameters
 
+<<<<<<< HEAD
 | Name                                      | Description                                                                  | Value                     |
 | ----------------------------------------- | ---------------------------------------------------------------------------- | ------------------------- |
 | `metrics.enabled`                         | Start a sidecar prometheus exporter to expose metrics                        | `false`                   |
@@ -274,6 +444,57 @@ The command removes all the Kubernetes components associated with the chart and 
 
 
 The above parameters map to the env variables defined in [bitnami/osclass](http://github.com/bitnami/bitnami-docker-osclass). For more information please refer to the [bitnami/osclass](http://github.com/bitnami/bitnami-docker-osclass) image documentation.
+=======
+| Name                                       | Description                                                                                                     | Value                     |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------------------- | ------------------------- |
+| `metrics.enabled`                          | Start a sidecar prometheus exporter to expose metrics                                                           | `false`                   |
+| `metrics.image.registry`                   | Apache Exporter image registry                                                                                  | `docker.io`               |
+| `metrics.image.repository`                 | Apache Exporter image repository                                                                                | `bitnami/apache-exporter` |
+| `metrics.image.tag`                        | Apache Exporter image tag (immutable tags are recommended)                                                      | `0.11.0-debian-11-r28`    |
+| `metrics.image.digest`                     | Apache Exporter image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag | `""`                      |
+| `metrics.image.pullPolicy`                 | Apache Exporter image pull policy                                                                               | `IfNotPresent`            |
+| `metrics.image.pullSecrets`                | Apache Exporter image pull secrets                                                                              | `[]`                      |
+| `metrics.resources.limits`                 | The resources limits for the Prometheus exporter container                                                      | `{}`                      |
+| `metrics.resources.requests`               | The requested resources for the Prometheus exporter container                                                   | `{}`                      |
+| `metrics.podAnnotations`                   | Annotations to add                                                                                              | `{}`                      |
+| `metrics.service.type`                     | Metrics service type                                                                                            | `ClusterIP`               |
+| `metrics.service.port`                     | Metrics service port                                                                                            | `9117`                    |
+| `metrics.service.annotations`              | Additional custom annotations for Metrics service                                                               | `{}`                      |
+| `metrics.serviceMonitor.enabled`           | Create ServiceMonitor Resource for scraping metrics using PrometheusOperator                                    | `false`                   |
+| `metrics.serviceMonitor.namespace`         | The namespace in which the ServiceMonitor will be created                                                       | `""`                      |
+| `metrics.serviceMonitor.interval`          | The interval at which metrics should be scraped                                                                 | `30s`                     |
+| `metrics.serviceMonitor.scrapeTimeout`     | The timeout after which the scrape is ended                                                                     | `""`                      |
+| `metrics.serviceMonitor.relabelings`       | RelabelConfigs to apply to samples before scraping                                                              | `[]`                      |
+| `metrics.serviceMonitor.metricRelabelings` | MetricRelabelConfigs to apply to samples before ingestion                                                       | `[]`                      |
+| `metrics.serviceMonitor.honorLabels`       | Labels to honor to add to the scrape endpoint                                                                   | `false`                   |
+| `metrics.serviceMonitor.selector`          | ServiceMonitor selector labels                                                                                  | `{}`                      |
+| `metrics.serviceMonitor.labels`            | Extra labels for the ServiceMonitor                                                                             | `{}`                      |
+| `metrics.serviceMonitor.jobLabel`          | The name of the label on the target service to use as the job name in prometheus.                               | `""`                      |
+
+
+### NetworkPolicy parameters
+
+| Name                                                          | Description                                                                                                                 | Value   |
+| ------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `networkPolicy.enabled`                                       | Enable network policies                                                                                                     | `false` |
+| `networkPolicy.metrics.enabled`                               | Enable network policy for metrics (prometheus)                                                                              | `false` |
+| `networkPolicy.metrics.namespaceSelector`                     | Monitoring namespace selector labels. These labels will be used to identify the prometheus' namespace.                      | `{}`    |
+| `networkPolicy.metrics.podSelector`                           | Monitoring pod selector labels. These labels will be used to identify the Prometheus pods.                                  | `{}`    |
+| `networkPolicy.ingress.enabled`                               | Enable network policy for Ingress Proxies                                                                                   | `false` |
+| `networkPolicy.ingress.namespaceSelector`                     | Ingress Proxy namespace selector labels. These labels will be used to identify the Ingress Proxy's namespace.               | `{}`    |
+| `networkPolicy.ingress.podSelector`                           | Ingress Proxy pods selector labels. These labels will be used to identify the Ingress Proxy pods.                           | `{}`    |
+| `networkPolicy.ingressRules.backendOnlyAccessibleByFrontend`  | Enable ingress rule that makes the backend (mariadb) only accessible by Osclass's pods.                                     | `false` |
+| `networkPolicy.ingressRules.customBackendSelector`            | Backend selector labels. These labels will be used to identify the backend pods.                                            | `{}`    |
+| `networkPolicy.ingressRules.accessOnlyFrom.enabled`           | Enable ingress rule that makes Osclass only accessible from a particular origin                                             | `false` |
+| `networkPolicy.ingressRules.accessOnlyFrom.namespaceSelector` | Namespace selector label that is allowed to access Osclass. This label will be used to identified the allowed namespace(s). | `{}`    |
+| `networkPolicy.ingressRules.accessOnlyFrom.podSelector`       | Pods selector label that is allowed to access Osclass. This label will be used to identified the allowed pod(s).            | `{}`    |
+| `networkPolicy.ingressRules.customRules`                      | Custom network policy ingress rule                                                                                          | `{}`    |
+| `networkPolicy.egressRules.denyConnectionsToExternal`         | Enable egress rule that denies outgoing traffic outside the cluster, except for DNS (port 53).                              | `false` |
+| `networkPolicy.egressRules.customRules`                       | Custom network policy rule                                                                                                  | `{}`    |
+
+
+The above parameters map to the env variables defined in [bitnami/osclass](https://github.com/bitnami/containers/tree/main/bitnami/osclass). For more information please refer to the [bitnami/osclass](https://github.com/bitnami/containers/tree/main/bitnami/osclass) image documentation.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
@@ -305,7 +526,7 @@ Bitnami will release a new chart updating its containers if a new version of the
 
 ## Persistence
 
-The [Bitnami Osclass](https://github.com/bitnami/bitnami-docker-osclass) image stores the Osclass data and configurations at the `/bitnami/osclass` path of the container.
+The [Bitnami Osclass](https://github.com/bitnami/containers/tree/main/bitnami/osclass) image stores the Osclass data and configurations at the `/bitnami/osclass` path of the container.
 
 Persistent Volume Claims are used to keep the data across deployments. This is known to work in GCE, AWS, and minikube. See the [Parameters](#parameters) section to configure the PVC or to disable persistence.
 
@@ -355,23 +576,53 @@ As an alternative, you can use of the preset configurations for pod affinity, po
 
 ### Ingress
 
+<<<<<<< HEAD
 This chart provides support for Ingress resources. If an Ingress controller, such as [nginx-ingress](https://kubeapps.com/charts/stable/nginx-ingress) or [traefik](https://kubeapps.com/charts/stable/traefik), that Ingress controller can be used to serve WordPress.
+=======
+This chart provides support for Ingress resources. If an Ingress controller, such as nginx-ingress or traefik, that Ingress controller can be used to serve WordPress.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 To enable Ingress integration, set `ingress.enabled` to `true`. The `ingress.hostname` property can be used to set the host name. The `ingress.tls` parameter can be used to add the TLS configuration for this host. It is also possible to have more than one host, with a separate TLS configuration for each host. [Learn more about configuring and using Ingress](https://docs.bitnami.com/kubernetes/apps/wordpress/configuration/configure-ingress/).
 
 ### TLS secrets
 
+<<<<<<< HEAD
 The chart also facilitates the creation of TLS secrets for use with the Ingress controller, with different options for certificate management. [Learn more about TLS secrets](https://docs.bitnami.com/kubernetes/apps/wordpress/administration/enable-tls/).
+=======
+The chart also facilitates the creation of TLS secrets for use with the Ingress controller, with different options for certificate management. [Learn more about TLS secrets](https://docs.bitnami.com/kubernetes/apps/wordpress/administration/enable-tls-ingress/).
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## Troubleshooting
 
-Find more information about how to deal with common errors related to Bitnami’s Helm charts in [this troubleshooting guide](https://docs.bitnami.com/general/how-to/troubleshoot-helm-chart-issues).
+Find more information about how to deal with common errors related to Bitnami's Helm charts in [this troubleshooting guide](https://docs.bitnami.com/general/how-to/troubleshoot-helm-chart-issues).
 
 ## Upgrading
 
+<<<<<<< HEAD
 ### To 10.0.0
 
 The [Bitnami Osclass](https://github.com/bitnami/bitnami-docker-osclass) image was migrated to a "non-root" user approach. Previously the container ran as the `root` user and the Apache daemon was started as the `daemon` user. From now on, both the container and the Apache daemon run as user `1001`. You can revert this behavior by setting the parameters `containerSecurityContext.runAsUser` to `root`.
+=======
+### To 14.0.0
+
+This major release bumps the MariaDB version to 10.6. Follow the [upstream instructions](https://mariadb.com/kb/en/upgrading-from-mariadb-105-to-mariadb-106/) for upgrading from MariaDB 10.5 to 10.6. No major issues are expected during the upgrade.
+
+### To 13.0.0
+
+This major release renames several values in this chart and adds missing features, in order to be inline with the rest of assets in the Bitnami charts repository.
+
+Affected values:
+
+- `service.port` was deprecated. We recommend using `service.ports.http` instead.
+- `service.httpsPort` was deprecated. We recommend using `service.ports.https` instead.
+- `metrics.serviceMonitor.additionalLabels` renamed as `metrics.serviceMonitor.labels`.
+
+Additionally updates the MariaDB subchart to it newest major, 10.0.0, which contains similar changes. Check [MariaDB Upgrading Notes](https://github.com/bitnami/charts/tree/master/bitnami/mariadb#to-1000) for more information.
+
+### To 10.0.0
+
+The [Bitnami Osclass](https://github.com/bitnami/containers/tree/main/bitnami/osclass) image was migrated to a "non-root" user approach. Previously the container ran as the `root` user and the Apache daemon was started as the `daemon` user. From now on, both the container and the Apache daemon run as user `1001`. You can revert this behavior by setting the parameters `containerSecurityContext.runAsUser` to `root`.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 Consequences:
 
@@ -380,7 +631,11 @@ Consequences:
 
 To upgrade to `9.0.0`, backup Osclass data and the previous MariaDB databases, install a new Osclass chart and import the backups and data, ensuring the `1001` user has the appropriate permissions on the migrated volume.
 
+<<<<<<< HEAD
 In addition to this, the image was refactored and now the source code is published in GitHub in the [`rootfs`](https://github.com/bitnami/bitnami-docker-osclass/tree/master/4/debian-10/rootfs) folder of the container image.
+=======
+In addition to this, the image was refactored and now the source code is published in GitHub in the `rootfs` folder of the container image.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 This upgrade also adapts the chart to the latest Bitnami good practices. Check the Parameters section for more information.
 
@@ -395,9 +650,9 @@ Consequences:
 
 ```console
 $ export APP_HOST=$(kubectl get svc --namespace default osclass --template "{{ range (index .status.loadBalancer.ingress 0) }}{{ . }}{{ end }}")
-$ export APP_PASSWORD=$(kubectl get secret --namespace default osclass -o jsonpath="{.data.osclass-password}" | base64 --decode)
-$ export MARIADB_ROOT_PASSWORD=$(kubectl get secret --namespace default osclass-mariadb -o jsonpath="{.data.mariadb-root-password}" | base64 --decode)
-$ export MARIADB_PASSWORD=$(kubectl get secret --namespace default osclass-mariadb -o jsonpath="{.data.mariadb-password}" | base64 --decode)
+$ export APP_PASSWORD=$(kubectl get secret --namespace default osclass -o jsonpath="{.data.osclass-password}" | base64 -d)
+$ export MARIADB_ROOT_PASSWORD=$(kubectl get secret --namespace default osclass-mariadb -o jsonpath="{.data.mariadb-root-password}" | base64 -d)
+$ export MARIADB_PASSWORD=$(kubectl get secret --namespace default osclass-mariadb -o jsonpath="{.data.mariadb-password}" | base64 -d)
 $ kubectl delete deployments.apps osclass
 $ helm upgrade osclass bitnami/osclass --set osclassHost=$APP_HOST,osclassPassword=$APP_PASSWORD,mariadb.auth.rootPassword=$MARIADB_ROOT_PASSWORD,mariadb.auth.password=$MARIADB_PASSWORD
 ```
@@ -446,9 +701,9 @@ Obtain the credentials and the names of the PVCs used to hold both the MariaDB a
 
 ```console
 export OSCLASS_HOST=$(kubectl get svc --namespace default osclass --template "{{ range (index .status.loadBalancer.ingress 0) }}{{ . }}{{ end }}")
-export OSCLASS_PASSWORD=$(kubectl get secret --namespace default osclass -o jsonpath="{.data.osclass-password}" | base64 --decode)
-export MARIADB_ROOT_PASSWORD=$(kubectl get secret --namespace default osclass-mariadb -o jsonpath="{.data.mariadb-root-password}" | base64 --decode)
-export MARIADB_PASSWORD=$(kubectl get secret --namespace default osclass-mariadb -o jsonpath="{.data.mariadb-password}" | base64 --decode)
+export OSCLASS_PASSWORD=$(kubectl get secret --namespace default osclass -o jsonpath="{.data.osclass-password}" | base64 -d)
+export MARIADB_ROOT_PASSWORD=$(kubectl get secret --namespace default osclass-mariadb -o jsonpath="{.data.mariadb-root-password}" | base64 -d)
+export MARIADB_PASSWORD=$(kubectl get secret --namespace default osclass-mariadb -o jsonpath="{.data.mariadb-password}" | base64 -d)
 export MARIADB_PVC=$(kubectl get pvc -l app=mariadb,component=master,release=osclass -o jsonpath="{.items[0].metadata.name}")
 ```
 
@@ -498,3 +753,28 @@ Use the workaround below to upgrade from versions previous to 3.0.0. The followi
 ```console
 $ kubectl patch deployment osclass-osclass --type=json -p='[{"op": "remove", "path": "/spec/selector/matchLabels/chart"}]'
 $ kubectl delete statefulset osclass-mariadb --cascade=false
+```
+
+## Community supported solution
+
+Please, note this Helm chart is a community-supported solution. This means that the Bitnami team is not actively working on new features/improvements nor providing support through GitHub Issues for this Helm chart. Any new issue will stay open for 20 days to allow the community to contribute, after 15 days without activity the issue will be marked as stale being closed after 5 days.
+
+The Bitnami team will review any PR that is created, feel free to create a PR if you find any issue or want to implement a new feature.
+
+New versions are not going to be affected. Once a new version is released in the upstream project, the Bitnami container image will be updated to use the latest version.
+
+## License
+
+Copyright &copy; 2022 Bitnami
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

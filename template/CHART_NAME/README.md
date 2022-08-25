@@ -15,8 +15,13 @@ $ helm install my-release bitnami/%%CHART_NAME%%
 
 ## Prerequisites
 
+<<<<<<< HEAD
 - Kubernetes 1.12+
 - Helm 3.1.0
+=======
+- Kubernetes 1.19+
+- Helm 3.2.0+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 - PV provisioner support in the underlying infrastructure
 - ReadWriteMany volumes for deployment scaling
 
@@ -25,7 +30,11 @@ $ helm install my-release bitnami/%%CHART_NAME%%
 To install the chart with the release name `my-release`:
 
 ```console
+<<<<<<< HEAD
 helm install my-release bitnami/%%CHART_NAME%%s
+=======
+helm install my-release bitnami/%%CHART_NAME%%
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ```
 
 The command deploys %%CHART_NAME%% on the Kubernetes cluster in the default configuration. The [Parameters](#parameters) section lists the parameters that can be configured during installation.
@@ -46,7 +55,11 @@ The command removes all the Kubernetes components associated with the chart and 
 
 See https://github.com/bitnami-labs/readme-generator-for-helm to create the table
 
+<<<<<<< HEAD
 The above parameters map to the env variables defined in [bitnami/%%CHART_NAME%%](http://github.com/bitnami/bitnami-docker-%%CHART_NAME%%). For more information please refer to the [bitnami/%%CHART_NAME%%](http://github.com/bitnami/bitnami-docker-%%CHART_NAME%%) image documentation.
+=======
+The above parameters map to the env variables defined in [bitnami/%%CHART_NAME%%](https://github.com/bitnami/containers/tree/main/bitnami/%%CHART_NAME%%). For more information please refer to the [bitnami/%%CHART_NAME%%](https://github.com/bitnami/containers/tree/main/bitnami/%%CHART_NAME%%) image documentation.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
@@ -109,7 +122,11 @@ The chart also facilitates the creation of TLS secrets for use with the Ingress 
 
 ## Persistence
 
+<<<<<<< HEAD
 The [Bitnami %%CHART_NAME%%](https://github.com/bitnami/bitnami-docker-%%CHART_NAME%%) image stores the %%CHART_NAME%% data and configurations at the `/bitnami` path of the container. Persistent Volume Claims are used to keep the data across deployments. [Learn more about persistence in the chart documentation](https://docs.bitnami.com/kubernetes/apps/%%CHART_NAME%%/configuration/chart-persistence/).
+=======
+The [Bitnami %%CHART_NAME%%](https://github.com/bitnami/containers/tree/main/bitnami/%%CHART_NAME%%) image stores the %%CHART_NAME%% data and configurations at the `/bitnami` path of the container. Persistent Volume Claims are used to keep the data across deployments. [Learn more about persistence in the chart documentation](https://docs.bitnami.com/kubernetes/apps/%%CHART_NAME%%/configuration/chart-persistence/).
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ### Additional environment variables
 
@@ -137,3 +154,22 @@ As an alternative, use one of the preset configurations for pod affinity, pod an
 ## Troubleshooting
 
 Find more information about how to deal with common errors related to Bitnami's Helm charts in [this troubleshooting guide](https://docs.bitnami.com/general/how-to/troubleshoot-helm-chart-issues).
+<<<<<<< HEAD
+=======
+
+## License
+
+Copyright &copy; 2022 Bitnami
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

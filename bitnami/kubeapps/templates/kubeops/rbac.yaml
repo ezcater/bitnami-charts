@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 {{- if .Values.rbac.create -}}
+=======
+{{- if and .Values.kubeops.enabled .Values.rbac.create -}}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: Role
 metadata:
@@ -48,15 +52,23 @@ roleRef:
   name: {{ template "kubeapps.kubeops.fullname" . }}
 subjects:
   - kind: ServiceAccount
+<<<<<<< HEAD
     name: {{ template "kubeapps.kubeops.fullname" . }}
+=======
+    name: {{ template "kubeapps.kubeops.serviceAccountName" . }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     namespace: {{ .Release.Namespace }}
 {{- if .Values.allowNamespaceDiscovery }}
 ---
 apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: ClusterRole
 metadata:
+<<<<<<< HEAD
   name: "kubeapps:controller:kubeops-ns-discovery-{{ .Release.Namespace }}"
   namespace: {{ .Release.Namespace | quote }}
+=======
+  name: {{ printf "kubeapps:controller:kubeops-ns-discovery-%s" .Release.Namespace }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: kubeops
     {{- if .Values.commonLabels }}
@@ -76,8 +88,12 @@ rules:
 apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
+<<<<<<< HEAD
   name: "kubeapps:controller:kubeops-ns-discovery-{{ .Release.Namespace }}"
   namespace: {{ .Release.Namespace | quote }}
+=======
+  name: {{ printf "kubeapps:controller:kubeops-ns-discovery-%s" .Release.Namespace }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: kubeops
     {{- if .Values.commonLabels }}
@@ -89,18 +105,29 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
+<<<<<<< HEAD
   name: "kubeapps:controller:kubeops-ns-discovery-{{ .Release.Namespace }}"
 subjects:
   - kind: ServiceAccount
     name: {{ template "kubeapps.kubeops.fullname" . }}
+=======
+  name: {{ printf "kubeapps:controller:kubeops-ns-discovery-%s" .Release.Namespace }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ template "kubeapps.kubeops.serviceAccountName" . }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     namespace: {{ .Release.Namespace }}
 {{- end }}
 ---
 apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: ClusterRole
 metadata:
+<<<<<<< HEAD
   name: "kubeapps:controller:kubeops-operators-{{ .Release.Namespace }}"
   namespace: {{ .Release.Namespace | quote }}
+=======
+  name: {{ printf "kubeapps:controller:kubeops-operators-%s" .Release.Namespace }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: kubeops
     {{- if .Values.commonLabels }}
@@ -120,8 +147,12 @@ rules:
 apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
+<<<<<<< HEAD
   name: "kubeapps:controller:kubeops-operators-{{ .Release.Namespace }}"
   namespace: {{ .Release.Namespace | quote }}
+=======
+  name: {{ printf "kubeapps:controller:kubeops-operators-%s" .Release.Namespace }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: kubeops
     {{- if .Values.commonLabels }}
@@ -133,9 +164,16 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
+<<<<<<< HEAD
   name: "kubeapps:controller:kubeops-operators-{{ .Release.Namespace }}"
 subjects:
   - kind: ServiceAccount
     name: {{ template "kubeapps.kubeops.fullname" . }}
+=======
+  name: {{ printf "kubeapps:controller:kubeops-operators-%s" .Release.Namespace }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ template "kubeapps.kubeops.serviceAccountName" . }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     namespace: {{ .Release.Namespace }}
 {{- end }}

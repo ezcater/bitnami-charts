@@ -1,3 +1,7 @@
+CHART NAME: {{ .Chart.Name }}
+CHART VERSION: {{ .Chart.Version }}
+APP VERSION: {{ .Chart.AppVersion }}
+
   ** Please be patient while the chart is being deployed **
 
 {{- if .Values.diagnosticMode.enabled }}
@@ -49,14 +53,14 @@ In order to access to the Consul Web UI:
   NOTE: It may take a few minutes for the LoadBalancer IP to be available.
         Watch the status with: 'kubectl get svc --namespace {{ .Release.Namespace }} -w {{ printf "%s-ui" (include "common.names.fullname" .) }}'
 
-    export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ printf "%s-ui" (include "common.names.fullname" .) }} --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
+    export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ printf "%s-ui" (include "common.names.fullname" .) }} --template "{{ "{{ range (index .status.loadBalancer.ingress 0) }}{{ . }}{{ end }}" }}")
 
-    echo "Consul URL: http://$SERVICE_IP:{{ .Values.service.port }}/"
+    echo "Consul URL: http://$SERVICE_IP:{{ .Values.service.ports.http }}/"
 
 {{- else if contains "ClusterIP"  .Values.service.type }}
 
-    kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ printf "%s-ui" (include "common.names.fullname" .) }} {{ .Values.service.port }}:{{ .Values.service.port }}
-    echo "Consul URL: http://127.0.0.1:{{ .Values.service.port }}"
+    kubectl port-forward --namespace {{ .Release.Namespace }} svc/{{ printf "%s-ui" (include "common.names.fullname" .) }} {{ .Values.service.ports.http }}:{{ .Values.service.ports.http }}
+    echo "Consul URL: http://127.0.0.1:{{ .Values.service.ports.http }}"
 
 {{- end }}
 {{- end }}
@@ -78,3 +82,4 @@ Furthermore, to know which Consul node is the cluster leader run this other comm
 
 {{- include "common.warnings.rollingTag" .Values.image }}
 {{- include "common.warnings.rollingTag" .Values.metrics.image }}
+{{- include "common.warnings.rollingTag" .Values.volumePermissions.image }}

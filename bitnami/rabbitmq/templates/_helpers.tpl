@@ -1,19 +1,4 @@
 {{/* vim: set filetype=mustache: */}}
-{{/*
-Expand the name of the chart.
-*/}}
-{{- define "rabbitmq.name" -}}
-{{- include "common.names.name" . -}}
-{{- end -}}
-
-{{/*
-Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-If release name contains chart name it will be used as a full name.
-*/}}
-{{- define "rabbitmq.fullname" -}}
-{{- include "common.names.fullname" . -}}
-{{- end -}}
 
 {{/*
 Return the proper RabbitMQ image name
@@ -37,6 +22,7 @@ Return the proper Docker Image Registry Secret Names
 {{- end -}}
 
 {{/*
+<<<<<<< HEAD
 Return podAnnotations
 */}}
 {{- define "rabbitmq.podAnnotations" -}}
@@ -49,11 +35,13 @@ Return podAnnotations
 {{- end -}}
 
 {{/*
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
  Create the name of the service account to use
  */}}
 {{- define "rabbitmq.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create -}}
-    {{ default (include "rabbitmq.fullname" .) .Values.serviceAccount.name }}
+    {{ default (include "common.names.fullname" .) .Values.serviceAccount.name }}
 {{- else -}}
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
@@ -66,7 +54,7 @@ Get the password secret.
     {{- if .Values.auth.existingPasswordSecret -}}
         {{- printf "%s" (tpl .Values.auth.existingPasswordSecret $) -}}
     {{- else -}}
-        {{- printf "%s" (include "rabbitmq.fullname" .) -}}
+        {{- printf "%s" (include "common.names.fullname" .) -}}
     {{- end -}}
 {{- end -}}
 
@@ -77,7 +65,7 @@ Get the erlang secret.
     {{- if .Values.auth.existingErlangSecret -}}
         {{- printf "%s" (tpl .Values.auth.existingErlangSecret $) -}}
     {{- else -}}
-        {{- printf "%s" (include "rabbitmq.fullname" .) -}}
+        {{- printf "%s" (include "common.names.fullname" .) -}}
     {{- end -}}
 {{- end -}}
 
@@ -88,7 +76,7 @@ Get the TLS secret.
     {{- if .Values.auth.tls.existingSecret -}}
         {{- printf "%s" (tpl .Values.auth.tls.existingSecret $) -}}
     {{- else -}}
-        {{- printf "%s-certs" (include "rabbitmq.fullname" .) -}}
+        {{- printf "%s-certs" (include "common.names.fullname" .) -}}
     {{- end -}}
 {{- end -}}
 
@@ -174,16 +162,16 @@ Validate values of rabbitmq - LDAP support
 {{- define "rabbitmq.validateValues.ldap" -}}
 {{- if .Values.ldap.enabled }}
 {{- $serversListLength := len .Values.ldap.servers }}
-{{- if or (not (gt $serversListLength 0)) (not (and .Values.ldap.port .Values.ldap.user_dn_pattern)) }}
+{{- $userDnPattern := coalesce .Values.ldap.user_dn_pattern .Values.ldap.userDnPattern }}
+{{- if or (and (not (gt $serversListLength 0)) (empty .Values.ldap.uri)) (and (not $userDnPattern) (not .Values.ldap.basedn)) }}
 rabbitmq: LDAP
-    Invalid LDAP configuration. When enabling LDAP support, the parameters "ldap.servers",
-    "ldap.port", and "ldap. user_dn_pattern" are mandatory. Please provide them:
-
+    Invalid LDAP configuration. When enabling LDAP support, the parameters "ldap.servers" or "ldap.uri" are mandatory
+    to configure the connection and "ldap.userDnPattern" or "ldap.basedn" are necessary to lookup the users. Please provide them:
     $ helm install {{ .Release.Name }} bitnami/rabbitmq \
       --set ldap.enabled=true \
-      --set ldap.servers[0]="lmy-ldap-server" \
+      --set ldap.servers[0]=my-ldap-server" \
       --set ldap.port="389" \
-      --set user_dn_pattern="cn=${username},dc=example,dc=org"
+      --set ldap.userDnPattern="cn=${username},dc=example,dc=org"
 {{- end -}}
 {{- end -}}
 {{- end -}}
@@ -220,13 +208,18 @@ rabbitmq: memoryHighWatermark
 Validate values of rabbitmq - TLS configuration for Ingress
 */}}
 {{- define "rabbitmq.validateValues.ingress.tls" -}}
+<<<<<<< HEAD
 {{- if and .Values.ingress.enabled .Values.ingress.tls (not .Values.ingress.certManager) (not .Values.ingress.selfSigned) (empty .Values.ingress.extraTls) }}
+=======
+{{- if and .Values.ingress.enabled .Values.ingress.tls (not (include "common.ingress.certManagerRequest" ( dict "annotations" .Values.ingress.annotations ))) (not .Values.ingress.selfSigned) (empty .Values.ingress.extraTls) }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 rabbitmq: ingress.tls
     You enabled the TLS configuration for the default ingress hostname but
     you did not enable any of the available mechanisms to create the TLS secret
     to be used by the Ingress Controller.
     Please use any of these alternatives:
       - Use the `ingress.extraTls` and `ingress.secrets` parameters to provide your custom TLS certificates.
+<<<<<<< HEAD
       - Relay on cert-manager to create it by setting `ingress.certManager=true`
       - Relay on Helm to create self-signed certificates by setting `ingress.selfSigned=true`
 {{- end -}}
@@ -234,6 +227,15 @@ rabbitmq: ingress.tls
 
 {{/* 
 Validate values of RabbitMQ - Auth TLS enabled 
+=======
+      - Rely on cert-manager to create it by setting the corresponding annotations
+      - Rely on Helm to create self-signed certificates by setting `ingress.selfSigned=true`
+{{- end -}}
+{{- end -}}
+
+{{/*
+Validate values of RabbitMQ - Auth TLS enabled
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 */}}
 {{- define "rabbitmq.validateValues.auth.tls" -}}
 {{- if and .Values.auth.tls.enabled (not .Values.auth.tls.autoGenerated) (not .Values.auth.tls.existingSecret) (not .Values.auth.tls.caCertificate) (not .Values.auth.tls.serverCertificate) (not .Values.auth.tls.serverKey) }}
@@ -245,3 +247,13 @@ rabbitmq: auth.tls
       - Enable auto-generated certificates using `auth.tls.autoGenerated`.
 {{- end -}}
 {{- end -}}
+<<<<<<< HEAD
+=======
+
+{{/*
+Get the initialization scripts volume name.
+*/}}
+{{- define "rabbitmq.initScripts" -}}
+{{- printf "%s-init-scripts" (include "common.names.fullname" .) -}}
+{{- end -}}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

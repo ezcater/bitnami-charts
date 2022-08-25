@@ -15,11 +15,16 @@ Return the proper image name (for the init container volume-permissions image)
 {{/*
 Return the proper Docker Image Registry Secret Names
 */}}
+<<<<<<< HEAD
 {{- define "imagePullSecrets" -}}
+=======
+{{- define "concourse.imagePullSecrets" -}}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- include "common.images.pullSecrets" (dict "images" (list .Values.image .Values.volumePermissions.image) "global" .Values.global) -}}
 {{- end -}}
 
 {{/*
+<<<<<<< HEAD
 Compile all warnings into a single message.
 */}}
 {{- define "concourse.validateValues" -}}
@@ -48,6 +53,8 @@ Return  the proper Storage Class
 {{- end -}}
 
 {{/*
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 Create a default fully qualified web node(s) name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
@@ -90,6 +97,7 @@ Create a default fully qualified postgresql name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 */}}
 {{- define "concourse.postgresql.fullname" -}}
+<<<<<<< HEAD
 {{- $name := default "postgresql" .Values.postgresql.nameOverride -}}
 {{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
@@ -124,6 +132,54 @@ When using Ingress, it will be set to the Ingress hostname.
 {{- printf "%s://%s" (ternary "https" "http" .Values.web.tls.enabled) $host -}}
 {{- else if (include "concourse.serviceIP" .) -}}
 {{- printf "%s://%s" (ternary "https" "http" .Values.web.tls.enabled) (include "concourse.serviceIP" .) -}}
+=======
+{{- include "common.names.dependency.fullname" (dict "chartName" "postgresql" "chartValues" .Values.postgresql "context" $) -}}
+{{- end -}}
+
+{{- define "concourse.database.host" -}}
+{{- ternary (include "concourse.postgresql.fullname" .) .Values.externalDatabase.host .Values.postgresql.enabled | quote -}}
+{{- end -}}
+
+{{- define "concourse.database.port" -}}
+{{- ternary "5432" .Values.externalDatabase.port .Values.postgresql.enabled | quote -}}
+{{- end -}}
+
+{{/*
+Add environment variables to configure database values
+*/}}
+{{- define "concourse.database.user" -}}
+{{- if .Values.postgresql.enabled }}
+    {{- if .Values.global.postgresql }}
+        {{- if .Values.global.postgresql.auth }}
+            {{- coalesce .Values.global.postgresql.auth.username .Values.postgresql.auth.username | quote -}}
+        {{- else -}}
+            {{- .Values.postgresql.auth.username | quote -}}
+        {{- end -}}
+    {{- else -}}
+        {{- .Values.postgresql.auth.username | quote -}}
+    {{- end -}}
+{{- else -}}
+    {{- .Values.externalDatabase.user | quote -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Add environment variables to configure database values
+*/}}
+{{- define "concourse.database.name" -}}
+{{- if .Values.postgresql.enabled }}
+    {{- if .Values.global.postgresql }}
+        {{- if .Values.global.postgresql.auth }}
+            {{- coalesce .Values.global.postgresql.auth.database .Values.postgresql.auth.database | quote -}}
+        {{- else -}}
+            {{- .Values.postgresql.auth.database | quote -}}
+        {{- end -}}
+    {{- else -}}
+        {{- .Values.postgresql.auth.database | quote -}}
+    {{- end -}}
+{{- else -}}
+    {{- .Values.externalDatabase.database | quote -}}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- end -}}
 {{- end -}}
 
@@ -139,10 +195,34 @@ Note, returns 127.0.0.1 if using ClusterIP.
 {{- end -}}
 {{- end -}}
 
+<<<<<<< HEAD
 {{/* Concourse credential web secret name */}}
 {{- define "concourse.web.secretName" -}}
 {{- if .Values.web.existingSecret -}}
   {{- .Values.web.existingSecret -}}
+=======
+{{/*
+Gets the host to be used for this application.
+If not using ClusterIP, or if a host or LoadBalancerIP is not defined, the value will be empty.
+When using Ingress, it will be set to the Ingress hostname.
+*/}}
+{{- define "concourse.host" -}}
+{{- if .Values.ingress.enabled -}}
+  {{- $host := .Values.ingress.hostname | default "" -}}
+  {{- printf "%s://%s" (ternary "https" "http" .Values.web.tls.enabled) (default (include "concourse.serviceIP" .) $host) -}}
+{{- else if .Values.web.externalUrl -}}
+  {{- $host := .Values.web.externalUrl | default "" -}}
+  {{- printf "%s://%s" (ternary "https" "http" .Values.web.tls.enabled) $host -}}
+{{- else if (include "concourse.serviceIP" .) -}}
+  {{- printf "%s://%s" (ternary "https" "http" .Values.web.tls.enabled) (include "concourse.serviceIP" .) -}}
+{{- end -}}
+{{- end -}}
+
+{{/* Concourse credential web secret name */}}
+{{- define "concourse.web.secretName" -}}
+{{- if .Values.web.existingSecret -}}
+  {{- printf "%s" .Values.web.existingSecret -}}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- else -}}
   {{- printf "%s" (include "concourse.web.fullname" . ) -}}
 {{- end -}}
@@ -153,7 +233,11 @@ Note, returns 127.0.0.1 if using ClusterIP.
 */}}
 {{- define "concourse.web.configmapName" -}}
 {{- if .Values.web.existingConfigmap -}}
+<<<<<<< HEAD
   {{- .Values.web.existingConfigmap -}}
+=======
+  {{- printf "%s" .Values.web.existingConfigmap -}}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- else -}}
   {{- printf "%s" (include "concourse.web.fullname" . ) -}}
 {{- end -}}
@@ -173,7 +257,11 @@ Creates the address of the TSA service.
 */}}
 {{- define "concourse.web.tsa.address" -}}
 {{- if .Values.web.enabled -}}
+<<<<<<< HEAD
 {{- $port := printf "%v" .Values.web.tsa.containerPort -}}
+=======
+{{- $port := printf "%v" .Values.web.containerPorts.tsa -}}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- printf "%s-gateway:%s" (include "concourse.web.fullname" .) $port -}}
 {{- else -}}
 {{- range $i, $tsaHost := .Values.worker.tsa.hosts -}}{{- if $i -}},{{ end -}}{{- $tsaHost -}}{{- end -}}
@@ -184,6 +272,7 @@ Creates the address of the TSA service.
 Get the Postgresql credentials secret.
 */}}
 {{- define "concourse.postgresql.secretName" -}}
+<<<<<<< HEAD
 {{- if and (.Values.postgresql.enabled) (not .Values.postgresql.existingSecret) -}}
     {{- printf "%s" (include "concourse.postgresql.fullname" .) -}}
 {{- else if and (.Values.postgresql.enabled) (.Values.postgresql.existingSecret) -}}
@@ -194,6 +283,24 @@ Get the Postgresql credentials secret.
     {{- else -}}
         {{ printf "%s-%s" .Release.Name "externaldb" -}}
     {{- end -}}
+=======
+{{- if .Values.postgresql.enabled }}
+    {{- if .Values.global.postgresql }}
+        {{- if .Values.global.postgresql.auth }}
+            {{- if .Values.global.postgresql.auth.existingSecret }}
+                {{- tpl .Values.global.postgresql.auth.existingSecret $ -}}
+            {{- else -}}
+                {{- default (include "concourse.postgresql.fullname" .) (tpl .Values.postgresql.auth.existingSecret $) -}}
+            {{- end -}}
+        {{- else -}}
+            {{- default (include "concourse.postgresql.fullname" .) (tpl .Values.postgresql.auth.existingSecret $) -}}
+        {{- end -}}
+    {{- else -}}
+        {{- default (include "concourse.postgresql.fullname" .) (tpl .Values.postgresql.auth.existingSecret $) -}}
+    {{- end -}}
+{{- else -}}
+    {{- default (printf "%s-externaldb" .Release.Name) (tpl .Values.externalDatabase.existingSecret $) -}}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- end -}}
 {{- end -}}
 
@@ -202,12 +309,17 @@ Add environment variables to configure database values
 */}}
 {{- define "concourse.database.existingsecret.key" -}}
 {{- if .Values.postgresql.enabled -}}
+<<<<<<< HEAD
     {{- printf "%s" "postgresql-password" -}}
+=======
+    {{- print "password" -}}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- else -}}
     {{- if .Values.externalDatabase.existingSecret -}}
         {{- if .Values.externalDatabase.existingSecretPasswordKey -}}
             {{- printf "%s" .Values.externalDatabase.existingSecretPasswordKey -}}
         {{- else -}}
+<<<<<<< HEAD
             {{- printf "%s" "postgresql-password" -}}
         {{- end -}}
     {{- else -}}
@@ -215,3 +327,55 @@ Add environment variables to configure database values
     {{- end -}}
 {{- end -}}
 {{- end -}}
+=======
+            {{- print "password" -}}
+        {{- end -}}
+    {{- else -}}
+        {{- print "password" -}}
+    {{- end -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Compile all warnings into a single message.
+*/}}
+{{- define "concourse.validateValues" -}}
+{{- $messages := list -}}
+{{- $messages := append $messages (include "concourse.validateValues.enabled" .) -}}
+{{- $messages := append $messages (include "concourse.web.conjur.validateValues" .) -}}
+{{- $messages := without $messages "" -}}
+{{- $message := join "\n" $messages -}}
+{{- if $message -}}
+{{- printf "\nVALUES VALIDATION:\n%s" $message | fail -}}
+{{- end -}}
+{{- end -}}
+
+{{/* Check if web or worker are enable */}}
+{{- define "concourse.validateValues.enabled" -}}
+{{- if not (or .Values.web.enabled .Values.worker.enabled) -}}
+concourse: enabled
+  Must set either web.enabled or worker.enabled to create a Concourse deployment
+{{- end -}}
+{{- end -}}
+
+{{/* Check Conjur parameters */}}
+{{- define "concourse.web.conjur.validateValues" -}}
+{{- if .Values.web.conjur.enabled -}}
+{{- if (empty .Values.web.conjur.applianceUrl) -}}
+{{- printf "Must set web.conjur.applianceUrl to integrate Conjur. Please set the parameter (--set web.conjur.applianceUrl=\"xxxx\")." -}}
+{{- end -}}
+{{- if (empty .Values.secrets.conjurAccount) -}}
+{{- printf "Must set secrets.conjurAccount to integrate Conjur. Please set the parameter (--set secrets.conjurAccount=\"xxxx\")." -}}
+{{- end -}}
+{{- if (empty .Values.secrets.conjurAuthnLogin) -}}
+{{- printf "Must set secrets.conjurAuthnLogin to integrate Conjur. Please set the parameter (--set secrets.conjurAuthnLogin=\"xxxx\")." -}}    
+{{- end -}}
+{{- if and (empty .Values.secrets.conjurAuthnTokenFile) (empty .Values.secrets.conjurAuthnApiKey) -}}
+{{- printf "Must set either secrets.conjurAuthnApiKey or secrets.conjurAuthnTokenFile to integrate Conjur. Please set the parameter (--set secrets.conjurAuthnLogin=\"xxxx\" or --set secrets.conjurAuthnTokenFile=\"xxxx\")" -}}
+{{- end -}}
+{{- if and .Values.secrets.conjurAuthnTokenFile .Values.secrets.conjurAuthnApiKey -}}
+{{- printf "You specified both secrets.conjurAuthnTokenFile and secrets.conjurAuthnApiKey. You can only set one to integrate Conjur." -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

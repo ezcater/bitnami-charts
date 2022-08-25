@@ -13,6 +13,12 @@ metadata:
   {{- end }}
 spec:
   replicas: {{ .Values.dashboard.replicaCount }}
+<<<<<<< HEAD
+=======
+  {{- if .Values.dashboard.updateStrategy }}
+  strategy: {{- toYaml .Values.dashboard.updateStrategy | nindent 4 }}
+  {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   selector:
     matchLabels: {{- include "common.labels.matchLabels" . | nindent 6 }}
       app.kubernetes.io/component: dashboard
@@ -41,6 +47,15 @@ spec:
         podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.dashboard.podAntiAffinityPreset "component" "dashboard" "context" $) | nindent 10 }}
         nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .Values.dashboard.nodeAffinityPreset.type "key" .Values.dashboard.nodeAffinityPreset.key "values" .Values.dashboard.nodeAffinityPreset.values) | nindent 10 }}
       {{- end }}
+<<<<<<< HEAD
+=======
+      {{- if .Values.dashboard.schedulerName }}
+      schedulerName: {{ .Values.dashboard.schedulerName }}
+      {{- end }}
+      {{- if .Values.dashboard.topologySpreadConstraints }}
+      topologySpreadConstraints: {{- include "common.tplvalues.render" (dict "value" .Values.dashboard.topologySpreadConstraints "context" .) | nindent 8 }}
+      {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       {{- if .Values.dashboard.nodeSelector }}
       nodeSelector: {{- include "common.tplvalues.render" (dict "value" .Values.dashboard.nodeSelector "context" $) | nindent 8 }}
       {{- end }}
@@ -58,11 +73,28 @@ spec:
       {{- end }}
       containers:
         - name: dashboard
+<<<<<<< HEAD
           image: {{ include "common.images.image" (dict "imageRoot" .Values.dashboard.image "global" .Values.global) }}
+=======
+          image: {{ include "kubeapps.dashboard.image" . }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           imagePullPolicy: {{ .Values.dashboard.image.pullPolicy | quote }}
           {{- if .Values.dashboard.containerSecurityContext.enabled }}
           securityContext: {{- omit .Values.dashboard.containerSecurityContext "enabled" | toYaml | nindent 12 }}
           {{- end }}
+<<<<<<< HEAD
+=======
+          {{- if .Values.diagnosticMode.enabled }}
+          command: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.command "context" $) | nindent 12 }}
+          {{- else if .Values.dashboard.command }}
+          command: {{- include "common.tplvalues.render" (dict "value" .Values.dashboard.command "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.diagnosticMode.enabled }}
+          args: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.args "context" $) | nindent 12 }}
+          {{- else if .Values.dashboard.args }}
+          args: {{- include "common.tplvalues.render" (dict "value" .Values.dashboard.args "context" $) | nindent 12 }}
+          {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           {{- if .Values.dashboard.lifecycleHooks }}
           lifecycle: {{- include "common.tplvalues.render" (dict "value" .Values.dashboard.lifecycleHooks "context" $) | nindent 12 }}
           {{- end }}
@@ -72,7 +104,10 @@ spec:
             {{- if .Values.dashboard.extraEnvVars }}
             {{- include "common.tplvalues.render" (dict "value" .Values.dashboard.extraEnvVars "context" $) | nindent 12 }}
             {{- end }}
+<<<<<<< HEAD
           {{- if or .Values.dashboard.extraEnvVarsCM .Values.dashboard.extraEnvVarsSecret }}
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           envFrom:
             {{- if .Values.dashboard.extraEnvVarsCM }}
             - configMapRef:
@@ -82,13 +117,26 @@ spec:
             - secretRef:
                 name: {{ include "common.tplvalues.render" (dict "value" .Values.dashboard.extraEnvVarsSecret "context" $) }}
             {{- end }}
+<<<<<<< HEAD
           {{- end }}
           {{- if .Values.dashboard.livenessProbe.enabled }}
           livenessProbe: {{- omit .Values.dashboard.livenessProbe "enabled" | toYaml | nindent 12 }}
+=======
+          ports:
+            - name: http
+              containerPort: {{ .Values.dashboard.containerPorts.http }}
+          {{- if not .Values.diagnosticMode.enabled }}
+          {{- if .Values.dashboard.livenessProbe.enabled }}
+          livenessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.dashboard.livenessProbe "enabled") "context" $) | nindent 12 }}
+            httpGet:
+              path: /
+              port: http
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           {{- else if .Values.dashboard.customLivenessProbe }}
           livenessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.dashboard.customLivenessProbe "context" $) | nindent 12 }}
           {{- end }}
           {{- if .Values.dashboard.readinessProbe.enabled }}
+<<<<<<< HEAD
           readinessProbe: {{- omit .Values.dashboard.readinessProbe "enabled" | toYaml | nindent 12 }}
           {{- else if .Values.dashboard.customReadinessProbe }}
           readinessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.dashboard.customReadinessProbe "context" $) | nindent 12 }}
@@ -96,6 +144,23 @@ spec:
           ports:
             - name: http
               containerPort: {{ .Values.dashboard.containerPort }}
+=======
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.dashboard.readinessProbe "enabled") "context" $) | nindent 12 }}
+            httpGet:
+              path: /
+              port: http
+          {{- else if .Values.dashboard.customReadinessProbe }}
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.dashboard.customReadinessProbe "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.dashboard.startupProbe.enabled }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.dashboard.startupProbe "enabled") "context" $) | nindent 12 }}
+            tcpSocket:
+              port: http
+          {{- else if .Values.dashboard.customStartupProbe }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" .Values.dashboard.customStartupProbe "context" $) | nindent 12 }}
+          {{- end }}
+          {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           {{- if .Values.dashboard.resources }}
           resources: {{- toYaml .Values.dashboard.resources | nindent 12 }}
           {{- end }}

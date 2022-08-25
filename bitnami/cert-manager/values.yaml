@@ -34,7 +34,13 @@ extraDeploy: []
 ## @param logLevel Set up cert manager log level
 ##
 logLevel: 2
+<<<<<<< HEAD
 ## Cert Manager leader Election
+=======
+## @param clusterResourceNamespace Namespace used to store DNS provider credentials etc. for ClusterIssuer resources. If empty, uses the namespace where the controller is deployed.
+##
+clusterResourceNamespace: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param leaderElection.namespace Namespace which leaderElection works.
 ##
 leaderElection:
@@ -59,6 +65,10 @@ controller:
   ## @param controller.image.registry Controller image registry
   ## @param controller.image.repository Controller image repository
   ## @param controller.image.tag Controller image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+  ## @param controller.image.digest Controller image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param controller.image.pullPolicy Controller image pull policy
   ## @param controller.image.pullSecrets Controller image pull secrets
   ## @param controller.image.debug Controller image debug mode
@@ -66,10 +76,18 @@ controller:
   image:
     registry: docker.io
     repository: bitnami/cert-manager
+<<<<<<< HEAD
     tag: 1.5.3-debian-10-r0
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+=======
+    tag: 1.9.1-debian-11-r6
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     ##
     pullPolicy: IfNotPresent
@@ -88,6 +106,10 @@ controller:
     ## @param controller.acmesolver.image.registry Controller image registry
     ## @param controller.acmesolver.image.repository Controller image repository
     ## @param controller.acmesolver.image.tag Controller image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+    ## @param controller.acmesolver.image.digest Controller image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## @param controller.acmesolver.image.pullPolicy Controller image pull policy
     ## @param controller.acmesolver.image.pullSecrets Controller image pull secrets
     ## @param controller.acmesolver.image.debug Controller image debug mode
@@ -95,10 +117,18 @@ controller:
     image:
       registry: docker.io
       repository: bitnami/acmesolver
+<<<<<<< HEAD
       tag: 1.5.3-debian-10-r0
       ## Specify a imagePullPolicy
       ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
       ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+=======
+      tag: 1.9.1-debian-11-r8
+      digest: ""
+      ## Specify a imagePullPolicy
+      ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+      ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       ##
       pullPolicy: IfNotPresent
       ## Optionally specify an array of imagePullSecrets.
@@ -113,7 +143,11 @@ controller:
       ##
       debug: false
   ## Controller containers' resource requests and limits
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param controller.resources.limits The resources limits for the Controller container
   ## @param controller.resources.requests The requested resources for the Controller container
   ##
@@ -183,6 +217,22 @@ controller:
   ## @param controller.priorityClassName Controller pod priority class name
   ##
   priorityClassName: ""
+<<<<<<< HEAD
+=======
+  ## @param controller.runtimeClassName Name of the runtime class to be used by pod(s)
+  ## ref: https://kubernetes.io/docs/concepts/containers/runtime-class/
+  ##
+  runtimeClassName: ""
+  ## @param controller.schedulerName Name of the k8s scheduler (other than default)
+  ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+  ##
+  schedulerName: ""
+  ## @param controller.topologySpreadConstraints Topology Spread Constraints for pod assignment
+  ## https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  ## The value is evaluated as a template
+  ##
+  topologySpreadConstraints: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param controller.hostAliases Custom host aliases for Controller pods
   ## ref: https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
   ##
@@ -199,6 +249,21 @@ controller:
   ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
   ##
   podAnnotations: {}
+<<<<<<< HEAD
+=======
+  ## @param controller.dnsPolicy Controller pod DNS policy
+  ## Ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-policy
+  ##
+  dnsPolicy: ""
+  ## @param controller.dnsConfig Controller pod DNS config. Required if `controller.dnsPolicy` is set to `None`
+  ## Ref: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-dns-config
+  ## E.g:
+  ## dnsConfig:
+  ##   nameservers:
+  ##     - "1.1.1.1"
+  ##
+  dnsConfig: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param controller.lifecycleHooks Add lifecycle hooks to the Controller deployment
   ##
   lifecycleHooks: {}
@@ -208,6 +273,16 @@ controller:
   updateStrategy:
     type: RollingUpdate
     rollingUpdate: {}
+<<<<<<< HEAD
+=======
+  ## @param controller.extraArgs Extra arguments to pass to the Controller container
+  ## E.g:
+  ## extraArgs:
+  ##   - name: FOO
+  ##     value: "bar"
+  ##
+  extraArgs: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param controller.extraEnvVars Add extra environment variables to the Controller container
   ## E.g:
   ## extraEnvVars:
@@ -263,6 +338,12 @@ controller:
     ## @param controller.serviceAccount.annotations Additional custom annotations for the ServiceAccount
     ##
     annotations: {}
+<<<<<<< HEAD
+=======
+    ## @param controller.serviceAccount.automountServiceAccountToken Automount service account token for the server service account
+    ##
+    automountServiceAccountToken: true
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## @section Webhook deployment parameters
 
@@ -277,6 +358,10 @@ webhook:
   ## @param webhook.image.registry Webhook image registry
   ## @param webhook.image.repository Webhook image repository
   ## @param webhook.image.tag Webhook image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+  ## @param webhook.image.digest Webhook image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param webhook.image.pullPolicy Webhook image pull policy
   ## @param webhook.image.pullSecrets Webhook image pull secrets
   ## @param webhook.image.debug Webhook image debug mode
@@ -284,10 +369,18 @@ webhook:
   image:
     registry: docker.io
     repository: bitnami/cert-manager-webhook
+<<<<<<< HEAD
     tag: 1.5.3-debian-10-r0
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+=======
+    tag: 1.9.1-debian-11-r5
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
@@ -302,7 +395,11 @@ webhook:
     ##
     debug: false
   ## Webhook containers' resource requests and limits
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   resources:
     ## @param webhook.resources.limits The resources limits for the Webhook container
@@ -422,6 +519,22 @@ webhook:
   ## @param webhook.priorityClassName Webhook pod priority class name
   ##
   priorityClassName: ""
+<<<<<<< HEAD
+=======
+  ## @param webhook.runtimeClassName Name of the runtime class to be used by pod(s)
+  ## ref: https://kubernetes.io/docs/concepts/containers/runtime-class/
+  ##
+  runtimeClassName: ""
+  ## @param webhook.schedulerName Name of the k8s scheduler (other than default)
+  ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+  ##
+  schedulerName: ""
+  ## @param webhook.topologySpreadConstraints Topology Spread Constraints for pod assignment
+  ## https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  ## The value is evaluated as a template
+  ##
+  topologySpreadConstraints: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param webhook.hostAliases Custom host aliases for Webhook pods
   ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
   ##
@@ -447,6 +560,16 @@ webhook:
   updateStrategy:
     type: RollingUpdate
     rollingUpdate: {}
+<<<<<<< HEAD
+=======
+  ## @param webhook.extraArgs Extra arguments to pass to the Webhook container
+  ## E.g:
+  ## extraArgs:
+  ##   - name: FOO
+  ##     value: "bar"
+  ##
+  extraArgs: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param webhook.extraEnvVars Add extra environment variables to the Webhook container
   ## E.g:
   ## extraEnvVars:
@@ -501,6 +624,12 @@ webhook:
     ## @param webhook.serviceAccount.annotations Additional custom annotations for the ServiceAccount
     ##
     annotations: {}
+<<<<<<< HEAD
+=======
+    ## @param webhook.serviceAccount.automountServiceAccountToken Automount service account token for the server service account
+    ##
+    automountServiceAccountToken: true
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## @section CAInjector deployment parameters
 
@@ -516,6 +645,10 @@ cainjector:
   ## @param cainjector.image.registry CAInjector image registry
   ## @param cainjector.image.repository CAInjector image repository
   ## @param cainjector.image.tag CAInjector image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+  ## @param cainjector.image.digest CAInjector image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param cainjector.image.pullPolicy CAInjector image pull policy
   ## @param cainjector.image.pullSecrets CAInjector image pull secrets
   ## @param cainjector.image.debug CAInjector image debug mode
@@ -523,10 +656,18 @@ cainjector:
   image:
     registry: docker.io
     repository: bitnami/cainjector
+<<<<<<< HEAD
     tag: 1.5.3-debian-10-r0
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
     ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+=======
+    tag: 1.9.1-debian-11-r6
+    digest: ""
+    ## Specify a imagePullPolicy
+    ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
@@ -541,7 +682,11 @@ cainjector:
     ##
     debug: false
   ## CAInjector containers' resource requests and limits
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   resources:
     ## @param cainjector.resources.limits The resources limits for the CAInjector container
@@ -609,6 +754,22 @@ cainjector:
   ## @param cainjector.priorityClassName CAInjector pod priority class name
   ##
   priorityClassName: ""
+<<<<<<< HEAD
+=======
+  ## @param cainjector.runtimeClassName Name of the runtime class to be used by pod(s)
+  ## ref: https://kubernetes.io/docs/concepts/containers/runtime-class/
+  ##
+  runtimeClassName: ""
+  ## @param cainjector.schedulerName Name of the k8s scheduler (other than default)
+  ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+  ##
+  schedulerName: ""
+  ## @param cainjector.topologySpreadConstraints Topology Spread Constraints for pod assignment
+  ## https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+  ## The value is evaluated as a template
+  ##
+  topologySpreadConstraints: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param cainjector.hostAliases Custom host aliases for CAInjector pods
   ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
   ##
@@ -633,6 +794,16 @@ cainjector:
   updateStrategy:
     type: RollingUpdate
     rollingUpdate: {}
+<<<<<<< HEAD
+=======
+  ## @param cainjector.extraArgs Extra arguments to pass to the CAInjector container
+  ## E.g:
+  ## extraArgs:
+  ##   - name: FOO
+  ##     value: "bar"
+  ##
+  extraArgs: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param cainjector.extraEnvVars Add extra environment variables to the CAInjector container
   ## E.g:
   ## extraEnvVars:
@@ -687,6 +858,12 @@ cainjector:
     ## @param cainjector.serviceAccount.annotations Additional custom annotations for the ServiceAccount
     ##
     annotations: {}
+<<<<<<< HEAD
+=======
+    ## @param cainjector.serviceAccount.automountServiceAccountToken Automount service account token for the server service account
+    ##
+    automountServiceAccountToken: true
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## @section Metrics Parameters
 
@@ -705,6 +882,7 @@ metrics:
     prometheus.io/path: "/metrics"
     prometheus.io/scrape: "true"
     prometheus.io/port: "{{ .Values.controller.containerPort }}"
+<<<<<<< HEAD
   ## @param metrics.serviceMonitor.enabled Create ServiceMonitor resource(s) for scraping metrics using PrometheusOperator
   ## @param metrics.serviceMonitor.namespace The namespace in which the ServiceMonitor will be created
   ## @param metrics.serviceMonitor.interval The interval at which metrics should be scraped
@@ -720,6 +898,61 @@ metrics:
     scrapeTimeout: 30s
     targetPort: 9402
     additionalLabels: {}
+=======
+
+  ## Prometheus Operator ServiceMonitor resource
+  ##
+  serviceMonitor:
+    ## @param metrics.serviceMonitor.path The path which the ServiceMonitor will monitor
+    ##
+    path: /metrics
+    ## @param metrics.serviceMonitor.targetPort The port in which the ServiceMonitor will monitor
+    ##
+    targetPort: 9402
+    ## @param metrics.serviceMonitor.enabled Create ServiceMonitor Resource for scraping metrics using PrometheusOperator
+    ##
+    enabled: false
+    ## @param metrics.serviceMonitor.namespace Namespace which Prometheus is running in
+    ## e.g:
+    ## namespace: monitoring
+    ##
+    namespace: ""
+    ## @param metrics.serviceMonitor.jobLabel The name of the label on the target service to use as the job name in prometheus.
+    ##
+    jobLabel: ""
+    ## @param metrics.serviceMonitor.interval Interval at which metrics should be scraped
+    ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
+    ##
+    interval: 60s
+    ## @param metrics.serviceMonitor.scrapeTimeout Timeout after which the scrape is ended
+    ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#endpoint
+    ##
+    scrapeTimeout: 30s
+    ## @param metrics.serviceMonitor.relabelings RelabelConfigs to apply to samples before scraping
+    ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
+    ##
+    relabelings: []
+    ## @param metrics.serviceMonitor.metricRelabelings MetricRelabelConfigs to apply to samples before ingestion
+    ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
+    ##
+    metricRelabelings: []
+    ## @param metrics.serviceMonitor.selector ServiceMonitor selector labels
+    ## ref: https://github.com/bitnami/charts/tree/master/bitnami/prometheus-operator#prometheus-configuration
+    ##
+    ## selector:
+    ##   prometheus: my-prometheus
+    ##
+    selector: {}
+    ## @param metrics.serviceMonitor.labels Extra labels for the ServiceMonitor
+    ##
+    labels: {}
+    ## @param metrics.serviceMonitor.additionalLabels DEPRECATED. Use metrics.serviceMonitor.labels instead.
+    ##
+    additionalLabels: {}
+    ## @param metrics.serviceMonitor.honorLabels honorLabels chooses the metric's labels on collisions with target labels
+    ##
+    honorLabels: false
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## @section Other Parameters
 

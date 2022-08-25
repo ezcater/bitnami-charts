@@ -1,14 +1,23 @@
 annotations:
   category: Infrastructure
 apiVersion: v2
+<<<<<<< HEAD
 appVersion: 2021.6.17
+=======
+appVersion: 2022.8.13
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
+<<<<<<< HEAD
     version: 1.x.x
 description: Bitnami Object Storage based on MinIO&reg; is an object storage server, compatible with Amazon S3 cloud storage service, mainly used for storing unstructured data (such as photos, videos, log files, etc.)
+=======
+    version: 2.x.x
+description: MinIO(R) is an object storage server, compatible with Amazon S3 cloud storage service, mainly used for storing unstructured data (such as photos, videos, log files, etc.).
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 engine: gotpl
 home: https://github.com/bitnami/charts/tree/master/bitnami/minio
 icon: https://bitnami.com/assets/stacks/minio/img/minio-stack-220x234.png
@@ -19,10 +28,14 @@ keywords:
   - s3
   - cluster
 maintainers:
-  - email: containers@bitnami.com
-    name: Bitnami
+  - name: Bitnami
+    url: https://github.com/bitnami/charts
 name: minio
 sources:
-  - https://github.com/bitnami/bitnami-docker-minio
+  - https://github.com/bitnami/containers/tree/main/bitnami/minio
   - https://min.io
+<<<<<<< HEAD
 version: 7.2.0
+=======
+version: 11.9.0
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

@@ -1,13 +1,21 @@
+<<<<<<< HEAD
 {{- if and .Values.metrics.enabled .Values.metrics.prometheusRule.enabled }}
+=======
+{{- if and .Values.metrics.enabled .Values.metrics.prometheusRule.enabled .Values.metrics.prometheusRule.groups }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
   name: {{ template "common.names.fullname" . }}
+<<<<<<< HEAD
   {{- if .Values.metrics.prometheusRule.namespace }}
   namespace: {{ .Values.metrics.prometheusRule.namespace }}
   {{- else }}
   namespace: {{ .Release.Namespace | quote }}
   {{- end }}
+=======
+  namespace: {{ default .Release.Namespace .Values.metrics.prometheusRule.namespace | quote }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     {{- if .Values.metrics.prometheusRule.additionalLabels }}
     {{- include "common.tplvalues.render" (dict "value" .Values.metrics.prometheusRule.additionalLabels "context" $) | nindent 4 }}
@@ -19,5 +27,9 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 spec:
+<<<<<<< HEAD
   {{- include "common.tplvalues.render" ( dict "value" .Values.metrics.prometheusRule.rules "context" $ ) | nindent 2 }}
+=======
+  groups: {{- include "common.tplvalues.render" ( dict "value" .Values.metrics.prometheusRule.groups "context" $ ) | nindent 2 }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- end }}

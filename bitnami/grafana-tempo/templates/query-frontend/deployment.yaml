@@ -21,9 +21,17 @@ spec:
       app.kubernetes.io/component: query-frontend
   template:
     metadata:
+<<<<<<< HEAD
       {{- if .Values.queryFrontend.podAnnotations }}
       annotations: {{- include "common.tplvalues.render" (dict "value" .Values.queryFrontend.podAnnotations "context" $) | nindent 8 }}
       {{- end }}
+=======
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/tempo-configmap.yaml") . | sha256sum }}
+        {{- if .Values.queryFrontend.podAnnotations }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.queryFrontend.podAnnotations "context" $) | nindent 8 }}
+        {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       labels: {{- include "common.labels.standard" . | nindent 8 }}
         app.kubernetes.io/component: query-frontend
         tempo-gossip-member: "true"
@@ -50,9 +58,21 @@ spec:
       {{- if .Values.queryFrontend.tolerations }}
       tolerations: {{- include "common.tplvalues.render" (dict "value" .Values.queryFrontend.tolerations "context" .) | nindent 8 }}
       {{- end }}
+<<<<<<< HEAD
       {{- if .Values.queryFrontend.priorityClassName }}
       priorityClassName: {{ .Values.queryFrontend.priorityClassName | quote }}
       {{- end }}
+=======
+      {{- if .Values.queryFrontend.topologySpreadConstraints }}
+      topologySpreadConstraints: {{- include "common.tplvalues.render" (dict "value" .Values.queryFrontend.topologySpreadConstraints "context" .) | nindent 8 }}
+      {{- end }}
+      {{- if .Values.queryFrontend.priorityClassName }}
+      priorityClassName: {{ .Values.queryFrontend.priorityClassName | quote }}
+      {{- end }}
+      {{- if .Values.queryFrontend.schedulerName }}
+      schedulerName: {{ .Values.queryFrontend.schedulerName }}
+      {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       {{- if .Values.queryFrontend.podSecurityContext.enabled }}
       securityContext: {{- omit .Values.queryFrontend.podSecurityContext "enabled" | toYaml | nindent 8 }}
       {{- end }}
@@ -95,17 +115,26 @@ spec:
                 name: {{ include "common.tplvalues.render" (dict "value" .Values.queryFrontend.extraEnvVarsSecret "context" $) }}
             {{- end }}
           ports:
+<<<<<<< HEAD
             - containerPort: {{ .Values.tempo.containerPort }}
               name: http
             - containerPort: {{ .Values.tempo.gossipRing.containerPort }}
               name: http-memberlist
             - containerPort: {{ .Values.tempo.grpcContainerPort }}
+=======
+            - containerPort: {{ .Values.tempo.containerPorts.web }}
+              name: http
+            - containerPort: {{ .Values.tempo.containerPorts.gossipRing }}
+              name: http-memberlist
+            - containerPort: {{ .Values.tempo.containerPorts.grpc }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
               name: grpc
           {{- if .Values.queryFrontend.resources }}
           resources: {{- toYaml .Values.queryFrontend.resources | nindent 12 }}
           {{- end }}
           {{- if not .Values.diagnosticMode.enabled }}
           {{- if .Values.queryFrontend.livenessProbe.enabled }}
+<<<<<<< HEAD
           livenessProbe:
             httpGet:
               path: /ready
@@ -115,10 +144,17 @@ spec:
             timeoutSeconds: {{ .Values.queryFrontend.livenessProbe.timeoutSeconds }}
             successThreshold: {{ .Values.queryFrontend.livenessProbe.successThreshold }}
             failureThreshold: {{ .Values.queryFrontend.livenessProbe.failureThreshold }}
+=======
+          livenessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.queryFrontend.livenessProbe "enabled") "context" $) | nindent 12 }}
+            httpGet:
+              path: /ready
+              port: {{ .Values.tempo.containerPorts.web }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           {{- else if .Values.queryFrontend.customLivenessProbe }}
           livenessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.queryFrontend.customLivenessProbe "context" $) | nindent 12 }}
           {{- end }}
           {{- if .Values.queryFrontend.readinessProbe.enabled }}
+<<<<<<< HEAD
           readinessProbe:
             httpGet:
               path: /ready
@@ -135,6 +171,26 @@ spec:
           lifecycle: {{- include "common.tplvalues.render" (dict "value" .Values.queryFrontend.lifecycleHooks "context" $) | nindent 12 }}
           {{- end }}
           {{- end }}
+=======
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.queryFrontend.readinessProbe "enabled") "context" $) | nindent 12 }}
+            httpGet:
+              path: /ready
+              port: {{ .Values.tempo.containerPorts.web }}
+          {{- else if .Values.queryFrontend.customReadinessProbe }}
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.queryFrontend.customReadinessProbe "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.queryFrontend.startupProbe.enabled }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.queryFrontend.startupProbe "enabled") "context" $) | nindent 12 }}
+            tcpSocket:
+              port: http
+          {{- else if .Values.queryFrontend.customStartupProbe }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" .Values.queryFrontend.customStartupProbe "context" $) | nindent 12 }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.queryFrontend.lifecycleHooks }}
+          lifecycle: {{- include "common.tplvalues.render" (dict "value" .Values.queryFrontend.lifecycleHooks "context" $) | nindent 12 }}
+          {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           volumeMounts:
             - name: tempo-config
               mountPath: /bitnami/grafana-tempo/conf/tempo.yaml
@@ -179,15 +235,22 @@ spec:
                 name: {{ include "common.tplvalues.render" (dict "value" .Values.queryFrontend.query.extraEnvVarsSecret "context" $) }}
             {{- end }}
           ports:
+<<<<<<< HEAD
             - containerPort: {{ .Values.queryFrontend.query.jaegerUIContainerPort }}
               name: jaeger-ui
             - containerPort: {{ .Values.queryFrontend.query.jaegerMetricsContainerPort }}
+=======
+            - containerPort: {{ .Values.queryFrontend.query.containerPorts.jaegerUI }}
+              name: jaeger-ui
+            - containerPort: {{ .Values.queryFrontend.query.containerPorts.jaegerMetrics }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
               name: jaeger-metrics
           {{- if .Values.queryFrontend.query.resources }}
           resources: {{- toYaml .Values.queryFrontend.query.resources | nindent 12 }}
           {{- end }}
           {{- if not .Values.diagnosticMode.enabled }}
           {{- if .Values.queryFrontend.query.livenessProbe.enabled }}
+<<<<<<< HEAD
           livenessProbe:
             tcpSocket:
               port: jaeger-ui
@@ -196,10 +259,16 @@ spec:
             timeoutSeconds: {{ .Values.queryFrontend.query.livenessProbe.timeoutSeconds }}
             successThreshold: {{ .Values.queryFrontend.query.livenessProbe.successThreshold }}
             failureThreshold: {{ .Values.queryFrontend.query.livenessProbe.failureThreshold }}
+=======
+          livenessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.queryFrontend.query.livenessProbe "enabled") "context" $) | nindent 12 }}
+            tcpSocket:
+              port: jaeger-ui
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           {{- else if .Values.queryFrontend.query.customLivenessProbe }}
           livenessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.queryFrontend.query.customLivenessProbe "context" $) | nindent 12 }}
           {{- end }}
           {{- if .Values.queryFrontend.query.readinessProbe.enabled }}
+<<<<<<< HEAD
           readinessProbe:
             tcpSocket:
               port: jaeger-ui
@@ -215,6 +284,25 @@ spec:
           lifecycle: {{- include "common.tplvalues.render" (dict "value" .Values.queryFrontend.query.lifecycleHooks "context" $) | nindent 12 }}
           {{- end }}
           {{- end }}
+=======
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.queryFrontend.query.readinessProbe "enabled") "context" $) | nindent 12 }}
+            tcpSocket:
+              port: jaeger-ui
+          {{- else if .Values.queryFrontend.query.customReadinessProbe }}
+          readinessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.queryFrontend.query.customReadinessProbe "context" $) | nindent 12 }}
+          {{- end }}
+          {{- if .Values.queryFrontend.query.startupProbe.enabled }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" (omit .Values.queryFrontend.query.startupProbe "enabled") "context" $) | nindent 12 }}
+            tcpSocket:
+              port: jaeger-ui
+          {{- else if .Values.queryFrontend.query.customStartupProbe }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" .Values.queryFrontend.query.customStartupProbe "context" $) | nindent 12 }}
+          {{- end }}
+          {{- end }}
+          {{- if .Values.queryFrontend.query.lifecycleHooks }}
+          lifecycle: {{- include "common.tplvalues.render" (dict "value" .Values.queryFrontend.query.lifecycleHooks "context" $) | nindent 12 }}
+          {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           volumeMounts:
             - name: tempo-query-config
               mountPath: /bitnami/grafana-tempo/conf

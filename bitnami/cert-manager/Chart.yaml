@@ -1,13 +1,21 @@
 annotations:
   category: CertificateAuthority
 apiVersion: v2
+<<<<<<< HEAD
 appVersion: 1.5.3
+=======
+appVersion: 1.9.1
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 dependencies:
   - name: common
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
+<<<<<<< HEAD
     version: 1.x.x
+=======
+    version: 2.x.x
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 description: Cert Manager is a Kubernetes add-on to automate the management and issuance of TLS certificates from various issuing sources.
 engine: gotpl
 home: https://github.com/jetstack/cert-manager
@@ -18,6 +26,7 @@ keywords:
   - tls
   - certificate
 maintainers:
+<<<<<<< HEAD
   - email: containers@bitnami.com
     name: Bitnami
 name: cert-manager
@@ -27,3 +36,14 @@ sources:
   - https://github.com/bitnami/bitnami-docker-cainjector
   - https://github.com/jetstack/cert-manager
 version: 0.1.19
+=======
+  - name: Bitnami
+    url: https://github.com/bitnami/charts
+name: cert-manager
+sources:
+  - https://github.com/bitnami/containers/tree/main/bitnami/cert-manager
+  - https://github.com/bitnami/containers/tree/main/bitnami/cert-manager-webhook
+  - https://github.com/bitnami/containers/tree/main/bitnami/cainjector
+  - https://github.com/jetstack/cert-manager
+version: 0.8.0
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

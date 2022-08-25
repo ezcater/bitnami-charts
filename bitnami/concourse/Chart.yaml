@@ -1,18 +1,31 @@
 annotations:
   category: Infrastructure
 apiVersion: v2
+<<<<<<< HEAD
 appVersion: 7.4.0
+=======
+appVersion: 7.8.2
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 dependencies:
   - condition: postgresql.enabled
     name: postgresql
     repository: https://charts.bitnami.com/bitnami
+<<<<<<< HEAD
     version: 10.X.X
+=======
+    version: 11.X.X
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   - name: common
     repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
+<<<<<<< HEAD
     version: 1.x.x
 description: Concourse is a pipeline-based continuous thing-doer.
+=======
+    version: 2.x.x
+description: Concourse is an automation system written in Go. It is most commonly used for CI/CD, and is built to scale to any kind of automation pipeline, from simple to complex.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 engine: gotpl
 home: https://github.com/concourse/concourse
 icon: https://bitnami.com/assets/stacks/concourse/img/concourse-stack-220x234.png
@@ -24,6 +37,7 @@ keywords:
   - web
   - application
 maintainers:
+<<<<<<< HEAD
   - email: containers@bitnami.com
     name: Bitnami
 name: concourse
@@ -31,3 +45,12 @@ sources:
   - https://github.com/bitnami/bitnami-docker-concourse
   - https://github.com/concourse/concourse
 version: 0.1.4
+=======
+  - name: Bitnami
+    url: https://github.com/bitnami/charts
+name: concourse
+sources:
+  - https://github.com/bitnami/containers/tree/main/bitnami/concourse
+  - https://github.com/concourse/concourse
+version: 1.4.0
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

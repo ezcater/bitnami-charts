@@ -1,20 +1,30 @@
-{{- if and .Values.queryFrontend.enabled .Values.queryFrontend.pspEnabled .Values.queryFrontend.rbac.create -}}
+{{- $pspAvailable := (semverCompare "<1.25-0" (include "common.capabilities.kubeVersion" .)) }}
+{{- if and $pspAvailable .Values.queryFrontend.enabled .Values.queryFrontend.pspEnabled .Values.queryFrontend.rbac.create }}
 apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: ClusterRoleBinding
 metadata:
   name: {{ include "common.names.fullname" . }}-query-frontend
+<<<<<<< HEAD
+=======
+  namespace: {{ .Release.Namespace | quote }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: query-frontend
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
+<<<<<<< HEAD
+=======
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 roleRef:
   kind: ClusterRole
   name: {{ include "common.names.fullname" . }}-query-frontend
   apiGroup: rbac.authorization.k8s.io
 subjects:
-# Authorize specific service accounts:
-- kind: ServiceAccount
-  name: {{ include "thanos.serviceaccount.name" (dict "component" "query-frontend" "context" $) }}
-  namespace: {{ .Release.Namespace }}
-{{- end -}}
+  - kind: ServiceAccount
+    name: {{ include "thanos.serviceAccount.name" (dict "component" "query-frontend" "context" $) }}
+    namespace: {{ .Release.Namespace | quote }}
+{{- end }}

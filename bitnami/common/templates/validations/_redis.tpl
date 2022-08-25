@@ -1,7 +1,11 @@
 
 {{/* vim: set filetype=mustache: */}}
 {{/*
+<<<<<<< HEAD
 Validate Redis&trade; required passwords are not empty.
+=======
+Validate Redis&reg; required passwords are not empty.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 Usage:
 {{ include "common.validations.values.redis.passwords" (dict "secret" "secretName" "subchart" false "context" $) }}
@@ -20,7 +24,11 @@ Params:
   {{- $valueKeyRedisPassword := ternary (printf "%s%s" $valueKeyPrefix "auth.password") (printf "%s%s" $valueKeyPrefix "password") (eq $standarizedVersion "true") }}
   {{- $valueKeyRedisUseAuth := ternary (printf "%s%s" $valueKeyPrefix "auth.enabled") (printf "%s%s" $valueKeyPrefix "usePassword") (eq $standarizedVersion "true") }}
 
+<<<<<<< HEAD
   {{- if and (not $existingSecretValue) (eq $enabled "true") -}}
+=======
+  {{- if and (or (not $existingSecret) (eq $existingSecret "\"\"")) (eq $enabled "true") -}}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     {{- $requiredPasswords := list -}}
 
     {{- $useAuth := include "common.utils.getValueFromKey" (dict "key" $valueKeyRedisUseAuth "context" .context) -}}

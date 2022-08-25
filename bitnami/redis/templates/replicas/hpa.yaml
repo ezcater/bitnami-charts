@@ -1,5 +1,9 @@
 {{- if and .Values.replica.autoscaling.enabled (not .Values.sentinel.enabled) }}
+<<<<<<< HEAD
 apiVersion: autoscaling/v2beta1
+=======
+apiVersion: {{ include "common.capabilities.hpa.apiVersion" ( dict "context" $ ) }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ printf "%s-replicas" (include "common.names.fullname" .) }}
@@ -20,16 +24,41 @@ spec:
   minReplicas: {{ .Values.replica.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.replica.autoscaling.maxReplicas }}
   metrics:
+<<<<<<< HEAD
     {{- if .Values.replica.autoscaling.targetCPU }}
     - type: Resource
       resource:
         name: cpu
         targetAverageUtilization: {{ .Values.replica.autoscaling.targetCPU }}
     {{- end }}
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     {{- if .Values.replica.autoscaling.targetMemory }}
     - type: Resource
       resource:
         name: memory
+<<<<<<< HEAD
         targetAverageUtilization: {{ .Values.replica.autoscaling.targetMemory }}
+=======
+        {{- if semverCompare "<1.23-0" (include "common.capabilities.kubeVersion" .) }}
+        targetAverageUtilization: {{ .Values.replica.autoscaling.targetMemory }}
+        {{- else }}
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.replica.autoscaling.targetMemory }}
+        {{- end }}
+    {{- end }}
+    {{- if .Values.replica.autoscaling.targetCPU }}
+    - type: Resource
+      resource:
+        name: cpu
+        {{- if semverCompare "<1.23-0" (include "common.capabilities.kubeVersion" .) }}
+        targetAverageUtilization: {{ .Values.replica.autoscaling.targetCPU }}
+        {{- else }}
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.replica.autoscaling.targetCPU }}
+        {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     {{- end }}
 {{- end }}

@@ -6,6 +6,7 @@
 ## @param global.imageRegistry Global Docker image registry
 ## @param global.imagePullSecrets Global Docker registry secret names as an array
 ## @param global.storageClass Global StorageClass for Persistent Volume(s)
+<<<<<<< HEAD
 ##
 global:
   imageRegistry: ""
@@ -38,6 +39,40 @@ commonAnnotations: {}
 clusterDomain: cluster.local
 ## @param extraDeploy Array of extra objects to deploy with the release
 ##
+=======
+##
+global:
+  imageRegistry: ""
+  ## E.g.
+  ## imagePullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
+  imagePullSecrets: []
+  storageClass: ""
+
+## @section Common parameters
+
+## @param kubeVersion Force target Kubernetes version (using Helm capabilities if not set)
+##
+kubeVersion: ""
+## @param nameOverride String to partially override common.names.fullname template (will maintain the release name)
+##
+nameOverride: ""
+## @param fullnameOverride String to fully override common.names.fullname template
+##
+fullnameOverride: ""
+## @param commonLabels Labels to add to all deployed objects
+##
+commonLabels: {}
+## @param commonAnnotations Annotations to add to all deployed objects
+##
+commonAnnotations: {}
+## @param clusterDomain Default Kubernetes cluster domain
+##
+clusterDomain: cluster.local
+## @param extraDeploy Array of extra objects to deploy with the release
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 extraDeploy: []
 
 ## @section Mediawiki parameters
@@ -47,16 +82,28 @@ extraDeploy: []
 ## @param image.registry MediaWiki image registry
 ## @param image.repository MediaWiki image repository
 ## @param image.tag MediaWiki image tag (immutable tags are recommended)
+<<<<<<< HEAD
 ## @param image.pullPolicy Image pull policy
 ## @param image.pullSecrets Specify docker-registry secret names as an array
+=======
+## @param image.digest MediaWiki image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+## @param image.pullPolicy Image pull policy
+## @param image.pullSecrets Specify docker-registry secret names as an array
+## @param image.debug Enable MediaWiki image debug mode
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 image:
   registry: docker.io
   repository: bitnami/mediawiki
+<<<<<<< HEAD
   tag: 1.36.1-debian-10-r55
+=======
+  tag: 1.38.2-debian-11-r15
+  digest: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
   ##
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
@@ -67,6 +114,12 @@ image:
   ##   - myRegistryKeySecretName
   ##
   pullSecrets: []
+<<<<<<< HEAD
+=======
+  ## Enable debug mode
+  ##
+  debug: false
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param hostAliases [array] Deployment pod host aliases
 ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
 ##
@@ -77,14 +130,19 @@ hostAliases:
     hostnames:
       - "status.localhost"
 ## @param mediawikiUser User of the application
+<<<<<<< HEAD
 ## ref: https://github.com/bitnami/bitnami-docker-mediawiki#environment-variables
+=======
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/mediawiki#environment-variables
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 mediawikiUser: user
 ## @param mediawikiPassword Application password
 ## Defaults to a random 10-character alphanumeric string if not set
-## ref: https://github.com/bitnami/bitnami-docker-mediawiki#environment-variables
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/mediawiki#environment-variables
 ##
 mediawikiPassword: ""
+<<<<<<< HEAD
 ## @param mediawikiEmail Admin email
 ## ref: https://github.com/bitnami/bitnami-docker-mediawiki#environment-variables
 ##
@@ -103,6 +161,30 @@ mediawikiHost: ""
 allowEmptyPassword: "yes"
 ## SMTP mail delivery configuration
 ## ref: https://github.com/bitnami/bitnami-docker-mediawiki#smtp-configuration
+=======
+## @param mediawikiSecret Existing `Secret` containing the password for the `mediawikiUser` user; must contain the key `mediawiki-password` and optional key `smtp-password`
+## Mutually exclusive with `mediawikiPassword`
+##
+mediawikiSecret: ""
+## @param mediawikiEmail Admin email
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/mediawiki#environment-variables
+##
+mediawikiEmail: user@example.com
+## @param mediawikiName Name for the wiki
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/mediawiki#environment-variables
+##
+mediawikiName: My Wiki
+## @param mediawikiHost Mediawiki host to create application URLs
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/mediawiki#configuration
+##
+mediawikiHost: ""
+## @param allowEmptyPassword Allow DB blank passwords
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/mediawiki#environment-variables
+##
+allowEmptyPassword: "yes"
+## SMTP mail delivery configuration
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/mediawiki#smtp-configuration
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param smtpHost SMTP host
 ## @param smtpPort SMTP port
 ## @param smtpHostID SMTP host ID
@@ -120,6 +202,12 @@ command: []
 ## @param args Override default container args (useful when using custom images)
 ##
 args: []
+<<<<<<< HEAD
+=======
+## @param lifecycleHooks for the Mediawiki container(s) to automate configuration before or after startup
+##
+lifecycleHooks: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param extraEnvVars Extra environment variables to be set on Mediawki container
 ## Example:
 ## extraEnvVars:
@@ -153,12 +241,22 @@ podSecurityContext:
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 ## @param containerSecurityContext.enabled Enable Mediawiki containers' SecurityContext
 ## @param containerSecurityContext.runAsUser User ID to run Mediawiki containers
+<<<<<<< HEAD
+=======
+## @param containerSecurityContext.runAsNonRoot Set Mediawiki container's Security Context runAsNonRoot
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 containerSecurityContext:
   enabled: true
   runAsUser: 1001
+<<<<<<< HEAD
 ## Mediawiki resource requests and limits
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  runAsNonRoot: true
+## Mediawiki resource requests and limits
+## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## We usually recommend not to specify default resources and to leave this as a conscious
 ## choice for the user. This also increases chances charts run on environments with little
 ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -175,9 +273,41 @@ resources:
   requests:
     memory: 512Mi
     cpu: 300m
+<<<<<<< HEAD
 ## Mediawiki containers' liveness probe.
 ## Configure extra options for liveness probe
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+=======
+## Mediawiki containers' startup probe.
+## Configure extra options for startup probe
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+## @param startupProbe.enabled Enable startupProbe
+## @param startupProbe.httpGet.path Request path for startupProbe
+## @param startupProbe.httpGet.port Port for startupProbe
+## @param startupProbe.httpGet.httpHeaders [array] Headers for startupProbe
+## @param startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+## @param startupProbe.periodSeconds Period seconds for startupProbe
+## @param startupProbe.timeoutSeconds Timeout seconds for startupProbe
+## @param startupProbe.failureThreshold Failure threshold for startupProbe
+## @param startupProbe.successThreshold Success threshold for startupProbe
+##
+startupProbe:
+  enabled: false
+  httpGet:
+    path: /api.php?action=query&meta=siteinfo&format=none
+    port: http
+    httpHeaders:
+      - name: Host
+        value: "{{ include \"mediawiki.host\" . }}"
+  initialDelaySeconds: 120
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 6
+  successThreshold: 1
+## Mediawiki containers' liveness probe.
+## Configure extra options for liveness probe
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param livenessProbe.enabled Enable livenessProbe
 ## @param livenessProbe.httpGet.path Request path for livenessProbe
 ## @param livenessProbe.httpGet.port Port for livenessProbe
@@ -227,6 +357,12 @@ readinessProbe:
   timeoutSeconds: 5
   failureThreshold: 6
   successThreshold: 1
+<<<<<<< HEAD
+=======
+## @param customStartupProbe Override default startup probe
+##
+customStartupProbe: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param customLivenessProbe Override default liveness probe
 ##
 customLivenessProbe: {}
@@ -282,6 +418,21 @@ nodeSelector: {}
 ## ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 ##
 tolerations: []
+<<<<<<< HEAD
+=======
+## @param priorityClassName Mediawiki pods' priorityClassName
+##
+priorityClassName: ""
+## @param schedulerName Name of the k8s scheduler (other than default)
+## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+##
+schedulerName: ""
+## @param topologySpreadConstraints Topology Spread Constraints for pod assignment
+## https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+## The value is evaluated as a template
+##
+topologySpreadConstraints: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param extraVolumes Optionally specify extra list of additional volumes for Mediawki pods
 ##
 extraVolumes: []
@@ -311,7 +462,7 @@ initContainers: []
 ##
 sidecars: []
 ## Enable persistence using Persistent Volume Claims
-## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
 ##
 persistence:
   ## @param persistence.enabled Enable persistence using PVC
@@ -330,15 +481,30 @@ persistence:
   ## If defined, PVC must be created manually before volume will be bound
   ##
   existingClaim: ""
+<<<<<<< HEAD
   ## @param persistence.accessMode PVC Access Mode for MediaWiki volume
   ##
   accessMode: ReadWriteOnce
+=======
+  ## @param persistence.accessModes [array] Persistent Volume access modes
+  ##
+  accessModes:
+    - ReadWriteOnce
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param persistence.size PVC Storage Request for MediaWiki volume
   ##
   size: 8Gi
+  ## @param persistence.annotations Persistent Volume Claim annotations
+  ##
+  annotations: {}
 
 ## @section Traffic Exposure parameters
 
+<<<<<<< HEAD
+## @section Traffic Exposure parameters
+
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Kubernetes service configuration
 ## For minikube, set this to NodePort, elsewhere use LoadBalancer
 ## Use serviceLoadBalancerIP to request a specific static IP, otherwise leave blank
@@ -348,6 +514,7 @@ service:
   ## For minikube, set this to NodePort, elsewhere use LoadBalancer
   ##
   type: LoadBalancer
+<<<<<<< HEAD
   ## @param service.loadBalancerIP Use serviceLoadBalancerIP to request a specific static IP,
   ## otherwise leave blank
   ##
@@ -358,6 +525,14 @@ service:
   ## @param service.httpsPort HTTPS Port. Set this to any value (recommended: 443) to enable the https service port
   ##
   httpsPort: ""
+=======
+  ## @param service.ports.http Service HTTP port
+  ## @param service.ports.https HTTPS Port. Set this to any value (recommended: 443) to enable the https service port
+  ##
+  ports:
+    http: 80
+    https: 443
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Use nodePorts to requests some specific ports when using NodePort
   ## @param service.nodePorts.http Kubernetes http node port
   ## @param service.nodePorts.https Kubernetes https node port
@@ -369,19 +544,67 @@ service:
     http: ""
     https: ""
   ## @param service.externalTrafficPolicy Enable client source IP preservation
+<<<<<<< HEAD
   ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
   ##
   externalTrafficPolicy: Cluster
 ## Configure the ingress resource that allows you to access the Mediawiki installation. Set up the URL
 ## ref: http://kubernetes.io/docs/user-guide/ingress/
+=======
+  ## ref https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+  ##
+  externalTrafficPolicy: Cluster
+  ## @param service.clusterIP Mediawiki service Cluster IP
+  ## e.g.:
+  ## clusterIP: None
+  ##
+  clusterIP: ""
+  ## @param service.loadBalancerIP Mediawiki service Load Balancer IP
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-loadbalancer
+  ##
+  loadBalancerIP: ""
+  ## @param service.loadBalancerSourceRanges Mediawiki service Load Balancer sources
+  ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
+  ## e.g:
+  ## loadBalancerSourceRanges:
+  ##   - 10.10.10.0/24
+  ##
+  loadBalancerSourceRanges: []
+  ## @param service.extraPorts Extra ports to expose (normally used with the `sidecar` value)
+  ##
+  extraPorts: []
+  ## @param service.annotations Additional custom annotations for Mediawiki service
+  ##
+  annotations: {}
+  ## @param service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+  ## If "ClientIP", consecutive client requests will be directed to the same Pod
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+  ##
+  sessionAffinity: None
+  ## @param service.sessionAffinityConfig Additional settings for the sessionAffinity
+  ## sessionAffinityConfig:
+  ##   clientIP:
+  ##     timeoutSeconds: 300
+  ##
+  sessionAffinityConfig: {}
+## Configure the ingress resource that allows you to access the Mediawiki installation. Set up the URL
+## ref: https://kubernetes.io/docs/user-guide/ingress/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 ingress:
   ## @param ingress.enabled Set to true to enable ingress record generation
   ##
   enabled: false
+<<<<<<< HEAD
   ## @param ingress.certManager Set this to true in order to add the corresponding annotations for cert-manager
   ##
   certManager: false
+=======
+  ## DEPRECATED: Use ingress.annotations instead of ingress.certManager
+  ## certManager: false
+  ##
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param ingress.pathType Ingress path type
   ##
   pathType: ImplementationSpecific
@@ -394,11 +617,20 @@ ingress:
   ## @param ingress.path The Path to Mediawiki. You may need to set this to '/*' in order to use this with ALB ingress controllers.
   ##
   path: /
+<<<<<<< HEAD
   ## @param ingress.annotations Ingress annotations
+=======
+  ## @param ingress.annotations Additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## For a full list of possible ingress annotations, please see
   ## ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md
+  ## Use this parameter to set the required annotations for cert-manager, see
+  ## ref: https://cert-manager.io/docs/usage/ingress/#supported-annotations
   ##
-  ## If certManager is set to true, annotation kubernetes.io/tls-acme: "true" will automatically be set
+  ## e.g:
+  ## annotations:
+  ##   kubernetes.io/ingress.class: nginx
+  ##   cert-manager.io/cluster-issuer: cluster-issuer-name
   ##
   annotations: {}
   ## @param ingress.tls Enable TLS configuration for the hostname defined at ingress.hostname parameter
@@ -445,9 +677,34 @@ ingress:
   ##   certificate:
   ##
   secrets: []
+<<<<<<< HEAD
 
 ## @section Database parameters
 
+=======
+  ## @param ingress.ingressClassName IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+)
+  ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
+  ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
+  ##
+  ingressClassName: ""
+  ## @param ingress.extraRules Additional rules to be covered with this ingress record
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-rules
+  ## e.g:
+  ## extraRules:
+  ## - host: example.local
+  ##     http:
+  ##       path: /
+  ##       backend:
+  ##         service:
+  ##           name: example-svc
+  ##           port:
+  ##             name: http
+  ##
+  extraRules: []
+
+## @section Database parameters
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## MariaDB chart configuration
 ## https://github.com/bitnami/charts/blob/master/bitnami/mariadb/values.yaml
 ##
@@ -463,6 +720,7 @@ mariadb:
   ##
   auth:
     ## @param mariadb.auth.rootPassword Password for the MariaDB `root` user
+<<<<<<< HEAD
     ## ref: https://github.com/bitnami/bitnami-docker-mariadb#setting-the-root-password-on-first-run
     ##
     rootPassword: ""
@@ -472,6 +730,17 @@ mariadb:
     database: bitnami_mediawiki
     ## @param mariadb.auth.username Database user to create
     ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#creating-a-database-user-on-first-run
+=======
+    ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mariadb#setting-the-root-password-on-first-run
+    ##
+    rootPassword: ""
+    ## @param mariadb.auth.database Database name to create
+    ## ref: https://github.com/bitnami/containers/blob/main/bitnami/mariadb/README.md#creating-a-database-on-first-run
+    ##
+    database: bitnami_mediawiki
+    ## @param mariadb.auth.username Database user to create
+    ## ref: https://github.com/bitnami/containers/blob/main/bitnami/mariadb/README.md#creating-a-database-user-on-first-run
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     username: bn_mediawiki
     ## @param mariadb.auth.password Password for the database
@@ -479,7 +748,11 @@ mariadb:
     password: ""
   primary:
     ## Enable persistence using Persistent Volume Claims
+<<<<<<< HEAD
     ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+=======
+    ## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## @param mariadb.primary.persistence.enabled Enable database persistence using PVC
     ## @param mariadb.primary.persistence.storageClass PVC Storage Class
     ## @param mariadb.primary.persistence.accessModes Persistent Volume Access Mode
@@ -541,13 +814,22 @@ metrics:
   ## @param metrics.image.registry Apache exporter image registry
   ## @param metrics.image.repository Apache exporter image repository
   ## @param metrics.image.tag Apache exporter image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+  ## @param metrics.image.digest Apache exporter image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param metrics.image.pullPolicy Image pull policy
   ## @param metrics.image.pullSecrets Specify docker-registry secret names as an array
   ##
   image:
     registry: docker.io
     repository: bitnami/apache-exporter
+<<<<<<< HEAD
     tag: 0.10.0-debian-10-r26
+=======
+    tag: 0.11.0-debian-11-r27
+    digest: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -558,7 +840,11 @@ metrics:
     ##
     pullSecrets: []
   ## @param metrics.resources Exporter resource requests/limit
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   resources: {}
   ## Metrics exporter pod Annotation and Labels
@@ -588,6 +874,7 @@ metrics:
     ## @param metrics.serviceMonitor.scrapeTimeout The timeout after which the scrape is ended
     ##
     scrapeTimeout: ""
+<<<<<<< HEAD
     ## @param metrics.serviceMonitor.relabellings Metrics relabellings to add to the scrape endpoint
     ##
     relabellings: []
@@ -597,3 +884,119 @@ metrics:
     ## @param metrics.serviceMonitor.additionalLabels Additional custom labels for the ServiceMonitor
     ##
     additionalLabels: {}
+=======
+    ## @param metrics.serviceMonitor.relabelings RelabelConfigs to apply to samples before scraping
+    ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
+    ##
+    relabelings: []
+    ## @param metrics.serviceMonitor.metricRelabelings MetricRelabelConfigs to apply to samples before ingestion
+    ## ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
+    ##
+    metricRelabelings: []
+    ## @param metrics.serviceMonitor.selector ServiceMonitor selector labels
+    ## ref: https://github.com/bitnami/charts/tree/master/bitnami/prometheus-operator#prometheus-configuration
+    ##
+    ## selector:
+    ##   prometheus: my-prometheus
+    ##
+    selector: {}
+    ## @param metrics.serviceMonitor.labels Extra labels for the ServiceMonitor
+    ##
+    labels: {}
+    ## @param metrics.serviceMonitor.honorLabels honorLabels chooses the metric's labels on collisions with target labels
+    ##
+    honorLabels: false
+
+## @section NetworkPolicy parameters
+
+## Add networkpolicies
+##
+networkPolicy:
+  ## @param networkPolicy.enabled Enable network policies
+  ## If ingress.enabled or metrics.enabled are true, configure networkPolicy.ingress and networkPolicy.metrics selectors respectively to allow communication
+  ##
+  enabled: false
+  ## @param networkPolicy.metrics.enabled Enable network policy for metrics (prometheus)
+  ## @param networkPolicy.metrics.namespaceSelector Monitoring namespace selector labels. These labels will be used to identify the prometheus' namespace.
+  ## @param networkPolicy.metrics.podSelector Monitoring pod selector labels. These labels will be used to identify the Prometheus pods.
+  ##
+  metrics:
+    enabled: false
+    ## e.g:
+    ## podSelector:
+    ##   label: monitoring
+    ##
+    podSelector: {}
+    ## e.g:
+    ## namespaceSelector:
+    ##   label: monitoring
+    ##
+    namespaceSelector: {}
+  ## @param networkPolicy.ingress.enabled Enable network policy for Ingress Proxies
+  ## @param networkPolicy.ingress.namespaceSelector Ingress Proxy namespace selector labels. These labels will be used to identify the Ingress Proxy's namespace.
+  ## @param networkPolicy.ingress.podSelector Ingress Proxy pods selector labels. These labels will be used to identify the Ingress Proxy pods.
+  ##
+  ingress:
+    enabled: false
+    ## e.g:
+    ## podSelector:
+    ##   label: ingress
+    ##
+    podSelector: {}
+    ## e.g:
+    ## namespaceSelector:
+    ##   label: ingress
+    ##
+    namespaceSelector: {}
+  ## @param networkPolicy.ingressRules.backendOnlyAccessibleByFrontend Enable ingress rule that makes the backend (mariadb) only accessible by MediaWiki's pods.
+  ## @param networkPolicy.ingressRules.customBackendSelector Backend selector labels. These labels will be used to identify the backend pods.
+  ## @param networkPolicy.ingressRules.accessOnlyFrom.enabled Enable ingress rule that makes MediaWiki only accessible from a particular origin
+  ## @param networkPolicy.ingressRules.accessOnlyFrom.namespaceSelector Namespace selector label that is allowed to access MediaWiki. This label will be used to identified the allowed namespace(s).
+  ## @param networkPolicy.ingressRules.accessOnlyFrom.podSelector Pods selector label that is allowed to access MediaWiki. This label will be used to identified the allowed pod(s).
+  ## @param networkPolicy.ingressRules.customRules Custom network policy ingress rule
+  ##
+  ingressRules:
+    ## mariadb backend only can be accessed from MediaWiki
+    ##
+    backendOnlyAccessibleByFrontend: false
+    customBackendSelector: {}
+    ## Allow only from the indicated:
+    ##
+    accessOnlyFrom:
+      enabled: false
+      ## e.g:
+      ## namespaceSelector:
+      ##   label: ingress
+      ##
+      namespaceSelector: {}
+      ## e.g:
+      ## podSelector:
+      ##   label: access
+      ##
+      podSelector: {}
+    ## custom ingress rules
+    ## e.g:
+    ## customRules:
+    ##   - from:
+    ##       - namespaceSelector:
+    ##           matchLabels:
+    ##             label: example
+    ##
+    customRules: {}
+  ## @param networkPolicy.egressRules.denyConnectionsToExternal Enable egress rule that denies outgoing traffic outside the cluster, except for DNS (port 53).
+  ## @param networkPolicy.egressRules.customRules Custom network policy rule
+  ##
+  egressRules:
+    ## Deny connections to external. This is not compatible with an external database.
+    ##
+    denyConnectionsToExternal: false
+    ## Additional custom egress rules
+    ## e.g:
+    ## customRules:
+    ##   - to:
+    ##       - namespaceSelector:
+    ##           matchLabels:
+    ##             label: example
+    ##
+    customRules: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

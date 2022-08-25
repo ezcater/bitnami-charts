@@ -30,9 +30,19 @@ spec:
   loadBalancerSourceRanges: {{- toYaml .Values.metrics.service.loadBalancerSourceRanges | nindent 4 }}
   {{- end }}
   ports:
+<<<<<<< HEAD
     - name: tcp-metrics
       port: {{ .Values.metrics.service.port }}
       protocol: TCP
       targetPort: metrics
+=======
+    - name: http-metrics
+      port: {{ .Values.metrics.service.port }}
+      protocol: TCP
+      targetPort: metrics
+    {{- if .Values.metrics.service.extraPorts }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.metrics.service.extraPorts "context" $) | nindent 4 }}
+    {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   selector: {{- include "common.labels.matchLabels" . | nindent 4 }}
 {{- end }}

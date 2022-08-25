@@ -2,11 +2,17 @@
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
+<<<<<<< HEAD
+=======
+  name: {{ include "jupyterhub.hub.name" . }}
+  namespace: {{ .Release.Namespace | quote }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: hub
     {{- if .Values.commonLabels }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
     {{- end }}
+<<<<<<< HEAD
   name: {{ include "jupyterhub.hub.name" . }}
   namespace: {{ .Release.Namespace | quote }}
 subjects:
@@ -16,5 +22,17 @@ subjects:
 roleRef:
   kind: Role
   name: {{ template "common.names.fullname" . }}-hub
+=======
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "jupyterhub.hubServiceAccountName" . }}
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  kind: Role
+  name: {{ printf "%s-hub" (include "common.names.fullname" .) }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   apiGroup: rbac.authorization.k8s.io
 {{- end }}

@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 {{- if .Values.podSecurityPolicy.create }}
 apiVersion: {{ template "podSecurityPolicy.apiVersion" . }}
+=======
+{{- $pspAvailable := (semverCompare "<1.25-0" (include "common.capabilities.kubeVersion" .)) -}}
+{{- if and $pspAvailable .Values.podSecurityPolicy.create }}
+apiVersion: policy/v1beta1
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 kind: PodSecurityPolicy
 metadata:
   name: {{ printf "%s-master" (include "common.names.fullname" .) }}

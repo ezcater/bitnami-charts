@@ -1,7 +1,77 @@
 {{- if and .Values.operator.rbac.create .Values.operator.enabled }}
----
+{{- if .Values.operator.leaderElect }}
 apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: Role
+metadata:
+  name: {{ include "common.names.fullname" . }}-leader-election
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+rules:
+- apiGroups:
+    - ""
+  resources:
+    - configmaps
+  verbs:
+    - get
+    - list
+    - watch
+    - create
+    - update
+    - patch
+    - delete
+- apiGroups:
+    - coordination.k8s.io
+  resources:
+    - leases
+  verbs:
+    - get
+    - list
+    - watch
+    - create
+    - update
+    - patch
+    - delete
+- apiGroups:
+    - ""
+  resources:
+    - events
+  verbs:
+    - create
+    - patch
+---
+apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+kind: RoleBinding
+metadata:
+  name: {{ include "common.names.fullname" . }}-leader-election
+  namespace: {{ include "common.names.namespace" . | quote }}
+  labels: {{- include "common.labels.standard" . | nindent 4 }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  {{- if .Values.commonAnnotations }}
+  annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+  {{- end }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "common.names.fullname" . }}-leader-election
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "grafana-operator.serviceAccountName" . }}
+{{- end }}
+---
+apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+{{- if or .Values.operator.scanAllNamespaces .Values.operator.scanNamespaces }}
+kind: ClusterRole
+{{- else }}
+kind: Role
+{{- end }}
 metadata:
   name: {{ include "common.names.fullname" . }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
@@ -15,93 +85,125 @@ rules:
   - apiGroups:
       - ""
     resources:
-      - pods
-      - services
-      - endpoints
-      - persistentvolumeclaims
       - configmaps
+      - persistentvolumeclaims
       - secrets
       - serviceaccounts
-      - configmaps
+      - services
     verbs:
+      - create
+      - delete
       - get
       - list
-      - create
+      - patch
       - update
-      - delete
-      - deletecollection
       - watch
   - apiGroups:
       - ""
     resources:
       - events
     verbs:
+      - create
       - get
       - list
       - watch
-      - create
-      - delete
-      - update
       - patch
   - apiGroups:
+      - ""
+    resources:
+      - pods
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
       - apps
+      - extensions
     resources:
       - deployments
       - deployments/finalizers
-      - daemonsets
-      - replicasets
-      - statefulsets
     verbs:
+      - create
+      - delete
       - get
       - list
-      - create
+      - patch
       - update
-      - delete
-      - deletecollection
-      - watch
-  - apiGroups:
-      - route.openshift.io
-    resources:
-      - routes
-      - routes/custom-host
-    verbs:
-      - get
-      - list
-      - create
-      - update
-      - delete
-      - deletecollection
-      - watch
-      - create
-  - apiGroups:
-      - extensions
-    resources:
-      - ingresses
-    verbs:
-      - get
-      - list
-      - create
-      - update
-      - delete
-      - deletecollection
       - watch
   - apiGroups:
       - integreatly.org
     resources:
-      - grafanas
-      - grafanas/status
-      - grafanas/finalizers
       - grafanadashboards
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - integreatly.org
+    resources:
+      - grafanadashboards/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - integreatly.org
+    resources:
       - grafanadatasources
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - integreatly.org
+    resources:
       - grafanadatasources/status
     verbs:
       - get
-      - list
-      - create
+      - patch
       - update
+  - apiGroups:
+      - integreatly.org
+    resources:
+      - grafananotificationchannels
+    verbs:
+      - create
       - delete
-      - deletecollection
+      - get
+      - list
+      - patch
+      - update
       - watch
+  - apiGroups:
+      - integreatly.org
+    resources:
+      - grafananotificationchannels/status
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - integreatly.org
+    resources:
+      - grafanas
+      - grafanas/finalizers
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+<<<<<<< HEAD
 ---
 apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: RoleBinding
@@ -135,9 +237,12 @@ metadata:
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
 rules:
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   - apiGroups:
       - ""
     resources:
+<<<<<<< HEAD
       - pods
       - services
       - endpoints
@@ -154,9 +259,17 @@ rules:
       - delete
       - deletecollection
       - watch
+=======
+      - grafanas/status
+    verbs:
+      - get
+      - patch
+      - update
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   - apiGroups:
-      - ""
+      - networking.k8s.io
     resources:
+<<<<<<< HEAD
       - events
     verbs:
       - get
@@ -181,6 +294,16 @@ rules:
       - update
       - delete
       - deletecollection
+=======
+      - ingresses
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       - watch
   - apiGroups:
       - route.openshift.io
@@ -188,6 +311,7 @@ rules:
       - routes
       - routes/custom-host
     verbs:
+<<<<<<< HEAD
       - get
       - list
       - create
@@ -225,9 +349,28 @@ rules:
       - delete
       - deletecollection
       - watch
+=======
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  {{- if or .Values.operator.scanAllNamespaces  .Values.operator.scanNamespaces }}
+  - nonResourceURLs:
+      - /metrics
+    verbs:
+      - get
+  {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ---
 apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
+{{- if or .Values.operator.scanAllNamespaces  .Values.operator.scanNamespaces }}
 kind: ClusterRoleBinding
+{{- else }}
+kind: RoleBinding
+{{- end }}
 metadata:
   name: {{ include "common.names.fullname" . }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
@@ -239,11 +382,19 @@ metadata:
   {{- end }}
 roleRef:
   name: {{ include "common.names.fullname" . }}
+  {{- if or .Values.operator.scanAllNamespaces  .Values.operator.scanNamespaces }}
   kind: ClusterRole
+<<<<<<< HEAD
+=======
+  {{- else }}
+  kind: Role
+  {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   apiGroup: rbac.authorization.k8s.io
 subjects:
   - kind: ServiceAccount
     name: {{ include "grafana-operator.serviceAccountName" . }}
-    namespace: {{ .Release.Namespace }}
-{{- end }}
+    {{- if or .Values.operator.scanAllNamespaces .Values.operator.scanNamespaces }}
+    namespace: {{ include "common.names.namespace" . }}
+    {{- end }}
 {{- end }}

@@ -28,7 +28,11 @@ Create the name of the service account to use
 */}}
 {{- define "haproxy.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create -}}
+<<<<<<< HEAD
     {{ default (printf "%s-foo" (include "common.names.fullname" .)) .Values.serviceAccount.name }}
+=======
+    {{ default (include "common.names.fullname" .) .Values.serviceAccount.name }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 {{- else -}}
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}

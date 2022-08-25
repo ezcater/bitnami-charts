@@ -1,5 +1,9 @@
 {{- if and .Values.autoscaling.enabled (eq .Values.architecture "high-availability") }}
+<<<<<<< HEAD
 apiVersion: autoscaling/v2beta1
+=======
+apiVersion: {{ include "common.capabilities.hpa.apiVersion" ( dict "context" $ ) }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ template "common.names.fullname" . }}
@@ -19,6 +23,7 @@ spec:
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
+<<<<<<< HEAD
     {{- if .Values.autoscaling.targetCPU }}
     - type: Resource
       resource:
@@ -30,5 +35,30 @@ spec:
       resource:
         name: memory
         targetAverageUtilization: {{ .Values.autoscaling.targetMemory  }}
+=======
+    {{- if .Values.autoscaling.targetMemory }}
+    - type: Resource
+      resource:
+        name: memory
+        {{- if semverCompare "<1.23-0" (include "common.capabilities.kubeVersion" .) }}
+        targetAverageUtilization: {{ .Values.autoscaling.targetMemory }}
+        {{- else }}
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.autoscaling.targetMemory }}
+        {{- end }}
+    {{- end }}
+    {{- if .Values.autoscaling.targetCPU }}
+    - type: Resource
+      resource:
+        name: cpu
+        {{- if semverCompare "<1.23-0" (include "common.capabilities.kubeVersion" .) }}
+        targetAverageUtilization: {{ .Values.autoscaling.targetCPU }}
+        {{- else }}
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.autoscaling.targetCPU }}
+        {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     {{- end }}
 {{- end }}

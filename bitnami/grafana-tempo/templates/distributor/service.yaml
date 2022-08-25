@@ -19,6 +19,7 @@ metadata:
   {{- end }}
 spec:
   type: {{ .Values.distributor.service.type }}
+<<<<<<< HEAD
   {{- if .Values.distributor.service.clusterIP }}
   clusterIP: {{ .Values.distributor.service.clusterIP }}
   {{- end }}
@@ -29,11 +30,33 @@ spec:
   loadBalancerSourceRanges: {{ .Values.distributor.service.loadBalancerSourceRanges }}
   {{ end }}
   {{- if (and (eq .Values.distributor.service.type "LoadBalancer") (not (empty .Values.distributor.service.loadBalancerIP))) }}
+=======
+  {{- if .Values.distributor.service.sessionAffinity }}
+  sessionAffinity: {{ .Values.distributor.service.sessionAffinity }}
+  {{- end }}
+  {{- if .Values.distributor.service.sessionAffinityConfig }}
+  sessionAffinityConfig: {{- include "common.tplvalues.render" (dict "value" .Values.distributor.service.sessionAffinityConfig "context" $) | nindent 4 }}
+  {{- end }}
+  {{- if and .Values.distributor.service.clusterIP (eq .Values.distributor.service.type "ClusterIP") }}
+  clusterIP: {{ .Values.distributor.service.clusterIP }}
+  {{- end }}
+  {{- if or (eq .Values.distributor.service.type "LoadBalancer") (eq .Values.distributor.service.type "NodePort") }}
+  externalTrafficPolicy: {{ .Values.distributor.service.externalTrafficPolicy | quote }}
+  {{- end }}
+  {{- if and (eq .Values.distributor.service.type "LoadBalancer") (not (empty .Values.distributor.service.loadBalancerSourceRanges)) }}
+  loadBalancerSourceRanges: {{ .Values.distributor.service.loadBalancerSourceRanges }}
+  {{- end }}
+  {{- if and (eq .Values.distributor.service.type "LoadBalancer") (not (empty .Values.distributor.service.loadBalancerIP)) }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   loadBalancerIP: {{ .Values.distributor.service.loadBalancerIP }}
   {{- end }}
   ports:
     - name: http
+<<<<<<< HEAD
       port: {{ .Values.distributor.service.port }}
+=======
+      port: {{ .Values.distributor.service.ports.http }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       targetPort: http
       protocol: TCP
       {{- if (and (or (eq .Values.distributor.service.type "NodePort") (eq .Values.distributor.service.type "LoadBalancer")) (not (empty .Values.distributor.service.nodePorts.http))) }}
@@ -42,7 +65,11 @@ spec:
       nodePort: null
       {{- end }}
     - name: grpc
+<<<<<<< HEAD
       port: {{ .Values.distributor.service.grpcPort }}
+=======
+      port: {{ .Values.distributor.service.ports.grpc }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       protocol: TCP
       targetPort: grpc
       {{- if (and (or (eq .Values.distributor.service.type "NodePort") (eq .Values.distributor.service.type "LoadBalancer")) (not (empty .Values.distributor.service.nodePorts.grpc))) }}
@@ -103,5 +130,11 @@ spec:
       protocol: TCP
       targetPort: opencensus
     {{- end }}
+<<<<<<< HEAD
+=======
+    {{- if .Values.distributor.service.extraPorts }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.distributor.service.extraPorts "context" $) | nindent 4 }}
+    {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   selector: {{- include "common.labels.matchLabels" . | nindent 4 }}
     app.kubernetes.io/component: distributor

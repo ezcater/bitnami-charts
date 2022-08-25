@@ -14,12 +14,15 @@ Return the proper Docker Image Registry Secret Names
 {{- include "common.images.pullSecrets" (dict "images" (list .Values.image) "global" .Values.global) -}}
 {{- end -}}
 
-{{- /*
-As we use a headless service we need to append -master-svc to
-the service name.
-*/ -}}
-{{- define "spark.master.service.name" -}}
-{{ include "common.names.fullname" . }}-master-svc
+{{/*
+Create the name of the service account to use
+*/}}
+{{- define "spark.serviceAccountName" -}}
+{{- if .Values.serviceAccount.create -}}
+    {{ default (include "common.names.fullname" .) .Values.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.serviceAccount.name }}
+{{- end -}}
 {{- end -}}
 
 {{/* Get the secret for passwords */}}
@@ -100,4 +103,25 @@ Compile all warnings into a single message, and call fail.
 {{- if $message -}}
 {{-   printf "\nVALUES VALIDATION:\n%s" $message | fail -}}
 {{- end -}}
+{{- end -}}
+
+{{/*
+Get the initialization scripts volume name.
+*/}}
+{{- define "spark.initScripts" -}}
+{{- printf "%s-init-scripts" (include "common.names.fullname" .) -}}
+{{- end -}}
+
+{{/*
+Get the initialization scripts ConfigMap name.
+*/}}
+{{- define "spark.initScriptsCM" -}}
+{{- printf "%s" .Values.initScriptsCM -}}
+{{- end -}}
+
+{{/*
+Get the initialization scripts Secret name.
+*/}}
+{{- define "spark.initScriptsSecret" -}}
+{{- printf "%s" .Values.initScriptsSecret -}}
 {{- end -}}

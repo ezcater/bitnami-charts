@@ -101,7 +101,11 @@ data:
 
     # hub_bind_url configures what the JupyterHub process within the hub pod's
     # container should listen to.
+<<<<<<< HEAD
     hub_container_port = {{ .Values.hub.containerPort }}
+=======
+    hub_container_port = {{ coalesce .Values.hub.containerPorts.http .Values.hub.containerPort }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     c.JupyterHub.hub_bind_url = f"http://:{hub_container_port}"
 
     # hub_connect_url is the URL for connecting to the hub for use by external
@@ -151,6 +155,11 @@ data:
         ("extra_annotations", None),
         ("uid", None),
         ("fs_gid", None),
+<<<<<<< HEAD
+=======
+        ("run_privileged", None),
+        ("allow_privilege_escalation", None),
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
         ("service_account", "serviceAccountName"),
         ("storage_extra_labels", "storage.extraLabels"),
         ("tolerations", "extraTolerations"),

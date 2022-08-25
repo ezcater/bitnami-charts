@@ -1,16 +1,20 @@
 annotations:
   category: CRM
 apiVersion: v2
+<<<<<<< HEAD
 appVersion: 14.0.20210810
+=======
+appVersion: 15.0.20220810
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 dependencies:
   - condition: postgresql.enabled
     name: postgresql
     repository: https://charts.bitnami.com/bitnami
-    version: 10.x.x
+    version: 11.x.x
   - name: common
     repository: https://charts.bitnami.com/bitnami
     version: 1.x.x
-description: A suite of web based open source business apps.
+description: Odoo is an open source ERP and CRM platform, formerly known as OpenERP, that can connect a wide variety of business operations such as sales, supply chain, finance, and project management.
 engine: gotpl
 home: https://github.com/bitnami/charts/tree/master/bitnami/odoo
 icon: https://bitnami.com/assets/stacks/odoo/img/odoo-stack-220x234.png
@@ -21,10 +25,14 @@ keywords:
   - http
   - web
 maintainers:
-  - email: containers@bitnami.com
-    name: Bitnami
+  - name: Bitnami
+    url: https://github.com/bitnami/charts
 name: odoo
 sources:
-  - https://github.com/bitnami/bitnami-docker-odoo
+  - https://github.com/bitnami/containers/tree/main/bitnami/odoo
   - https://www.odoo.com/
+<<<<<<< HEAD
 version: 19.0.7
+=======
+version: 21.5.5
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

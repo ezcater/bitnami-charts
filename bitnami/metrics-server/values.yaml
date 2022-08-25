@@ -5,6 +5,7 @@
 
 ## @param global.imageRegistry Global Docker image registry
 ## @param global.imagePullSecrets Global Docker registry secret names as an array
+<<<<<<< HEAD
 ##
 global:
   imageRegistry: ""
@@ -22,6 +23,54 @@ nameOverride: ""
 ## @param fullnameOverride String to fully override common.names.fullname template
 ##
 fullnameOverride: ""
+=======
+##
+global:
+  imageRegistry: ""
+  ## E.g.
+  ## imagePullSecrets:
+  ##   - myRegistryKeySecretName
+  ##
+  imagePullSecrets: []
+
+## @section Common parameters
+
+## @param kubeVersion Force target Kubernetes version (using Helm capabilities if not set)
+##
+kubeVersion: ""
+## @param nameOverride String to partially override common.names.fullname template (will maintain the release name)
+##
+nameOverride: ""
+## @param fullnameOverride String to fully override common.names.fullname template
+##
+fullnameOverride: ""
+## @param namespaceOverride String to fully override common.names.namespace
+##
+namespaceOverride: ""
+## @param commonLabels Add labels to all the deployed resources
+##
+commonLabels: {}
+## @param commonAnnotations Add annotations to all the deployed resources
+##
+commonAnnotations: {}
+## @param extraDeploy Array of extra objects to deploy with the release
+##
+extraDeploy: []
+## Enable diagnostic mode in the deployment(s)/statefulset(s)
+##
+diagnosticMode:
+  ## @param diagnosticMode.enabled Enable diagnostic mode (all probes will be disabled and the command will be overridden)
+  ##
+  enabled: false
+  ## @param diagnosticMode.command Command to override all containers in the the deployment(s)/statefulset(s)
+  ##
+  command:
+    - sleep
+  ## @param diagnosticMode.args Args to override all containers in the the deployment(s)/statefulset(s)
+  ##
+  args:
+    - infinity
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## @section Metrics Server parameters
 
@@ -30,16 +79,25 @@ fullnameOverride: ""
 ## @param image.registry Metrics Server image registry
 ## @param image.repository Metrics Server image repository
 ## @param image.tag Metrics Server image tag (immutable tags are recommended)
+<<<<<<< HEAD
+=======
+## @param image.digest Metrics Server image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param image.pullPolicy Metrics Server image pull policy
 ## @param image.pullSecrets Metrics Server image pull secrets
 ##
 image:
   registry: docker.io
   repository: bitnami/metrics-server
+<<<<<<< HEAD
   tag: 0.5.0-debian-10-r83
+=======
+  tag: 0.6.1-debian-11-r26
+  digest: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
   ##
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
@@ -91,6 +149,12 @@ serviceAccount:
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/#use-the-default-service-account-to-access-the-api-server
   ##
   automountServiceAccountToken: true
+<<<<<<< HEAD
+=======
+  ## @param serviceAccount.annotations Annotations for service account. Evaluated as a template. Only used if `create` is `true`.
+  ##
+  annotations: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## API service parameters
 ##
 apiService:
@@ -98,6 +162,7 @@ apiService:
   ## This is still necessary up to at least k8s version >= 1.21, but depends on vendors and cloud providers.
   ##
   create: false
+<<<<<<< HEAD
 ## @param securePort Port where metrics-server will be running
 ##
 securePort: 8443
@@ -112,12 +177,82 @@ hostNetwork: false
 command: ["metrics-server"]
 ## @param extraArgs Extra arguments to pass to metrics-server on start up
 ## ref: https://github.com/kubernetes-incubator/metrics-server/blob/master/README.md#flags
+=======
+  ## @param apiService.insecureSkipTLSVerify Specifies whether to skip self-verifying self-signed TLS certificates. Set to "false" if you are providing your own certificates.
+  ## Note that "false" MUST be in quotation marks (cf. https://github.com/helm/helm/issues/3308), since false without quotation marks will render to true
+  insecureSkipTLSVerify: true
+  ## @param apiService.caBundle A base64-encoded string of concatenated certificates for the CA chain for the APIService.
+  caBundle: ""
+## @param containerPorts.https Port where metrics-server will be running
+##
+containerPorts:
+  https: 8443
+## @param hostNetwork Enable hostNetwork mode
+## You would require this enabled if you use alternate overlay networking for pods and
+## API server unable to communicate with metrics-server. As an example, this is required
+## if you use Weave network on EKS
+##
+hostNetwork: false
+## @param dnsPolicy Default dnsPolicy setting
+## If you enable hostNetwork then you may need to set your dnsPolicy to something other
+## than "ClusterFirst" depending on your requirements.
+dnsPolicy: "ClusterFirst"
+## @param command Override default container command (useful when using custom images)
+##
+command: []
+## @param args Override default container args (useful when using custom images)
+##
+args: []
+## @param lifecycleHooks for the metrics-server container(s) to automate configuration before or after startup
+##
+lifecycleHooks: {}
+## @param extraEnvVars Array with extra environment variables to add to metrics-server nodes
+## e.g:
+## extraEnvVars:
+##   - name: FOO
+##     value: "bar"
+##
+extraEnvVars: []
+## @param extraEnvVarsCM Name of existing ConfigMap containing extra env vars for metrics-server nodes
+##
+extraEnvVarsCM: ""
+## @param extraEnvVarsSecret Name of existing Secret containing extra env vars for metrics-server nodes
+##
+extraEnvVarsSecret: ""
+## @param extraArgs Extra arguments to pass to metrics-server on start up
+## ref: https://github.com/kubernetes-incubator/metrics-server#flags
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 ## extraArgs:
-##   kubelet-insecure-tls: true
-##   kubelet-preferred-address-types: InternalIP
+##   - --kubelet-insecure-tls=true
+##   - --kubelet-preferred-address-types=InternalIP
 ##
+<<<<<<< HEAD
 extraArgs: {}
+=======
+extraArgs: []
+## @param sidecars Add additional sidecar containers to the metrics-server pod(s)
+## e.g:
+## sidecars:
+##   - name: your-image-name
+##     image: your-image
+##     imagePullPolicy: Always
+##     ports:
+##       - name: portname
+##         containerPort: 1234
+##
+sidecars: []
+## @param initContainers Add additional init containers to the metrics-server pod(s)
+## ref: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
+## e.g:
+## initContainers:
+##  - name: your-image-name
+##    image: your-image
+##    imagePullPolicy: Always
+##    command: ['sh', '-c', 'echo "hello world"']
+##
+initContainers: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param podLabels Pod labels
 ## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 ##
@@ -129,6 +264,17 @@ podAnnotations: {}
 ## @param priorityClassName Priority class for pod scheduling
 ## ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
 priorityClassName: ""
+<<<<<<< HEAD
+=======
+## @param schedulerName Name of the k8s scheduler (other than default)
+## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+##
+schedulerName: ""
+## @param terminationGracePeriodSeconds In seconds, time the given to the metrics-server pod needs to terminate gracefully
+## ref: https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods
+##
+terminationGracePeriodSeconds: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param podAffinityPreset Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`
 ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
 ##
@@ -139,12 +285,21 @@ podAffinityPreset: ""
 podAntiAffinityPreset: soft
 ## Pod disruption budget
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/#pod-disruption-budgets
+<<<<<<< HEAD
 ## @param podDisruptionBudget.enabled Create a PodDisruptionBudget
 ## @param podDisruptionBudget.minAvailable Minimum available instances
 ## @param podDisruptionBudget.maxUnavailable Maximum unavailable instances
 ##
 podDisruptionBudget:
   enabled: false
+=======
+## @param pdb.create Create a PodDisruptionBudget
+## @param pdb.minAvailable Minimum available instances
+## @param pdb.maxUnavailable Maximum unavailable instances
+##
+pdb:
+  create: false
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   minAvailable: ""
   maxUnavailable: ""
 ## Node affinity preset
@@ -189,20 +344,55 @@ service:
   ## @param service.type Kubernetes Service type
   ##
   type: ClusterIP
+<<<<<<< HEAD
   ## @param service.port Kubernetes Service port
   ##
   port: 443
   ## @param service.nodePort Kubernetes Service port
+=======
+  ## @param service.ports.https Kubernetes Service port
+  ##
+  ports:
+    https: 443
+  ## @param service.nodePorts.https Kubernetes Service port
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
   ## e.g:
   ## nodePort: 30001
   ##
+<<<<<<< HEAD
   nodePort: ""
+=======
+  nodePorts:
+    https: ""
+  ## @param service.clusterIP metrics-server service Cluster IP
+  ## e.g.:
+  ## clusterIP: None
+  ##
+  clusterIP: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param service.loadBalancerIP LoadBalancer IP if Service type is `LoadBalancer`
   ## Set the LoadBalancer service type to internal only.
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
   ##
   loadBalancerIP: ""
+<<<<<<< HEAD
+=======
+  ## @param service.loadBalancerSourceRanges metrics-server service Load Balancer sources
+  ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/configure-cloud-provider-firewall/#restrict-access-for-loadbalancer-service
+  ## e.g:
+  ## loadBalancerSourceRanges:
+  ##   - 10.10.10.0/24
+  ##
+  loadBalancerSourceRanges: []
+  ## @param service.externalTrafficPolicy metrics-server service external traffic policy
+  ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+  ##
+  externalTrafficPolicy: Cluster
+  ## @param service.extraPorts Extra ports to expose (normally used with the `sidecar` value)
+  ##
+  extraPorts: []
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param service.annotations Annotations for the Service
   ## set the LoadBalancer service type to internal only.
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#internal-load-balancer
@@ -214,8 +404,24 @@ service:
   ##  kubernetes.io/name: "Metrics-server"
   ##
   labels: {}
+<<<<<<< HEAD
 ## Metric Server containers' resource requests and limits
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## @param service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+  ## If "ClientIP", consecutive client requests will be directed to the same Pod
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+  ##
+  sessionAffinity: None
+  ## @param service.sessionAffinityConfig Additional settings for the sessionAffinity
+  ## sessionAffinityConfig:
+  ##   clientIP:
+  ##     timeoutSeconds: 300
+  ##
+  sessionAffinityConfig: {}
+## Metric Server containers' resource requests and limits
+## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## We usually recommend not to specify default resources and to leave this as a conscious
 ## choice for the user. This also increases chances charts run on environments with little
 ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -234,6 +440,7 @@ resources:
   ##    cpu: 250m
   ##    memory: 256Mi
   requests: {}
+<<<<<<< HEAD
 ## Configure extra options for liveness probe
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 ## @param livenessProbe.enabled Enable livenessProbe
@@ -242,15 +449,35 @@ resources:
 ## @param livenessProbe.httpGet.scheme Scheme for livenessProbe
 ## @param livenessProbe.periodSeconds Period seconds for livenessProbe
 ## @param livenessProbe.failureThreshold Failure threshold for livenessProbe
+=======
+## Configure extra options for metrics-server containers' liveness, readiness and startup probes
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes)
+## @param startupProbe.enabled Enable startupProbe
+## @param startupProbe.initialDelaySeconds Initial delay seconds for startupProbe
+## @param startupProbe.periodSeconds Period seconds for startupProbe
+## @param startupProbe.timeoutSeconds Timeout seconds for startupProbe
+## @param startupProbe.failureThreshold Failure threshold for startupProbe
+## @param startupProbe.successThreshold Success threshold for startupProbe
+startupProbe:
+  enabled: false
+  initialDelaySeconds: 0
+  periodSeconds: 10
+  timeoutSeconds: 1
+  failureThreshold: 3
+  successThreshold: 1
+## @param livenessProbe.enabled Enable livenessProbe
+## @param livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
+## @param livenessProbe.periodSeconds Period seconds for livenessProbe
+## @param livenessProbe.timeoutSeconds Timeout seconds for livenessProbe
+## @param livenessProbe.failureThreshold Failure threshold for livenessProbe
+## @param livenessProbe.successThreshold Success threshold for livenessProbe
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 livenessProbe:
   enabled: true
-  failureThreshold: 3
-  httpGet:
-    path: /livez
-    port: https
-    scheme: HTTPS
+  initialDelaySeconds: 0
   periodSeconds: 10
+<<<<<<< HEAD
 ## Configure extra options for readiness probe
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 ## @param readinessProbe.enabled Enable readinessProbe
@@ -259,15 +486,31 @@ livenessProbe:
 ## @param readinessProbe.httpGet.scheme Scheme for livenessProbe
 ## @param readinessProbe.periodSeconds Period seconds for readinessProbe
 ## @param readinessProbe.failureThreshold Failure threshold for readinessProbe
+=======
+  timeoutSeconds: 1
+  failureThreshold: 3
+  successThreshold: 1
+## @param readinessProbe.enabled Enable readinessProbe
+## @param readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
+## @param readinessProbe.periodSeconds Period seconds for readinessProbe
+## @param readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
+## @param readinessProbe.failureThreshold Failure threshold for readinessProbe
+## @param readinessProbe.successThreshold Success threshold for readinessProbe
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 readinessProbe:
   enabled: true
-  failureThreshold: 3
-  httpGet:
-    path: /readyz
-    port: https
-    scheme: HTTPS
+  initialDelaySeconds: 0
   periodSeconds: 10
+<<<<<<< HEAD
+=======
+  timeoutSeconds: 1
+  failureThreshold: 3
+  successThreshold: 1
+## @param customStartupProbe Custom liveness probe for the Web component
+##
+customStartupProbe: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param customLivenessProbe Custom Liveness probes for metrics-server
 ##
 customLivenessProbe: {}
@@ -279,17 +522,33 @@ customReadinessProbe: {}
 ## @param containerSecurityContext.enabled Enable Container security context
 ## @param containerSecurityContext.readOnlyRootFilesystem ReadOnlyRootFilesystem for the container
 ## @param containerSecurityContext.runAsNonRoot Run containers as non-root users
+<<<<<<< HEAD
+=======
+## @param containerSecurityContext.runAsUser Set containers' Security Context runAsUser
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 containerSecurityContext:
   enabled: true
   readOnlyRootFilesystem: false
   runAsNonRoot: true
+<<<<<<< HEAD
 ## Pod security context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 ## @param podSecurityContext.enabled Pod security context
 ##
 podSecurityContext:
   enabled: false
+=======
+  runAsUser: 1001
+## Pod security context
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+## @param podSecurityContext.enabled Pod security context
+## @param podSecurityContext.fsGroup Set %%MAIN_CONTAINER_NAME%% pod's Security Context fsGroup
+##
+podSecurityContext:
+  enabled: false
+  fsGroup: 1001
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Extra volumes to mount
 ## @param extraVolumes Extra volumes
 ## @param extraVolumeMounts Mount extra volume(s)
@@ -304,6 +563,9 @@ extraVolumes: []
 ##    mountPath: /tmp
 ##
 extraVolumeMounts: []
+<<<<<<< HEAD
 ## @param extraContainers Extra containers to run within the pod
 ##
 extraContainers: {}
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

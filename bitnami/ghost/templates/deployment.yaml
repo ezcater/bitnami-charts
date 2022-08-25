@@ -53,6 +53,13 @@ spec:
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName | quote }}
       {{- end }}
+      serviceAccountName: {{ include "ghost.serviceAccountName" . }}
+      {{- if .Values.schedulerName }}
+      schedulerName: {{ .Values.schedulerName }}
+      {{- end }}
+      {{- if .Values.topologySpreadConstraints }}
+      topologySpreadConstraints: {{- include "common.tplvalues.render" (dict "value" .Values.topologySpreadConstraints "context" .) | nindent 8 }}
+      {{- end }}
       {{- if .Values.podSecurityContext.enabled }}
       securityContext: {{- omit .Values.podSecurityContext "enabled" | toYaml | nindent 8 }}
       {{- end }}
@@ -69,7 +76,11 @@ spec:
             - |
               mkdir -p /bitnami/ghost
               chown -R "{{ .Values.containerSecurityContext.runAsUser }}:{{ .Values.podSecurityContext.fsGroup }}" /bitnami/ghost
+<<<<<<< HEAD
           {{- if eq ( toString ( .Values.volumePermissions.securityContext.runAsUser )) "auto"}}
+=======
+          {{- if eq ( toString ( .Values.volumePermissions.securityContext.runAsUser )) "auto" }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           securityContext: {{- omit .Values.volumePermissions.securityContext "runAsUser" | toYaml | nindent 12 }}
           {{- else }}
           securityContext: {{- .Values.volumePermissions.securityContext | toYaml | nindent 12 }}
@@ -80,6 +91,12 @@ spec:
           volumeMounts:
             - name: ghost-data
               mountPath: /bitnami/ghost
+<<<<<<< HEAD
+=======
+              {{- if .Values.persistence.subPath }}
+              subPath: {{ .Values.persistence.subPath }}
+              {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
         {{- end }}
         {{- if .Values.initContainers }}
         {{- include "common.tplvalues.render" (dict "value" .Values.initContainers "context" $) | nindent 8 }}
@@ -118,7 +135,15 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ include "ghost.databaseSecretName" . }}
-                  key: mariadb-password
+                  key: mysql-password
+            {{- if (and (not .Values.mysql.enabled) .Values.externalDatabase.ssl) }}
+            - name: GHOST_DATABASE_ENABLE_SSL
+              value: {{ .Values.externalDatabase.ssl | quote }}
+            - name: MYSQL_CLIENT_ENABLE_SSL
+              value: {{ ternary "yes" "no" .Values.externalDatabase.ssl | quote }}
+            - name: GHOST_DATABASE_SSL_CA_FILE
+              value: {{ .Values.externalDatabase.sslCaFile | quote }}
+            {{- end }}
             - name: GHOST_HOST
               value: {{ include "ghost.host" . | quote }}
             - name: GHOST_PORT_NUMBER
@@ -137,9 +162,15 @@ spec:
             - name: GHOST_ENABLE_HTTPS
               value: {{ ternary "yes" "no" .Values.ghostEnableHttps | quote }}
             - name: GHOST_EXTERNAL_HTTP_PORT_NUMBER
+<<<<<<< HEAD
               value: {{ .Values.service.port | quote }}
             - name: GHOST_EXTERNAL_HTTPS_PORT_NUMBER
               value: {{ .Values.service.httpsPort | quote }}
+=======
+              value: {{ coalesce .Values.service.ports.http .Values.service.port| quote }}
+            - name: GHOST_EXTERNAL_HTTPS_PORT_NUMBER
+              value: {{ coalesce .Values.service.ports.https .Values.service.httpsPort| quote }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             - name: GHOST_SKIP_BOOTSTRAP
               value: {{ ternary "yes" "no" .Values.ghostSkipInstall  | quote }}
             {{- if .Values.smtpHost }}
@@ -165,6 +196,10 @@ spec:
             - name: GHOST_SMTP_SERVICE
               value: {{ .Values.smtpService | quote }}
             {{- end }}
+            {{- if .Values.smtpProtocol }}
+            - name: GHOST_SMTP_PROTOCOL
+              value: {{ .Values.smtpProtocol | quote }}
+            {{- end }}
             {{- if .Values.extraEnvVars }}
             {{- include "common.tplvalues.render" ( dict "value" .Values.extraEnvVars "context" $ ) | nindent 12 }}
             {{- end }}
@@ -189,12 +224,43 @@ spec:
               containerPort: {{ .Values.containerPorts.http }}
               protocol: TCP
             {{- end }}
+<<<<<<< HEAD
+=======
+          {{- if .Values.startupProbe.enabled }}
+          startupProbe:
+            httpGet:
+              path: /
+              port: {{ ternary "https" "http" .Values.ghostEnableHttps | quote }}
+              scheme: HTTP
+              {{- if .Values.ghostEnableHttps }}
+              httpHeaders:
+                - name: x-forwarded-proto
+                  value: https
+              {{- end }}
+            initialDelaySeconds: {{ .Values.startupProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.startupProbe.periodSeconds }}
+            timeoutSeconds: {{ .Values.startupProbe.timeoutSeconds }}
+            failureThreshold: {{ .Values.startupProbe.failureThreshold }}
+            successThreshold: {{ .Values.startupProbe.successThreshold }}
+          {{- else if .Values.customStartupProbe }}
+          startupProbe: {{- include "common.tplvalues.render" (dict "value" .Values.customStartupProbe "context" $) | nindent 12 }}
+          {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
               path: /
               port: {{ ternary "https" "http" .Values.ghostEnableHttps | quote }}
+<<<<<<< HEAD
               scheme: {{ ternary "HTTPS" "HTTP" .Values.ghostEnableHttps | quote }}
+=======
+              scheme: HTTP
+              {{- if .Values.ghostEnableHttps }}
+              httpHeaders:
+                - name: x-forwarded-proto
+                  value: https
+              {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
@@ -208,7 +274,16 @@ spec:
             httpGet:
               path: /
               port: {{ ternary "https" "http" .Values.ghostEnableHttps | quote }}
+<<<<<<< HEAD
               scheme: {{ ternary "HTTPS" "HTTP" .Values.ghostEnableHttps | quote }}
+=======
+              scheme: HTTP
+              {{- if .Values.ghostEnableHttps }}
+              httpHeaders:
+                - name: x-forwarded-proto
+                  value: https
+              {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             initialDelaySeconds: {{ .Values.readinessProbe.initialDelaySeconds }}
             periodSeconds: {{ .Values.readinessProbe.periodSeconds }}
             timeoutSeconds: {{ .Values.readinessProbe.timeoutSeconds }}
@@ -223,6 +298,12 @@ spec:
           volumeMounts:
             - name: ghost-data
               mountPath: /bitnami/ghost
+<<<<<<< HEAD
+=======
+            {{- if .Values.persistence.subPath }}
+              subPath: {{ .Values.persistence.subPath }}
+            {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             {{- if .Values.extraVolumeMounts }}
             {{- include "common.tplvalues.render" (dict "value" .Values.extraVolumeMounts "context" $) | nindent 12 }}
             {{- end }}

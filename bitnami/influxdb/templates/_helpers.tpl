@@ -9,6 +9,7 @@ Return the proper InfluxDB&trade; image name
 {{- end -}}
 
 {{/*
+<<<<<<< HEAD
 Return the proper InfluxDB Relay&trade; image name
 */}}
 {{- define "influxdb.relay.image" -}}
@@ -16,6 +17,8 @@ Return the proper InfluxDB Relay&trade; image name
 {{- end -}}
 
 {{/*
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 Return the proper init container volume-permissions image name
 */}}
 {{- define "influxdb.volumePermissions.image" -}}
@@ -37,13 +40,34 @@ Return the proper azure-cli image name
 {{- end -}}
 
 {{/*
-Return the proper Docker Image Registry Secret Names
+Return the proper aws-cli image name
 */}}
-{{- define "influxdb.imagePullSecrets" -}}
-{{ include "common.images.pullSecrets" (dict "images" (list .Values.image .Values.relay.image .Values.volumePermissions.image .Values.backup.uploadProviders.google.image .Values.backup.uploadProviders.azure.image) "global" .Values.global) }}
+{{- define "awsCli.image" -}}
+{{ include "common.images.image" (dict "imageRoot" .Values.backup.uploadProviders.aws.image "global" .Values.global) }}
 {{- end -}}
 
 {{/*
+Return the proper Docker Image Registry Secret Names
+*/}}
+{{- define "influxdb.imagePullSecrets" -}}
+{{ include "common.images.pullSecrets" (dict "images" (list .Values.image .Values.volumePermissions.image .Values.backup.uploadProviders.google.image .Values.backup.uploadProviders.azure.image) "global" .Values.global) }}
+{{- end -}}
+
+{{/*
+<<<<<<< HEAD
+=======
+Create the name of the service account to use
+*/}}
+{{- define "influxdb.serviceAccountName" -}}
+{{- if or .Values.serviceAccount.enabled .Values.serviceAccount.create -}}
+    {{ default (include "common.names.fullname" .) .Values.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.serviceAccount.name }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 Return the InfluxDB&trade; credentials secret.
 */}}
 {{- define "influxdb.secretName" -}}
@@ -93,6 +117,7 @@ Get the InfluxDB&trade; initialization scripts secret.
 {{- define "influxdb.initdbScriptsSecret" -}}
 {{- printf "%s" (tpl .Values.influxdb.initdbScriptsSecret $) -}}
 {{- end -}}
+<<<<<<< HEAD
 
 {{/*
 Return the InfluxDB&trade; configuration configmap.
@@ -151,3 +176,5 @@ influxdb: replicaCount
     use the "high-availability" architecture (--set architecture="high-availability")
 {{- end -}}
 {{- end -}}
+=======
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

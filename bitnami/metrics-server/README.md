@@ -1,7 +1,13 @@
-# Metrics Server
+<!--- app-name: Metrics Server -->
 
-[Metrics Server](https://github.com/kubernetes-incubator/metrics-server) is a cluster-wide aggregator of resource usage data. Metrics Server collects metrics from the Summary API, exposed by Kubelet on each node.
+# Metrics Server packaged by Bitnami
 
+Metrics Server aggregates resource usage data, such as container CPU and memory usage, in a Kubernetes cluster and makes it available via the Metrics API.
+
+[Overview of Metrics Server](https://github.com/kubernetes-incubator/metrics-server)
+
+Trademarks: This software listing is packaged by Bitnami. The respective trademarks mentioned in the offering are owned by the respective companies, and use of them does not imply any affiliation or endorsement.
+                           
 ## TL;DR
 
 ```console
@@ -11,14 +17,14 @@ $ helm install my-release bitnami/metrics-server
 
 ## Introduction
 
-This chart bootstraps a [Metrics Server](https://github.com/bitnami/bitnami-docker-metrics-server) deployment on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+This chart bootstraps a [Metrics Server](https://github.com/bitnami/containers/tree/main/bitnami/metrics-server) deployment on a [Kubernetes](https://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
-Bitnami charts can be used with [Kubeapps](https://kubeapps.com/) for deployment and management of Helm Charts in clusters. This Helm chart has been tested on top of [Bitnami Kubernetes Production Runtime](https://kubeprod.io/) (BKPR). Deploy BKPR to get automated TLS certificates, logging and monitoring for your applications.
+Bitnami charts can be used with [Kubeapps](https://kubeapps.dev/) for deployment and management of Helm Charts in clusters.
 
 ## Prerequisites
 
-- Kubernetes 1.12+
-- Helm 3.1.0
+- Kubernetes 1.19+
+- Helm 3.2.0+
 
 ## Installing the Chart
 
@@ -55,10 +61,25 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Common parameters
 
+<<<<<<< HEAD
 | Name               | Description                                                                                  | Value |
 | ------------------ | -------------------------------------------------------------------------------------------- | ----- |
 | `nameOverride`     | String to partially override common.names.fullname template (will maintain the release name) | `""`  |
 | `fullnameOverride` | String to fully override common.names.fullname template                                      | `""`  |
+=======
+| Name                     | Description                                                                                  | Value          |
+| ------------------------ | -------------------------------------------------------------------------------------------- | -------------- |
+| `kubeVersion`            | Force target Kubernetes version (using Helm capabilities if not set)                         | `""`           |
+| `nameOverride`           | String to partially override common.names.fullname template (will maintain the release name) | `""`           |
+| `fullnameOverride`       | String to fully override common.names.fullname template                                      | `""`           |
+| `namespaceOverride`      | String to fully override common.names.namespace                                              | `""`           |
+| `commonLabels`           | Add labels to all the deployed resources                                                     | `{}`           |
+| `commonAnnotations`      | Add annotations to all the deployed resources                                                | `{}`           |
+| `extraDeploy`            | Array of extra objects to deploy with the release                                            | `[]`           |
+| `diagnosticMode.enabled` | Enable diagnostic mode (all probes will be disabled and the command will be overridden)      | `false`        |
+| `diagnosticMode.command` | Command to override all containers in the the deployment(s)/statefulset(s)                   | `["sleep"]`    |
+| `diagnosticMode.args`    | Args to override all containers in the the deployment(s)/statefulset(s)                      | `["infinity"]` |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 
 ### Metrics Server parameters
@@ -67,7 +88,12 @@ The command removes all the Kubernetes components associated with the chart and 
 | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------ |
 | `image.registry`                                  | Metrics Server image registry                                                                                                                                            | `docker.io`              |
 | `image.repository`                                | Metrics Server image repository                                                                                                                                          | `bitnami/metrics-server` |
+<<<<<<< HEAD
 | `image.tag`                                       | Metrics Server image tag (immutable tags are recommended)                                                                                                                | `0.5.0-debian-10-r83`    |
+=======
+| `image.tag`                                       | Metrics Server image tag (immutable tags are recommended)                                                                                                                | `0.6.1-debian-11-r26`    |
+| `image.digest`                                    | Metrics Server image digest in the way sha256:aa.... Please note this parameter, if set, will override the tag                                                           | `""`                     |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 | `image.pullPolicy`                                | Metrics Server image pull policy                                                                                                                                         | `IfNotPresent`           |
 | `image.pullSecrets`                               | Metrics Server image pull secrets                                                                                                                                        | `[]`                     |
 | `hostAliases`                                     | Add deployment host aliases                                                                                                                                              | `[]`                     |
@@ -77,6 +103,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `serviceAccount.create`                           | Specifies whether a ServiceAccount should be created                                                                                                                     | `true`                   |
 | `serviceAccount.name`                             | The name of the ServiceAccount to create                                                                                                                                 | `""`                     |
 | `serviceAccount.automountServiceAccountToken`     | Automount API credentials for a service account                                                                                                                          | `true`                   |
+<<<<<<< HEAD
 | `apiService.create`                               | Specifies whether the v1beta1.metrics.k8s.io API service should be created. You can check if it is needed with `kubectl get --raw "/apis/metrics.k8s.io/v1beta1/nodes"`. | `false`                  |
 | `securePort`                                      | Port where metrics-server will be running                                                                                                                                | `8443`                   |
 | `hostNetwork`                                     | Enable hostNetwork mode                                                                                                                                                  | `false`                  |
@@ -90,6 +117,34 @@ The command removes all the Kubernetes components associated with the chart and 
 | `podDisruptionBudget.enabled`                     | Create a PodDisruptionBudget                                                                                                                                             | `false`                  |
 | `podDisruptionBudget.minAvailable`                | Minimum available instances                                                                                                                                              | `""`                     |
 | `podDisruptionBudget.maxUnavailable`              | Maximum unavailable instances                                                                                                                                            | `""`                     |
+=======
+| `serviceAccount.annotations`                      | Annotations for service account. Evaluated as a template. Only used if `create` is `true`.                                                                               | `{}`                     |
+| `apiService.create`                               | Specifies whether the v1beta1.metrics.k8s.io API service should be created. You can check if it is needed with `kubectl get --raw "/apis/metrics.k8s.io/v1beta1/nodes"`. | `false`                  |
+| `apiService.insecureSkipTLSVerify`                | Specifies whether to skip self-verifying self-signed TLS certificates. Set to "false" if you are providing your own certificates.                                        | `true`                   |
+| `apiService.caBundle`                             | A base64-encoded string of concatenated certificates for the CA chain for the APIService.                                                                                | `""`                     |
+| `containerPorts.https`                            | Port where metrics-server will be running                                                                                                                                | `8443`                   |
+| `hostNetwork`                                     | Enable hostNetwork mode                                                                                                                                                  | `false`                  |
+| `dnsPolicy`                                       | Default dnsPolicy setting                                                                                                                                                | `ClusterFirst`           |
+| `command`                                         | Override default container command (useful when using custom images)                                                                                                     | `[]`                     |
+| `args`                                            | Override default container args (useful when using custom images)                                                                                                        | `[]`                     |
+| `lifecycleHooks`                                  | for the metrics-server container(s) to automate configuration before or after startup                                                                                    | `{}`                     |
+| `extraEnvVars`                                    | Array with extra environment variables to add to metrics-server nodes                                                                                                    | `[]`                     |
+| `extraEnvVarsCM`                                  | Name of existing ConfigMap containing extra env vars for metrics-server nodes                                                                                            | `""`                     |
+| `extraEnvVarsSecret`                              | Name of existing Secret containing extra env vars for metrics-server nodes                                                                                               | `""`                     |
+| `extraArgs`                                       | Extra arguments to pass to metrics-server on start up                                                                                                                    | `[]`                     |
+| `sidecars`                                        | Add additional sidecar containers to the metrics-server pod(s)                                                                                                           | `[]`                     |
+| `initContainers`                                  | Add additional init containers to the metrics-server pod(s)                                                                                                              | `[]`                     |
+| `podLabels`                                       | Pod labels                                                                                                                                                               | `{}`                     |
+| `podAnnotations`                                  | Pod annotations                                                                                                                                                          | `{}`                     |
+| `priorityClassName`                               | Priority class for pod scheduling                                                                                                                                        | `""`                     |
+| `schedulerName`                                   | Name of the k8s scheduler (other than default)                                                                                                                           | `""`                     |
+| `terminationGracePeriodSeconds`                   | In seconds, time the given to the metrics-server pod needs to terminate gracefully                                                                                       | `""`                     |
+| `podAffinityPreset`                               | Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                                                                      | `""`                     |
+| `podAntiAffinityPreset`                           | Pod anti-affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                                                                 | `soft`                   |
+| `pdb.create`                                      | Create a PodDisruptionBudget                                                                                                                                             | `false`                  |
+| `pdb.minAvailable`                                | Minimum available instances                                                                                                                                              | `""`                     |
+| `pdb.maxUnavailable`                              | Maximum unavailable instances                                                                                                                                            | `""`                     |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 | `nodeAffinityPreset.type`                         | Node affinity preset type. Ignored if `affinity` is set. Allowed values: `soft` or `hard`                                                                                | `""`                     |
 | `nodeAffinityPreset.key`                          | Node label key to match. Ignored if `affinity` is set.                                                                                                                   | `""`                     |
 | `nodeAffinityPreset.values`                       | Node label values to match. Ignored if `affinity` is set.                                                                                                                | `[]`                     |
@@ -98,6 +153,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `nodeSelector`                                    | Node labels for pod assignment                                                                                                                                           | `{}`                     |
 | `tolerations`                                     | Tolerations for pod assignment                                                                                                                                           | `[]`                     |
 | `service.type`                                    | Kubernetes Service type                                                                                                                                                  | `ClusterIP`              |
+<<<<<<< HEAD
 | `service.port`                                    | Kubernetes Service port                                                                                                                                                  | `443`                    |
 | `service.nodePort`                                | Kubernetes Service port                                                                                                                                                  | `""`                     |
 | `service.loadBalancerIP`                          | LoadBalancer IP if Service type is `LoadBalancer`                                                                                                                        | `""`                     |
@@ -117,15 +173,57 @@ The command removes all the Kubernetes components associated with the chart and 
 | `readinessProbe.httpGet.scheme`                   | Scheme for livenessProbe                                                                                                                                                 | `HTTPS`                  |
 | `readinessProbe.periodSeconds`                    | Period seconds for readinessProbe                                                                                                                                        | `10`                     |
 | `readinessProbe.failureThreshold`                 | Failure threshold for readinessProbe                                                                                                                                     | `3`                      |
+=======
+| `service.ports.https`                             | Kubernetes Service port                                                                                                                                                  | `443`                    |
+| `service.nodePorts.https`                         | Kubernetes Service port                                                                                                                                                  | `""`                     |
+| `service.clusterIP`                               | metrics-server service Cluster IP                                                                                                                                        | `""`                     |
+| `service.loadBalancerIP`                          | LoadBalancer IP if Service type is `LoadBalancer`                                                                                                                        | `""`                     |
+| `service.loadBalancerSourceRanges`                | metrics-server service Load Balancer sources                                                                                                                             | `[]`                     |
+| `service.externalTrafficPolicy`                   | metrics-server service external traffic policy                                                                                                                           | `Cluster`                |
+| `service.extraPorts`                              | Extra ports to expose (normally used with the `sidecar` value)                                                                                                           | `[]`                     |
+| `service.annotations`                             | Annotations for the Service                                                                                                                                              | `{}`                     |
+| `service.labels`                                  | Labels for the Service                                                                                                                                                   | `{}`                     |
+| `service.sessionAffinity`                         | Session Affinity for Kubernetes service, can be "None" or "ClientIP"                                                                                                     | `None`                   |
+| `service.sessionAffinityConfig`                   | Additional settings for the sessionAffinity                                                                                                                              | `{}`                     |
+| `resources.limits`                                | The resources limits for the container                                                                                                                                   | `{}`                     |
+| `resources.requests`                              | The requested resources for the container                                                                                                                                | `{}`                     |
+| `startupProbe.enabled`                            | Enable startupProbe                                                                                                                                                      | `false`                  |
+| `startupProbe.initialDelaySeconds`                | Initial delay seconds for startupProbe                                                                                                                                   | `0`                      |
+| `startupProbe.periodSeconds`                      | Period seconds for startupProbe                                                                                                                                          | `10`                     |
+| `startupProbe.timeoutSeconds`                     | Timeout seconds for startupProbe                                                                                                                                         | `1`                      |
+| `startupProbe.failureThreshold`                   | Failure threshold for startupProbe                                                                                                                                       | `3`                      |
+| `startupProbe.successThreshold`                   | Success threshold for startupProbe                                                                                                                                       | `1`                      |
+| `livenessProbe.enabled`                           | Enable livenessProbe                                                                                                                                                     | `true`                   |
+| `livenessProbe.initialDelaySeconds`               | Initial delay seconds for livenessProbe                                                                                                                                  | `0`                      |
+| `livenessProbe.periodSeconds`                     | Period seconds for livenessProbe                                                                                                                                         | `10`                     |
+| `livenessProbe.timeoutSeconds`                    | Timeout seconds for livenessProbe                                                                                                                                        | `1`                      |
+| `livenessProbe.failureThreshold`                  | Failure threshold for livenessProbe                                                                                                                                      | `3`                      |
+| `livenessProbe.successThreshold`                  | Success threshold for livenessProbe                                                                                                                                      | `1`                      |
+| `readinessProbe.enabled`                          | Enable readinessProbe                                                                                                                                                    | `true`                   |
+| `readinessProbe.initialDelaySeconds`              | Initial delay seconds for readinessProbe                                                                                                                                 | `0`                      |
+| `readinessProbe.periodSeconds`                    | Period seconds for readinessProbe                                                                                                                                        | `10`                     |
+| `readinessProbe.timeoutSeconds`                   | Timeout seconds for readinessProbe                                                                                                                                       | `1`                      |
+| `readinessProbe.failureThreshold`                 | Failure threshold for readinessProbe                                                                                                                                     | `3`                      |
+| `readinessProbe.successThreshold`                 | Success threshold for readinessProbe                                                                                                                                     | `1`                      |
+| `customStartupProbe`                              | Custom liveness probe for the Web component                                                                                                                              | `{}`                     |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 | `customLivenessProbe`                             | Custom Liveness probes for metrics-server                                                                                                                                | `{}`                     |
 | `customReadinessProbe`                            | Custom Readiness probes metrics-server                                                                                                                                   | `{}`                     |
 | `containerSecurityContext.enabled`                | Enable Container security context                                                                                                                                        | `true`                   |
 | `containerSecurityContext.readOnlyRootFilesystem` | ReadOnlyRootFilesystem for the container                                                                                                                                 | `false`                  |
 | `containerSecurityContext.runAsNonRoot`           | Run containers as non-root users                                                                                                                                         | `true`                   |
+<<<<<<< HEAD
 | `podSecurityContext.enabled`                      | Pod security context                                                                                                                                                     | `false`                  |
 | `extraVolumes`                                    | Extra volumes                                                                                                                                                            | `[]`                     |
 | `extraVolumeMounts`                               | Mount extra volume(s)                                                                                                                                                    | `[]`                     |
 | `extraContainers`                                 | Extra containers to run within the pod                                                                                                                                   | `{}`                     |
+=======
+| `containerSecurityContext.runAsUser`              | Set containers' Security Context runAsUser                                                                                                                               | `1001`                   |
+| `podSecurityContext.enabled`                      | Pod security context                                                                                                                                                     | `false`                  |
+| `podSecurityContext.fsGroup`                      | Set %%MAIN_CONTAINER_NAME%% pod's Security Context fsGroup                                                                                                               | `1001`                   |
+| `extraVolumes`                                    | Extra volumes                                                                                                                                                            | `[]`                     |
+| `extraVolumeMounts`                               | Mount extra volume(s)                                                                                                                                                    | `[]`                     |
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
@@ -147,27 +245,41 @@ $ helm install my-release -f values.yaml bitnami/metrics-server
 
 ## Configuration and installation details
 
-### [Rolling VS Immutable tags](https://docs.bitnami.com/containers/how-to/understand-rolling-tags-containers/)
+### [Rolling vs Immutable tags](https://docs.bitnami.com/containers/how-to/understand-rolling-tags-containers/)
 
 It is strongly recommended to use immutable tags in a production environment. This ensures your deployment does not change automatically if the same tag is updated with a different image.
 
 Bitnami will release a new chart updating its containers if a new version of the main container, significant changes, or critical vulnerabilities exist.
 
-### Enable security for Metrics Server. Configuring RBAC
+### Enable RBAC security
 
-In order to enable Role-based access control for Metrics Servier you can use the following parameter: `rbac.create=true`
+In order to enable Role-Based Access Control (RBAC) for Metrics Server, use the following parameter: `rbac.create=true`.
 
-### Setting Pod's affinity
+### Configure certificates
 
-This chart allows you to set your custom affinity using the `affinity` parameter. Find more information about Pod's affinity in the [kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity).
+If you are providing your own certificates for the API Service, set `insecureSkipTLSVerify` to `"false"`, and provide a `caBundle` consisting of the base64-encoded certificate chain.
 
-As an alternative, you can use of the preset configurations for pod affinity, pod anti-affinity, and node affinity available at the [bitnami/common](https://github.com/bitnami/charts/tree/master/bitnami/common#affinities) chart. To do so, set the `podAffinityPreset`, `podAntiAffinityPreset`, or `nodeAffinityPreset` parameters.
+### Set Pod affinity
+
+This chart allows you to set custom Pod affinity using the `affinity` parameter. Find more information about Pod affinity in the [Kubernetes documentation](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity).
+
+As an alternative, you can use one of the preset configurations for pod affinity, pod anti-affinity, and node affinity available at the [bitnami/common](https://github.com/bitnami/charts/tree/master/bitnami/common#affinities) chart. To do so, set the `podAffinityPreset`, `podAntiAffinityPreset`, or `nodeAffinityPreset` parameters.
 
 ## Troubleshooting
 
-Find more information about how to deal with common errors related to Bitnami’s Helm charts in [this troubleshooting guide](https://docs.bitnami.com/general/how-to/troubleshoot-helm-chart-issues).
+Find more information about how to deal with common errors related to Bitnami's Helm charts in [this troubleshooting guide](https://docs.bitnami.com/general/how-to/troubleshoot-helm-chart-issues).
 
 ## Upgrading
+
+### To 6.0.0
+
+This major release renames several values in this chart and adds missing features, in order to be aligned with the rest of the assets in the Bitnami charts repository.
+
+Affected values:
+
+- `service.port` was deprecated. We recommend using `service.ports.http` instead.
+- `service.nodePort` was deprecated. We recommend using `service.nodePorts.https` instead.
+- `extraArgs` is now interpreted as an array.
 
 ### To 5.2.0
 
@@ -175,24 +287,9 @@ This version introduces `bitnami/common`, a [library chart](https://helm.sh/docs
 
 ### To 5.0.0
 
-[On November 13, 2020, Helm v2 support was formally finished](https://github.com/helm/charts#status-of-the-project), this major version is the result of the required changes applied to the Helm Chart to be able to incorporate the different features added in Helm v3 and to be consistent with the Helm project itself regarding the Helm v2 EOL.
+[On November 13, 2020, Helm v2 support formally ended](https://github.com/helm/charts#status-of-the-project). This major version is the result of the required changes applied to the Helm Chart to be able to incorporate the different features added in Helm v3 and to be consistent with the Helm project itself regarding the Helm v2 EOL.
 
-**What changes were introduced in this major version?**
-
-- Previous versions of this Helm Chart use `apiVersion: v1` (installable by both Helm 2 and 3), this Helm Chart was updated to `apiVersion: v2` (installable by Helm 3 only). [Here](https://helm.sh/docs/topics/charts/#the-apiversion-field) you can find more information about the `apiVersion` field.
-- The different fields present in the *Chart.yaml* file has been ordered alphabetically in a homogeneous way for all the Bitnami Helm Charts
-
-**Considerations when upgrading to this version**
-
-- If you want to upgrade to this version from a previous one installed with Helm v3, you shouldn't face any issues
-- If you want to upgrade to this version using Helm v2, this scenario is not supported as this version doesn't support Helm v2 anymore
-- If you installed the previous version with Helm v2 and wants to upgrade to this version with Helm v3, please refer to the [official Helm documentation](https://helm.sh/docs/topics/v2_v3_migration/#migration-use-cases) about migrating from Helm v2 to v3
-
-**Useful links**
-
-- https://docs.bitnami.com/tutorials/resolve-helm2-helm3-post-migration-issues/
-- https://helm.sh/docs/topics/v2_v3_migration/
-- https://helm.sh/blog/migrate-from-helm-v2-to-helm-v3/
+[Learn more about this change and related upgrade considerations](https://docs.bitnami.com/kubernetes/infrastructure/metrics-server/administration/upgrade-helm3/).
 
 ### To 4.0.0
 
@@ -212,3 +309,19 @@ Use the workaround below to upgrade from versions previous to 2.0.0. The followi
 ```console
 $ kubectl patch deployment metrics-server --type=json -p='[{"op": "remove", "path": "/spec/selector/matchLabels/chart"}]'
 ```
+
+## License
+
+Copyright &copy; 2022 Bitnami
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

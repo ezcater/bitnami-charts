@@ -13,7 +13,23 @@
       "type": "object",
       "title": "Authentication configuration",
       "form": true,
+<<<<<<< HEAD
       "required": ["database", "username", "password"],
+=======
+      "required": ["username", "password"],
+      "if": {
+        "properties": {
+          "createDatabase":  { "enum": [ true ] }
+        }
+      },
+      "then": {
+        "properties": {
+          "database": {
+            "pattern": "[a-zA-Z0-9]{1,64}"
+          }
+        }
+      },
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       "properties": {
         "rootPassword": {
           "type": "string",
@@ -22,7 +38,12 @@
         },
         "database": {
           "type": "string",
+<<<<<<< HEAD
           "title": "MySQL custom database name"
+=======
+          "title": "MySQL custom database name",
+          "maxLength": 64
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
         },
         "username": {
           "type": "string",
@@ -39,6 +60,13 @@
         "replicationPassword": {
           "type": "string",
           "title": "MySQL replication password"
+<<<<<<< HEAD
+=======
+        },
+        "createDatabase": {
+          "type": "boolean",
+          "title": "MySQL create custom database"
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
         }
       }
     },
@@ -175,4 +203,8 @@
       }
     }
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

@@ -22,6 +22,7 @@ global:
 ##
 kubeVersion: ""
 ## @param nameOverride String to partially override prestashop.fullname template (will maintain the release name)
+<<<<<<< HEAD
 ##
 nameOverride: ""
 ## @param fullnameOverride String to fully override prestashop.fullname template
@@ -35,6 +36,24 @@ commonAnnotations: {}
 commonLabels: {}
 ## @param extraDeploy Array with extra yaml to deploy with the chart. Evaluated as a template
 ##
+=======
+##
+nameOverride: ""
+## @param fullnameOverride String to fully override prestashop.fullname template
+##
+fullnameOverride: ""
+## @param namespaceOverride String to fully override common.names.namespace
+##
+namespaceOverride: ""
+## @param commonAnnotations Common annotations to add to all PrestaShop resources (sub-charts are not considered). Evaluated as a template
+##
+commonAnnotations: {}
+## @param commonLabels Common labels to add to all PrestaShop resources (sub-charts are not considered). Evaluated as a template
+##
+commonLabels: {}
+## @param extraDeploy Array with extra yaml to deploy with the chart. Evaluated as a template
+##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 extraDeploy: []
 
 ## @section PrestaShop parameters
@@ -51,10 +70,14 @@ extraDeploy: []
 image:
   registry: docker.io
   repository: bitnami/prestashop
+<<<<<<< HEAD
   tag: 1.7.7-7-debian-10-r6
+=======
+  tag: 1.7.8-7-debian-11-r3
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-  ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+  ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
   ##
   pullPolicy: IfNotPresent
   ## Optionally specify an array of imagePullSecrets.
@@ -81,6 +104,7 @@ hostAliases:
 ##
 replicaCount: 1
 ## @param prestashopSkipInstall Skip PrestaShop installation wizard. Useful for migrations and restoring from SQL dump
+<<<<<<< HEAD
 ## ref: https://github.com/bitnami/bitnami-docker-prestashop#configuration
 ##
 prestashopSkipInstall: false
@@ -90,14 +114,26 @@ prestashopSkipInstall: false
 prestashopHost: ""
 ## @param prestashopUsername User of the application
 ## ref: https://github.com/bitnami/bitnami-docker-prestashop#configuration
+=======
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/prestashop#configuration
+##
+prestashopSkipInstall: false
+## @param prestashopHost PrestaShop host to create application URLs (when ingress, it will be ignored)
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/prestashop#configuration
+##
+prestashopHost: ""
+## @param prestashopUsername User of the application
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/prestashop#configuration
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 prestashopUsername: user@example.com
 ## @param prestashopPassword Application password
 ## Defaults to a random 10-character alphanumeric string if not set
-## ref: https://github.com/bitnami/bitnami-docker-prestashop#configuration
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/prestashop#configuration
 ##
 prestashopPassword: ""
 ## @param prestashopEmail Admin email
+<<<<<<< HEAD
 ## ref: https://github.com/bitnami/bitnami-docker-prestashop#configuration
 ##
 prestashopEmail: user@example.com
@@ -123,6 +159,33 @@ prestashopCountry: "us"
 prestashopLanguage: "en"
 ## @param allowEmptyPassword Allow DB blank passwords
 ## ref: https://github.com/bitnami/bitnami-docker-prestashop#environment-variables
+=======
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/prestashop#configuration
+##
+prestashopEmail: user@example.com
+## @param prestashopFirstName First Name
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/prestashop#configuration
+##
+prestashopFirstName: Bitnami
+## @param prestashopLastName Last Name
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/prestashop#configuration
+##
+prestashopLastName: User
+## @param prestashopCookieCheckIP Whether to check the cookie's IP address or not
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/prestashop#configuration
+##
+prestashopCookieCheckIP: "no"
+## @param prestashopCountry Default country of the store
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/prestashop#configuration
+##
+prestashopCountry: "us"
+## @param prestashopLanguage Default language of the store (ISO code)
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/prestashop#configuration
+##
+prestashopLanguage: "en"
+## @param allowEmptyPassword Allow DB blank passwords
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/prestashop#environment-variables
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 allowEmptyPassword: true
 ## @param command Override default container command (useful when using custom images)
@@ -166,6 +229,7 @@ sidecars: []
 ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
 ##
 tolerations: []
+<<<<<<< HEAD
 ## @param existingSecret Use existing secret for the application password
 ##
 existingSecret: ""
@@ -196,6 +260,50 @@ containerPorts:
 sessionAffinity: "None"
 ## Enable persistence using Persistent Volume Claims
 ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+=======
+## @param priorityClassName PrestaShop pods' priorityClassName
+##
+priorityClassName: ""
+## @param schedulerName Name of the k8s scheduler (other than default)
+## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
+##
+schedulerName: ""
+## @param topologySpreadConstraints Topology Spread Constraints for pod assignment
+## https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
+## The value is evaluated as a template
+##
+topologySpreadConstraints: []
+## @param existingSecret Use existing secret for the application password
+##
+existingSecret: ""
+## SMTP mail delivery configuration
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/prestashop/#smtp-configuration
+## @param smtpHost SMTP host
+## @param smtpPort SMTP port
+## @param smtpUser SMTP user
+## @param smtpPassword SMTP password
+## @param smtpProtocol SMTP Protocol (options: ssl,tls, nil)
+##
+smtpHost: ""
+smtpPort: ""
+smtpUser: ""
+smtpPassword: ""
+smtpProtocol: ""
+## Container ports
+## @param containerPorts.http Sets HTTP port inside NGINX container
+## @param containerPorts.https Sets HTTPS port inside NGINX container
+##
+containerPorts:
+  http: 8080
+  https: 8443
+## @param sessionAffinity Control where client requests go, to the same pod or round-robin
+## Values: ClientIP or None
+## ref: https://kubernetes.io/docs/user-guide/services/
+##
+sessionAffinity: "None"
+## Enable persistence using Persistent Volume Claims
+## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 persistence:
   ## @param persistence.enabled Enable persistence using PVC
@@ -209,9 +317,16 @@ persistence:
   ##   GKE, AWS & OpenStack)
   ##
   storageClass: ""
+<<<<<<< HEAD
   ## @param persistence.accessMode PVC Access Mode for PrestaShop volume
   ##
   accessMode: ReadWriteOnce
+=======
+  ## @param persistence.accessModes PVC Access Mode for PrestaShop volume
+  ##
+  accessModes:
+    - ReadWriteOnce
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param persistence.size PVC Storage Request for PrestaShop volume
   ##
   size: 8Gi
@@ -226,6 +341,12 @@ persistence:
   ## Default: nil.
   ##
   hostPath: ""
+<<<<<<< HEAD
+=======
+  ## @param persistence.annotations Persistent Volume Claim annotations
+  ##
+  annotations: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## @param podAffinityPreset Pod affinity preset. Ignored if `affinity` is set. Allowed values: `soft` or `hard`
 ## ref: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#inter-pod-affinity-and-anti-affinity
 ##
@@ -263,13 +384,23 @@ affinity: {}
 ##
 nodeSelector: {}
 ## Configure resource requests and limits
+<<<<<<< HEAD
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
 ## @param resources.requests [object] The requested resources for the container
+=======
+## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+## @param resources.requests [object] The requested resources for the container
+## @param resources.limits The resources limits for the container
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 resources:
   requests:
     memory: 512Mi
     cpu: 300m
+<<<<<<< HEAD
+=======
+  limits: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Configure Pods Security Context
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
 ## @param podSecurityContext.enabled Enable PrestaShop pods' Security Context
@@ -281,11 +412,20 @@ podSecurityContext:
 ## Configure Container Security Context (only main container)
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
 ## @param containerSecurityContext.enabled Enable PrestaShop containers' Security Context
+<<<<<<< HEAD
 ## @param containerSecurityContext.runAsUser PrestaShop containers' Security Context
+=======
+## @param containerSecurityContext.runAsUser PrestaShop containers' Security Context runAsUser
+## @param containerSecurityContext.runAsNonRoot PrestaShop containers' Security Context runAsNonRoot
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ##
 containerSecurityContext:
   enabled: true
   runAsUser: 1001
+<<<<<<< HEAD
+=======
+  runAsNonRoot: true
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Configure extra options for liveness probe
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/#configure-probes
 ## @param livenessProbe.enabled Enable livenessProbe
@@ -370,23 +510,40 @@ service:
   ## @param service.type Kubernetes Service type
   ##
   type: LoadBalancer
+<<<<<<< HEAD
   ## @param service.port Service HTTP port
   ##
   port: 80
   ## @param service.httpsPort Service HTTPS port
   ##
   httpsPort: 443
+=======
+  ## @param service.ports.http Service HTTP port
+  ## @param service.ports.https Service HTTPS port
+  ##
+  ports:
+    http: 80
+    https: 443
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param service.clusterIP Service Cluster IP
   ##
   clusterIP: ""
   ## @param service.loadBalancerSourceRanges Control hosts connecting to "LoadBalancer" only
   ## loadBalancerSourceRanges:
   ##   - 0.0.0.0/0
+<<<<<<< HEAD
   ##
   loadBalancerSourceRanges: []
   ## @param service.loadBalancerIP Load balancerIP for the PrestaShop Service (optional, cloud specific)
   ## ref: http://kubernetes.io/docs/user-guide/services/#type-loadbalancer
   ##
+=======
+  ##
+  loadBalancerSourceRanges: []
+  ## @param service.loadBalancerIP Load balancerIP for the PrestaShop Service (optional, cloud specific)
+  ## ref: https://kubernetes.io/docs/user-guide/services/#type-loadbalancer
+  ##
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   loadBalancerIP: ""
   ## @param service.nodePorts.http Kubernetes HTTP node port
   ## @param service.nodePorts.https Kubernetes HTTPS node port
@@ -398,26 +555,65 @@ service:
     http: ""
     https: ""
   ## @param service.externalTrafficPolicy Enable client source IP preservation
+<<<<<<< HEAD
   ## ref http://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
   ##
   externalTrafficPolicy: Cluster
+=======
+  ## ref https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
+  ##
+  externalTrafficPolicy: Cluster
+  ## @param service.extraPorts Extra ports to expose (normally used with the `sidecar` value)
+  ##
+  extraPorts: []
+  ## @param service.annotations Additional custom annotations for PrestaShop service
+  ##
+  annotations: {}
+  ## @param service.sessionAffinity Session Affinity for Kubernetes service, can be "None" or "ClientIP"
+  ## If "ClientIP", consecutive client requests will be directed to the same Pod
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#virtual-ips-and-service-proxies
+  ##
+  sessionAffinity: None
+  ## @param service.sessionAffinityConfig Additional settings for the sessionAffinity
+  ## sessionAffinityConfig:
+  ##   clientIP:
+  ##     timeoutSeconds: 300
+  ##
+  sessionAffinityConfig: {}
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## Configure the ingress resource that allows you to access the
 ## PrestaShop installation. Set up the URL
-## ref: http://kubernetes.io/docs/user-guide/ingress/
+## ref: https://kubernetes.io/docs/user-guide/ingress/
 ##
 ingress:
   ## @param ingress.enabled Enable ingress controller resource
   ##
   enabled: false
+<<<<<<< HEAD
   ## @param ingress.certManager Add annotations for cert-manager
   ##
   certManager: false
+=======
+  ## DEPRECATED: Use ingress.annotations instead of ingress.certManager
+  ## certManager: false
+  ##
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param ingress.pathType Ingress path type
   ##
   pathType: ImplementationSpecific
   ## @param ingress.apiVersion Override API Version (automatically detected if not set)
   ##
   apiVersion: ""
+<<<<<<< HEAD
+=======
+  ## @param ingress.ingressClassName IngressClass that will be be used to implement the Ingress (Kubernetes 1.18+)
+  ## This is supported in Kubernetes 1.18+ and required if you have more than one IngressClass marked as the default for your cluster .
+  ## ref: https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/
+  ##
+  ingressClassName: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## @param ingress.hostname Default host for the ingress resource
   ##
   hostname: prestashop.local
@@ -425,11 +621,20 @@ ingress:
   ## with ALB ingress controllers.
   ##
   path: /
+<<<<<<< HEAD
   ## @param ingress.annotations Ingress annotations
+=======
+  ## @param ingress.annotations Additional annotations for the Ingress resource. To enable certificate autogeneration, place here your cert-manager annotations.
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## For a full list of possible ingress annotations, please see
   ## ref: https://github.com/kubernetes/ingress-nginx/blob/master/docs/user-guide/nginx-configuration/annotations.md
+  ## Use this parameter to set the required annotations for cert-manager, see
+  ## ref: https://cert-manager.io/docs/usage/ingress/#supported-annotations
   ##
-  ## If certManager is set to true, annotation kubernetes.io/tls-acme: "true" will automatically be set
+  ## e.g:
+  ## annotations:
+  ##   kubernetes.io/ingress.class: nginx
+  ##   cert-manager.io/cluster-issuer: cluster-issuer-name
   ##
   annotations: {}
   ## @param ingress.tls Create TLS Secret
@@ -476,9 +681,29 @@ ingress:
   ##   certificate:
   ##
   secrets: []
+<<<<<<< HEAD
 
 ## @section Database parameters
 
+=======
+  ## @param ingress.extraRules Additional rules to be covered with this ingress record
+  ## ref: https://kubernetes.io/docs/concepts/services-networking/ingress/#ingress-rules
+  ## e.g:
+  ## extraRules:
+  ## - host: prestashop.local
+  ##     http:
+  ##       path: /
+  ##       backend:
+  ##         service:
+  ##           name: prestashop-svc
+  ##           port:
+  ##             name: http
+  ##
+  extraRules: []
+
+## @section Database parameters
+
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 ## MariaDB chart configuration
 ## https://github.com/bitnami/charts/blob/master/bitnami/mariadb/values.yaml
 ##
@@ -494,6 +719,7 @@ mariadb:
   ##
   auth:
     ## @param mariadb.auth.rootPassword Password for the MariaDB `root` user
+<<<<<<< HEAD
     ## ref: https://github.com/bitnami/bitnami-docker-mariadb#setting-the-root-password-on-first-run
     ##
     rootPassword: ""
@@ -503,6 +729,17 @@ mariadb:
     database: bitnami_prestashop
     ## @param mariadb.auth.username Database user to create
     ## ref: https://github.com/bitnami/bitnami-docker-mariadb/blob/master/README.md#creating-a-database-user-on-first-run
+=======
+    ## ref: https://github.com/bitnami/containers/tree/main/bitnami/mariadb#setting-the-root-password-on-first-run
+    ##
+    rootPassword: ""
+    ## @param mariadb.auth.database Database name to create
+    ## ref: https://github.com/bitnami/containers/blob/main/bitnami/mariadb/README.md#creating-a-database-on-first-run
+    ##
+    database: bitnami_prestashop
+    ## @param mariadb.auth.username Database user to create
+    ## ref: https://github.com/bitnami/containers/blob/main/bitnami/mariadb/README.md#creating-a-database-user-on-first-run
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     username: bn_prestashop
     ## @param mariadb.auth.password Password for the database
@@ -510,7 +747,11 @@ mariadb:
     password: ""
   primary:
     ## Enable persistence using Persistent Volume Claims
+<<<<<<< HEAD
     ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+=======
+    ## ref: https://kubernetes.io/docs/user-guide/persistent-volumes/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ##
     persistence:
       ## @param mariadb.primary.persistence.enabled Enable database persistence using PVC
@@ -555,6 +796,12 @@ externalDatabase:
   ## @param externalDatabase.database Name of the existing database
   ##
   database: bitnami_prestashop
+<<<<<<< HEAD
+=======
+  ## @param externalDatabase.existingSecret Name of an existing secret resource containing the DB password
+  ##
+  existingSecret: ""
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 
 ## @section Volume Permissions parameters
 
@@ -574,8 +821,13 @@ volumePermissions:
   image:
     registry: docker.io
     repository: bitnami/bitnami-shell
+<<<<<<< HEAD
     tag: 10-debian-10-r172
     pullPolicy: Always
+=======
+    tag: 11-debian-11-r23
+    pullPolicy: IfNotPresent
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
     ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
@@ -585,7 +837,11 @@ volumePermissions:
     ##
     pullSecrets: []
   ## Init containers' resource requests and limits
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ## We usually recommend not to specify default resources and to leave this as a conscious
   ## choice for the user. This also increases chances charts run on environments with little
   ## resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -622,7 +878,11 @@ metrics:
   image:
     registry: docker.io
     repository: bitnami/apache-exporter
+<<<<<<< HEAD
     tag: 0.10.0-debian-10-r27
+=======
+    tag: 0.11.0-debian-11-r28
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -633,7 +893,11 @@ metrics:
     ##
     pullSecrets: []
   ## @param metrics.resources Metrics exporter resource requests and limits
+<<<<<<< HEAD
   ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+=======
+  ## ref: https://kubernetes.io/docs/user-guide/compute-resources/
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   ##
   resources: {}
   ## @param metrics.podAnnotations [object] Metrics exporter pod annotations
@@ -690,10 +954,14 @@ certificates:
   image:
     registry: docker.io
     repository: bitnami/bitnami-shell
+<<<<<<< HEAD
     tag: 10-debian-10-r172
+=======
+    tag: 11-debian-11-r23
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     ## Specify a imagePullPolicy
     ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
-    ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+    ## ref: https://kubernetes.io/docs/user-guide/images/#pre-pulling-images
     ##
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
@@ -704,3 +972,99 @@ certificates:
     ##   - myRegistryKeySecretName
     ##
     pullSecrets: []
+<<<<<<< HEAD
+=======
+
+## @section NetworkPolicy parameters
+
+## Add networkpolicies
+##
+networkPolicy:
+  ## @param networkPolicy.enabled Enable network policies
+  ## If ingress.enabled or metrics.enabled are true, configure networkPolicy.ingress and networkPolicy.metrics selectors respectively to allow communication
+  ##
+  enabled: false
+  ## @param networkPolicy.metrics.enabled Enable network policy for metrics (prometheus)
+  ## @param networkPolicy.metrics.namespaceSelector Monitoring namespace selector labels. These labels will be used to identify the prometheus' namespace.
+  ## @param networkPolicy.metrics.podSelector Monitoring pod selector labels. These labels will be used to identify the Prometheus pods.
+  ##
+  metrics:
+    enabled: false
+    ## e.g:
+    ## podSelector:
+    ##   label: monitoring
+    ##
+    podSelector: {}
+    ## e.g:
+    ## namespaceSelector:
+    ##   label: monitoring
+    ##
+    namespaceSelector: {}
+  ## @param networkPolicy.ingress.enabled Enable network policy for Ingress Proxies
+  ## @param networkPolicy.ingress.namespaceSelector Ingress Proxy namespace selector labels. These labels will be used to identify the Ingress Proxy's namespace.
+  ## @param networkPolicy.ingress.podSelector Ingress Proxy pods selector labels. These labels will be used to identify the Ingress Proxy pods.
+  ##
+  ingress:
+    enabled: false
+    ## e.g:
+    ## podSelector:
+    ##   label: ingress
+    ##
+    podSelector: {}
+    ## e.g:
+    ## namespaceSelector:
+    ##   label: ingress
+    ##
+    namespaceSelector: {}
+  ## @param networkPolicy.ingressRules.backendOnlyAccessibleByFrontend Enable ingress rule that makes the backend (mariadb) only accessible by PrestaShop's pods.
+  ## @param networkPolicy.ingressRules.customBackendSelector Backend selector labels. These labels will be used to identify the backend pods.
+  ## @param networkPolicy.ingressRules.accessOnlyFrom.enabled Enable ingress rule that makes PrestaShop only accessible from a particular origin
+  ## @param networkPolicy.ingressRules.accessOnlyFrom.namespaceSelector Namespace selector label that is allowed to access PrestaShop. This label will be used to identified the allowed namespace(s).
+  ## @param networkPolicy.ingressRules.accessOnlyFrom.podSelector Pods selector label that is allowed to access PrestaShop. This label will be used to identified the allowed pod(s).
+  ## @param networkPolicy.ingressRules.customRules Custom network policy ingress rule
+  ##
+  ingressRules:
+    ## mariadb backend only can be accessed from PrestaShop
+    ##
+    backendOnlyAccessibleByFrontend: false
+    customBackendSelector: {}
+    ## Allow only from the indicated:
+    ##
+    accessOnlyFrom:
+      enabled: false
+      ## e.g:
+      ## namespaceSelector:
+      ##   label: ingress
+      ##
+      namespaceSelector: {}
+      ## e.g:
+      ## podSelector:
+      ##   label: access
+      ##
+      podSelector: {}
+    ## custom ingress rules
+    ## e.g:
+    ## customRules:
+    ##   - from:
+    ##       - namespaceSelector:
+    ##           matchLabels:
+    ##             label: example
+    ##
+    customRules: {}
+  ## @param networkPolicy.egressRules.denyConnectionsToExternal Enable egress rule that denies outgoing traffic outside the cluster, except for DNS (port 53).
+  ## @param networkPolicy.egressRules.customRules Custom network policy rule
+  ##
+  egressRules:
+    ## Deny connections to external. This is not compatible with an external database.
+    ##
+    denyConnectionsToExternal: false
+    ## Additional custom egress rules
+    ## e.g:
+    ## customRules:
+    ##   - to:
+    ##       - namespaceSelector:
+    ##           matchLabels:
+    ##             label: example
+    ##
+    customRules: {}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0

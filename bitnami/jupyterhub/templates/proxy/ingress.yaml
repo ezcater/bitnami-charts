@@ -20,6 +20,12 @@ metadata:
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
     {{- end }}
 spec:
+<<<<<<< HEAD
+=======
+  {{- if and .Values.proxy.ingress.ingressClassName (include "common.ingress.supportsIngressClassname" .) }}
+  ingressClassName: {{ .Values.proxy.ingress.ingressClassName | quote }}
+  {{- end }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   rules:
     {{- if .Values.proxy.ingress.hostname }}
     - host: {{ .Values.proxy.ingress.hostname | quote }}
@@ -44,6 +50,7 @@ spec:
             {{- end }}
             backend: {{- include "common.ingress.backend" (dict "serviceName" (include "common.names.fullname" $) "servicePort" "http" "context" $) | nindent 14 }}
     {{- end }}
+<<<<<<< HEAD
   {{- if or .Values.proxy.ingress.tls .Values.proxy.ingress.extraTls }}
   tls:
     {{- if .Values.proxy.ingress.tls }}
@@ -52,6 +59,16 @@ spec:
         {{- range .Values.proxy.ingress.extraHosts }}
         - {{ .name | quote }}
         {{- end }}
+=======
+    {{- if .Values.proxy.ingress.extraRules }}
+    {{- include "common.tplvalues.render" (dict "value" .Values.proxy.ingress.extraRules "context" $) | nindent 4 }}
+    {{- end }}
+  {{- if or (and .Values.proxy.ingress.tls (or (include "common.ingress.certManagerRequest" ( dict "annotations" .Values.proxy.ingress.annotations )) .Values.proxy.ingress.selfSigned)) .Values.proxy.ingress.extraTls }}
+  tls:
+    {{- if and .Values.proxy.ingress.tls (or (include "common.ingress.certManagerRequest" ( dict "annotations" .Values.proxy.ingress.annotations )) .Values.proxy.ingress.selfSigned) }}
+    - hosts:
+        - {{ .Values.proxy.ingress.hostname | quote }}
+>>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
       secretName: {{ printf "%s-tls" .Values.proxy.ingress.hostname }}
     {{- end }}
     {{- if .Values.proxy.ingress.extraTls }}
