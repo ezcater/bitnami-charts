@@ -3,14 +3,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "common.names.fullname" . }}-aggregator
-<<<<<<< HEAD
-  labels: {{- include "common.labels.standard" . | nindent 4 }}
-    app.kubernetes.io/component: aggregator
-    app: aggregator
-  {{- if .Values.aggregator.service.annotations }}
-  annotations: {{- include "common.tplvalues.render" (dict "value" .Values.aggregator.service.annotations "context" $) | nindent 4 }}
-  {{- end }}
-=======
   namespace: {{ .Release.Namespace | quote }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: aggregator
@@ -25,7 +17,6 @@ metadata:
     {{- if .Values.aggregator.service.annotations }}
     {{- include "common.tplvalues.render" (dict "value" .Values.aggregator.service.annotations "context" $) | nindent 4 }}
     {{- end }}
->>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 spec:
   type: {{ .Values.aggregator.service.type }}
   {{- if and (eq .Values.aggregator.service.type "ClusterIP") .Values.aggregator.service.clusterIP }}

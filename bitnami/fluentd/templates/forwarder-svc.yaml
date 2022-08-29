@@ -3,14 +3,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "common.names.fullname" . }}-forwarder
-<<<<<<< HEAD
-  labels: {{- include "common.labels.standard" . | nindent 4 }}
-    app.kubernetes.io/component: forwarder
-    app: forwarder
-  {{- if .Values.forwarder.service.annotations }}
-  annotations: {{- include "common.tplvalues.render" (dict "value" .Values.forwarder.service.annotations "context" $) | nindent 4 }}
-  {{- end }}
-=======
   namespace: {{ .Release.Namespace | quote }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: forwarder
@@ -25,7 +17,6 @@ metadata:
     {{- if .Values.forwarder.service.annotations }}
     {{- include "common.tplvalues.render" (dict "value" .Values.forwarder.service.annotations "context" $) | nindent 4 }}
     {{- end }}
->>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 spec:
   type: {{ .Values.forwarder.service.type }}
   {{- if and .Values.forwarder.service.loadBalancerIP (eq .Values.forwarder.service.type "LoadBalancer") }}

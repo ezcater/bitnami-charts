@@ -3,13 +3,6 @@ apiVersion: {{ include "common.capabilities.hpa.apiVersion" ( dict "beta2" "true
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ include "common.names.fullname" . }}-aggregator-hpa
-<<<<<<< HEAD
-  labels: {{- include "common.labels.standard" . | nindent 4 }}
-    app.kubernetes.io/component: aggregator
-  {{- if .Values.aggregator.annotations }}
-  annotations: {{- include "common.tplvalues.render" (dict "value" .Values.aggregator.annotations "context" $) | nindent 4 }}
-  {{- end }}
-=======
   namespace: {{ .Release.Namespace | quote }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: aggregator
@@ -23,7 +16,6 @@ metadata:
     {{- if .Values.commonAnnotations }}
     {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
     {{- end }}
->>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
