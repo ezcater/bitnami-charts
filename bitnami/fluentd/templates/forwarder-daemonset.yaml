@@ -3,13 +3,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: {{ include "common.names.fullname" . }}
-<<<<<<< HEAD
-  {{- if .Values.forwarder.annotations }}
-  annotations: {{- include "common.tplvalues.render" (dict "value" .Values.forwarder.annotations "context" $) | nindent 4 }}
-  {{- end }}
-=======
   namespace: {{ .Release.Namespace | quote }}
->>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
   labels: {{- include "common.labels.standard" . | nindent 4 }}
     app.kubernetes.io/component: forwarder
     ## Istio Labels: https://istio.io/docs/ops/deployment/requirements/
@@ -41,12 +35,6 @@ spec:
         checksum/config: {{ include (print $.Template.BasePath "/forwarder-configmap.yaml") . | sha256sum }}
         {{- if .Values.forwarder.podAnnotations }}
         {{- include "common.tplvalues.render" (dict "value" .Values.forwarder.podAnnotations "context" $) | nindent 8 }}
-<<<<<<< HEAD
-        {{- end }}
-        {{- if .Values.forwarder.rbac.pspEnabled }}
-        checksum/psp: {{ include (print $.Template.BasePath "/forwarder-psp.yaml") . | sha256sum }}
-=======
->>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
         {{- end }}
     spec:
       {{- include "fluentd.imagePullSecrets" . | nindent 6 }}
@@ -86,11 +74,6 @@ spec:
         - name: fluentd
           image: {{ include "fluentd.forwarder.image" . }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-<<<<<<< HEAD
-          {{- if .Values.diagnosticMode.enabled }}
-          command: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.command "context" $) | nindent 12 }}
-          args: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.args "context" $) | nindent 12 }}
-=======
           {{- if .Values.forwarder.containerSecurityContext.enabled }}
           securityContext: {{- omit .Values.forwarder.containerSecurityContext "enabled" | toYaml | nindent 12 }}
           {{- end }}
@@ -107,7 +90,6 @@ spec:
           {{- if .Values.forwarder.args }}
           args: {{- include "common.tplvalues.render" (dict "value" .Values.forwarder.args "context" $) | nindent 12 }}
           {{- end }}
->>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           {{- end }}
           env:
             - name: BITNAMI_DEBUG
@@ -145,8 +127,6 @@ spec:
               protocol: TCP
             {{- end }}
           {{- if not .Values.diagnosticMode.enabled }}
-<<<<<<< HEAD
-=======
           {{- if .Values.forwarder.startupProbe.enabled }}
           startupProbe:
             httpGet:
@@ -160,7 +140,6 @@ spec:
           {{- else if .Values.forwarder.customStartupProbe }}
           startupProbe: {{- include "common.tplvalues.render" (dict "value" .Values.forwarder.customStartupProbe "context" $) | nindent 12 }}
           {{- end }}
->>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           {{- if .Values.forwarder.livenessProbe.enabled }}
           livenessProbe:
             httpGet:
@@ -187,12 +166,6 @@ spec:
           {{- else if .Values.forwarder.customReadinessProbe }}
           readinessProbe: {{- include "common.tplvalues.render" (dict "value" .Values.forwarder.customReadinessProbe "context" $) | nindent 12 }}
           {{- end }}
-<<<<<<< HEAD
-          {{- end }}
-          {{- if .Values.forwarder.resources }}
-          resources: {{- toYaml .Values.forwarder.resources | nindent 12 }}
-=======
->>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
           {{- end }}
           volumeMounts:
             - name: fluentd-config
@@ -208,8 +181,6 @@ spec:
             - name: fluentd-forwarder-certificates
               mountPath: /opt/bitnami/fluentd/certs/out_forward
               readOnly: true
-<<<<<<< HEAD
-=======
             {{- end }}
             {{- if .Values.forwarder.initScripts }}
             - name: custom-init-scripts
@@ -222,7 +193,6 @@ spec:
             {{- if .Values.forwarder.initScriptsSecret }}
             - name: custom-init-scripts-secret
               mountPath: /docker-entrypoint-initdb.d/init-scripts-secret
->>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
             {{- end }}
             - name: varlog
               mountPath: /var/log
@@ -241,11 +211,6 @@ spec:
         {{- end }}
         {{- if .Values.tls.enabled }}
         - name: fluentd-forwarder-certificates
-<<<<<<< HEAD
-          secret:
-            secretName: {{ include "fluentd.forwarder.tlsSecretName" . }}
-            defaultMode: 256
-=======
           secret:
             secretName: {{ include "fluentd.forwarder.tlsSecretName" . }}
             defaultMode: 256
@@ -265,7 +230,6 @@ spec:
           secret:
             secretName: {{ template ".Values.initScriptsSecret" . }}
             defaultMode: 0755
->>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
         {{- end }}
         - name: fluentd-config
           configMap:

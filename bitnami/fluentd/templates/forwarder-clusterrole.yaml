@@ -2,10 +2,6 @@
 apiVersion: {{ include "common.capabilities.rbac.apiVersion" . }}
 kind: ClusterRole
 metadata:
-<<<<<<< HEAD
-  name: {{ include "common.names.fullname" . }}
-  labels: {{- include "common.labels.standard" . | nindent 4 }}
-=======
   name: {{ include "common.names.fullname.namespace" . }}
   namespace: {{ .Release.Namespace | quote }}
   labels: {{- include "common.labels.standard" . | nindent 4 }}
@@ -15,7 +11,6 @@ metadata:
   {{- if .Values.commonAnnotations }}
   annotations: {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
   {{- end }}
->>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
 rules:
   - apiGroups:
       - ""
@@ -33,11 +28,7 @@ rules:
     resources:
       - "podsecuritypolicies"
     resourceNames:
-<<<<<<< HEAD
-      - {{ include "common.names.fullname" . }}-forwarder
-=======
       - {{ printf "%s-%s" (include "common.names.fullname.namespace" .) "forwarder" }}
->>>>>>> ee2009506fa88a29a08be8ffce1bb6753a5ab4d0
     verbs:
       - "use"
   {{- end }}
