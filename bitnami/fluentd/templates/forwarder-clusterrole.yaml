@@ -28,7 +28,7 @@ rules:
     resources:
       - "podsecuritypolicies"
     resourceNames:
-      - {{ printf "%s-%s" (include "common.names.fullname.namespace" .) "forwarder" }}
+      - {{ include "common.names.fullname" . }}-forwarder
     verbs:
       - "use"
   {{- end }}
